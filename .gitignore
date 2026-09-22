@@ -1,0 +1,20 @@
+# Build outputs
+bin/
+docs/build/
+
+# Object files and dynamic libraries
+*.o
+*.so
+*.dylib
+*.dll
+
+# Compiled static archive for sqlite-vec is preserved
+!src/sqlite/libsqlite_vec.a
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python caches
+__pycache__/
+*.py[cod]
