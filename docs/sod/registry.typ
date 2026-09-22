@@ -30,4 +30,18 @@
     source: "docs/sod/records/0002-sqlodin-architecture.typ",
     pdf: "sod-0002-sqlodin-architecture.pdf",
   ),
+  (
+    number: "0003",
+    slug: "mathematical-foundations-and-proofs",
+    title: "Mathematical Foundations and Safety Proofs for Multi-Master Consensus",
+    state: "committed",
+    area: "theory",
+    category: "Formal Specification & Theory",
+    status: "Committed",
+    created: "2026-09-22",
+    updated: "2026-09-22",
+    summary: "Formal distributed computing model, axioms, invariants, and proofs of safety, liveness, and 1-RTT optimality for SQLodin.",
+    source: "docs/sod/records/0003-mathematical-foundations-and-proofs.typ",
+    pdf: "sod-0003-mathematical-foundations-and-proofs.pdf",
+  ),
 )
