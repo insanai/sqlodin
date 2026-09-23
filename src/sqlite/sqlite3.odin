@@ -3,10 +3,13 @@ package sqlite
 import "core:c"
 import "core:strings"
 
-foreign import sqlite3 "system:sqlite3"
+// Built from the source/checksum lock by tools/build_native.py on every platform.
+foreign import sqlite3 "../../build/native/libsqlite3.a"
 
 Sqlite3      :: distinct rawptr
 Sqlite3_Stmt :: distinct rawptr
+Sqlite3_Context :: distinct rawptr
+Sqlite3_Value :: distinct rawptr
 
 OK         :: 0
 ERROR      :: 1
@@ -40,6 +43,7 @@ WARNING    :: 28
 ROW        :: 100
 DONE       :: 101
 
+OPEN_READONLY      :: 0x00000001
 OPEN_READWRITE     :: 0x00000002
 OPEN_CREATE        :: 0x00000004
 OPEN_URI           :: 0x00000040
@@ -57,6 +61,15 @@ NULL_TYPE    :: 5
 
 @(default_calling_convention="c")
 foreign sqlite3 {
+	sqlite3_db_config :: proc(db: Sqlite3, op: c.int, #c_vararg args: ..any) -> c.int ---
+	sqlite3_limit :: proc(db: Sqlite3, id, value: c.int) -> c.int ---
+	sqlite3_progress_handler :: proc(
+		db: Sqlite3, instructions: c.int, callback: proc "c" (rawptr) -> c.int, user: rawptr,
+	) ---
+	sqlite3_sourceid :: proc() -> cstring ---
+	sqlite3_compileoption_get :: proc(index: c.int) -> cstring ---
+	sqlite3_db_status :: proc(db: Sqlite3, op: c.int, current, highwater: ^c.int, reset: c.int) -> c.int ---
+	sqlite3_free :: proc(p: rawptr) ---
 	sqlite3_open_v2 :: proc(
 		filename: cstring,
 		ppDb: ^Sqlite3,
@@ -81,6 +94,28 @@ foreign sqlite3 {
 	sqlite3_step :: proc(pStmt: Sqlite3_Stmt) -> c.int ---
 	sqlite3_finalize :: proc(pStmt: Sqlite3_Stmt) -> c.int ---
 	sqlite3_reset :: proc(pStmt: Sqlite3_Stmt) -> c.int ---
+	sqlite3_clear_bindings :: proc(pStmt: Sqlite3_Stmt) -> c.int ---
+	sqlite3_create_function_v2 :: proc(
+		db: Sqlite3, name: cstring, argc, flags: c.int, user: rawptr,
+		function: proc "c" (Sqlite3_Context, c.int, ^Sqlite3_Value),
+		step, final, destroy: rawptr,
+	) -> c.int ---
+	sqlite3_user_data :: proc(ctx: Sqlite3_Context) -> rawptr ---
+	sqlite3_result_error :: proc(ctx: Sqlite3_Context, message: cstring, length: c.int) ---
+	sqlite3_result_error_code :: proc(ctx: Sqlite3_Context, code: c.int) ---
+	sqlite3_update_hook :: proc(
+		db: Sqlite3, callback: proc "c" (rawptr, c.int, cstring, cstring, i64), user: rawptr,
+	) -> rawptr ---
+	sqlite3_stmt_readonly :: proc(pStmt: Sqlite3_Stmt) -> c.int ---
+	sqlite3_get_autocommit :: proc(db: Sqlite3) -> c.int ---
+	sqlite3_set_authorizer :: proc(
+		db: Sqlite3,
+		callback: proc "c" (rawptr, c.int, cstring, cstring, cstring, cstring) -> c.int,
+		user: rawptr,
+	) -> c.int ---
+	sqlite3_bind_blob :: proc(
+		stmt: Sqlite3_Stmt, i: c.int, data: rawptr, n: c.int, destructor: rawptr,
+	) -> c.int ---
 
 	sqlite3_bind_int64 :: proc(pStmt: Sqlite3_Stmt, i: c.int, v: i64) -> c.int ---
 	sqlite3_bind_double :: proc(pStmt: Sqlite3_Stmt, i: c.int, v: f64) -> c.int ---
@@ -100,9 +135,13 @@ foreign sqlite3 {
 	sqlite3_column_double :: proc(pStmt: Sqlite3_Stmt, iCol: c.int) -> f64 ---
 	sqlite3_column_text :: proc(pStmt: Sqlite3_Stmt, iCol: c.int) -> cstring ---
 	sqlite3_column_bytes :: proc(pStmt: Sqlite3_Stmt, iCol: c.int) -> c.int ---
+	sqlite3_column_blob :: proc(pStmt: Sqlite3_Stmt, iCol: c.int) -> rawptr ---
 
 	sqlite3_changes :: proc(db: Sqlite3) -> c.int ---
 	sqlite3_last_insert_rowid :: proc(db: Sqlite3) -> i64 ---
+	sqlite3_extended_errcode :: proc(db: Sqlite3) -> c.int ---
+	sqlite3_bind_parameter_count :: proc(stmt: Sqlite3_Stmt) -> c.int ---
+	sqlite3_total_changes64 :: proc(db: Sqlite3) -> i64 ---
 	sqlite3_errmsg :: proc(db: Sqlite3) -> cstring ---
 	sqlite3_wal_checkpoint_v2 :: proc(
 		db: Sqlite3,
@@ -123,7 +162,11 @@ open :: proc(path: string, memory: bool = false) -> (Sqlite3, bool) {
 	defer delete(path_cstr)
 
 	rc := sqlite3_open_v2(path_cstr, &db, flags, nil)
-	return db, rc == OK
+	if rc != OK {
+		if db != nil do sqlite3_close_v2(db)
+		return nil, false
+	}
+	return db, true
 }
 
 close :: proc(db: Sqlite3) -> bool {
@@ -139,7 +182,7 @@ exec :: proc(db: Sqlite3, sql: string) -> bool {
 }
 
 enable_wal :: proc(db: Sqlite3) -> bool {
-	wal_sql := "PRAGMA journal_mode=WAL; PRAGMA synchronous=NORMAL; PRAGMA busy_timeout=5000;"
+	wal_sql := "PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA busy_timeout=5000;"
 	return exec(db, wal_sql)
 }
 

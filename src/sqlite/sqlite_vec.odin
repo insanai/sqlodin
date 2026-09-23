@@ -2,9 +2,10 @@ package sqlite
 
 import "core:c"
 import "core:fmt"
+import "core:mem"
 import "core:strings"
 
-foreign import sqlite_vec "libsqlite_vec.a"
+foreign import sqlite_vec "../../build/native/libsqlite_vec.a"
 
 @(default_calling_convention="c")
 foreign sqlite_vec {
@@ -16,6 +17,7 @@ vec_register :: proc(db: Sqlite3) -> bool {
 	if db == nil do return false
 	err_msg: cstring
 	rc := sqlite3_vec_init(db, &err_msg, nil)
+	if err_msg != nil do sqlite3_free(rawptr(err_msg))
 	return rc == OK
 }
 
@@ -32,8 +34,8 @@ vec_format :: proc(vec: []f32, buf: []u8) -> string {
 	return strings.to_string(b)
 }
 
-// Queries the loaded sqlite-vec extension version.
-vec_version :: proc(db: Sqlite3) -> string {
+// The returned version is owned by the caller; delete it with the same allocator.
+vec_version :: proc(db: Sqlite3, allocator: mem.Allocator = context.allocator) -> string {
 	stmt: Sqlite3_Stmt
 	rc := sqlite3_prepare_v2(db, "SELECT vec_version();", -1, &stmt, nil)
 	if rc != OK do return ""
@@ -41,7 +43,7 @@ vec_version :: proc(db: Sqlite3) -> string {
 
 	if sqlite3_step(stmt) == ROW {
 		txt := sqlite3_column_text(stmt, 0)
-		if txt != nil do return string(txt)
+		if txt != nil do return strings.clone(string(txt), allocator)
 	}
 	return ""
 }
