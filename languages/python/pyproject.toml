@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sqlodin"
+version = "0.3.0"
+description = "A small, explicit Python client for SQLodin's durable multi-master SQL service"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "Vikrant Rathore"}, {name = "Ronak Rathore"}]
+license = "MIT"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10", "SQLAlchemy>=2.0.43,<2.1"]
+sqlalchemy = ["SQLAlchemy>=2.0.43,<2.1"]
+
+[project.entry-points."sqlalchemy.dialects"]
+sqlodin = "sqlodin.sqlalchemy:SQLodinDialect"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sqlodin"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
