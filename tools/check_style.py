@@ -59,7 +59,7 @@ def check_procs(path, lines, problems):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--soft', action='store_true', help='also report lines over the 99-column soft limit')
-    parser.add_argument('paths', nargs='*', default=['src', 'tests', 'sim', 'bench', 'cli'])
+    parser.add_argument('paths', nargs='*', default=['src', 'service', 'transport', 'tests', 'sim', 'bench', 'cli', 'internal', 'examples'])
     args = parser.parse_args()
 
     problems, soft = [], []

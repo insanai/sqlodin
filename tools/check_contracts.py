@@ -57,9 +57,9 @@ DURABILITY = (
     (
         'messages_before_confirm',
         '_ = sqlodin.effects_messages_slice(&e)',
-        'messages accessed before writes were confirmed durable',
+        'messages_slice before confirm_writes_durable',
     ),
-    ('reset_before_confirm', 'sqlodin.effects_reset(&e)', 'reset discarded unconfirmed durable writes'),
+    ('reset_before_confirm', 'sqlodin.effects_reset(&e)', 'reset discarded unconfirmed writes'),
     (
         'correct_order',
         'sqlodin.effects_confirm_writes_durable(&e)\n    _ = sqlodin.effects_messages_slice(&e)\n    sqlodin.effects_reset(&e)',
