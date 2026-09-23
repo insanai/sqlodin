@@ -1,0 +1,98 @@
+{
+  "complete": true,
+  "binary_sha256": "e9920de70aecc0e781ba4662b6fa94e72c29005a9aa7e41d8956c0f0fc477503",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "linkage": "\nDynamic section at offset 0x92f6f0 contains 30 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-x86-64.so.2]\n 0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN]\n 0x000000000000000c (INIT)               0xb9000\n 0x000000000000000d (FINI)               0x6ee9c0\n 0x0000000000000019 (INIT_ARRAY)         0x8a8f90\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x8a8f98\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x3e8\n 0x0000000000000005 (STRTAB)             0x1858\n 0x0000000000000006 (SYMTAB)             0x4d8\n 0x000000000000000a (STRSZ)              2222 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000015 (DEBUG)              0x0\n 0x0000000000000003 (PLTGOT)             0x930910\n 0x0000000000000002 (PLTRELSZ)           3648 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0xb77e8\n 0x0000000000000007 (RELA)               0x23d8\n 0x0000000000000008 (RELASZ)             742416 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000000000001e (FLAGS)              BIND_NOW\n 0x000000006ffffffb (FLAGS_1)            Flags: NOW PIE\n 0x000000006ffffffe (VERNEED)            0x22a8\n 0x000000006fffffff (VERNEEDNUM)         3\n 0x000000006ffffff0 (VERSYM)             0x2106\n 0x000000006ffffff9 (RELACOUNT)          30869\n 0x0000000000000000 (NULL)               0x0\n",
+  "native": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "openssl": "3.5.8",
+    "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "compiler": "/usr/bin/cc",
+      "archiver": "/usr/bin/ar",
+      "compiler_version": "cc (Debian 14.2.0-19) 14.2.0",
+      "builder_sha256": "ed2760e611b57d4e09769caa528f882bbd87d6842c6589c66d7b285035777d3f"
+    },
+    "sources": {
+      "sqlite": {
+        "version": "3.51.3",
+        "url": "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        "files": {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      },
+      "vec": {
+        "version": "0.1.9",
+        "url": "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        "files": {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      },
+      "openssl": {
+        "version": "3.5.8",
+        "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+        "sha256": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2"
+      }
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "openssl_flags": [
+      "no-shared",
+      "no-dso",
+      "no-module",
+      "no-engine",
+      "no-zlib",
+      "--libdir=lib",
+      "--openssldir=/sqlodin/no-system-openssl"
+    ],
+    "archives_sha256": {
+      "libsqlite3.a": "aac3b0f9cafb856e49bc0fc8f00289e1dd36a596032383028ee9a663559630ae",
+      "libsqlite_vec.a": "64f35312f89c2251bc249b2b2301d7b0c9aba7987e1a7e547008a24c68a576d0",
+      "libssl.a": "d287b4bf68bebb8ea76818c859763eb8ac90f65d5ecf13fc0f253a50405df140",
+      "libcrypto.a": "077bddd675958dc9243a04182c15567afcd2d6b68a565eafa9f940c5543ff665"
+    }
+  },
+  "shell": {
+    "sqlite_version": "3.51.3",
+    "source_sha256": "4a5bde1b3e00f873caa7e0e7a4def2ea656b7dfae6cad5fb1e9c0d8f44f4397a",
+    "helper_sha256": "29ce37683ac1014f668d0ba6aca6d4488640ad31a9f59cbeded77d657e0c4413",
+    "flags": [
+      "-O2",
+      "-fPIC",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1",
+      "-Dmain=sqlodin_sqlite_shell",
+      "-DSQLITE_SHELL_INIT_PROC=sqlodin_shell_init"
+    ],
+    "builder_sha256": "e6299ee205ff59fe577739f1672c712a85a4c80b8f376ac088edb3220f46d0c7",
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archive_sha256": "7a5de5b39e5f45ea8bf7170360865fb4e11d6c0c4871c2edb4e2e96b12b7dd3a"
+  },
+  "odin": "odin version dev-2026-09-nightly:a2fb372",
+  "scope": "Native SQLite/FTS5, sqlite-vec and OpenSSL are static; OS runtime may remain dynamic"
+}

@@ -1,0 +1,5 @@
+RUN mixed 2 rqlite
+RUN sequential 2 cowsql
+RUN sequential 2 sqlodin
+RUN sequential 2 rqlite
+RUN sequential 2 zaxonlite

@@ -1,0 +1,34 @@
+{
+  "complete": true,
+  "generated_utc": "2026-09-23T05:18:57.285080+00:00",
+  "platforms": [
+    {
+      "platform": "macOS arm64",
+      "cli_report": "local-cli.json",
+      "service_report": "local-cli-service.json",
+      "build_report": "local-cli-build.json",
+      "cli_checks": 28,
+      "service_checks": 14,
+      "binary_sha256": "1842ee4018129c48b49e56bc826015e348820b58b3f980d0adc8c59235a0d35f"
+    },
+    {
+      "platform": "insan@10.175.52.18",
+      "cli_report": "linux-cli.json",
+      "service_report": "linux-cli-service.json",
+      "build_report": "linux-cli-build.json",
+      "cli_checks": 28,
+      "service_checks": 14,
+      "binary_sha256": "e9920de70aecc0e781ba4662b6fa94e72c29005a9aa7e41d8956c0f0fc477503"
+    }
+  ],
+  "build_flags": [
+    "-o:speed",
+    "-use-separate-modules",
+    "-vet",
+    "-strict-style"
+  ],
+  "linux_link_driver": "Task-local clang-named wrapper invokes /usr/bin/cc (GCC) for the final link; no system installation",
+  "linux_directory": "/home/insan/projects/sqlodin/cli-validation-20260923",
+  "scope": "Disposable disk-backed three-process clusters; CLI functionality and service regressions, not endurance qualification",
+  "soak_binary_unchanged": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
+}

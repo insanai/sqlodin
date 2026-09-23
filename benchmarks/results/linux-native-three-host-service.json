@@ -1,0 +1,100 @@
+{
+  "complete": true,
+  "passed": true,
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "remote_root": "/home/insan/projects/sqlodin/network-service/20260922T180056Z",
+  "scope": "three Linux instances; direct native mTLS consensus and SQL; fixed membership",
+  "binary_sha256": "2cf734fbb1e2d3339852d93a58ca0bd381344878a0651d23357bcc575210f8e6",
+  "checks": [
+    {
+      "name": "native_cluster_schema",
+      "passed": true
+    },
+    {
+      "name": "write_any_node_fenced_rows",
+      "passed": true
+    },
+    {
+      "name": "typed_parameters_and_results",
+      "passed": true
+    },
+    {
+      "name": "atomic_batch_rollback_and_next_sequence",
+      "passed": true
+    },
+    {
+      "name": "readonly_policy_and_result_limit",
+      "passed": true
+    },
+    {
+      "name": "untrusted_unlisted_and_peer_as_client_rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed_frames_close_only_offending_connection",
+      "passed": true
+    },
+    {
+      "name": "six_concurrent_sessions_mixed_writes_and_fenced_reads",
+      "passed": true
+    },
+    {
+      "name": "cross_master_durable_deduplication",
+      "passed": true
+    },
+    {
+      "name": "minority_no_ack_and_explicit_stale_read",
+      "passed": true
+    },
+    {
+      "name": "recover_uncertain_write_after_quorum_restored",
+      "passed": true
+    },
+    {
+      "name": "all_process_sigkill_reopen_fenced_convergence",
+      "passed": true
+    }
+  ],
+  "filesystem": [
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy01[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    },
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy02[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    },
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy03[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    }
+  ],
+  "logs": {
+    "node1.log": "SQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\n",
+    "node2.log": "SQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\n",
+    "node3.log": "SQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\n"
+  },
+  "ended_utc": "2026-09-22T18:01:25.721108+00:00"
+}

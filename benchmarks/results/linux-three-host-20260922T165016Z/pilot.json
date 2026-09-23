@@ -1,0 +1,371 @@
+{
+  "complete": true,
+  "status": "passed",
+  "started_utc": "2026-09-22T17:01:04.323184+00:00",
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "scope": "three Linux instances, one fixed-membership durable voter each; authenticated SSH framed-pipe transport through a coordinator; 70/30 generated mixed point reads/transfers, twelve long-lived sessions; not a native network service or proof of physical-host independence",
+  "limits": {
+    "max_data_bytes": 8589934592,
+    "max_rss_bytes": 536870912,
+    "min_free_bytes": 10737418240
+  },
+  "seed": 20260923,
+  "phase": "pilot",
+  "manifest": {
+    "source_sha256": {
+      "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+      "src/engine.odin": "68acc036cb6934f25ed8a01ca83e1562341d599d24668d43f3ede3cc14b62825",
+      "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+      "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+      "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+      "src/transaction.odin": "0b4475c7a88fcddde46cdb1af73c1417f9096f58979b3974d313c1f115e9193a",
+      "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+      "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+      "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+      "src/engine_outcomes.odin": "ffea59aa2c49b48698ad0373d1581128ca012ac7ea71d2b5147c95b75ed33550",
+      "src/engine_sessions.odin": "ae0719387678c5ff38e9c01b684e3c9aa453764748fd86dc2b48148a36972edb",
+      "src/mutation.odin": "1e1e5a5c52658f6899fcedfdefa32d55362336842caf3cccecf0425dbed5d635",
+      "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+      "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+      "src/engine_policy.odin": "f70c25c75cd505bfc8962bb868c92a0e59100d8ff6f1ff04d2fc05332d67bbce",
+      "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+      "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+      "src/sqlite/sqlite3.odin": "344c301ddde7c98d885bf82c18c1c2fcf0fd40dea56247c8a1ef6cee9b006fbd",
+      "src/durable/transition_group.odin": "e50e3199a5d33aac2bb16294791701e1f8debbb18dbe684fd642a03676d5aeb4",
+      "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+      "src/durable/host.odin": "6f8cb285a746e903df63bda5a3255a97c8882bd716d99a63a79444faca0246db",
+      "src/durable/codec.odin": "8252dafef72a2460ec01f5023fe7a9e6f4f4693946097e2c320c9be11a0b6654",
+      "src/durable/storage.odin": "e1124440683e725a3a0c3bdb667bc96451caa7a42da0ac219eeb6cc9776c0858",
+      "src/durable/journal.odin": "aa970e1d220622ac8b4e1b0c61e8d414a9987eec2a18bbba23a2a32059698b42",
+      "src/durable/batch.odin": "79ad08b40fde740a8fb67ea6938d0bcc6ca4936506765c8e460143789eb1b04c",
+      "src/durable/reads.odin": "ba9fe24170ccd4c45829091e003f4d7c138d3c681ecceae5b1d2e6f4ebd6f7e6",
+      "src/durable/packing.odin": "43b6463698a49cfeb78f01fe730daf595c67caa9bbef20d52a2f8d6c3508c4ba",
+      "internal/process_probe/main.odin": "317a7446966a346bf0176dba3c682ee0889a72acba2898ad0aaf60d901b33002",
+      "internal/process_probe/wire.odin": "228bf1a752aae59c40253cb36b58cdce9d774883b4a9cadd93bea0c24df8399d",
+      "tools/qualification_worker.py": "52aaf654c6076e91dde400468ce4fb001e037711ce338ccab8d57c972dbc7a19",
+      "tools/run_cluster_soak.py": "c4a2e31426e3f7227acfd01af8575c2e3b5adda6db5c48962fce02f52a49f493",
+      "tools/check_process_cluster.py": "601d69de2b4a0e0999f21048ad605ff7f8fe894f6f28a64f0822f14f16f19904"
+    },
+    "paxos_pin": "a3e1fd78ec8f0429e5024710189ef77fc31961af",
+    "durability_evidence": {
+      "path": "benchmarks/results/linux-journal-final-durability.json",
+      "sha256": "f5184a1571e1f6fcb4da584a6f8eb2e0966eb6dd4dc084d267b42949a10d94be",
+      "passed_cases": 22
+    },
+    "transport": "SSH qualification fixture; native mTLS work separate"
+  },
+  "host_inspection": [
+    {
+      "hostname": "agy01",
+      "kernel": "7.0.0-28-generic",
+      "identity": {
+        "/etc/os-release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.7\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"",
+        "/etc/machine-id": "40558b56e434485bab6d1c0c22df6682",
+        "/proc/sys/kernel/random/boot_id": "ab54e8e2-1815-4b77-9820-01592126a80d",
+        "/sys/fs/cgroup/memory.max": "max",
+        "/sys/fs/cgroup/cpu.max": "max 100000"
+      },
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "resources": {
+        "free_bytes": 345097764864,
+        "data_bytes": 4312544
+      },
+      "binary_sha256": "99676e6c2c7f79c9fdff4986f3fda22794432e8c2c0080e3235658cbc435f8b6",
+      "filesystem": {
+        "filesystems": [
+          {
+            "target": "/",
+            "fstype": "zfs",
+            "source": "local/containers/agy01[/rootfs]",
+            "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+          }
+        ]
+      },
+      "virtualization": "lxc",
+      "clock_epoch": 1790096464.36623
+    },
+    {
+      "hostname": "agy02",
+      "kernel": "7.0.0-28-generic",
+      "identity": {
+        "/etc/os-release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.1\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"",
+        "/etc/machine-id": "173f9c41d0734bc680593d709cf9e25d",
+        "/proc/sys/kernel/random/boot_id": "a02d83a6-b4e8-4f66-b647-35aada978586",
+        "/sys/fs/cgroup/memory.max": "max",
+        "/sys/fs/cgroup/cpu.max": "max 100000"
+      },
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "resources": {
+        "free_bytes": 377289048064,
+        "data_bytes": 4406824
+      },
+      "binary_sha256": "99676e6c2c7f79c9fdff4986f3fda22794432e8c2c0080e3235658cbc435f8b6",
+      "filesystem": {
+        "filesystems": [
+          {
+            "target": "/",
+            "fstype": "zfs",
+            "source": "local/containers/agy02[/rootfs]",
+            "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+          }
+        ]
+      },
+      "virtualization": "lxc",
+      "clock_epoch": 1790096464.6332438
+    },
+    {
+      "hostname": "agy03",
+      "kernel": "7.0.0-28-generic",
+      "identity": {
+        "/etc/os-release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION=\"13 (trixie)\"\nVERSION_CODENAME=trixie\nDEBIAN_VERSION_FULL=13.1\nID=debian\nHOME_URL=\"https://www.debian.org/\"\nSUPPORT_URL=\"https://www.debian.org/support\"\nBUG_REPORT_URL=\"https://bugs.debian.org/\"",
+        "/etc/machine-id": "bf38d614d4bb41acaae66d7670031aab",
+        "/proc/sys/kernel/random/boot_id": "743c8bff-e9be-4f57-84b1-01134e4c455e",
+        "/sys/fs/cgroup/memory.max": "max",
+        "/sys/fs/cgroup/cpu.max": "max 100000"
+      },
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "resources": {
+        "free_bytes": 1288790736896,
+        "data_bytes": 4488672
+      },
+      "binary_sha256": "99676e6c2c7f79c9fdff4986f3fda22794432e8c2c0080e3235658cbc435f8b6",
+      "filesystem": {
+        "filesystems": [
+          {
+            "target": "/",
+            "fstype": "zfs",
+            "source": "local/containers/agy03[/rootfs]",
+            "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+          }
+        ]
+      },
+      "virtualization": "lxc",
+      "clock_epoch": 1790096464.8475525
+    }
+  ],
+  "workload_started_utc": "2026-09-22T17:01:05.066944+00:00",
+  "requested_workload_seconds": 125,
+  "planned_workload_end_utc": "2026-09-22T17:03:10.066964+00:00",
+  "progress": {
+    "type": "interval",
+    "elapsed_seconds": 125.17892922181636,
+    "operations": 10140,
+    "reads": 7115,
+    "writes": 3025,
+    "verified_transfers": 3025,
+    "acknowledged_retries": 13,
+    "interval_operations_per_second": 78.21475452640183,
+    "write_latency_ms": {
+      "p50": 34.635755233466625,
+      "p95": 72.51854054629803,
+      "p99": 91.87834989279509
+    },
+    "read_latency_ms": {
+      "p50": 27.446232736110687,
+      "p95": 48.68987575173378,
+      "p99": 63.92419431358576
+    },
+    "voter_resources": [
+      {
+        "free_bytes": 345094881280,
+        "data_bytes": 17165416,
+        "pid": 181450,
+        "cpu_seconds": 0.6,
+        "VmHWM": 9646080,
+        "VmRSS": 9646080
+      },
+      {
+        "free_bytes": 377286033408,
+        "data_bytes": 17259864,
+        "pid": 2063,
+        "cpu_seconds": 0.6,
+        "VmHWM": 8966144,
+        "VmRSS": 8966144
+      },
+      {
+        "free_bytes": 1288787591168,
+        "data_bytes": 17374312,
+        "pid": 2117,
+        "cpu_seconds": 0.58,
+        "VmHWM": 9007104,
+        "VmRSS": 9007104
+      }
+    ],
+    "voter_cpu_seconds": 55.76,
+    "peak_rss_bytes_per_voter": [
+      18477056,
+      9338880,
+      9416704
+    ],
+    "utc": "2026-09-22T17:03:10.245914+00:00"
+  },
+  "workload_seconds": 125.18844380043447,
+  "workload_finished_utc": "2026-09-22T17:03:10.255384+00:00",
+  "reads": 7115,
+  "writes": 3025,
+  "operations": 10140,
+  "acknowledged_retries": 13,
+  "final_applied": [
+    11128,
+    11128,
+    11128
+  ],
+  "session_count": 13,
+  "expected_balances": [
+    999995,
+    999993,
+    1000012
+  ],
+  "offline_audits": [
+    {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "1cfab527fff4697c1664c277603386cac01be34cda541a627d511ff32e40acfd",
+        "transfers": "d3cf23bb7edba3f9ed6f618fa97ebd643e2ceb1bf8f54a418fc7b6ef283e8eb8",
+        "ledger": "24ff7b7837ff91524d51948ee7481321999ab3221cf9dc7b7dbb5accb9db6b40",
+        "sessions": "3e9fd6b28ab0c4de07a24c08826196a6f007a8e70d75a09fd4a2dd82e1b0bb93",
+        "state": "8be0234e57a12206da6e898011af686aa7715244dde89b24dc2cfd430a949a5c"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 3025,
+        "ledger": 6050,
+        "sessions": 13,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 345094881280,
+        "data_bytes": 17165416
+      },
+      "verification_sqlite": "3.46.1"
+    },
+    {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "1cfab527fff4697c1664c277603386cac01be34cda541a627d511ff32e40acfd",
+        "transfers": "d3cf23bb7edba3f9ed6f618fa97ebd643e2ceb1bf8f54a418fc7b6ef283e8eb8",
+        "ledger": "24ff7b7837ff91524d51948ee7481321999ab3221cf9dc7b7dbb5accb9db6b40",
+        "sessions": "3e9fd6b28ab0c4de07a24c08826196a6f007a8e70d75a09fd4a2dd82e1b0bb93",
+        "state": "8be0234e57a12206da6e898011af686aa7715244dde89b24dc2cfd430a949a5c"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 3025,
+        "ledger": 6050,
+        "sessions": 13,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 377286033408,
+        "data_bytes": 17259864
+      },
+      "verification_sqlite": "3.46.1"
+    },
+    {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "1cfab527fff4697c1664c277603386cac01be34cda541a627d511ff32e40acfd",
+        "transfers": "d3cf23bb7edba3f9ed6f618fa97ebd643e2ceb1bf8f54a418fc7b6ef283e8eb8",
+        "ledger": "24ff7b7837ff91524d51948ee7481321999ab3221cf9dc7b7dbb5accb9db6b40",
+        "sessions": "3e9fd6b28ab0c4de07a24c08826196a6f007a8e70d75a09fd4a2dd82e1b0bb93",
+        "state": "8be0234e57a12206da6e898011af686aa7715244dde89b24dc2cfd430a949a5c"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 3025,
+        "ledger": 6050,
+        "sessions": 13,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 1288787591168,
+        "data_bytes": 17374312
+      },
+      "verification_sqlite": "3.46.1"
+    }
+  ],
+  "finished_utc": "2026-09-22T17:03:11.756347+00:00"
+}

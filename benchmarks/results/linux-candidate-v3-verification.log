@@ -1,0 +1,331 @@
+odin version dev-2026-09-nightly:a2fb372
+Soft limit exceeded (wrap when convenient):
+  src/engine_dml.odin:119: 100 columns (soft limit 99)
+  src/engine_group.odin:54: 106 columns (soft limit 99)
+  src/engine_group.odin:58: 102 columns (soft limit 99)
+  src/engine_outcomes.odin:15: 105 columns (soft limit 99)
+  src/engine_outcomes.odin:132: 104 columns (soft limit 99)
+  src/engine_outcomes.odin:133: 101 columns (soft limit 99)
+  src/engine_outcomes.odin:151: 103 columns (soft limit 99)
+  src/engine_outcomes.odin:160: 102 columns (soft limit 99)
+  src/engine_sessions.odin:112: 102 columns (soft limit 99)
+  src/engine_sessions.odin:121: 101 columns (soft limit 99)
+  src/engine_skips.odin:18: 102 columns (soft limit 99)
+  src/sqlite/sqlite3.odin:73: 108 columns (soft limit 99)
+  tests/test_engine_regressions.odin:157: 104 columns (soft limit 99)
+  tests/test_expression_outcomes.odin:29: 105 columns (soft limit 99)
+  tests/test_mutation.odin:57: 105 columns (soft limit 99)
+  tests/test_skip_durability.odin:31: 104 columns (soft limit 99)
+  sim/simulation.odin:155: 101 columns (soft limit 99)
+  sim/simulation.odin:275: 101 columns (soft limit 99)
+  bench/main.odin:20: 101 columns (soft limit 99)
+  bench/profile.odin:80: 101 columns (soft limit 99)
+  bench/profile.odin:155: 100 columns (soft limit 99)
+  internal/durability_probe/group.odin:64: 104 columns (soft limit 99)
+  internal/process_probe/main.odin:77: 104 columns (soft limit 99)
+  internal/process_probe/main.odin:134: 106 columns (soft limit 99)
+  internal/process_probe/wire.odin:59: 100 columns (soft limit 99)
+  examples/multimaster_search.odin:11: 101 columns (soft limit 99)
+PASS style: files <= 1408 lines, lines <= 108 columns, procedures <= 70 logic lines
+PASS style: Zen constraints, vet, strict style
+[INFO ] --- [2026-09-22 15:02:45] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 15:02:45] The random seed sent to every test is: 17737049388120384. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 15:02:45] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 15:02:45] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 79 tests in 9.480238781s. All tests were successful.
+
+PASS unit tests (-debug)
+[INFO ] --- [2026-09-22 15:02:57] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 15:02:57] The random seed sent to every test is: 17737085584921536. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 15:02:57] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 15:02:57] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 79 tests in 10.488335ms. All tests were successful.
+
+PASS pinned upstream tests (-debug)
+[INFO ] --- [2026-09-22 15:04:18] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 15:04:18] The random seed sent to every test is: 17737344319948000. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 15:04:18] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 15:04:18] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 79 tests in 8.08867852s. All tests were successful.
+
+PASS unit tests (-o:speed)
+[INFO ] --- [2026-09-22 15:04:36] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 15:04:36] The random seed sent to every test is: 17737403952012896. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 15:04:36] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 15:04:36] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 79 tests in 3.771379ms. All tests were successful.
+
+PASS pinned upstream tests (-o:speed)
+[INFO ] --- [2026-09-22 15:06:00] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 15:06:00] The random seed sent to every test is: 17737670129541728. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 15:06:00] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 15:06:00] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 79 tests in 9.72355733s. All tests were successful.
+
+PASS individual-transaction reference configuration
+{
+  "schema_version": 1,
+  "run_at_utc": "2026-09-22T15:07:46.708930+00:00",
+  "source_sha256": {
+    "internal/durability_probe/group.odin": "3a99caf3a8e0fb95acebc45f7decad4c6a8acffc99e354599709fb6a574461ae",
+    "internal/durability_probe/main.odin": "d836bf2ecb03143f440ab36b4c2987ea34fbec5690ac4190ef848ce560862f4b",
+    "internal/durability_probe/transaction.odin": "8cf55d4659a5f43d8943feb5f656823aea5332a1655375d7a57201beac8cd65c",
+    "src/durable/batch.odin": "a5ab93604ccc1603d83dab91e6d13ae8be32b7f2980e1e36873e21b0b221d22d",
+    "src/durable/codec.odin": "8252dafef72a2460ec01f5023fe7a9e6f4f4693946097e2c320c9be11a0b6654",
+    "src/durable/host.odin": "bba1383afa2783872b1342a12bf35b4dcc43c845d6c4544fbeb50a0d2929913f",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "f64e470ad896eb43032efa4dfa253354a6fa038c009bdcfa3ede31287df3c43d",
+    "src/durable/packing.odin": "43b6463698a49cfeb78f01fe730daf595c67caa9bbef20d52a2f8d6c3508c4ba",
+    "src/durable/reads.odin": "ba9fe24170ccd4c45829091e003f4d7c138d3c681ecceae5b1d2e6f4ebd6f7e6",
+    "src/durable/storage.odin": "380082ac877b2a53a83fda602f70e36c8463b2890f2098be09b1f20b903f88ed",
+    "src/engine.odin": "68acc036cb6934f25ed8a01ca83e1562341d599d24668d43f3ede3cc14b62825",
+    "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+    "src/engine_outcomes.odin": "ffea59aa2c49b48698ad0373d1581128ca012ac7ea71d2b5147c95b75ed33550",
+    "src/engine_policy.odin": "f70c25c75cd505bfc8962bb868c92a0e59100d8ff6f1ff04d2fc05332d67bbce",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_sessions.odin": "ae0719387678c5ff38e9c01b684e3c9aa453764748fd86dc2b48148a36972edb",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "1e1e5a5c52658f6899fcedfdefa32d55362336842caf3cccecf0425dbed5d635",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "344c301ddde7c98d885bf82c18c1c2fcf0fd40dea56247c8a1ef6cee9b006fbd",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "0b4475c7a88fcddde46cdb1af73c1417f9096f58979b3974d313c1f115e9193a"
+  },
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "scope": "process crash; not physical power-loss certification",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "fstype": "zfs",
+        "source": "local/containers/agy01[/rootfs]",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "case": "before",
+      "passed": true,
+      "verification": "verified rows=0 applied=1"
+    },
+    {
+      "case": "journal",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "application",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "ack",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "three_voters_killed_at_ack",
+      "passed": true,
+      "verification": "verified three voters: all 80 acknowledged writes survived"
+    },
+    {
+      "case": "transaction-before",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-journal",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-application",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-ack",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-before",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-journal",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-application",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-ack",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "application-group-before",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-journal",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-sql",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-application",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-ack",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    }
+  ]
+}
+PASS mixed SQL: all three replicas verify order/ledger/stock invariants before and after restart
+{
+  "operations": 240,
+  "reads": 166,
+  "writes": 74,
+  "seconds": 5.9700602842494845,
+  "operations_per_second": 40.20059908493389,
+  "voter_cpu_seconds_timed": 2.08,
+  "controller_boundary": "closed-loop waves, at most 12 writes or 3 fenced reads outstanding",
+  "read_latency_ms": {
+    "p50": 42.66566038131714,
+    "p95": 74.54899419099092,
+    "p99": 125.23593474179506
+  },
+  "write_latency_ms": {
+    "p50": 108.22815913707018,
+    "p95": 205.57348616421223,
+    "p99": 276.79888904094696
+  },
+  "verified_transfers_including_fault_phases": 96,
+  "peak_rss_bytes_per_voter": [
+    8314880,
+    8138752,
+    8867840
+  ],
+  "checks": [
+    "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+    "fresh_ordered_read_barrier_on_every_voter",
+    "all_processes_sigkill_uncertain_retry_other_master",
+    "acknowledged_retry_other_master_after_restart",
+    "minority_cannot_complete_fenced_read",
+    "minority_no_ack_heal_retry",
+    "surviving_quorum_writes_offline_voter_catchup",
+    "all_acknowledged_transactions_survive_final_sigkill"
+  ]
+}
+PASS compile-fail zero_window
+PASS compile-fail zero_chunk
+PASS compile-fail window_not_power_of_two
+PASS compile-fail chunk_exceeds_window
+PASS compile-fail zero_members
+PASS compile-fail too_many_members
+PASS durability messages_before_confirm -debug
+PASS durability reset_before_confirm -debug
+PASS durability correct_order -debug
+PASS durability zero_value_is_ready -debug
+PASS durability messages_before_confirm -o:speed
+PASS durability reset_before_confirm -o:speed
+PASS durability correct_order -o:speed
+PASS durability zero_value_is_ready -o:speed
+PASS 30 simulations across 1, 3, and 5 nodes (150000 fault steps)
+=================================================================
+  SQLODIN MULTI-MASTER REPLICATION DEMO
+=================================================================
+Active nodes: 3 (Decentralized Multi-Master)
+Consensus: Rotating Slot Ownership (in-process demonstration)
+
+-> Node 1 inserts document into FTS5 index (Slot 1)...
+-> Node 2 inserts document into FTS5 index (Slot 2)...
+-> Node 3 inserts embedding into vec0 index (Slot 3)...
+
+All 3 slots committed across quorum without remote leader hops!
+
+[Node 3] Full-Text Search for 'consensus':
+  Found 1 matching document(s).
+
+[Node 1] Vector Similarity Search (KNN float[4]):
+  Found 1 nearest vector match(es).
+
+[Node 2] Read-Your-Writes Watermark Read (Watermark Slot 2):
+  Consistent read satisfied at watermark: 2 row(s).
+
+=================================================================
+  DEMO COMPLETE: Deterministic convergence verified.
+=================================================================
+PASS multi-master vector/FTS search example
+PASS benchmark smoke and six JSON profiles
+PASS CLI propagates subprocess failure with recovery hint
+All SQLodin checks passed.

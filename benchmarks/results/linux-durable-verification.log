@@ -1,0 +1,180 @@
+odin version dev-2026-09-nightly:a2fb372
+Soft limit exceeded (wrap when convenient):
+  src/engine_dml.odin:117: 100 columns (soft limit 99)
+  tests/test_engine_regressions.odin:157: 104 columns (soft limit 99)
+  tests/test_mutation.odin:57: 105 columns (soft limit 99)
+  sim/simulation.odin:155: 101 columns (soft limit 99)
+  sim/simulation.odin:275: 101 columns (soft limit 99)
+  bench/main.odin:20: 101 columns (soft limit 99)
+  bench/profile.odin:80: 101 columns (soft limit 99)
+  bench/profile.odin:155: 100 columns (soft limit 99)
+  examples/multimaster_search.odin:11: 101 columns (soft limit 99)
+PASS style: files <= 1408 lines, lines <= 108 columns, procedures <= 70 logic lines
+PASS style: Zen constraints, vet, strict style
+[INFO ] --- [2026-09-22 10:43:37] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 10:43:37] The random seed sent to every test is: 17687390687095488. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 10:43:37] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 10:43:37] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 43 tests in 410.131024ms. All tests were successful.
+
+PASS unit tests (-debug)
+[INFO ] --- [2026-09-22 10:43:39] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 10:43:39] The random seed sent to every test is: 17687397731709600. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 10:43:39] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 10:43:39] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 79 tests in 8.320477ms. All tests were successful.
+
+PASS pinned upstream tests (-debug)
+[INFO ] --- [2026-09-22 10:44:35] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 10:44:35] The random seed sent to every test is: 17687576345038240. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 10:44:35] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 10:44:35] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 43 tests in 159.722479ms. All tests were successful.
+
+PASS unit tests (-o:speed)
+[INFO ] --- [2026-09-22 10:44:46] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-22 10:44:46] The random seed sent to every test is: 17687610687758304. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-22 10:44:46] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-22 10:44:46] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 79 tests in 7.490338ms. All tests were successful.
+
+PASS pinned upstream tests (-o:speed)
+{
+  "schema_version": 1,
+  "run_at_utc": "2026-09-22T10:45:16.545811+00:00",
+  "source_sha256": {
+    "internal/durability_probe/main.odin": "3552d58be5624c54e6dce48bf4c61de37f7d969276cc4d77ea5afda8509ff778",
+    "src/durable/codec.odin": "1a98c7f0cbbcc42ae3d4bbc0fe49a68b1291bd938485ca53754fa40b1e833668",
+    "src/durable/host.odin": "eea0ee3d5ebdb67aae7d028821fd65da7c7b3af118dc5f0e4c02015ec207dc56",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "ea1257e8f2038f667baab4bd2d7c2502011ace26f10fdd5eae0dfa2b6955904c",
+    "src/durable/storage.odin": "53ba8332e5c52e03cf8e50503b88c3c572d8f95c8ca70d437594b1aa8eb3c81c",
+    "src/engine.odin": "017d57a55e833823ffd65ec299eec0096204107a41105ab7b346e3b4012a76f0",
+    "src/engine_dml.odin": "e57176f91d72837f1c5811eb332c4b5b2f998382ecf224f07b498dcf63dea5b3",
+    "src/errors.odin": "6a757bae504e82a8636a34a52baf29b03dccab5ee9f0028da78c66235f5d5d3c",
+    "src/mutation.odin": "4060ea874276995ace4d56af81d729c42b91e7c0214ac72c723018c99bdbd9fc",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "4c7a413dbe2d3e1682066b04625f5e4857e1bc4de1756808d31c469ebaa06952",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f"
+  },
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "scope": "process crash; not physical power-loss certification",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "case": "before",
+      "passed": true,
+      "verification": "verified rows=0 applied=1"
+    },
+    {
+      "case": "journal",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "application",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "ack",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "three_voters_killed_at_ack",
+      "passed": true,
+      "verification": "verified three voters: all 80 acknowledged writes survived"
+    }
+  ]
+}
+PASS compile-fail zero_window
+PASS compile-fail zero_chunk
+PASS compile-fail window_not_power_of_two
+PASS compile-fail chunk_exceeds_window
+PASS compile-fail zero_members
+PASS compile-fail too_many_members
+PASS durability messages_before_confirm -debug
+PASS durability reset_before_confirm -debug
+PASS durability correct_order -debug
+PASS durability zero_value_is_ready -debug
+PASS durability messages_before_confirm -o:speed
+PASS durability reset_before_confirm -o:speed
+PASS durability correct_order -o:speed
+PASS durability zero_value_is_ready -o:speed
+PASS 30 simulations across 1, 3, and 5 nodes (150000 fault steps)
+=================================================================
+  SQLODIN MULTI-MASTER REPLICATION DEMO
+=================================================================
+Active nodes: 3 (Decentralized Multi-Master)
+Consensus: Rotating Slot Ownership (in-process demonstration)
+
+-> Node 1 inserts document into FTS5 index (Slot 1)...
+-> Node 2 inserts document into FTS5 index (Slot 2)...
+-> Node 3 inserts embedding into vec0 index (Slot 3)...
+
+All 3 slots committed across quorum without remote leader hops!
+
+[Node 3] Full-Text Search for 'consensus':
+  Found 1 matching document(s).
+
+[Node 1] Vector Similarity Search (KNN float[4]):
+  Found 1 nearest vector match(es).
+
+[Node 2] Read-Your-Writes Watermark Read (Watermark Slot 2):
+  Consistent read satisfied at watermark: 2 row(s).
+
+=================================================================
+  DEMO COMPLETE: Deterministic convergence verified.
+=================================================================
+PASS multi-master vector/FTS search example
+PASS benchmark smoke and six JSON profiles
+PASS CLI propagates subprocess failure with recovery hint
+All SQLodin checks passed.

@@ -1,0 +1,76 @@
+{
+  "complete": true,
+  "run_at_utc": "2026-09-22T14:32:29.683770+00:00",
+  "scope": "one machine, three separate voter processes/directories; FULL durability; framed JSON/base64 pipe transport via parallel controller; local snapshot reads; bounded workload/fault test, not service capacity or power-loss qualification",
+  "source_sha256": {
+    "internal/process_probe/main.odin": "297c06e82bcbedd381500d517c40cb2074de87765fb12986e0d7ca8511a21c22",
+    "internal/process_probe/wire.odin": "228bf1a752aae59c40253cb36b58cdce9d774883b4a9cadd93bea0c24df8399d",
+    "src/durable/batch.odin": "5c8a8db3d08f5dbe86203f4088f72d5187e5637abeae71e0534869354ed5fa16",
+    "src/durable/codec.odin": "e7870af334b1f47177e968a82e11239caf7cd228ea9389ef888c45333979f825",
+    "src/durable/host.odin": "9f7b631831985357a0e7b4ce3adaaaeefc93ba58db45a8a1d50cf81adf58517d",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "4ac84c3a38542c601b2259a0e91a412fec6d227525a7f0f2e265bfdf4ae60415",
+    "src/durable/storage.odin": "b851f0ec89f06800bd77811711a7073ce0699f830a325d8f74a849837a0dbbe9",
+    "src/engine.odin": "5218d6063c1204cc2fdb25752e42c6cd7400ab75f31ca142296a83c3f6a3fcb4",
+    "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+    "src/engine_errors.odin": "73a539f9d968d44a128c46c1457fab4bc71ecc831ef7c10ccaadc51f2ae4f679",
+    "src/engine_limits.odin": "e37fd3596c0e066c07e0d2402cbdb96f773ea4ae902f3f9a23c1c113ec374986",
+    "src/engine_outcomes.odin": "96b094e49e0ddd7ff521915c83b661869c2e18211f594a519c26bb8701020443",
+    "src/engine_policy.odin": "da8ee491ab7359604be64845c4b4f100b3b0cb955862573244b04d580549b2c8",
+    "src/engine_reader.odin": "9220a1b3d54443d9437e7d4cd209a46311692b97ea451abd5de62cad28256440",
+    "src/engine_sessions.odin": "5cff7779c72c09614ff969151922af96d0f0916ed3257ee407c152ef3f03f40e",
+    "src/errors.odin": "6a757bae504e82a8636a34a52baf29b03dccab5ee9f0028da78c66235f5d5d3c",
+    "src/mutation.odin": "1e1e5a5c52658f6899fcedfdefa32d55362336842caf3cccecf0425dbed5d635",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "fb2acffa4e174ddb2a64b5df19c5ce10dc7c36e2e0a3989b591002125a884152",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "0b4475c7a88fcddde46cdb1af73c1417f9096f58979b3974d313c1f115e9193a",
+    "tools/check_process_cluster.py": "fb881d41c2fad7d21efe318d5c2b8eead6bb5e305ea387d649af68496f384807"
+  },
+  "seed": 20260922,
+  "sample": {
+    "operations": 240,
+    "reads": 166,
+    "writes": 74,
+    "seconds": 0.2392211016267538,
+    "operations_per_second": 1003.2559768680502,
+    "write_latency_ms": {
+      "p50": 6.542222574353218,
+      "p95": 12.853533029556274,
+      "p99": 20.93595266342163
+    },
+    "verified_transfers_including_fault_phases": 96,
+    "peak_rss_bytes_per_voter": [
+      10002432,
+      10121216,
+      10657792
+    ],
+    "checks": [
+      "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+      "all_processes_sigkill_uncertain_retry_other_master",
+      "acknowledged_retry_other_master_after_restart",
+      "minority_no_ack_heal_retry",
+      "surviving_quorum_writes_offline_voter_catchup",
+      "all_acknowledged_transactions_survive_final_sigkill"
+    ]
+  },
+  "worker_pids": [
+    177422,
+    177423,
+    177424,
+    177428,
+    177429,
+    177430,
+    177431,
+    177432,
+    177433,
+    177434
+  ],
+  "storage_correction": {
+    "filesystem": "tmpfs",
+    "path": "/tmp",
+    "scope": "Process-crash correctness only. Timing is not persistent-disk benchmark evidence.",
+    "discovered_utc": "2026-09-22T14:36:00Z"
+  }
+}

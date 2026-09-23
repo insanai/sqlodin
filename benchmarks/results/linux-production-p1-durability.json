@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "run_at_utc": "2026-09-22T13:47:48.266287+00:00",
+  "source_sha256": {
+    "internal/durability_probe/main.odin": "4348c16ca903fdb3919d4cd4a8c6dfbff8f575b5288941a6b6add29b0b1b5402",
+    "internal/durability_probe/transaction.odin": "8cf55d4659a5f43d8943feb5f656823aea5332a1655375d7a57201beac8cd65c",
+    "src/durable/batch.odin": "5c8a8db3d08f5dbe86203f4088f72d5187e5637abeae71e0534869354ed5fa16",
+    "src/durable/codec.odin": "e7870af334b1f47177e968a82e11239caf7cd228ea9389ef888c45333979f825",
+    "src/durable/host.odin": "cc623b30f1d8eb09cb1a09ca7fcc24468c9dafb16a7379c6c93a167193f61567",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "4ac84c3a38542c601b2259a0e91a412fec6d227525a7f0f2e265bfdf4ae60415",
+    "src/durable/storage.odin": "40661b7c07d0f6069cf1d9ea7dfe9803e00d6f21b9cdd5cac08ab59223c7e5b3",
+    "src/engine.odin": "de3eaa560e4c396844a7537d04024fdff9f221877bd5d83704d5769ba74e7500",
+    "src/engine_dml.odin": "d79af3b5b79f2799a146318e03c93064e98db10a0b3f1916bd06287ff90d6bc9",
+    "src/engine_outcomes.odin": "41ff2a7c4cf6dc77ccbb3d6a1131912133bcdf97631ae4d085632fe78b4af7e3",
+    "src/engine_policy.odin": "dc922569ef2935ccb7df9c7220cc9cfcefbf68ede1aab5dfa862a979fc8f935b",
+    "src/engine_reader.odin": "9220a1b3d54443d9437e7d4cd209a46311692b97ea451abd5de62cad28256440",
+    "src/engine_sessions.odin": "5cff7779c72c09614ff969151922af96d0f0916ed3257ee407c152ef3f03f40e",
+    "src/errors.odin": "6a757bae504e82a8636a34a52baf29b03dccab5ee9f0028da78c66235f5d5d3c",
+    "src/mutation.odin": "1e1e5a5c52658f6899fcedfdefa32d55362336842caf3cccecf0425dbed5d635",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "9107df0ea9717e034c4d2e10d5f532a2221cdc4d3865c152f1a0043fafab08b1",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "0b4475c7a88fcddde46cdb1af73c1417f9096f58979b3974d313c1f115e9193a"
+  },
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "scope": "process crash; not physical power-loss certification",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "case": "before",
+      "passed": true,
+      "verification": "verified rows=0 applied=1"
+    },
+    {
+      "case": "journal",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "application",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "ack",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "three_voters_killed_at_ack",
+      "passed": true,
+      "verification": "verified three voters: all 80 acknowledged writes survived"
+    },
+    {
+      "case": "transaction-before",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-journal",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-application",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-ack",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-before",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-journal",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-application",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-ack",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    }
+  ]
+}

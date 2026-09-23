@@ -1,0 +1,134 @@
+{
+  "complete": true,
+  "passed": true,
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "remote_root": "/home/insan/projects/sqlodin/network-service/20260922T234903Z",
+  "scope": "three Linux instances; direct native mTLS consensus and SQL; fixed membership",
+  "binary_sha256": "a0032806358d4826dcb79e61519630dbf6f830c3ee6c8b81238f0848b35d1a93",
+  "checks": [
+    {
+      "name": "native_cluster_schema",
+      "passed": true
+    },
+    {
+      "name": "write_any_node_fenced_rows",
+      "passed": true
+    },
+    {
+      "name": "typed_parameters_and_results",
+      "passed": true
+    },
+    {
+      "name": "atomic_batch_rollback_and_next_sequence",
+      "passed": true
+    },
+    {
+      "name": "readonly_policy_and_result_limit",
+      "passed": true
+    },
+    {
+      "name": "untrusted_unlisted_and_peer_as_client_rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed_frames_close_only_offending_connection",
+      "passed": true
+    },
+    {
+      "name": "six_concurrent_sessions_mixed_writes_and_fenced_reads",
+      "passed": true
+    },
+    {
+      "name": "cross_master_durable_deduplication",
+      "passed": true
+    },
+    {
+      "name": "minority_no_ack_and_explicit_stale_read",
+      "passed": true
+    },
+    {
+      "name": "recover_uncertain_write_after_quorum_restored",
+      "passed": true
+    },
+    {
+      "name": "all_process_sigkill_reopen_fenced_convergence",
+      "passed": true
+    },
+    {
+      "name": "pinned_sqlite_fts_and_vector_versions",
+      "passed": true
+    },
+    {
+      "name": "atomic_search_index_fts_vector_and_single_snapshot_hybrid",
+      "passed": true
+    },
+    {
+      "name": "search_update_delete_and_cross_master_vector_retry",
+      "passed": true
+    },
+    {
+      "name": "fts_and_content_rollback_and_policy_boundary",
+      "passed": true
+    },
+    {
+      "name": "384_dimension_typed_binding_blob_roundtrip",
+      "passed": true
+    },
+    {
+      "name": "sqlalchemy_core_typed_vectors_fts_and_atomic_executemany",
+      "passed": true
+    },
+    {
+      "name": "search_and_sqlalchemy_all_voter_crash_recovery",
+      "passed": true
+    }
+  ],
+  "python_features": true,
+  "source_sha256": {
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_network_hosts.py": "4cf1888ff259ca1499a34553deb28c2b252463228e9ec7f1d3d4e83fcd9aba30",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_network_service.py": "10d2c98b792325183a767a69b7a15647aa546be4725f464d532a0f97c4ecf8e3",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_python_features.py": "eeca0e5d8d8d48b1fe6fa22b45d461cacebca8a746ec51c20af67c3727a516b4"
+  },
+  "filesystem": [
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy01[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    },
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy02[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    },
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy03[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    }
+  ],
+  "logs": {
+    "node1.log": "SQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\n",
+    "node2.log": "SQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\n",
+    "node3.log": "SQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\n"
+  },
+  "ended_utc": "2026-09-22T23:49:36.145366+00:00"
+}

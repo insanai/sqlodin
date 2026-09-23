@@ -1,0 +1,507 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "started_utc": "2026-09-22T16:06:06.510970+00:00",
+  "scope": "instrumented diagnostic, 256-byte insert rows; all fsync/fdatasync calls forwarded unchanged; timed region excludes setup, warmup, verification and close; SQLite batch-32 changes transaction granularity and is only an amortization reference; all replicas execute serially in one process; no maximum-throughput or mixed-SQL claim",
+  "host": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "rows": 480,
+  "warmup_rows": 96,
+  "repeats": 3,
+  "journal_group_commit": true,
+  "native": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "durability_report": "benchmarks/results/linux-journal-final-durability.json",
+  "durability_report_sha256": "f5184a1571e1f6fcb4da584a6f8eb2e0966eb6dd4dc084d267b42949a10d94be",
+  "filesystem": "SOURCE                          FSTYPE OPTIONS\nlocal/containers/agy01[/rootfs] zfs    rw,relatime,idmapped,xattr,posixacl,casesensitive\n",
+  "paxos_pin": "a3e1fd78ec8f0429e5024710189ef77fc31961af",
+  "run_directory": "/home/insan/projects/sqlodin/build/durability-cost/20260922-160606",
+  "samples": [
+    {
+      "mode": "sqlite_full_32",
+      "rows": 480,
+      "rows_per_transaction": 32,
+      "proposal_batch": 1,
+      "seconds": 0.09874294,
+      "rows_per_second": 4861.107032057178,
+      "sync": {
+        "calls": 15,
+        "nanos": 89033705,
+        "writes": 152,
+        "bytes": 313120,
+        "write_nanos": 4099525
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "durable_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 25.763523325,
+      "rows_per_second": 18.630992118000613,
+      "sync": {
+        "calls": 4365,
+        "nanos": 23609977082,
+        "writes": 28637,
+        "bytes": 60309632,
+        "write_nanos": 852053230
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "durable_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 5.947692823,
+      "rows_per_second": 80.70356258881058,
+      "sync": {
+        "calls": 972,
+        "nanos": 5384406081,
+        "writes": 7494,
+        "bytes": 15873376,
+        "write_nanos": 200765927
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "transaction_3_batch16",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 16,
+      "seconds": 1.950260908,
+      "rows_per_second": 246.12091542779362,
+      "sync": {
+        "calls": 290,
+        "nanos": 1502034992,
+        "writes": 4670,
+        "bytes": 9620200,
+        "write_nanos": 78524633
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "transaction_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 14.185836427,
+      "rows_per_second": 33.83656666775127,
+      "sync": {
+        "calls": 2590,
+        "nanos": 12528584015,
+        "writes": 20700,
+        "bytes": 43904400,
+        "write_nanos": 556275725
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "transaction_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 5.157968855,
+      "rows_per_second": 93.05988723346023,
+      "sync": {
+        "calls": 975,
+        "nanos": 4494749338,
+        "writes": 8911,
+        "bytes": 18896240,
+        "write_nanos": 223986110
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "sqlite_full_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 2.331600106,
+      "rows_per_second": 205.86720628670278,
+      "sync": {
+        "calls": 480,
+        "nanos": 2212626543,
+        "writes": 1088,
+        "bytes": 2241280,
+        "write_nanos": 53089863
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "transaction_1_batch16",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 16,
+      "seconds": 0.413116883,
+      "rows_per_second": 1161.8987742991856,
+      "sync": {
+        "calls": 60,
+        "nanos": 275528716,
+        "writes": 1212,
+        "bytes": 2496720,
+        "write_nanos": 18906422
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "sqlite_full_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 2.327347717,
+      "rows_per_second": 206.2433543960204,
+      "sync": {
+        "calls": 480,
+        "nanos": 2205039592,
+        "writes": 1088,
+        "bytes": 2241280,
+        "write_nanos": 52853149
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "transaction_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 5.236282378,
+      "rows_per_second": 91.66808918035015,
+      "sync": {
+        "calls": 975,
+        "nanos": 4583746162,
+        "writes": 8911,
+        "bytes": 18896240,
+        "write_nanos": 221712963
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "durable_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 22.66999449,
+      "rows_per_second": 21.173362005523803,
+      "sync": {
+        "calls": 4365,
+        "nanos": 20523119458,
+        "writes": 28637,
+        "bytes": 60309632,
+        "write_nanos": 855273187
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "transaction_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 13.570063895,
+      "rows_per_second": 35.37197788559123,
+      "sync": {
+        "calls": 2590,
+        "nanos": 11959147436,
+        "writes": 20700,
+        "bytes": 43904400,
+        "write_nanos": 545906143
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "transaction_3_batch16",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 16,
+      "seconds": 1.7703487789999999,
+      "rows_per_second": 271.1330138409975,
+      "sync": {
+        "calls": 290,
+        "nanos": 1325098955,
+        "writes": 4670,
+        "bytes": 9620200,
+        "write_nanos": 74177182
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "durable_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 5.054009756,
+      "rows_per_second": 94.97409446631072,
+      "sync": {
+        "calls": 972,
+        "nanos": 4475439744,
+        "writes": 7494,
+        "bytes": 15873376,
+        "write_nanos": 205595823
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "sqlite_full_32",
+      "rows": 480,
+      "rows_per_transaction": 32,
+      "proposal_batch": 1,
+      "seconds": 0.086299774,
+      "rows_per_second": 5562.007613136971,
+      "sync": {
+        "calls": 15,
+        "nanos": 76415991,
+        "writes": 152,
+        "bytes": 313120,
+        "write_nanos": 4661248
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "transaction_1_batch16",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 16,
+      "seconds": 0.404293922,
+      "rows_per_second": 1187.2550485683532,
+      "sync": {
+        "calls": 60,
+        "nanos": 270830397,
+        "writes": 1212,
+        "bytes": 2496720,
+        "write_nanos": 19750707
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "durable_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 22.747990509,
+      "rows_per_second": 21.100764914162113,
+      "sync": {
+        "calls": 4365,
+        "nanos": 20600993055,
+        "writes": 28637,
+        "bytes": 60309632,
+        "write_nanos": 850421452
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "transaction_3_batch16",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 16,
+      "seconds": 1.919102179,
+      "rows_per_second": 250.11695846758766,
+      "sync": {
+        "calls": 290,
+        "nanos": 1472123006,
+        "writes": 4670,
+        "bytes": 9620200,
+        "write_nanos": 77355421
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "durable_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 5.625584291,
+      "rows_per_second": 85.32447034309311,
+      "sync": {
+        "calls": 972,
+        "nanos": 5071866421,
+        "writes": 7494,
+        "bytes": 15873376,
+        "write_nanos": 199945126
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "sqlite_full_32",
+      "rows": 480,
+      "rows_per_transaction": 32,
+      "proposal_batch": 1,
+      "seconds": 0.080292008,
+      "rows_per_second": 5978.179048654506,
+      "sync": {
+        "calls": 15,
+        "nanos": 70489667,
+        "writes": 152,
+        "bytes": 313120,
+        "write_nanos": 4330239
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "transaction_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 5.136663035,
+      "rows_per_second": 93.44588047325554,
+      "sync": {
+        "calls": 975,
+        "nanos": 4469726983,
+        "writes": 8911,
+        "bytes": 18896240,
+        "write_nanos": 220962910
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "transaction_1_batch16",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 16,
+      "seconds": 0.403596514,
+      "rows_per_second": 1189.3066053588361,
+      "sync": {
+        "calls": 60,
+        "nanos": 271433901,
+        "writes": 1212,
+        "bytes": 2496720,
+        "write_nanos": 18059380
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "transaction_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 13.597232643,
+      "rows_per_second": 35.30130083102675,
+      "sync": {
+        "calls": 2590,
+        "nanos": 11962498723,
+        "writes": 20700,
+        "bytes": 43904400,
+        "write_nanos": 555777246
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "sqlite_full_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "proposal_batch": 1,
+      "seconds": 2.330340177,
+      "rows_per_second": 205.97851109357583,
+      "sync": {
+        "calls": 480,
+        "nanos": 2214892395,
+        "writes": 1088,
+        "bytes": 2241280,
+        "write_nanos": 51192519
+      },
+      "verified": true,
+      "repeat": 3
+    }
+  ],
+  "source_sha256": {
+    "bench/durability_cost/main.odin": "e300a539c04049a0f0ebd2ec9e1a7ac6bd62a39b40b5b39de75ee48fa2b660a0",
+    "bench/durability_cost/sync_profile.c": "5f28c360a24ac5dea410eddf0a126ae8e249713cbec1235f12769ffb863cf235",
+    "bench/durability_cost/transaction.odin": "af771473d34d6f437a323f835b43e459a955ecf4b2aa339f663060a59f8ad874",
+    "src/durable/batch.odin": "79ad08b40fde740a8fb67ea6938d0bcc6ca4936506765c8e460143789eb1b04c",
+    "src/durable/codec.odin": "8252dafef72a2460ec01f5023fe7a9e6f4f4693946097e2c320c9be11a0b6654",
+    "src/durable/host.odin": "6f8cb285a746e903df63bda5a3255a97c8882bd716d99a63a79444faca0246db",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "aa970e1d220622ac8b4e1b0c61e8d414a9987eec2a18bbba23a2a32059698b42",
+    "src/durable/packing.odin": "43b6463698a49cfeb78f01fe730daf595c67caa9bbef20d52a2f8d6c3508c4ba",
+    "src/durable/reads.odin": "ba9fe24170ccd4c45829091e003f4d7c138d3c681ecceae5b1d2e6f4ebd6f7e6",
+    "src/durable/storage.odin": "e1124440683e725a3a0c3bdb667bc96451caa7a42da0ac219eeb6cc9776c0858",
+    "src/durable/transition_group.odin": "e50e3199a5d33aac2bb16294791701e1f8debbb18dbe684fd642a03676d5aeb4",
+    "src/engine.odin": "68acc036cb6934f25ed8a01ca83e1562341d599d24668d43f3ede3cc14b62825",
+    "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+    "src/engine_outcomes.odin": "ffea59aa2c49b48698ad0373d1581128ca012ac7ea71d2b5147c95b75ed33550",
+    "src/engine_policy.odin": "f70c25c75cd505bfc8962bb868c92a0e59100d8ff6f1ff04d2fc05332d67bbce",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_sessions.odin": "ae0719387678c5ff38e9c01b684e3c9aa453764748fd86dc2b48148a36972edb",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "1e1e5a5c52658f6899fcedfdefa32d55362336842caf3cccecf0425dbed5d635",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "344c301ddde7c98d885bf82c18c1c2fcf0fd40dea56247c8a1ef6cee9b006fbd",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "0b4475c7a88fcddde46cdb1af73c1417f9096f58979b3974d313c1f115e9193a",
+    "tools/profile_durability_cost.py": "0d953bde749fbed2a649aaff3a30a8c3bbc6c9f1d160dc026f0213e5dc119982"
+  },
+  "binary_sha256": {
+    "probe": "17d31d3c55ff9c14edc116818e05c34acdd05c6520203bec267dff3ec00948eb",
+    "libsync_profile.so": "14372b25b4068068eaaf62c05d0d24873a95413b811c83b2391d15b9b23a1841"
+  },
+  "finished_utc": "2026-09-22T16:09:19.682478+00:00"
+}

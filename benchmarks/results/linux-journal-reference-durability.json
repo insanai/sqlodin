@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "run_at_utc": "2026-09-22T16:12:47.953002+00:00",
+  "journal_group_commit": false,
+  "source_sha256": {
+    "internal/durability_probe/group.odin": "3a99caf3a8e0fb95acebc45f7decad4c6a8acffc99e354599709fb6a574461ae",
+    "internal/durability_probe/journal_group.odin": "95968c2783426d1a08fd73f86c7806eea6659a3ea500af6b3bc9a99e7dea20e9",
+    "internal/durability_probe/main.odin": "fb7f35bda8bc1fb2da70bfb76c07ec8d21df2c498ed8887b4a91ffa3f1428f48",
+    "internal/durability_probe/transaction.odin": "8cf55d4659a5f43d8943feb5f656823aea5332a1655375d7a57201beac8cd65c",
+    "src/durable/batch.odin": "79ad08b40fde740a8fb67ea6938d0bcc6ca4936506765c8e460143789eb1b04c",
+    "src/durable/codec.odin": "8252dafef72a2460ec01f5023fe7a9e6f4f4693946097e2c320c9be11a0b6654",
+    "src/durable/host.odin": "6f8cb285a746e903df63bda5a3255a97c8882bd716d99a63a79444faca0246db",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "aa970e1d220622ac8b4e1b0c61e8d414a9987eec2a18bbba23a2a32059698b42",
+    "src/durable/packing.odin": "43b6463698a49cfeb78f01fe730daf595c67caa9bbef20d52a2f8d6c3508c4ba",
+    "src/durable/reads.odin": "ba9fe24170ccd4c45829091e003f4d7c138d3c681ecceae5b1d2e6f4ebd6f7e6",
+    "src/durable/storage.odin": "e1124440683e725a3a0c3bdb667bc96451caa7a42da0ac219eeb6cc9776c0858",
+    "src/durable/transition_group.odin": "e50e3199a5d33aac2bb16294791701e1f8debbb18dbe684fd642a03676d5aeb4",
+    "src/engine.odin": "68acc036cb6934f25ed8a01ca83e1562341d599d24668d43f3ede3cc14b62825",
+    "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+    "src/engine_outcomes.odin": "ffea59aa2c49b48698ad0373d1581128ca012ac7ea71d2b5147c95b75ed33550",
+    "src/engine_policy.odin": "f70c25c75cd505bfc8962bb868c92a0e59100d8ff6f1ff04d2fc05332d67bbce",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_sessions.odin": "ae0719387678c5ff38e9c01b684e3c9aa453764748fd86dc2b48148a36972edb",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "1e1e5a5c52658f6899fcedfdefa32d55362336842caf3cccecf0425dbed5d635",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "344c301ddde7c98d885bf82c18c1c2fcf0fd40dea56247c8a1ef6cee9b006fbd",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "0b4475c7a88fcddde46cdb1af73c1417f9096f58979b3974d313c1f115e9193a"
+  },
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "scope": "process crash; not physical power-loss certification",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "fstype": "zfs",
+        "source": "local/containers/agy01[/rootfs]",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "case": "before",
+      "passed": true,
+      "verification": "verified rows=0 applied=1"
+    },
+    {
+      "case": "journal",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "application",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "ack",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "three_voters_killed_at_ack",
+      "passed": true,
+      "verification": "verified three voters: all 80 acknowledged writes survived"
+    },
+    {
+      "case": "transaction-before",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-journal",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-application",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-ack",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-before",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-journal",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-application",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-ack",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "application-group-before",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-journal",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-sql",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-application",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-ack",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "journal-group-before",
+      "passed": true,
+      "verification": "verified promise and 0 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-journal",
+      "passed": true,
+      "verification": "verified promise and 0 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-application",
+      "passed": true,
+      "verification": "verified promise and 0 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-ack",
+      "passed": true,
+      "verification": "verified promise and 15 votes; no unchosen SQL applied"
+    }
+  ]
+}

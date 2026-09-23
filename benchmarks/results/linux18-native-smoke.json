@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "started_utc": "2026-09-23T00:42:53.899565+00:00",
+  "host": "paxos-zig",
+  "host_address": "10.175.52.18",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           48 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  32\nOn-line CPU(s) list:                     0-31\nVendor ID:                               AuthenticAMD\nModel name:                              AMD Ryzen 9 5950X 16-Core Processor\nCPU family:                              25\nModel:                                   33\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               1\nStepping:                                0\nFrequency boost:                         enabled\nCPU(s) scaling MHz:                      50%\nCPU max MHz:                             5086.1812\nCPU min MHz:                             582.1540\nBogoMIPS:                                6800.71\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk clzero irperf xsaveerptr rdpru wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip pku ospke vaes vpclmulqdq rdpid overflow_recov succor smca fsrm debug_swap\nL1d cache:                               512 KiB (16 instances)\nL1i cache:                               512 KiB (16 instances)\nL2 cache:                                8 MiB (16 instances)\nL3 cache:                                64 MiB (2 instances)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-31\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Mitigation; Safe RET\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Mitigation; Clear CPU buffers\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Mitigation; IBPB before exit to userspace\n",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "run_directory": "/home/insan/projects/sqlodin/build/native-comparison-runs/20260923-004253",
+  "workload": {
+    "operations": 40,
+    "warmup": 10,
+    "concurrency": 4,
+    "repeats": 1,
+    "read_percent": 70,
+    "write_percent": 30
+  },
+  "realworld": [
+    {
+      "system": "sqlodin",
+      "nodes": 3,
+      "initial_startup_ms": 151.98668465018272,
+      "schema_and_seed_ms": 10918.089559301734,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 40,
+          "reads": 30,
+          "writes": 10,
+          "concurrency": 4,
+          "seconds": 2.2169830380007625,
+          "operations_per_second": 18.042537680428676,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 149.1814674809575,
+          "latency_ms": {
+            "all": {
+              "p50": 154.26697209477425,
+              "p95": 334.72475688904524,
+              "p99": 351.34070459753275,
+              "max": 351.34070459753275
+            },
+            "reads": {
+              "p50": 145.721519831568,
+              "p95": 334.72475688904524,
+              "p99": 346.7901889234781,
+              "max": 346.7901889234781
+            },
+            "writes": {
+              "p50": 184.16730081662536,
+              "p95": 351.34070459753275,
+              "p99": 351.34070459753275,
+              "max": 351.34070459753275
+            }
+          }
+        },
+        {
+          "name": "one_voter_crashed",
+          "operations": 40,
+          "reads": 30,
+          "writes": 10,
+          "concurrency": 4,
+          "seconds": 9.030658415518701,
+          "operations_per_second": 4.42935588519904,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 810.9697382897139,
+          "latency_ms": {
+            "all": {
+              "p50": 870.2354137785733,
+              "p95": 1159.060356207192,
+              "p99": 2033.3298770710826,
+              "max": 2033.3298770710826
+            },
+            "reads": {
+              "p50": 879.2591569945216,
+              "p95": 1904.908625409007,
+              "p99": 2033.3298770710826,
+              "max": 2033.3298770710826
+            },
+            "writes": {
+              "p50": 854.5373529195786,
+              "p95": 1018.4867139905691,
+              "p99": 1018.4867139905691,
+              "max": 1018.4867139905691
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 2273.368090391159,
+          "caught_up_state": {
+            "2": [
+              23,
+              23,
+              23,
+              23,
+              53,
+              339929,
+              0
+            ]
+          }
+        },
+        {
+          "name": "entry_voter_crashed",
+          "operations": 40,
+          "reads": 26,
+          "writes": 14,
+          "concurrency": 4,
+          "seconds": 9.526894207112491,
+          "operations_per_second": 4.198640095125357,
+          "retry_attempts": 2,
+          "time_to_first_success_ms": 56.98691122233868,
+          "latency_ms": {
+            "all": {
+              "p50": 814.2276895232499,
+              "p95": 1838.7209251523018,
+              "p99": 1878.3413656055927,
+              "max": 1878.3413656055927
+            },
+            "reads": {
+              "p50": 1005.9417048469186,
+              "p95": 1869.7636909782887,
+              "p99": 1878.3413656055927,
+              "max": 1878.3413656055927
+            },
+            "writes": {
+              "p50": 238.6003341525793,
+              "p95": 897.4716737866402,
+              "p99": 897.4716737866402,
+              "max": 897.4716737866402
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 4141.8146239593625,
+          "caught_up_state": {
+            "1": [
+              37,
+              37,
+              37,
+              37,
+              83,
+              481766,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 89.67889007180929,
+        "state": {
+          "1": [
+            37,
+            37,
+            37,
+            37,
+            83,
+            481766,
+            0
+          ],
+          "2": [
+            37,
+            37,
+            37,
+            37,
+            83,
+            481766,
+            0
+          ],
+          "3": [
+            37,
+            37,
+            37,
+            37,
+            83,
+            481766,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 37,
+          "order_lines": 37,
+          "ledger_entries": 37,
+          "distinct_operations": 37,
+          "units_sold": 83,
+          "revenue_cents": 481766,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            37,
+            37,
+            37,
+            37,
+            83,
+            481766,
+            0
+          ],
+          "2": [
+            37,
+            37,
+            37,
+            37,
+            83,
+            481766,
+            0
+          ],
+          "3": [
+            37,
+            37,
+            37,
+            37,
+            83,
+            481766,
+            0
+          ]
+        },
+        "integrity": {
+          "1": "ok",
+          "2": "ok",
+          "3": "ok"
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 2.62,
+        "sampled_peak_aggregate_rss_bytes": 34025472,
+        "whole_lifecycle_seconds": 41.18680556677282,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 14392024,
+        "allocated_bytes": 2064896,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "three native mTLS processes; fresh quorum-barrier reads; writes admitted at all voters",
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "repeat": 0
+    }
+  ],
+  "sequential_writes": [
+    {
+      "system": "sqlodin",
+      "operations": 40,
+      "operations_per_second": 9.504402991695672,
+      "latency_ms": {
+        "p50": 109.75477425381541,
+        "p95": 125.74166990816593,
+        "p99": 126.19808688759804,
+        "max": 126.19808688759804
+      },
+      "restart_verified": true,
+      "boundary": "native mTLS, sequential durable 256-byte inserts",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 0.71,
+        "sampled_peak_aggregate_rss_bytes": 28667904,
+        "whole_lifecycle_seconds": 7.82175515498966,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 12839400,
+        "allocated_bytes": 756736,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "repeat": 0
+    }
+  ],
+  "sqlodin_build": {
+    "complete": true,
+    "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e",
+    "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+    "linkage": "\nDynamic section at offset 0x8c47f0 contains 30 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-x86-64.so.2]\n 0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN]\n 0x000000000000000c (INIT)               0xb3000\n 0x000000000000000d (FINI)               0x6a6940\n 0x0000000000000019 (INIT_ARRAY)         0x840ed0\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x840ed8\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x3e8\n 0x0000000000000005 (STRTAB)             0x15e8\n 0x0000000000000006 (SYMTAB)             0x4a8\n 0x000000000000000a (STRSZ)              2072 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000015 (DEBUG)              0x0\n 0x0000000000000003 (PLTGOT)             0x8c5a10\n 0x0000000000000002 (PLTRELSZ)           3120 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0xb20f8\n 0x0000000000000007 (RELA)               0x20a0\n 0x0000000000000008 (RELASZ)             720984 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000000000001e (FLAGS)              BIND_NOW\n 0x000000006ffffffb (FLAGS_1)            Flags: NOW PIE\n 0x000000006ffffffe (VERNEED)            0x1f70\n 0x000000006fffffff (VERNEEDNUM)         3\n 0x000000006ffffff0 (VERSYM)             0x1e00\n 0x000000006ffffff9 (RELACOUNT)          29984\n 0x0000000000000000 (NULL)               0x0\n",
+    "native": {
+      "sqlite": "3.51.3",
+      "sqlite_vec": "0.1.9",
+      "openssl": "3.5.8",
+      "platform": {
+        "system": "Linux",
+        "machine": "x86_64",
+        "compiler": "/usr/bin/cc",
+        "archiver": "/usr/bin/ar",
+        "compiler_version": "cc (Debian 14.2.0-19) 14.2.0",
+        "builder_sha256": "ed2760e611b57d4e09769caa528f882bbd87d6842c6589c66d7b285035777d3f"
+      },
+      "sources": {
+        "sqlite": {
+          "version": "3.51.3",
+          "url": "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+          "files": {
+            "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+            "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+            "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+          }
+        },
+        "vec": {
+          "version": "0.1.9",
+          "url": "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+          "files": {
+            "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+            "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+          }
+        },
+        "openssl": {
+          "version": "3.5.8",
+          "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+          "sha256": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2"
+        }
+      },
+      "sqlite_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-DSQLITE_THREADSAFE=1",
+        "-DSQLITE_OMIT_LOAD_EXTENSION",
+        "-DSQLITE_OMIT_DEPRECATED",
+        "-DSQLITE_DQS=0",
+        "-DSQLITE_ENABLE_FTS5",
+        "-DHAVE_USLEEP=1"
+      ],
+      "vec_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-DSQLITE_CORE",
+        "-DSQLITE_VEC_STATIC",
+        "-DSQLITE_VEC_OMIT_FS"
+      ],
+      "openssl_flags": [
+        "no-shared",
+        "no-dso",
+        "no-module",
+        "no-engine",
+        "no-zlib",
+        "--libdir=lib",
+        "--openssldir=/sqlodin/no-system-openssl"
+      ],
+      "archives_sha256": {
+        "libsqlite3.a": "aac3b0f9cafb856e49bc0fc8f00289e1dd36a596032383028ee9a663559630ae",
+        "libsqlite_vec.a": "64f35312f89c2251bc249b2b2301d7b0c9aba7987e1a7e547008a24c68a576d0",
+        "libssl.a": "d287b4bf68bebb8ea76818c859763eb8ac90f65d5ecf13fc0f253a50405df140",
+        "libcrypto.a": "077bddd675958dc9243a04182c15567afcd2d6b68a565eafa9f940c5543ff665"
+      }
+    },
+    "odin": "odin version dev-2026-09-nightly:a2fb372",
+    "scope": "Native SQLite/FTS5, sqlite-vec and OpenSSL are static; OS runtime may remain dynamic"
+  },
+  "comparison_build": {
+    "pins": {
+      "raft": [
+        "https://github.com/cowsql/raft.git",
+        "v0.22.1",
+        "9edb176a7924ce2b943cb56552366dc4b5a1a6b7"
+      ],
+      "cowsql": [
+        "https://github.com/cowsql/cowsql.git",
+        "v1.15.9",
+        "783815b901470e27b7dfbcce3a67c888dad19e78"
+      ],
+      "go-cowsql": [
+        "https://github.com/cowsql/go-cowsql.git",
+        "v1.22.0",
+        "b0e46059265dcc795d35a15e86f44ee848e25252"
+      ]
+    },
+    "archives": {
+      "go1.24.4.linux-amd64.tar.gz": [
+        "https://go.dev/dl/",
+        "77e5da33bb72aeaef1ba4418b6fe511bc4d041873cbf82e5aa6318740df98717"
+      ],
+      "rqlite-v10.2.7-linux-amd64.tar.gz": [
+        "https://github.com/rqlite/rqlite/releases/download/v10.2.7/",
+        "0b4e8ffbbacc84e421c49915bbd82cc67ac6488e22d4ce58b678fc1219c6a38a"
+      ]
+    },
+    "packages": {
+      "libsqlite3-dev_3.46.1-7+deb13u2_amd64.deb": "56e1945d52292b506c1f0bcb77543fea289ccee857c478dcddded40226e1594d",
+      "autoconf_2.72-3.1_all.deb": "0de76b647b0afb6c7934999aaefeb463656c147672464a367df1019969e77af3",
+      "automake_1%3a1.17-4_all.deb": "8d4b172d4ff8070789c54b48a95585b53e4c65faeb07a2ae52da16cb364df635",
+      "libtool_2.5.4-4_all.deb": "be5361a8c1fce2758c3e19608bf97393d5f3afdb7e926aeb83e2818355bd885f",
+      "pkgconf-bin_1.8.1-4_amd64.deb": "54efef2aef4db5fcb5e0f5b7746465000c6a779b06f3686d0ec3d2a901b20aeb",
+      "autotools-dev_20240727.1_all.deb": "d07d476c1fcd713ed04695f25ac290c3ae2317e6fd974ad6b2168e3be1c795c3",
+      "libsqlite3-0_3.46.1-7+deb13u2_amd64.deb": "0a459adaffd901109f7811ab65f58e7a957b4907d05539cf3d1184efdcde0468",
+      "libltdl-dev_2.5.4-4_amd64.deb": "0f225ed11c06958274e2ff0ea27f283f23aa6cd6a03df04499b467f68fedfed4",
+      "libuv1-dev_1.50.0-2_amd64.deb": "a638490607f08b4369b2515c013ced6b33dabecbf985b0a1629d4ad53ec9c9d2",
+      "m4_1.4.19-8_amd64.deb": "221b3e224708c1da2a1a88b6824380593579b2254ae7d914afa14cbd5d343334",
+      "libpkgconf3_1.8.1-4_amd64.deb": "85087cd04e57fd4ab7d6e816d348c335047823ab60c78878336b74f07b352ca1",
+      "libuv1t64_1.50.0-2_amd64.deb": "5fec8035002e0c745b64d1c5b3e1dc42790d1a77574315b976cf3e4aab9ddc0a",
+      "autoconf-archive_20220903-3_all.deb": "9f13a50fa9038cb4381545b275f7440c0a40d43832046a7e7f515f47a4ecbac8",
+      "pkgconf_1.8.1-4_amd64.deb": "f1fcad470ca3ac80b4a0f4af6f03cd215089473996b07e508b3ee342bbb11af7"
+    },
+    "go": "go version go1.24.4 linux/amd64",
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "raft_configure": [
+      "--without-lz4"
+    ],
+    "cowsql_configure": [
+      "--disable-backtrace"
+    ],
+    "cowsql_demo_sha256": "270eba3d18f7a1f45bd0266aeade26884750e439a55fa8ed56d9fbe30138409e"
+  },
+  "zaxon_release": {
+    "repository": "https://github.com/insanai/zaxonlite",
+    "tag": "v0.7.0",
+    "asset_url": "https://github.com/insanai/zaxonlite/releases/download/v0.7.0/zaxon-0.7.0-x86_64-linux-musl.tar.gz",
+    "archive_sha256": "6e13ea5fe25f41675fea3f4148447555570d8510f0887c454b7e9090676752e4",
+    "binary_sha256": "6a8f7748405f580c28d4c27a69a9c3dbc6d65790ff84ee8addbc99edd65c2da1",
+    "version": "zaxon 0.7.0",
+    "published_checksums": "1dfbd970253f7724f655aa8401542d4bfed426b74d5236a7a4a751b0df1729c0  zaxon-0.7.0-aarch64-linux-musl.tar.gz\n577302dc5ac4a5a8c75e1877e081d28624e40c30fb1bceaa539a09b93aa648d0  zaxon-0.7.0-aarch64-macos.tar.gz\n6e13ea5fe25f41675fea3f4148447555570d8510f0887c454b7e9090676752e4  zaxon-0.7.0-x86_64-linux-musl.tar.gz\nc7f7b7f73c761d70d118e42cd0a7b09e6122c8a500ddeae8342ba3af1ab85818  zaxon-0.7.0-x86_64-macos.tar.gz\nd6e4d0ef78c5e1dc8a8d3fa9e37a2582c9edb1f01a5d8ad2f82bb6bfe4469f7b  zaxon-0.7.0-x86_64-windows-gnu.zip\n115935c40ad759e41db99ad47184f296ec5a8f22713f90acba9d11cacf079a5b  zxlite-0.7.0-cp312-abi3-macosx_10_15_x86_64.whl\nc9a631e109464f6ceb18f69b8c9ac6ca664985ce2102d65a00fd30f8959999cd  zxlite-0.7.0-cp312-abi3-macosx_11_0_arm64.whl\nc3bfd68ec18be20afa09f433920d9a56ca12baf72cf1a3e4eb3d38eeb1bf2084  zxlite-0.7.0-cp312-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl\nad868a00fbb5deb4c9be574d8a94c98830115fd1a0af196c1e0bdbdcbcb07bcc  zxlite-0.7.0-cp312-abi3-win_amd64.whl\n"
+  },
+  "source_sha256": {
+    "tools/compare_native_workloads.py": "da3fa36fa436b24734bb31613ea430917b3ac1d231a47aed6fbebf620576f9eb",
+    "tools/compare_realworld.py": "7a7d7e5ebc2d6a66475a6f4a948ab2118fa148df1f8815e27f25561250795e90",
+    "benchmarks/vendor/zaxonlite/compare-rqlite-realworld-3node.py": "de6f59176811410c3ef0702082d9ecf872b38a9765470b43bba42654d7ed6a61",
+    "benchmarks/vendor/zaxonlite/realworld_workload.py": "fc911c1066a28d4864bb547ac787e5ee189091e03299c785938381bcf3c4ae9a",
+    "benchmarks/vendor/zaxonlite/driver.py": "e49639b870070f24f3abe6bdcf3f5901b7e5eba6ecd76c3f90c27f3f15833dba"
+  },
+  "binaries_sha256": {
+    "sqlodin": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e",
+    "zaxonlite": "6a8f7748405f580c28d4c27a69a9c3dbc6d65790ff84ee8addbc99edd65c2da1",
+    "rqlite": "175ad4a5e75aeb91281e30540ba9505b704ea856fb1d3d8312a60bc7ef4600ce",
+    "cowsql": "270eba3d18f7a1f45bd0266aeade26884750e439a55fa8ed56d9fbe30138409e"
+  },
+  "finished_utc": "2026-09-23T00:43:43.464418+00:00"
+}

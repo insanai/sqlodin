@@ -1,0 +1,16 @@
+{
+  "complete": true,
+  "scope": "native service correctness and Python packaging; not a comparative benchmark or production qualification",
+  "reports": {
+    "local-network-service-final.json": "447f1cf02dc1403c25653e15d4de7083c42df86507030f87f239dba1cdf52a43",
+    "linux-network-service-final.json": "0cc87cb925aea74456a74f5eb6ff7127e1e49a2170bca66f7808ca03ac96bb39",
+    "linux-native-three-host-service.json": "3e39405d9de962fab1a7fa76ee540e9d01779cd2e026e9460e28d6fdf53e24db",
+    "local-mtls-service.json": "b704516dc591c595b31e54ef97d7af7bad0e3f0500e25cf264c8a3b64bdef7d5",
+    "linux-mtls-service.json": "98b7ecfb292d6bc545573f9c61ee3c115b1e51fdba310fe26848d01896a37b17",
+    "local-python-service.json": "11d93d59cb28ed8626061a156a0abd11845d211d2970b6c12143b1e68d93d76e"
+  },
+  "artifacts": {
+    "build/python-dist/sqlodin-0.1.0.tar.gz": "c9d8d2dc8223bc7e6e040bbc6342940d13460caa45fe27d9e06887ba565ad5fa",
+    "build/python-dist/sqlodin-0.1.0-py3-none-any.whl": "d3b5e03ab7160e4cbb6f5779a3f3a8a2739ca97046a80c3f6c89830dcdde323b"
+  }
+}

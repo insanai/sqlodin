@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "run_at_utc": "2026-09-22T10:54:02.081571+00:00",
+  "source_sha256": {
+    "internal/durability_probe/main.odin": "92c5473e84c99c9bd486dd077a9da741b93d77f528f7daba76486130141fad20",
+    "src/durable/codec.odin": "1a98c7f0cbbcc42ae3d4bbc0fe49a68b1291bd938485ca53754fa40b1e833668",
+    "src/durable/host.odin": "eea0ee3d5ebdb67aae7d028821fd65da7c7b3af118dc5f0e4c02015ec207dc56",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "ea1257e8f2038f667baab4bd2d7c2502011ace26f10fdd5eae0dfa2b6955904c",
+    "src/durable/storage.odin": "53ba8332e5c52e03cf8e50503b88c3c572d8f95c8ca70d437594b1aa8eb3c81c",
+    "src/engine.odin": "017d57a55e833823ffd65ec299eec0096204107a41105ab7b346e3b4012a76f0",
+    "src/engine_dml.odin": "e57176f91d72837f1c5811eb332c4b5b2f998382ecf224f07b498dcf63dea5b3",
+    "src/errors.odin": "6a757bae504e82a8636a34a52baf29b03dccab5ee9f0028da78c66235f5d5d3c",
+    "src/mutation.odin": "4060ea874276995ace4d56af81d729c42b91e7c0214ac72c723018c99bdbd9fc",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "4c7a413dbe2d3e1682066b04625f5e4857e1bc4de1756808d31c469ebaa06952",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f"
+  },
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "scope": "process crash; not physical power-loss certification",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "case": "before",
+      "passed": true,
+      "verification": "verified rows=0 applied=1"
+    },
+    {
+      "case": "journal",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "application",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "ack",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "three_voters_killed_at_ack",
+      "passed": true,
+      "verification": "verified three voters: all 80 acknowledged writes survived"
+    }
+  ]
+}

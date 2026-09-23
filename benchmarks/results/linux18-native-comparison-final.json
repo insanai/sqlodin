@@ -1,0 +1,2036 @@
+{
+  "schema_version": 1,
+  "complete": false,
+  "started_utc": "2026-09-23T02:11:36.502006+00:00",
+  "host": "paxos-zig",
+  "host_address": "10.175.52.18",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           48 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  32\nOn-line CPU(s) list:                     0-31\nVendor ID:                               AuthenticAMD\nModel name:                              AMD Ryzen 9 5950X 16-Core Processor\nCPU family:                              25\nModel:                                   33\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               1\nStepping:                                0\nFrequency boost:                         enabled\nCPU(s) scaling MHz:                      52%\nCPU max MHz:                             5086.1812\nCPU min MHz:                             582.1540\nBogoMIPS:                                6800.71\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk clzero irperf xsaveerptr rdpru wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip pku ospke vaes vpclmulqdq rdpid overflow_recov succor smca fsrm debug_swap\nL1d cache:                               512 KiB (16 instances)\nL1i cache:                               512 KiB (16 instances)\nL2 cache:                                8 MiB (16 instances)\nL3 cache:                                64 MiB (2 instances)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-31\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Mitigation; Safe RET\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Mitigation; Clear CPU buffers\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Mitigation; IBPB before exit to userspace\n",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "run_directory": "/home/insan/projects/sqlodin/build/native-comparison-runs/20260923-021136",
+  "workload": {
+    "operations": 400,
+    "warmup": 100,
+    "concurrency": 4,
+    "repeats": 3,
+    "read_percent": 70,
+    "write_percent": 30
+  },
+  "realworld": [
+    {
+      "system": "rqlite",
+      "nodes": 3,
+      "initial_startup_ms": 3210.6582364067435,
+      "schema_and_seed_ms": 230.36704305559397,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 274,
+          "writes": 126,
+          "concurrency": 4,
+          "seconds": 1.6017419714480639,
+          "operations_per_second": 249.72811297338842,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 28.75129133462906,
+          "latency_ms": {
+            "all": {
+              "p50": 10.659533552825451,
+              "p95": 40.28511978685856,
+              "p99": 48.765379935503006,
+              "max": 57.1795217692852
+            },
+            "reads": {
+              "p50": 0.7704696618020535,
+              "p95": 27.253339998424053,
+              "p99": 30.413836240768433,
+              "max": 37.764512933790684
+            },
+            "writes": {
+              "p50": 30.37738660350442,
+              "p95": 47.95277677476406,
+              "p99": 56.974248960614204,
+              "max": 57.1795217692852
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 400,
+          "reads": 266,
+          "writes": 134,
+          "concurrency": 4,
+          "seconds": 1.7087857192382216,
+          "operations_per_second": 234.08435329054623,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 1.0061366483569145,
+          "latency_ms": {
+            "all": {
+              "p50": 12.809967156499624,
+              "p95": 45.49354873597622,
+              "p99": 55.13649061322212,
+              "max": 56.981117464601994
+            },
+            "reads": {
+              "p50": 0.6238198839128017,
+              "p95": 20.725606009364128,
+              "p99": 27.98190526664257,
+              "max": 31.107292510569096
+            },
+            "writes": {
+              "p50": 31.19846386834979,
+              "p95": 49.21216517686844,
+              "p99": 56.516893208026886,
+              "max": 56.981117464601994
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 967.3267910256982,
+          "caught_up_state": {
+            "2": [
+              289,
+              289,
+              289,
+              289,
+              711,
+              3610286,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 400,
+          "reads": 268,
+          "writes": 132,
+          "concurrency": 4,
+          "seconds": 6.472195724025369,
+          "operations_per_second": 61.80282813685072,
+          "retry_attempts": 74,
+          "time_to_first_success_ms": 2764.8170981556177,
+          "latency_ms": {
+            "all": {
+              "p50": 26.17874089628458,
+              "p95": 120.7701712846756,
+              "p99": 154.14287149906158,
+              "max": 2969.919345341623
+            },
+            "reads": {
+              "p50": 0.5720509216189384,
+              "p95": 36.75056714564562,
+              "p99": 53.588190115988255,
+              "max": 2935.6259582564235
+            },
+            "writes": {
+              "p50": 91.10575215891004,
+              "p95": 131.72744121402502,
+              "p99": 2798.0227321386337,
+              "max": 2969.919345341623
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 1418.239981867373,
+          "caught_up_state": {
+            "1": [
+              421,
+              421,
+              421,
+              421,
+              1029,
+              5272307,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 1532.2737079113722,
+        "state": {
+          "1": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "2": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "3": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 421,
+          "order_lines": 421,
+          "ledger_entries": 421,
+          "distinct_operations": 421,
+          "units_sold": 1029,
+          "revenue_cents": 5272307,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "2": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "3": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "sqlite_ok": true
+          },
+          "2": {
+            "sqlite_ok": true
+          },
+          "3": {
+            "sqlite_ok": true
+          }
+        }
+      },
+      "cli_evidence": {
+        "reachable_voters": 3,
+        "evidence_file": "rqlite-cli-final-nodes.txt"
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 1.96,
+        "sampled_peak_aggregate_rss_bytes": 73207808,
+        "whole_lifecycle_seconds": 17.759339365176857,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 52470216,
+        "allocated_bytes": 99840,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite materialization with persistent Raft log and snapshots",
+      "repeat": 0,
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/native-comparison-runs/20260923-020010"
+    },
+    {
+      "system": "sqlodin",
+      "nodes": 3,
+      "initial_startup_ms": 101.12162120640278,
+      "schema_and_seed_ms": 11592.749229632318,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 274,
+          "writes": 126,
+          "concurrency": 4,
+          "seconds": 16.23471311852336,
+          "operations_per_second": 24.638562879414916,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 46.111238189041615,
+          "latency_ms": {
+            "all": {
+              "p50": 109.7339796833694,
+              "p95": 227.96622943133116,
+              "p99": 281.79613314568996,
+              "max": 413.881435059011
+            },
+            "reads": {
+              "p50": 107.95399826020002,
+              "p95": 244.00859978049994,
+              "p99": 283.3386743441224,
+              "max": 413.881435059011
+            },
+            "writes": {
+              "p50": 112.83876188099384,
+              "p95": 185.49625016748905,
+              "p99": 200.58850198984146,
+              "max": 214.41067848354578
+            }
+          }
+        },
+        {
+          "name": "one_voter_crashed",
+          "operations": 400,
+          "reads": 266,
+          "writes": 134,
+          "concurrency": 4,
+          "seconds": 79.18229250516742,
+          "operations_per_second": 5.05163449231905,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 83.46955757588148,
+          "latency_ms": {
+            "all": {
+              "p50": 904.2387115769088,
+              "p95": 1069.501494988799,
+              "p99": 1207.2867611423135,
+              "max": 2047.8761726990342
+            },
+            "reads": {
+              "p50": 965.9610101953149,
+              "p95": 1094.796797260642,
+              "p99": 1901.7892563715577,
+              "max": 2047.8761726990342
+            },
+            "writes": {
+              "p50": 845.3454081900418,
+              "p95": 1045.488533563912,
+              "p99": 1106.0519255697727,
+              "max": 1111.0763838514686
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 7809.443346224725,
+          "caught_up_state": {
+            "2": [
+              289,
+              289,
+              289,
+              289,
+              711,
+              3610286,
+              0
+            ]
+          }
+        },
+        {
+          "name": "entry_voter_crashed",
+          "operations": 400,
+          "reads": 268,
+          "writes": 132,
+          "concurrency": 4,
+          "seconds": 142.7552897715941,
+          "operations_per_second": 2.801997744812068,
+          "retry_attempts": 2,
+          "time_to_first_success_ms": 70.29076665639877,
+          "latency_ms": {
+            "all": {
+              "p50": 1028.5283694975078,
+              "p95": 3058.9691316708922,
+              "p99": 3108.124499209225,
+              "max": 3200.9855872020125
+            },
+            "reads": {
+              "p50": 1145.2546580694616,
+              "p95": 3074.205690063536,
+              "p99": 3136.5635404363275,
+              "max": 3200.9855872020125
+            },
+            "writes": {
+              "p50": 881.5267411991954,
+              "p95": 1078.8055090233684,
+              "p99": 1154.8102218657732,
+              "max": 1167.0717168599367
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 10397.032036446035,
+          "caught_up_state": {
+            "1": [
+              421,
+              421,
+              421,
+              421,
+              1029,
+              5272307,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 190.12468587607145,
+        "state": {
+          "1": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "2": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "3": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 421,
+          "order_lines": 421,
+          "ledger_entries": 421,
+          "distinct_operations": 421,
+          "units_sold": 1029,
+          "revenue_cents": 5272307,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "2": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "3": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ]
+        },
+        "integrity": {
+          "1": "ok",
+          "2": "ok",
+          "3": "ok"
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 13.52,
+        "sampled_peak_aggregate_rss_bytes": 37826560,
+        "whole_lifecycle_seconds": 286.2327428422868,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 18660680,
+        "allocated_bytes": 4682240,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "three native mTLS processes; fresh quorum-barrier reads; writes admitted at all voters",
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "repeat": 0,
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/native-comparison-runs/20260923-020010"
+    },
+    {
+      "system": "zaxonlite",
+      "nodes": 3,
+      "initial_startup_ms": 359.4864448532462,
+      "schema_and_seed_ms": 7488.505408167839,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 274,
+          "writes": 126,
+          "concurrency": 4,
+          "seconds": 46.26113559305668,
+          "operations_per_second": 8.646566818390768,
+          "retry_attempts": 105,
+          "time_to_first_success_ms": 43.34299731999636,
+          "latency_ms": {
+            "all": {
+              "p50": 166.07960872352123,
+              "p95": 1772.064215503633,
+              "p99": 5486.109579913318,
+              "max": 7298.526747152209
+            },
+            "reads": {
+              "p50": 113.95126907154918,
+              "p95": 823.7130893394351,
+              "p99": 1231.2340382486582,
+              "max": 1830.758978612721
+            },
+            "writes": {
+              "p50": 390.86177572607994,
+              "p95": 5273.513571359217,
+              "p99": 7079.610892571509,
+              "max": 7298.526747152209
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 400,
+          "reads": 266,
+          "writes": 134,
+          "concurrency": 4,
+          "seconds": 29.687044613063335,
+          "operations_per_second": 13.473890891247088,
+          "retry_attempts": 42,
+          "time_to_first_success_ms": 138.84118478745222,
+          "latency_ms": {
+            "all": {
+              "p50": 154.53280415385962,
+              "p95": 1087.4849781394005,
+              "p99": 1299.2912381887436,
+              "max": 1404.2523326352239
+            },
+            "reads": {
+              "p50": 117.844860535115,
+              "p95": 877.3815492168069,
+              "p99": 1177.1503537893295,
+              "max": 1299.2912381887436
+            },
+            "writes": {
+              "p50": 319.6676312945783,
+              "p95": 1278.4485733136535,
+              "p99": 1347.7302249521017,
+              "max": 1404.2523326352239
+            }
+          },
+          "restarted_node": 1,
+          "catch_up_ms": 13203.068382106721,
+          "caught_up_state": {
+            "1": [
+              289,
+              289,
+              289,
+              289,
+              711,
+              3610286,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 400,
+          "reads": 268,
+          "writes": 132,
+          "concurrency": 4,
+          "seconds": 28.544064726680517,
+          "operations_per_second": 14.013421137814149,
+          "retry_attempts": 62,
+          "time_to_first_success_ms": 400.0563370063901,
+          "latency_ms": {
+            "all": {
+              "p50": 145.8039009012282,
+              "p95": 1083.075107075274,
+              "p99": 1474.1025380790234,
+              "max": 1764.537543989718
+            },
+            "reads": {
+              "p50": 107.64975287020206,
+              "p95": 775.3085866570473,
+              "p99": 1328.7940239533782,
+              "max": 1550.9568694978952
+            },
+            "writes": {
+              "p50": 353.57885900884867,
+              "p95": 1419.7788760066032,
+              "p99": 1610.8197728171945,
+              "max": 1764.537543989718
+            }
+          },
+          "crashed_node": 2,
+          "restarted_node_catch_up_ms": 12635.017630644143,
+          "caught_up_state": {
+            "2": [
+              421,
+              421,
+              421,
+              421,
+              1029,
+              5272307,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 694.7727454826236,
+        "state": {
+          "1": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "2": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "3": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 421,
+          "order_lines": 421,
+          "ledger_entries": 421,
+          "distinct_operations": 421,
+          "units_sold": 1029,
+          "revenue_cents": 5272307,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "2": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "3": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "2": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "3": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          }
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 20.16,
+        "sampled_peak_aggregate_rss_bytes": 185024512,
+        "whole_lifecycle_seconds": 149.2563891420141,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 57907432,
+        "allocated_bytes": 17963520,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite WAL NORMAL with separate full-sync Paxos log",
+      "repeat": 0,
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/native-comparison-runs/20260923-020010"
+    },
+    {
+      "system": "sqlodin",
+      "nodes": 3,
+      "initial_startup_ms": 101.05301346629858,
+      "schema_and_seed_ms": 9082.819601520896,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 294,
+          "writes": 106,
+          "concurrency": 4,
+          "seconds": 16.786254670470953,
+          "operations_per_second": 23.829020103194804,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 74.35721717774868,
+          "latency_ms": {
+            "all": {
+              "p50": 113.82479779422283,
+              "p95": 238.53853717446327,
+              "p99": 282.2306817397475,
+              "max": 322.77386635541916
+            },
+            "reads": {
+              "p50": 108.12066867947578,
+              "p95": 257.94490706175566,
+              "p99": 294.58116460591555,
+              "max": 322.77386635541916
+            },
+            "writes": {
+              "p50": 135.44680969789624,
+              "p95": 215.15406295657158,
+              "p99": 237.04839311540127,
+              "max": 241.26976635307074
+            }
+          }
+        },
+        {
+          "name": "one_voter_crashed",
+          "operations": 400,
+          "reads": 283,
+          "writes": 117,
+          "concurrency": 4,
+          "seconds": 101.83819800056517,
+          "operations_per_second": 3.927799272310181,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 1054.039854556322,
+          "latency_ms": {
+            "all": {
+              "p50": 994.68281166628,
+              "p95": 2048.7704249098897,
+              "p99": 2118.7332356348634,
+              "max": 2165.2194540947676
+            },
+            "reads": {
+              "p50": 1010.6666143983603,
+              "p95": 2062.7078376710415,
+              "p99": 2126.8664486706257,
+              "max": 2165.2194540947676
+            },
+            "writes": {
+              "p50": 712.3030750080943,
+              "p95": 1096.476943232119,
+              "p99": 1151.0657612234354,
+              "max": 1193.929805420339
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 8394.513584673405,
+          "caught_up_state": {
+            "2": [
+              248,
+              248,
+              248,
+              248,
+              579,
+              2696054,
+              0
+            ]
+          }
+        },
+        {
+          "name": "entry_voter_crashed",
+          "operations": 400,
+          "reads": 283,
+          "writes": 117,
+          "concurrency": 4,
+          "seconds": 118.60084882378578,
+          "operations_per_second": 3.372657143409742,
+          "retry_attempts": 2,
+          "time_to_first_success_ms": 56.178259663283825,
+          "latency_ms": {
+            "all": {
+              "p50": 1007.9332627356052,
+              "p95": 2030.2734384313226,
+              "p99": 2730.41623365134,
+              "max": 3089.913483709097
+            },
+            "reads": {
+              "p50": 1063.2745251059532,
+              "p95": 2071.8242982402444,
+              "p99": 3043.6790408566594,
+              "max": 3089.913483709097
+            },
+            "writes": {
+              "p50": 363.96231409162283,
+              "p95": 1017.2983091324568,
+              "p99": 1056.6582269966602,
+              "max": 1154.9237705767155
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 10581.436855718493,
+          "caught_up_state": {
+            "1": [
+              365,
+              365,
+              365,
+              365,
+              883,
+              4073584,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 190.0088358670473,
+        "state": {
+          "1": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "2": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "3": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 365,
+          "order_lines": 365,
+          "ledger_entries": 365,
+          "distinct_operations": 365,
+          "units_sold": 883,
+          "revenue_cents": 4073584,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "2": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "3": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ]
+        },
+        "integrity": {
+          "1": "ok",
+          "2": "ok",
+          "3": "ok"
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 12.93,
+        "sampled_peak_aggregate_rss_bytes": 36728832,
+        "whole_lifecycle_seconds": 272.5319944228977,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 18496576,
+        "allocated_bytes": 4319744,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "three native mTLS processes; fresh quorum-barrier reads; writes admitted at all voters",
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "repeat": 1
+    },
+    {
+      "system": "rqlite",
+      "nodes": 3,
+      "initial_startup_ms": 3232.9206820577383,
+      "schema_and_seed_ms": 328.11209186911583,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 294,
+          "writes": 106,
+          "concurrency": 4,
+          "seconds": 1.7612297246232629,
+          "operations_per_second": 227.1140410633044,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 0.9723817929625511,
+          "latency_ms": {
+            "all": {
+              "p50": 11.25809084624052,
+              "p95": 56.225065141916275,
+              "p99": 66.46184623241425,
+              "max": 76.10808592289686
+            },
+            "reads": {
+              "p50": 0.6466154009103775,
+              "p95": 29.83593102544546,
+              "p99": 44.66722346842289,
+              "max": 50.54650641977787
+            },
+            "writes": {
+              "p50": 40.736181661486626,
+              "p95": 66.3466602563858,
+              "p99": 74.2143439128995,
+              "max": 76.10808592289686
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 400,
+          "reads": 283,
+          "writes": 117,
+          "concurrency": 4,
+          "seconds": 1.9852220714092255,
+          "operations_per_second": 201.48879350110028,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 1.019059680402279,
+          "latency_ms": {
+            "all": {
+              "p50": 15.194296836853027,
+              "p95": 57.95740243047476,
+              "p99": 68.82981490343809,
+              "max": 83.93859956413507
+            },
+            "reads": {
+              "p50": 0.6126109510660172,
+              "p95": 31.245178543031216,
+              "p99": 41.409862227737904,
+              "max": 49.06044062227011
+            },
+            "writes": {
+              "p50": 41.48207977414131,
+              "p95": 68.77922546118498,
+              "p99": 83.10800418257713,
+              "max": 83.93859956413507
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 709.3940321356058,
+          "caught_up_state": {
+            "2": [
+              248,
+              248,
+              248,
+              248,
+              579,
+              2696054,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 400,
+          "reads": 283,
+          "writes": 117,
+          "concurrency": 4,
+          "seconds": 4.797454509884119,
+          "operations_per_second": 83.37754931826584,
+          "retry_attempts": 74,
+          "time_to_first_success_ms": 2756.924284622073,
+          "latency_ms": {
+            "all": {
+              "p50": 5.904842168092728,
+              "p95": 61.60333100706339,
+              "p99": 82.80350267887115,
+              "max": 2966.932930983603
+            },
+            "reads": {
+              "p50": 0.618751160800457,
+              "p95": 29.96279764920473,
+              "p99": 52.287342958152294,
+              "max": 2773.4442967921495
+            },
+            "writes": {
+              "p50": 46.053601428866386,
+              "p95": 75.3700165078044,
+              "p99": 2966.5357135236263,
+              "max": 2966.932930983603
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 557.3889361694455,
+          "caught_up_state": {
+            "1": [
+              365,
+              365,
+              365,
+              365,
+              883,
+              4073584,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 1475.2591354772449,
+        "state": {
+          "1": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "2": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "3": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 365,
+          "order_lines": 365,
+          "ledger_entries": 365,
+          "distinct_operations": 365,
+          "units_sold": 883,
+          "revenue_cents": 4073584,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "2": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "3": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "sqlite_ok": true
+          },
+          "2": {
+            "sqlite_ok": true
+          },
+          "3": {
+            "sqlite_ok": true
+          }
+        }
+      },
+      "cli_evidence": {
+        "reachable_voters": 3,
+        "evidence_file": "rqlite-cli-final-nodes.txt"
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 1.76,
+        "sampled_peak_aggregate_rss_bytes": 74489856,
+        "whole_lifecycle_seconds": 15.436838409863412,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 35778286,
+        "allocated_bytes": 240128,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite materialization with persistent Raft log and snapshots",
+      "repeat": 1
+    },
+    {
+      "system": "zaxonlite",
+      "nodes": 3,
+      "initial_startup_ms": 409.86014530062675,
+      "schema_and_seed_ms": 10021.676309406757,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 294,
+          "writes": 106,
+          "concurrency": 4,
+          "seconds": 37.137416704557836,
+          "operations_per_second": 10.770808405499794,
+          "retry_attempts": 80,
+          "time_to_first_success_ms": 1051.4482809230685,
+          "latency_ms": {
+            "all": {
+              "p50": 116.31610989570618,
+              "p95": 1313.5965438559651,
+              "p99": 4970.193017274141,
+              "max": 9465.810811147094
+            },
+            "reads": {
+              "p50": 76.66762685403228,
+              "p95": 787.7128347754478,
+              "p99": 1362.0691560208797,
+              "max": 1648.9273626357317
+            },
+            "writes": {
+              "p50": 277.1136206574738,
+              "p95": 4867.3749985173345,
+              "p99": 6356.221825815737,
+              "max": 9465.810811147094
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 400,
+          "reads": 283,
+          "writes": 117,
+          "concurrency": 4,
+          "seconds": 26.78007503040135,
+          "operations_per_second": 14.936477942870246,
+          "retry_attempts": 39,
+          "time_to_first_success_ms": 310.190936550498,
+          "latency_ms": {
+            "all": {
+              "p50": 142.56945298984647,
+              "p95": 980.4433872923255,
+              "p99": 1288.5105246677995,
+              "max": 1435.735223814845
+            },
+            "reads": {
+              "p50": 116.89896509051323,
+              "p95": 853.5617981106043,
+              "p99": 1150.8197523653507,
+              "max": 1435.735223814845
+            },
+            "writes": {
+              "p50": 260.9504973515868,
+              "p95": 1143.320037983358,
+              "p99": 1354.0272563695908,
+              "max": 1427.4014476686716
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 10678.99220250547,
+          "caught_up_state": {
+            "2": [
+              248,
+              248,
+              248,
+              248,
+              579,
+              2696054,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 400,
+          "reads": 283,
+          "writes": 117,
+          "concurrency": 4,
+          "seconds": 26.729782255366445,
+          "operations_per_second": 14.964581311532884,
+          "retry_attempts": 66,
+          "time_to_first_success_ms": 407.7934743836522,
+          "latency_ms": {
+            "all": {
+              "p50": 120.51185872405767,
+              "p95": 1095.9856547415257,
+              "p99": 1408.482126891613,
+              "max": 1815.3648367151618
+            },
+            "reads": {
+              "p50": 98.75595383346081,
+              "p95": 723.6273596063256,
+              "p99": 1408.482126891613,
+              "max": 1703.84781062603
+            },
+            "writes": {
+              "p50": 342.8492220118642,
+              "p95": 1239.223312586546,
+              "p99": 1712.049562484026,
+              "max": 1815.3648367151618
+            }
+          },
+          "crashed_node": 3,
+          "restarted_node_catch_up_ms": 11858.837937004864,
+          "caught_up_state": {
+            "3": [
+              365,
+              365,
+              365,
+              365,
+              883,
+              4073584,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 644.7281781584024,
+        "state": {
+          "1": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "2": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "3": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 365,
+          "order_lines": 365,
+          "ledger_entries": 365,
+          "distinct_operations": 365,
+          "units_sold": 883,
+          "revenue_cents": 4073584,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "2": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "3": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "2": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "3": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          }
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 17.51,
+        "sampled_peak_aggregate_rss_bytes": 169295872,
+        "whole_lifecycle_seconds": 135.22044845297933,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 50031907,
+        "allocated_bytes": 14891008,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite WAL NORMAL with separate full-sync Paxos log",
+      "repeat": 1
+    },
+    {
+      "system": "sqlodin",
+      "nodes": 3,
+      "initial_startup_ms": 151.51023212820292,
+      "schema_and_seed_ms": 7525.469991378486,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 297,
+          "writes": 103,
+          "concurrency": 4,
+          "seconds": 16.57993335276842,
+          "operations_per_second": 24.125549330583425,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 45.2320771291852,
+          "latency_ms": {
+            "all": {
+              "p50": 111.26781813800335,
+              "p95": 228.55021804571152,
+              "p99": 282.0118796080351,
+              "max": 299.5170596987009
+            },
+            "reads": {
+              "p50": 110.64323782920837,
+              "p95": 231.80201649665833,
+              "p99": 288.429981097579,
+              "max": 299.5170596987009
+            },
+            "writes": {
+              "p50": 115.52914697676897,
+              "p95": 215.96181206405163,
+              "p99": 252.04931013286114,
+              "max": 259.9716344848275
+            }
+          }
+        },
+        {
+          "name": "one_voter_crashed",
+          "operations": 400,
+          "reads": 281,
+          "writes": 119,
+          "concurrency": 4,
+          "seconds": 81.38458535447717,
+          "operations_per_second": 4.914935650992968,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 278.4263603389263,
+          "latency_ms": {
+            "all": {
+              "p50": 892.1728362329304,
+              "p95": 1069.1829985007644,
+              "p99": 1204.5856062322855,
+              "max": 1903.9612747728825
+            },
+            "reads": {
+              "p50": 974.3530210107565,
+              "p95": 1082.2297045961022,
+              "p99": 1688.6373423039913,
+              "max": 1903.9612747728825
+            },
+            "writes": {
+              "p50": 375.01551024615765,
+              "p95": 1048.3510540798306,
+              "p99": 1069.1829985007644,
+              "max": 1112.3157516121864
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 9500.203926116228,
+          "caught_up_state": {
+            "2": [
+              248,
+              248,
+              248,
+              248,
+              620,
+              2854050,
+              0
+            ]
+          }
+        },
+        {
+          "name": "entry_voter_crashed",
+          "operations": 400,
+          "reads": 294,
+          "writes": 106,
+          "concurrency": 4,
+          "seconds": 140.39493665099144,
+          "operations_per_second": 2.849105598404608,
+          "retry_attempts": 2,
+          "time_to_first_success_ms": 96.25184535980225,
+          "latency_ms": {
+            "all": {
+              "p50": 1033.53371610865,
+              "p95": 2333.9740335941315,
+              "p99": 3090.0033190846443,
+              "max": 3129.0549831464887
+            },
+            "reads": {
+              "p50": 1184.7098050639033,
+              "p95": 3057.870185934007,
+              "p99": 3117.2828655689955,
+              "max": 3129.0549831464887
+            },
+            "writes": {
+              "p50": 700.057374779135,
+              "p95": 1076.92492287606,
+              "p99": 1139.8211922496557,
+              "max": 1233.9786561205983
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 10456.172690726817,
+          "caught_up_state": {
+            "1": [
+              354,
+              354,
+              354,
+              354,
+              871,
+              4092778,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 190.19548315554857,
+        "state": {
+          "1": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ],
+          "2": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ],
+          "3": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 354,
+          "order_lines": 354,
+          "ledger_entries": 354,
+          "distinct_operations": 354,
+          "units_sold": 871,
+          "revenue_cents": 4092778,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ],
+          "2": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ],
+          "3": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ]
+        },
+        "integrity": {
+          "1": "ok",
+          "2": "ok",
+          "3": "ok"
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 13.06,
+        "sampled_peak_aggregate_rss_bytes": 36790272,
+        "whole_lifecycle_seconds": 273.7022951859981,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 18488576,
+        "allocated_bytes": 3938816,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "three native mTLS processes; fresh quorum-barrier reads; writes admitted at all voters",
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "repeat": 2
+    }
+  ],
+  "sequential_writes": [
+    {
+      "system": "zaxonlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 400,
+      "payload_bytes": 256,
+      "seconds": 184.73168704099953,
+      "operations_per_second": 2.165302587807925,
+      "latency_ms": {
+        "p50": 125.02390332520008,
+        "p95": 3802.2406911477447,
+        "p99": 5251.008074730635,
+        "max": 5299.691142514348
+      },
+      "restart_verified": true,
+      "retry_attempts": 36,
+      "resources": {
+        "sampled_database_cpu_seconds": 25.88,
+        "sampled_peak_aggregate_rss_bytes": 114126848,
+        "whole_lifecycle_seconds": 244.58305421844125,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 16808200,
+        "allocated_bytes": 2009088,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "reference retry-capable client; idempotent INSERT OR IGNORE; retry-inclusive latency",
+      "repeat": 0
+    },
+    {
+      "system": "cowsql",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 400,
+      "payload_bytes": 256,
+      "seconds": 2.434594539925456,
+      "operations_per_second": 164.29840511030122,
+      "latency_ms": {
+        "p50": 3.4676301293075085,
+        "p95": 15.335239470005035,
+        "p99": 16.306841745972633,
+        "max": 18.372701480984688
+      },
+      "restart_verified": true,
+      "verified_before_restart": true,
+      "membership": {
+        "data-0/127.0.0.1:12300/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12300\n  Role: 0\n- ID: 7889406811615236465\n  Address: 127.0.0.1:12301\n  Role: 0\n- ID: 10514668221539991749\n  Address: 127.0.0.1:12302\n  Role: 0\n",
+        "data-1/127.0.0.1:12301/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12300\n  Role: 0\n- ID: 7889406811615236465\n  Address: 127.0.0.1:12301\n  Role: 0\n- ID: 10514668221539991749\n  Address: 127.0.0.1:12302\n  Role: 0\n",
+        "data-2/127.0.0.1:12302/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12300\n  Role: 0\n- ID: 7889406811615236465\n  Address: 127.0.0.1:12301\n  Role: 0\n- ID: 10514668221539991749\n  Address: 127.0.0.1:12302\n  Role: 0\n"
+      },
+      "storage": "in-memory SQLite materialization; durable Raft logs and snapshots",
+      "boundary": "stock go-cowsql demo PUT/GET; no arbitrary SQL workload",
+      "resources": {
+        "sampled_database_cpu_seconds": 1.13,
+        "sampled_peak_aggregate_rss_bytes": 74502144,
+        "whole_lifecycle_seconds": 40.479424824006855,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 89028470,
+        "allocated_bytes": 470528,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "repeat": 0
+    },
+    {
+      "system": "rqlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 400,
+      "payload_bytes": 256,
+      "seconds": 11.14579891320318,
+      "operations_per_second": 35.8879612950997,
+      "latency_ms": {
+        "p50": 26.63475275039673,
+        "p95": 34.318432211875916,
+        "p99": 40.11709336191416,
+        "max": 47.23798856139183
+      },
+      "restart_verified": true,
+      "retry_attempts": 0,
+      "resources": {
+        "sampled_database_cpu_seconds": 1.37,
+        "sampled_peak_aggregate_rss_bytes": 68468736,
+        "whole_lifecycle_seconds": 19.306473792530596,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 4682848,
+        "allocated_bytes": 56832,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "reference retry-capable client; idempotent INSERT OR IGNORE; retry-inclusive latency",
+      "repeat": 0
+    },
+    {
+      "system": "sqlodin",
+      "operations": 400,
+      "operations_per_second": 8.286413712193353,
+      "latency_ms": {
+        "p50": 115.31827319413424,
+        "p95": 171.7488458380103,
+        "p99": 243.69801208376884,
+        "max": 303.2633000984788
+      },
+      "restart_verified": true,
+      "boundary": "native mTLS, sequential durable 256-byte inserts",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 6.7700000000000005,
+        "sampled_peak_aggregate_rss_bytes": 35323904,
+        "whole_lifecycle_seconds": 64.14509972091764,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 15960720,
+        "allocated_bytes": 2442240,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "repeat": 0
+    },
+    {
+      "system": "cowsql",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 400,
+      "payload_bytes": 256,
+      "seconds": 2.392744392156601,
+      "operations_per_second": 167.1720562009035,
+      "latency_ms": {
+        "p50": 3.4227613359689713,
+        "p95": 15.086758881807327,
+        "p99": 16.954772174358368,
+        "max": 30.77996987849474
+      },
+      "restart_verified": true,
+      "verified_before_restart": true,
+      "membership": {
+        "data-1/127.0.0.1:13501/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:13500\n  Role: 0\n- ID: 14909220102128393198\n  Address: 127.0.0.1:13501\n  Role: 0\n- ID: 4816021584900465190\n  Address: 127.0.0.1:13502\n  Role: 0\n",
+        "data-2/127.0.0.1:13502/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:13500\n  Role: 0\n- ID: 14909220102128393198\n  Address: 127.0.0.1:13501\n  Role: 0\n- ID: 4816021584900465190\n  Address: 127.0.0.1:13502\n  Role: 0\n",
+        "data-0/127.0.0.1:13500/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:13500\n  Role: 0\n- ID: 14909220102128393198\n  Address: 127.0.0.1:13501\n  Role: 0\n- ID: 4816021584900465190\n  Address: 127.0.0.1:13502\n  Role: 0\n"
+      },
+      "storage": "in-memory SQLite materialization; durable Raft logs and snapshots",
+      "boundary": "stock go-cowsql demo PUT/GET; no arbitrary SQL workload",
+      "resources": {
+        "sampled_database_cpu_seconds": 1.33,
+        "sampled_peak_aggregate_rss_bytes": 75194368,
+        "whole_lifecycle_seconds": 39.44856818020344,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 89028470,
+        "allocated_bytes": 466944,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "repeat": 1
+    },
+    {
+      "system": "sqlodin",
+      "operations": 400,
+      "operations_per_second": 8.474626905097473,
+      "latency_ms": {
+        "p50": 113.05858055129647,
+        "p95": 163.8833023607731,
+        "p99": 197.30785954743624,
+        "max": 320.52620965987444
+      },
+      "restart_verified": true,
+      "boundary": "native mTLS, sequential durable 256-byte inserts",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 6.52,
+        "sampled_peak_aggregate_rss_bytes": 32014336,
+        "whole_lifecycle_seconds": 61.651150500401855,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 16026376,
+        "allocated_bytes": 2364928,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "repeat": 1
+    },
+    {
+      "system": "rqlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 400,
+      "payload_bytes": 256,
+      "seconds": 11.341237097978592,
+      "operations_per_second": 35.269521000605316,
+      "latency_ms": {
+        "p50": 27.109268587082624,
+        "p95": 35.121542401611805,
+        "p99": 42.45961643755436,
+        "max": 50.45971181243658
+      },
+      "restart_verified": true,
+      "retry_attempts": 0,
+      "resources": {
+        "sampled_database_cpu_seconds": 1.37,
+        "sampled_peak_aggregate_rss_bytes": 69390336,
+        "whole_lifecycle_seconds": 18.826030161231756,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 4682848,
+        "allocated_bytes": 56832,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "reference retry-capable client; idempotent INSERT OR IGNORE; retry-inclusive latency",
+      "repeat": 1
+    },
+    {
+      "system": "zaxonlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 400,
+      "payload_bytes": 256,
+      "seconds": 192.22301958780736,
+      "operations_per_second": 2.0809162235498033,
+      "latency_ms": {
+        "p50": 118.16777801141143,
+        "p95": 5133.706551045179,
+        "p99": 5239.531243219972,
+        "max": 5275.049492716789
+      },
+      "restart_verified": true,
+      "retry_attempts": 42,
+      "resources": {
+        "sampled_database_cpu_seconds": 26.029999999999998,
+        "sampled_peak_aggregate_rss_bytes": 110579712,
+        "whole_lifecycle_seconds": 241.9440022651106,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 16777779,
+        "allocated_bytes": 2009088,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "reference retry-capable client; idempotent INSERT OR IGNORE; retry-inclusive latency",
+      "repeat": 1
+    }
+  ],
+  "sqlodin_build": {
+    "complete": true,
+    "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e",
+    "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+    "linkage": "\nDynamic section at offset 0x8c47f0 contains 30 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-x86-64.so.2]\n 0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN]\n 0x000000000000000c (INIT)               0xb3000\n 0x000000000000000d (FINI)               0x6a6940\n 0x0000000000000019 (INIT_ARRAY)         0x840ed0\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x840ed8\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x3e8\n 0x0000000000000005 (STRTAB)             0x15e8\n 0x0000000000000006 (SYMTAB)             0x4a8\n 0x000000000000000a (STRSZ)              2072 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000015 (DEBUG)              0x0\n 0x0000000000000003 (PLTGOT)             0x8c5a10\n 0x0000000000000002 (PLTRELSZ)           3120 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0xb20f8\n 0x0000000000000007 (RELA)               0x20a0\n 0x0000000000000008 (RELASZ)             720984 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000000000001e (FLAGS)              BIND_NOW\n 0x000000006ffffffb (FLAGS_1)            Flags: NOW PIE\n 0x000000006ffffffe (VERNEED)            0x1f70\n 0x000000006fffffff (VERNEEDNUM)         3\n 0x000000006ffffff0 (VERSYM)             0x1e00\n 0x000000006ffffff9 (RELACOUNT)          29984\n 0x0000000000000000 (NULL)               0x0\n",
+    "native": {
+      "sqlite": "3.51.3",
+      "sqlite_vec": "0.1.9",
+      "openssl": "3.5.8",
+      "platform": {
+        "system": "Linux",
+        "machine": "x86_64",
+        "compiler": "/usr/bin/cc",
+        "archiver": "/usr/bin/ar",
+        "compiler_version": "cc (Debian 14.2.0-19) 14.2.0",
+        "builder_sha256": "ed2760e611b57d4e09769caa528f882bbd87d6842c6589c66d7b285035777d3f"
+      },
+      "sources": {
+        "sqlite": {
+          "version": "3.51.3",
+          "url": "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+          "files": {
+            "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+            "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+            "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+          }
+        },
+        "vec": {
+          "version": "0.1.9",
+          "url": "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+          "files": {
+            "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+            "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+          }
+        },
+        "openssl": {
+          "version": "3.5.8",
+          "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+          "sha256": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2"
+        }
+      },
+      "sqlite_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-DSQLITE_THREADSAFE=1",
+        "-DSQLITE_OMIT_LOAD_EXTENSION",
+        "-DSQLITE_OMIT_DEPRECATED",
+        "-DSQLITE_DQS=0",
+        "-DSQLITE_ENABLE_FTS5",
+        "-DHAVE_USLEEP=1"
+      ],
+      "vec_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-DSQLITE_CORE",
+        "-DSQLITE_VEC_STATIC",
+        "-DSQLITE_VEC_OMIT_FS"
+      ],
+      "openssl_flags": [
+        "no-shared",
+        "no-dso",
+        "no-module",
+        "no-engine",
+        "no-zlib",
+        "--libdir=lib",
+        "--openssldir=/sqlodin/no-system-openssl"
+      ],
+      "archives_sha256": {
+        "libsqlite3.a": "aac3b0f9cafb856e49bc0fc8f00289e1dd36a596032383028ee9a663559630ae",
+        "libsqlite_vec.a": "64f35312f89c2251bc249b2b2301d7b0c9aba7987e1a7e547008a24c68a576d0",
+        "libssl.a": "d287b4bf68bebb8ea76818c859763eb8ac90f65d5ecf13fc0f253a50405df140",
+        "libcrypto.a": "077bddd675958dc9243a04182c15567afcd2d6b68a565eafa9f940c5543ff665"
+      }
+    },
+    "odin": "odin version dev-2026-09-nightly:a2fb372",
+    "scope": "Native SQLite/FTS5, sqlite-vec and OpenSSL are static; OS runtime may remain dynamic"
+  },
+  "comparison_build": {
+    "pins": {
+      "raft": [
+        "https://github.com/cowsql/raft.git",
+        "v0.22.1",
+        "9edb176a7924ce2b943cb56552366dc4b5a1a6b7"
+      ],
+      "cowsql": [
+        "https://github.com/cowsql/cowsql.git",
+        "v1.15.9",
+        "783815b901470e27b7dfbcce3a67c888dad19e78"
+      ],
+      "go-cowsql": [
+        "https://github.com/cowsql/go-cowsql.git",
+        "v1.22.0",
+        "b0e46059265dcc795d35a15e86f44ee848e25252"
+      ]
+    },
+    "archives": {
+      "go1.24.4.linux-amd64.tar.gz": [
+        "https://go.dev/dl/",
+        "77e5da33bb72aeaef1ba4418b6fe511bc4d041873cbf82e5aa6318740df98717"
+      ],
+      "rqlite-v10.2.7-linux-amd64.tar.gz": [
+        "https://github.com/rqlite/rqlite/releases/download/v10.2.7/",
+        "0b4e8ffbbacc84e421c49915bbd82cc67ac6488e22d4ce58b678fc1219c6a38a"
+      ]
+    },
+    "packages": {
+      "libsqlite3-dev_3.46.1-7+deb13u2_amd64.deb": "56e1945d52292b506c1f0bcb77543fea289ccee857c478dcddded40226e1594d",
+      "autoconf_2.72-3.1_all.deb": "0de76b647b0afb6c7934999aaefeb463656c147672464a367df1019969e77af3",
+      "automake_1%3a1.17-4_all.deb": "8d4b172d4ff8070789c54b48a95585b53e4c65faeb07a2ae52da16cb364df635",
+      "libtool_2.5.4-4_all.deb": "be5361a8c1fce2758c3e19608bf97393d5f3afdb7e926aeb83e2818355bd885f",
+      "pkgconf-bin_1.8.1-4_amd64.deb": "54efef2aef4db5fcb5e0f5b7746465000c6a779b06f3686d0ec3d2a901b20aeb",
+      "autotools-dev_20240727.1_all.deb": "d07d476c1fcd713ed04695f25ac290c3ae2317e6fd974ad6b2168e3be1c795c3",
+      "libsqlite3-0_3.46.1-7+deb13u2_amd64.deb": "0a459adaffd901109f7811ab65f58e7a957b4907d05539cf3d1184efdcde0468",
+      "libltdl-dev_2.5.4-4_amd64.deb": "0f225ed11c06958274e2ff0ea27f283f23aa6cd6a03df04499b467f68fedfed4",
+      "libuv1-dev_1.50.0-2_amd64.deb": "a638490607f08b4369b2515c013ced6b33dabecbf985b0a1629d4ad53ec9c9d2",
+      "m4_1.4.19-8_amd64.deb": "221b3e224708c1da2a1a88b6824380593579b2254ae7d914afa14cbd5d343334",
+      "libpkgconf3_1.8.1-4_amd64.deb": "85087cd04e57fd4ab7d6e816d348c335047823ab60c78878336b74f07b352ca1",
+      "libuv1t64_1.50.0-2_amd64.deb": "5fec8035002e0c745b64d1c5b3e1dc42790d1a77574315b976cf3e4aab9ddc0a",
+      "autoconf-archive_20220903-3_all.deb": "9f13a50fa9038cb4381545b275f7440c0a40d43832046a7e7f515f47a4ecbac8",
+      "pkgconf_1.8.1-4_amd64.deb": "f1fcad470ca3ac80b4a0f4af6f03cd215089473996b07e508b3ee342bbb11af7"
+    },
+    "go": "go version go1.24.4 linux/amd64",
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "raft_configure": [
+      "--without-lz4"
+    ],
+    "cowsql_configure": [
+      "--disable-backtrace"
+    ],
+    "cowsql_demo_sha256": "270eba3d18f7a1f45bd0266aeade26884750e439a55fa8ed56d9fbe30138409e"
+  },
+  "zaxon_release": {
+    "repository": "https://github.com/insanai/zaxonlite",
+    "tag": "v0.7.0",
+    "asset_url": "https://github.com/insanai/zaxonlite/releases/download/v0.7.0/zaxon-0.7.0-x86_64-linux-musl.tar.gz",
+    "archive_sha256": "6e13ea5fe25f41675fea3f4148447555570d8510f0887c454b7e9090676752e4",
+    "binary_sha256": "6a8f7748405f580c28d4c27a69a9c3dbc6d65790ff84ee8addbc99edd65c2da1",
+    "version": "zaxon 0.7.0",
+    "published_checksums": "1dfbd970253f7724f655aa8401542d4bfed426b74d5236a7a4a751b0df1729c0  zaxon-0.7.0-aarch64-linux-musl.tar.gz\n577302dc5ac4a5a8c75e1877e081d28624e40c30fb1bceaa539a09b93aa648d0  zaxon-0.7.0-aarch64-macos.tar.gz\n6e13ea5fe25f41675fea3f4148447555570d8510f0887c454b7e9090676752e4  zaxon-0.7.0-x86_64-linux-musl.tar.gz\nc7f7b7f73c761d70d118e42cd0a7b09e6122c8a500ddeae8342ba3af1ab85818  zaxon-0.7.0-x86_64-macos.tar.gz\nd6e4d0ef78c5e1dc8a8d3fa9e37a2582c9edb1f01a5d8ad2f82bb6bfe4469f7b  zaxon-0.7.0-x86_64-windows-gnu.zip\n115935c40ad759e41db99ad47184f296ec5a8f22713f90acba9d11cacf079a5b  zxlite-0.7.0-cp312-abi3-macosx_10_15_x86_64.whl\nc9a631e109464f6ceb18f69b8c9ac6ca664985ce2102d65a00fd30f8959999cd  zxlite-0.7.0-cp312-abi3-macosx_11_0_arm64.whl\nc3bfd68ec18be20afa09f433920d9a56ca12baf72cf1a3e4eb3d38eeb1bf2084  zxlite-0.7.0-cp312-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl\nad868a00fbb5deb4c9be574d8a94c98830115fd1a0af196c1e0bdbdcbcb07bcc  zxlite-0.7.0-cp312-abi3-win_amd64.whl\n"
+  },
+  "source_sha256": {
+    "tools/compare_native_workloads.py": "76de068d699e5a1e9932639748246c92c81bb13599cd4abdddbe47a6c62c6ed0",
+    "tools/compare_realworld.py": "7a7d7e5ebc2d6a66475a6f4a948ab2118fa148df1f8815e27f25561250795e90",
+    "benchmarks/vendor/zaxonlite/compare-rqlite-realworld-3node.py": "de6f59176811410c3ef0702082d9ecf872b38a9765470b43bba42654d7ed6a61",
+    "benchmarks/vendor/zaxonlite/realworld_workload.py": "fc911c1066a28d4864bb547ac787e5ee189091e03299c785938381bcf3c4ae9a",
+    "benchmarks/vendor/zaxonlite/driver.py": "e49639b870070f24f3abe6bdcf3f5901b7e5eba6ecd76c3f90c27f3f15833dba"
+  },
+  "binaries_sha256": {
+    "sqlodin": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e",
+    "zaxonlite": "6a8f7748405f580c28d4c27a69a9c3dbc6d65790ff84ee8addbc99edd65c2da1",
+    "rqlite": "175ad4a5e75aeb91281e30540ba9505b704ea856fb1d3d8312a60bc7ef4600ce",
+    "cowsql": "270eba3d18f7a1f45bd0266aeade26884750e439a55fa8ed56d9fbe30138409e"
+  },
+  "resumed_from": {
+    "path": "benchmarks/results/linux18-native-comparison.json",
+    "sha256": "65ca1e792d7f768356928f5a5a95c561f41e644da7d64fb455463e130e19f41e",
+    "source_sha256": {
+      "tools/compare_native_workloads.py": "da3fa36fa436b24734bb31613ea430917b3ac1d231a47aed6fbebf620576f9eb",
+      "tools/compare_realworld.py": "7a7d7e5ebc2d6a66475a6f4a948ab2118fa148df1f8815e27f25561250795e90",
+      "benchmarks/vendor/zaxonlite/compare-rqlite-realworld-3node.py": "de6f59176811410c3ef0702082d9ecf872b38a9765470b43bba42654d7ed6a61",
+      "benchmarks/vendor/zaxonlite/realworld_workload.py": "fc911c1066a28d4864bb547ac787e5ee189091e03299c785938381bcf3c4ae9a",
+      "benchmarks/vendor/zaxonlite/driver.py": "e49639b870070f24f3abe6bdcf3f5901b7e5eba6ecd76c3f90c27f3f15833dba"
+    },
+    "run_directory": "/home/insan/projects/sqlodin/build/native-comparison-runs/20260923-020010",
+    "reason": "Sequential adapter now retries idempotent operations; retain completed mixed samples"
+  },
+  "error": "RuntimeError(\"Zaxon request failed: {'ok': False, 'error': 'sql', 'message': 'database disk image is malformed'}\")",
+  "finished_utc": "2026-09-23T02:35:42.700118+00:00"
+}

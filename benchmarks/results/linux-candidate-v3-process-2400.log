@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/home/insan/projects/sqlodin/tools/check_process_cluster.py", line 471, in <module>
+    main()
+    ~~~~^^
+  File "/home/insan/projects/sqlodin/tools/check_process_cluster.py", line 450, in main
+    sample = exercise(cluster, args.operations, args.seed, args.read_mode)
+  File "/home/insan/projects/sqlodin/tools/check_process_cluster.py", line 316, in exercise
+    cluster.verify(expected)
+    ~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/insan/projects/sqlodin/tools/check_process_cluster.py", line 227, in verify
+    result = self.round(reads={node: query for node in range(3) if self.workers[node]})
+  File "/home/insan/projects/sqlodin/tools/check_process_cluster.py", line 145, in round
+    response = job.result()
+  File "/usr/lib/python3.13/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/insan/projects/sqlodin/tools/check_process_cluster.py", line 49, in rpc
+    header = self.read_exact(4, deadline)
+  File "/home/insan/projects/sqlodin/tools/check_process_cluster.py", line 64, in read_exact
+    raise RuntimeError(f'Worker {self.node} exited; see its stderr.log')
+RuntimeError: Worker 0 exited; see its stderr.log

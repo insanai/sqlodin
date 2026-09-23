@@ -1,0 +1,223 @@
+{
+  "complete": true,
+  "status": "passed",
+  "started_utc": "2026-09-23T02:02:29.648423+00:00",
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "requested_workload_seconds": 45,
+  "scope": "three Linux instances; native mTLS replication and SQL; closed-loop 70/30 reads/transfers",
+  "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e",
+  "limits": {
+    "rss_bytes": 536870912,
+    "data_bytes": 8589934592,
+    "min_free_bytes": 10737418240
+  },
+  "faults": [
+    {
+      "node": 1,
+      "epoch": 1790128971.9020169,
+      "kind": "SIGKILL, surviving-quorum read/write, reopen"
+    },
+    {
+      "node": 2,
+      "epoch": 1790128992.1758428,
+      "kind": "SIGKILL, surviving-quorum read/write, reopen"
+    }
+  ],
+  "source_sha256": {
+    "tools/run_native_soak.py": "af886099745c9baf1947ebebb84bbdc68b0d1b31b1c7886e7dc024b3246b53e5",
+    "tools/native_soak_worker.py": "e4719b82f33ce7a2d7423002b934a5da2b39596e509b3699d5e36415875fbd9e"
+  },
+  "workload_started_utc": "2026-09-23T02:02:30.797048+00:00",
+  "planned_end_utc": "2026-09-23T02:03:15.797074+00:00",
+  "progress": {
+    "elapsed_seconds": 46.411932616494596,
+    "reads": 718,
+    "writes": 327,
+    "verified_transfers": 327,
+    "acknowledged_retries": 1,
+    "resources": [
+      {
+        "pid": 209286,
+        "resources": {
+          "pid": 209286,
+          "started": 1790128971.8754766,
+          "samples": [],
+          "error": null,
+          "latest": {
+            "free_bytes": 344853446656,
+            "data_bytes": 5213808,
+            "cpu_seconds": 1.66,
+            "VmHWM": 11841536,
+            "VmRSS": 11841536,
+            "epoch": 1790128995.8901346
+          }
+        },
+        "usage": {
+          "free_bytes": 344853446656,
+          "data_bytes": 5213808
+        },
+        "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
+      },
+      {
+        "pid": 3504,
+        "resources": {
+          "pid": 3504,
+          "started": 1790128992.1491144,
+          "samples": [],
+          "error": null,
+          "latest": {
+            "free_bytes": 377167282176,
+            "data_bytes": 5205592,
+            "cpu_seconds": 0.3,
+            "VmHWM": 11206656,
+            "VmRSS": 11206656,
+            "epoch": 1790128996.1517482
+          }
+        },
+        "usage": {
+          "free_bytes": 377167282176,
+          "data_bytes": 5205592
+        },
+        "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
+      },
+      {
+        "pid": 3516,
+        "resources": {
+          "pid": 3516,
+          "started": 1790128950.279916,
+          "samples": [],
+          "error": null,
+          "latest": {
+            "free_bytes": 1288572764160,
+            "data_bytes": 5201472,
+            "cpu_seconds": 2.02,
+            "VmHWM": 12369920,
+            "VmRSS": 12369920,
+            "epoch": 1790128996.2943828
+          }
+        },
+        "usage": {
+          "free_bytes": 1288572764160,
+          "data_bytes": 5201472
+        },
+        "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
+      }
+    ],
+    "latency_ms": {
+      "read": {
+        "p50": 27.42476761341095,
+        "p95": 118.57666447758675,
+        "p99": 134.67277865856886
+      },
+      "write": {
+        "p50": 24.741326458752155,
+        "p95": 122.43695370852947,
+        "p99": 133.1912586465478
+      }
+    }
+  },
+  "updated_utc": "2026-09-23T02:03:17.209260+00:00",
+  "audits": [
+    {
+      "integrity": "ok",
+      "foreign_keys": "ok",
+      "tables": {
+        "accounts": {
+          "rows": 3,
+          "sha256": "5f4d1aa88b180d095075658ba6b50a5900e3b679e3bc32e93a6cb750771cae8b"
+        },
+        "transfers": {
+          "rows": 327,
+          "sha256": "f6fadd3a996491f8a3cbffa3bdaa6d96fad62dba2e961a3ed0eec62db21426ec"
+        },
+        "ledger": {
+          "rows": 654,
+          "sha256": "16c1a2889977776af435f03f23cc6e4ca42a51d3aa3f4890d5b1138a7b33716d"
+        }
+      },
+      "balances": [
+        [
+          1,
+          999993
+        ],
+        [
+          2,
+          999997
+        ],
+        [
+          3,
+          1000010
+        ]
+      ]
+    },
+    {
+      "integrity": "ok",
+      "foreign_keys": "ok",
+      "tables": {
+        "accounts": {
+          "rows": 3,
+          "sha256": "5f4d1aa88b180d095075658ba6b50a5900e3b679e3bc32e93a6cb750771cae8b"
+        },
+        "transfers": {
+          "rows": 327,
+          "sha256": "f6fadd3a996491f8a3cbffa3bdaa6d96fad62dba2e961a3ed0eec62db21426ec"
+        },
+        "ledger": {
+          "rows": 654,
+          "sha256": "16c1a2889977776af435f03f23cc6e4ca42a51d3aa3f4890d5b1138a7b33716d"
+        }
+      },
+      "balances": [
+        [
+          1,
+          999993
+        ],
+        [
+          2,
+          999997
+        ],
+        [
+          3,
+          1000010
+        ]
+      ]
+    },
+    {
+      "integrity": "ok",
+      "foreign_keys": "ok",
+      "tables": {
+        "accounts": {
+          "rows": 3,
+          "sha256": "5f4d1aa88b180d095075658ba6b50a5900e3b679e3bc32e93a6cb750771cae8b"
+        },
+        "transfers": {
+          "rows": 327,
+          "sha256": "f6fadd3a996491f8a3cbffa3bdaa6d96fad62dba2e961a3ed0eec62db21426ec"
+        },
+        "ledger": {
+          "rows": 654,
+          "sha256": "16c1a2889977776af435f03f23cc6e4ca42a51d3aa3f4890d5b1138a7b33716d"
+        }
+      },
+      "balances": [
+        [
+          1,
+          999993
+        ],
+        [
+          2,
+          999997
+        ],
+        [
+          3,
+          1000010
+        ]
+      ]
+    }
+  ],
+  "finished_utc": "2026-09-23T02:03:20.075679+00:00"
+}

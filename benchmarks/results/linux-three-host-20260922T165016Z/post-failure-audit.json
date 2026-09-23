@@ -1,0 +1,144 @@
+{
+  "scope": "Read-only post-failure audit; not an eight-hour pass or complete acknowledgement-history audit",
+  "all_equal": true,
+  "hosts": {
+    "10.175.52.19": {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "7821156b94e1da8c1f1ea9bc11634a8c4d8fd396dd8802c05f2e1d6f24b7a2cf",
+        "transfers": "1207a23d09cecc937db0854692caee83cb562b79d7e9fa38c594763ba6c0fd90",
+        "ledger": "5e2969d679ad5f457434b44d883f478d46eb0efa96664215ae128b90190b463a",
+        "sessions": "32ad6ac17a718e7ce4f8332cc32bd309c449cc22b9b8a43b1e00223338475e38",
+        "state": "8543eec0495c4b55cebe0c9929c60fae79714f9ed34a75cce0c0242cfc961973"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 100105,
+        "ledger": 200210,
+        "sessions": 13,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 345009684480,
+        "data_bytes": 314399640
+      },
+      "verification_sqlite": "3.46.1"
+    },
+    "10.175.52.20": {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "7821156b94e1da8c1f1ea9bc11634a8c4d8fd396dd8802c05f2e1d6f24b7a2cf",
+        "transfers": "1207a23d09cecc937db0854692caee83cb562b79d7e9fa38c594763ba6c0fd90",
+        "ledger": "5e2969d679ad5f457434b44d883f478d46eb0efa96664215ae128b90190b463a",
+        "sessions": "32ad6ac17a718e7ce4f8332cc32bd309c449cc22b9b8a43b1e00223338475e38",
+        "state": "8543eec0495c4b55cebe0c9929c60fae79714f9ed34a75cce0c0242cfc961973"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 100105,
+        "ledger": 200210,
+        "sessions": 13,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 377207521280,
+        "data_bytes": 314358920
+      },
+      "verification_sqlite": "3.46.1"
+    },
+    "10.175.52.21": {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "7821156b94e1da8c1f1ea9bc11634a8c4d8fd396dd8802c05f2e1d6f24b7a2cf",
+        "transfers": "1207a23d09cecc937db0854692caee83cb562b79d7e9fa38c594763ba6c0fd90",
+        "ledger": "5e2969d679ad5f457434b44d883f478d46eb0efa96664215ae128b90190b463a",
+        "sessions": "32ad6ac17a718e7ce4f8332cc32bd309c449cc22b9b8a43b1e00223338475e38",
+        "state": "8543eec0495c4b55cebe0c9929c60fae79714f9ed34a75cce0c0242cfc961973"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 100105,
+        "ledger": 200210,
+        "sessions": 13,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 1288710914048,
+        "data_bytes": 314772352
+      },
+      "verification_sqlite": "3.46.1"
+    }
+  },
+  "verifier_query": {
+    "sqlite": "3.46.1",
+    "readonly": true,
+    "queries": {
+      "JOIN": {
+        "plan": [
+          [
+            7,
+            0,
+            0,
+            "SCAN l"
+          ],
+          [
+            9,
+            0,
+            0,
+            "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+          ],
+          [
+            45,
+            0,
+            0,
+            "USE TEMP B-TREE FOR GROUP BY"
+          ],
+          [
+            86,
+            0,
+            0,
+            "USE TEMP B-TREE FOR count(DISTINCT)"
+          ]
+        ],
+        "rows": 32,
+        "instructions_lower_bound": 1006000
+      },
+      "CROSS JOIN": {
+        "plan": [
+          [
+            7,
+            0,
+            0,
+            "SEARCH t USING INTEGER PRIMARY KEY (rowid>? AND rowid<?)"
+          ],
+          [
+            29,
+            0,
+            0,
+            "SCAN l"
+          ],
+          [
+            80,
+            0,
+            0,
+            "USE TEMP B-TREE FOR count(DISTINCT)"
+          ]
+        ],
+        "rows": 32,
+        "instructions_lower_bound": 59986000
+      }
+    }
+  }
+}

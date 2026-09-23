@@ -1,0 +1,36 @@
+{
+  "operations": 2400,
+  "reads": 1677,
+  "writes": 723,
+  "seconds": 41.82086339592934,
+  "operations_per_second": 57.38762438447423,
+  "voter_cpu_seconds_timed": 18.05,
+  "controller_boundary": "closed-loop waves, at most 12 writes or 3 fenced reads outstanding",
+  "read_latency_ms": {
+    "p50": 30.707886442542076,
+    "p95": 63.62949777394533,
+    "p99": 83.07996392250061
+  },
+  "write_latency_ms": {
+    "p50": 51.66277941316366,
+    "p95": 105.87813146412373,
+    "p99": 122.22868762910366
+  },
+  "verified_transfers_including_fault_phases": 745,
+  "peak_rss_bytes_per_voter": [
+    10354688,
+    10440704,
+    11526144
+  ],
+  "checks": [
+    "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+    "fresh_ordered_read_barrier_on_every_voter",
+    "all_processes_sigkill_uncertain_retry_other_master",
+    "acknowledged_retry_other_master_after_restart",
+    "minority_cannot_complete_fenced_read",
+    "minority_no_ack_heal_retry",
+    "restarted_stale_voter_fenced_read_observes_acknowledged_writes",
+    "surviving_quorum_writes_offline_voter_catchup",
+    "all_acknowledged_transactions_survive_final_sigkill"
+  ]
+}

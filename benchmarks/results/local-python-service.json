@@ -1,0 +1,14 @@
+{
+  "complete": true,
+  "tests": 8,
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "source_sha256": {
+    "languages/python/src/sqlodin/results.py": "ab73e7b554a817e7dc7d13b4062c50751935bb57c947af088d64aa05096da310",
+    "languages/python/src/sqlodin/transport.py": "5051f293062b21977b18216397c689c921d6570762df320cb1000f99a6c44282",
+    "languages/python/src/sqlodin/transaction.py": "66cfc8b8c12fe52e9ed7151c1945242c01526b5fd8adcd2ffdab355de5ef5542",
+    "languages/python/src/sqlodin/client.py": "e2a9436c8070805aa41055d2286cd1fd439a64c97c993fbf7b43903cfad30fee",
+    "languages/python/src/sqlodin/__init__.py": "b0481f23b1c75f0c0865d4a05f3704f3c3316b4c226d2c342d4bb71a59cdf957",
+    "languages/python/src/sqlodin/parameters.py": "8435af510051b849c0bbedeb852787375c5112385167b69dbdcc72d1eae1e818",
+    "languages/python/src/sqlodin/errors.py": "c758c3794538a1d869c7d59372019bb2647807e605883f3f03c7f2cd9a4e3cec"
+  }
+}

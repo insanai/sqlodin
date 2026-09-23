@@ -1,0 +1,51 @@
+{
+  "hostname": "paxos-zig",
+  "address": "10.175.52.18",
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "cgroup": {
+    "/sys/fs/cgroup/cpu.max": "max 100000",
+    "/sys/fs/cgroup/memory.max": "max"
+  },
+  "loadavg": "3.12 1.89 1.37 2/1167 258209",
+  "virtualization": "lxc",
+  "storage_sync_policy": "Filesystem mount verified as ZFS; host pool sync settings and physical power-loss behavior not independently verified",
+  "concurrent_activity": "Native qualification soak on .19/.20/.21; physical hardware independence not established",
+  "existing_harness": {
+    "realworld_workload.py": "fc911c1066a28d4864bb547ac787e5ee189091e03299c785938381bcf3c4ae9a",
+    "driver.py": "e49639b870070f24f3abe6bdcf3f5901b7e5eba6ecd76c3f90c27f3f15833dba",
+    "compare-rqlite-realworld-3node.py": "de6f59176811410c3ef0702082d9ecf872b38a9765470b43bba42654d7ed6a61"
+  }
+}

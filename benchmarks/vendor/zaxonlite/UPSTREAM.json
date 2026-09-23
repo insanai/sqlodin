@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/insanai/paxos-zig",
+  "commit": "71863b787f7b6a4f4bfc9f5aa3a62cb4d7e1d0ac",
+  "files": {
+    "realworld_workload.py": "fc911c1066a28d4864bb547ac787e5ee189091e03299c785938381bcf3c4ae9a",
+    "LICENSE": "fda88836526617781960d9d4d22aae619f0e4e17c5388c894905f87eb679eeda",
+    "compare-rqlite-realworld-3node.py": "de6f59176811410c3ef0702082d9ecf872b38a9765470b43bba42654d7ed6a61",
+    "driver.py": "e49639b870070f24f3abe6bdcf3f5901b7e5eba6ecd76c3f90c27f3f15833dba"
+  }
+}

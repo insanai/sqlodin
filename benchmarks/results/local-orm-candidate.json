@@ -1,0 +1,106 @@
+{
+  "complete": true,
+  "format": 4,
+  "policy": 6,
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "checks": [
+    {
+      "name": "native_cli_status_write_and_query",
+      "passed": true
+    },
+    {
+      "name": "native_cluster_schema",
+      "passed": true
+    },
+    {
+      "name": "write_any_node_fenced_rows",
+      "passed": true
+    },
+    {
+      "name": "typed_parameters_and_results",
+      "passed": true
+    },
+    {
+      "name": "atomic_batch_rollback_and_next_sequence",
+      "passed": true
+    },
+    {
+      "name": "readonly_policy_and_result_limit",
+      "passed": true
+    },
+    {
+      "name": "untrusted_unlisted_and_peer_as_client_rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed_frames_close_only_offending_connection",
+      "passed": true
+    },
+    {
+      "name": "six_concurrent_sessions_mixed_writes_and_fenced_reads",
+      "passed": true
+    },
+    {
+      "name": "cross_master_durable_deduplication",
+      "passed": true
+    },
+    {
+      "name": "minority_no_ack_and_explicit_stale_read",
+      "passed": true
+    },
+    {
+      "name": "recover_uncertain_write_after_quorum_restored",
+      "passed": true
+    },
+    {
+      "name": "all_process_sigkill_reopen_fenced_convergence",
+      "passed": true
+    },
+    {
+      "name": "graceful_shutdown_and_exclusive_creation",
+      "passed": true
+    },
+    {
+      "name": "orm_begin_flush_generated_keys_relationships_and_visibility",
+      "passed": true
+    },
+    {
+      "name": "orm_rollback_exception_and_close_discard_all_staged_writes",
+      "passed": true
+    },
+    {
+      "name": "orm_nested_savepoint_rollback_constraint_and_release",
+      "passed": true
+    },
+    {
+      "name": "orm_foreign_key_flush_error_and_session_reuse",
+      "passed": true
+    },
+    {
+      "name": "orm_cross_master_conflict_and_complete_transaction_retry",
+      "passed": true
+    },
+    {
+      "name": "orm_repeatable_read_detects_intervening_commit",
+      "passed": true
+    },
+    {
+      "name": "core_transaction_and_pool_reset_rollback",
+      "passed": true
+    },
+    {
+      "name": "orm_uncertain_commit_identity_recovery_on_another_master",
+      "passed": true
+    },
+    {
+      "name": "orm_commits_survive_all_voter_crash_recovery",
+      "passed": true
+    }
+  ],
+  "binary_sha256": "43987cf6ef7a3aeea153f712a58498b96b20b4ad94daacc2af24e05ec58bbc18",
+  "logs": {
+    "node1.log": "SQLodin node 1 listening on 127.0.0.1:51349 (mTLS, cluster network-qualification)\nSQLodin node 1 listening on 127.0.0.1:51349 (mTLS, cluster network-qualification)\nSQLodin node 1 listening on 127.0.0.1:51349 (mTLS, cluster network-qualification)\nSQLodin node 1 listening on 127.0.0.1:51349 (mTLS, cluster network-qualification)\n",
+    "node2.log": "SQLodin node 2 listening on 127.0.0.1:51350 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 127.0.0.1:51350 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 127.0.0.1:51350 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 127.0.0.1:51350 (mTLS, cluster network-qualification)\n",
+    "node3.log": "SQLodin node 3 listening on 127.0.0.1:51351 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 127.0.0.1:51351 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 127.0.0.1:51351 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 127.0.0.1:51351 (mTLS, cluster network-qualification)\n"
+  }
+}

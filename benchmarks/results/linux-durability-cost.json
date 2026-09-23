@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "started_utc": "2026-09-22T11:53:42.927603+00:00",
+  "scope": "instrumented diagnostic, 256-byte insert rows; all fsync/fdatasync calls forwarded unchanged; timed region excludes setup, warmup, verification and close; SQLite batch-32 changes transaction granularity and is only an amortization reference; all replicas execute serially in one process; no maximum-throughput or mixed-SQL claim",
+  "host": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "rows": 480,
+  "warmup_rows": 96,
+  "repeats": 3,
+  "native": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "filesystem": "SOURCE                          FSTYPE OPTIONS\nlocal/containers/agy01[/rootfs] zfs    rw,relatime,idmapped,xattr,posixacl,casesensitive\n",
+  "paxos_pin": "a3e1fd78ec8f0429e5024710189ef77fc31961af",
+  "run_directory": "/home/insan/projects/sqlodin/build/durability-cost/20260922-115342",
+  "samples": [
+    {
+      "mode": "sqlite_full_32",
+      "rows": 480,
+      "rows_per_transaction": 32,
+      "seconds": 0.056041668,
+      "rows_per_second": 8565.055558303511,
+      "sync": {
+        "calls": 15,
+        "nanos": 49794857,
+        "writes": 152,
+        "bytes": 313120,
+        "write_nanos": 3144565
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "durable_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 22.326432856,
+      "rows_per_second": 21.499180056925436,
+      "sync": {
+        "calls": 4383,
+        "nanos": 19968222795,
+        "writes": 47277,
+        "bytes": 110052672,
+        "write_nanos": 1191997201
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "sqlite_full_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 1.360996284,
+      "rows_per_second": 352.6828145255979,
+      "sync": {
+        "calls": 480,
+        "nanos": 1286573126,
+        "writes": 1088,
+        "bytes": 2241280,
+        "write_nanos": 34809850
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "durable_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 4.080457992,
+      "rows_per_second": 117.63385407742729,
+      "sync": {
+        "calls": 978,
+        "nanos": 3520190806,
+        "writes": 12774,
+        "bytes": 31074656,
+        "write_nanos": 278326111
+      },
+      "verified": true,
+      "repeat": 1
+    },
+    {
+      "mode": "durable_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 22.166898308,
+      "rows_per_second": 21.653909055321858,
+      "sync": {
+        "calls": 4383,
+        "nanos": 19892944534,
+        "writes": 47277,
+        "bytes": 110052672,
+        "write_nanos": 1163617223
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "sqlite_full_32",
+      "rows": 480,
+      "rows_per_transaction": 32,
+      "seconds": 0.065751701,
+      "rows_per_second": 7300.191366912318,
+      "sync": {
+        "calls": 15,
+        "nanos": 56378824,
+        "writes": 152,
+        "bytes": 313120,
+        "write_nanos": 3898776
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "sqlite_full_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 1.3864328289999999,
+      "rows_per_second": 346.21222893734586,
+      "sync": {
+        "calls": 480,
+        "nanos": 1312698420,
+        "writes": 1088,
+        "bytes": 2241280,
+        "write_nanos": 34829787
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "durable_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 4.052039271,
+      "rows_per_second": 118.45887166871933,
+      "sync": {
+        "calls": 978,
+        "nanos": 3509384205,
+        "writes": 12774,
+        "bytes": 31074656,
+        "write_nanos": 276747192
+      },
+      "verified": true,
+      "repeat": 2
+    },
+    {
+      "mode": "sqlite_full_32",
+      "rows": 480,
+      "rows_per_transaction": 32,
+      "seconds": 0.066840752,
+      "rows_per_second": 7181.247751371798,
+      "sync": {
+        "calls": 15,
+        "nanos": 57106979,
+        "writes": 152,
+        "bytes": 313120,
+        "write_nanos": 4206384
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "durable_3",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 22.645828375,
+      "rows_per_second": 21.19595680279459,
+      "sync": {
+        "calls": 4383,
+        "nanos": 20308493742,
+        "writes": 47277,
+        "bytes": 110052672,
+        "write_nanos": 1185900208
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "durable_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 4.108159463,
+      "rows_per_second": 116.84064465440153,
+      "sync": {
+        "calls": 978,
+        "nanos": 3561822952,
+        "writes": 12774,
+        "bytes": 31074656,
+        "write_nanos": 273113902
+      },
+      "verified": true,
+      "repeat": 3
+    },
+    {
+      "mode": "sqlite_full_1",
+      "rows": 480,
+      "rows_per_transaction": 1,
+      "seconds": 1.414986647,
+      "rows_per_second": 339.22581602990914,
+      "sync": {
+        "calls": 480,
+        "nanos": 1327216092,
+        "writes": 1088,
+        "bytes": 2241280,
+        "write_nanos": 39610572
+      },
+      "verified": true,
+      "repeat": 3
+    }
+  ],
+  "source_sha256": {
+    "bench/durability_cost/main.odin": "9c4af26763367d163a3b2cf844dd13373ef59b55e437961b09a0334ff5056dc1",
+    "bench/durability_cost/sync_profile.c": "5f28c360a24ac5dea410eddf0a126ae8e249713cbec1235f12769ffb863cf235",
+    "src/durable/codec.odin": "1a98c7f0cbbcc42ae3d4bbc0fe49a68b1291bd938485ca53754fa40b1e833668",
+    "src/durable/host.odin": "eea0ee3d5ebdb67aae7d028821fd65da7c7b3af118dc5f0e4c02015ec207dc56",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "ea1257e8f2038f667baab4bd2d7c2502011ace26f10fdd5eae0dfa2b6955904c",
+    "src/durable/storage.odin": "53ba8332e5c52e03cf8e50503b88c3c572d8f95c8ca70d437594b1aa8eb3c81c",
+    "src/engine.odin": "017d57a55e833823ffd65ec299eec0096204107a41105ab7b346e3b4012a76f0",
+    "src/engine_dml.odin": "e57176f91d72837f1c5811eb332c4b5b2f998382ecf224f07b498dcf63dea5b3",
+    "src/errors.odin": "6a757bae504e82a8636a34a52baf29b03dccab5ee9f0028da78c66235f5d5d3c",
+    "src/mutation.odin": "4060ea874276995ace4d56af81d729c42b91e7c0214ac72c723018c99bdbd9fc",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "4c7a413dbe2d3e1682066b04625f5e4857e1bc4de1756808d31c469ebaa06952",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "tools/profile_durability_cost.py": "de29fbbcbbf9a265fb263fa619949a6c61f750895632df6926ae7d146a5426a9"
+  },
+  "binary_sha256": {
+    "probe": "cfccf7660ea602cd96472ac21fee0309b99adc87b646d8fc5b41efd5ab0bbdc8",
+    "libsync_profile.so": "14372b25b4068068eaaf62c05d0d24873a95413b811c83b2391d15b9b23a1841"
+  },
+  "finished_utc": "2026-09-22T11:55:24.881831+00:00"
+}

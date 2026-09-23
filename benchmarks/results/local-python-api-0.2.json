@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "tests": 23,
+  "version": "0.2.0",
+  "output": ".......................                                                  [100%]\n23 passed in 0.29s\n",
+  "source_sha256": {
+    "languages/python/src/sqlodin/vector.py": "07c14a567fbd5cb5c98e40a0bc1c7097463805278d3611daa136d19c30fe5212",
+    "languages/python/src/sqlodin/results.py": "ab73e7b554a817e7dc7d13b4062c50751935bb57c947af088d64aa05096da310",
+    "languages/python/src/sqlodin/transport.py": "5051f293062b21977b18216397c689c921d6570762df320cb1000f99a6c44282",
+    "languages/python/src/sqlodin/dbapi.py": "0aa3dfac814d9d89fe98b9e702e4c53ecbc700693e4cc7265e6267f250ba8ec2",
+    "languages/python/src/sqlodin/transaction.py": "66cfc8b8c12fe52e9ed7151c1945242c01526b5fd8adcd2ffdab355de5ef5542",
+    "languages/python/src/sqlodin/client.py": "81d9f101c411133d9988d759502a3cbedd2632442f5559e60b6c7bacf7c425d2",
+    "languages/python/src/sqlodin/__init__.py": "be18335c74d6dd0744a3f6cf5d4a23a1b32a9ccff38e1e2d56d2805dd6174883",
+    "languages/python/src/sqlodin/sqlalchemy.py": "48299c6c152c8c249a2a47fdaf9630d9e1f6b8870d8ccf3501ffc3fb56761208",
+    "languages/python/src/sqlodin/parameters.py": "7705bba70912e01397c137610c5790869fbbaf4ba8e015dd62e8689c837a6464",
+    "languages/python/src/sqlodin/search.py": "678a506c39a2d2de4425e3ba4712cc5085a5aae1dafcaa89a4bd3aeb04d910dc",
+    "languages/python/src/sqlodin/errors.py": "c758c3794538a1d869c7d59372019bb2647807e605883f3f03c7f2cd9a4e3cec"
+  },
+  "wheel_sha256": "865c66f18b1b139f1dcd86e8ffb7a05fd849bc0432bd741c644d37e4d7ca1d21",
+  "isolated_wheel_without_optional_dependencies": true,
+  "installed_sqlalchemy_entrypoint": true
+}

@@ -1,0 +1,79 @@
+{
+  "complete": true,
+  "binary_sha256": "de193ea62aad5e2a386dae4744442f24a76211d03de9bb763bcb50fb128ae24c",
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "linkage": "/Users/vikrantrathore/projects/insan.ai/sqlodin/bin/sqlodin:\n\t/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa (compatibility version 1.0.0, current version 24.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)\n",
+  "native": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "openssl": "3.5.8",
+    "platform": {
+      "system": "Darwin",
+      "machine": "arm64",
+      "compiler": "/usr/bin/cc",
+      "archiver": "/usr/bin/ar",
+      "compiler_version": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+      "builder_sha256": "ed2760e611b57d4e09769caa528f882bbd87d6842c6589c66d7b285035777d3f"
+    },
+    "sources": {
+      "sqlite": {
+        "version": "3.51.3",
+        "url": "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        "files": {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      },
+      "vec": {
+        "version": "0.1.9",
+        "url": "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        "files": {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      },
+      "openssl": {
+        "version": "3.5.8",
+        "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+        "sha256": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2"
+      }
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "openssl_flags": [
+      "no-shared",
+      "no-dso",
+      "no-module",
+      "no-engine",
+      "no-zlib",
+      "--libdir=lib",
+      "--openssldir=/sqlodin/no-system-openssl"
+    ],
+    "archives_sha256": {
+      "libsqlite3.a": "3d2dc1f4c05bd55ccc581fee68db767d6d8607bad3a81e26484c327278bf69a8",
+      "libsqlite_vec.a": "4fb88a224d869fd827266a98ba17c884b6f22be33183548800fa939a61dc9326",
+      "libssl.a": "ee41b6691e437599cd8a8dbd5e3a674807656d15ca7ecdbac58b323d22de7847",
+      "libcrypto.a": "96b6dd3480af901dde87891922542583a903e3652e7182c00915ab7ec10c115b"
+    }
+  },
+  "odin": "/opt/homebrew/bin/odin version dev-2026-09:a2fb372b7",
+  "scope": "Native SQLite/FTS5, sqlite-vec and OpenSSL are static; OS runtime may remain dynamic"
+}

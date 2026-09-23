@@ -1,0 +1,34 @@
+RUN sequential 0 zaxonlite
+RUN sequential 0 cowsql
+RUN sequential 0 rqlite
+RUN sequential 0 sqlodin
+RUN mixed 1 sqlodin
+RUN mixed 1 rqlite
+RUN mixed 1 zaxonlite
+RUN sequential 1 cowsql
+RUN sequential 1 sqlodin
+RUN sequential 1 rqlite
+RUN sequential 1 zaxonlite
+RUN mixed 2 sqlodin
+RUN mixed 2 zaxonlite
+Traceback (most recent call last):
+  File "/home/insan/projects/sqlodin/tools/compare_native_workloads.py", line 299, in <module>
+    if __name__ == '__main__': main()
+                               ~~~~^^
+  File "/home/insan/projects/sqlodin/tools/compare_native_workloads.py", line 282, in main
+    result = native_run(folder,args,seed) if system=='sqlodin' else previous.network_run(system,folder,args,seed,previous.unused_base_port())
+                                                                    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/insan/projects/sqlodin/tools/compare_realworld.py", line 182, in network_run
+    result = reference.run_system(cluster, args.operations, args.warmup, args.concurrency, seed)
+  File "/home/insan/projects/sqlodin/benchmarks/vendor/zaxonlite/compare-rqlite-realworld-3node.py", line 467, in run_system
+    cluster.setup()
+    ~~~~~~~~~~~~~^^
+  File "/home/insan/projects/sqlodin/benchmarks/vendor/zaxonlite/compare-rqlite-realworld-3node.py", line 231, in setup
+    client.execute(statement)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/insan/projects/sqlodin/benchmarks/vendor/zaxonlite/realworld_workload.py", line 400, in execute
+    _, attempts = self.call({"op": "exec", "sql": sql})
+                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/insan/projects/sqlodin/benchmarks/vendor/zaxonlite/realworld_workload.py", line 385, in call
+    raise RuntimeError(f"Zaxon request failed: {response}")
+RuntimeError: Zaxon request failed: {'ok': False, 'error': 'sql', 'message': 'database disk image is malformed'}

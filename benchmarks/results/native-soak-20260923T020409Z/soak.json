@@ -1,0 +1,129 @@
+{
+  "complete": false,
+  "status": "running",
+  "started_utc": "2026-09-23T02:04:15.800440+00:00",
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "requested_workload_seconds": 28800,
+  "scope": "three Linux instances; native mTLS replication and SQL; closed-loop 70/30 reads/transfers",
+  "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e",
+  "limits": {
+    "rss_bytes": 536870912,
+    "data_bytes": 8589934592,
+    "min_free_bytes": 10737418240
+  },
+  "faults": [
+    {
+      "node": 1,
+      "epoch": 1790132658.1270592,
+      "kind": "SIGKILL, surviving-quorum read/write, reopen"
+    },
+    {
+      "node": 2,
+      "epoch": 1790136258.563604,
+      "kind": "SIGKILL, surviving-quorum read/write, reopen"
+    },
+    {
+      "node": 3,
+      "epoch": 1790139858.3813648,
+      "kind": "SIGKILL, surviving-quorum read/write, reopen"
+    }
+  ],
+  "source_sha256": {
+    "tools/run_native_soak.py": "af886099745c9baf1947ebebb84bbdc68b0d1b31b1c7886e7dc024b3246b53e5",
+    "tools/native_soak_worker.py": "e4719b82f33ce7a2d7423002b934a5da2b39596e509b3699d5e36415875fbd9e"
+  },
+  "workload_started_utc": "2026-09-23T02:04:16.957727+00:00",
+  "planned_end_utc": "2026-09-23T10:04:16.957752+00:00",
+  "progress": {
+    "elapsed_seconds": 11686.530697176233,
+    "reads": 152740,
+    "writes": 65170,
+    "verified_transfers": 65170,
+    "acknowledged_retries": 253,
+    "resources": [
+      {
+        "pid": 209692,
+        "resources": {
+          "pid": 209692,
+          "started": 1790132658.1000805,
+          "samples": [],
+          "error": null,
+          "latest": {
+            "free_bytes": 344777555968,
+            "data_bytes": 245419752,
+            "cpu_seconds": 626.78,
+            "VmHWM": 14626816,
+            "VmRSS": 14626816,
+            "epoch": 1790140742.8819437
+          }
+        },
+        "usage": {
+          "free_bytes": 344777555968,
+          "data_bytes": 245419752
+        },
+        "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
+      },
+      {
+        "pid": 4945,
+        "resources": {
+          "pid": 4945,
+          "started": 1790136258.5431077,
+          "samples": [],
+          "error": null,
+          "latest": {
+            "free_bytes": 377091784704,
+            "data_bytes": 245235456,
+            "cpu_seconds": 351.47,
+            "VmHWM": 13381632,
+            "VmRSS": 13381632,
+            "epoch": 1790140741.4011934
+          }
+        },
+        "usage": {
+          "free_bytes": 377091784704,
+          "data_bytes": 245235456
+        },
+        "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
+      },
+      {
+        "pid": 5595,
+        "resources": {
+          "pid": 5595,
+          "started": 1790139858.3210104,
+          "samples": [],
+          "error": null,
+          "latest": {
+            "free_bytes": 1288246788096,
+            "data_bytes": 245186280,
+            "cpu_seconds": 47.39,
+            "VmHWM": 12345344,
+            "VmRSS": 12345344,
+            "epoch": 1790140742.5928051
+          }
+        },
+        "usage": {
+          "free_bytes": 1288246919168,
+          "data_bytes": 245186280
+        },
+        "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
+      }
+    ],
+    "latency_ms": {
+      "read": {
+        "p50": 106.49575013667345,
+        "p95": 121.09034042805433,
+        "p99": 132.29560758918524
+      },
+      "write": {
+        "p50": 111.96993384510279,
+        "p95": 127.6885736733675,
+        "p99": 138.80667369812727
+      }
+    }
+  },
+  "updated_utc": "2026-09-23T05:19:03.488544+00:00"
+}

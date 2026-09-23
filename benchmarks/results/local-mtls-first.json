@@ -1,0 +1,238 @@
+{
+  "complete": false,
+  "checks": [
+    {
+      "name": "native_mutual_tls13",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 0,
+          "stdout": "authenticated TLS 1.3 application exchange passed\n",
+          "stderr": ""
+        },
+        {
+          "returncode": 0,
+          "stdout": "authenticated TLS 1.3 application exchange passed\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "reject_wrong_client_identity",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        },
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        }
+      ]
+    },
+    {
+      "name": "reject_wrong_server_identity",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        },
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        }
+      ]
+    },
+    {
+      "name": "reject_untrusted_ca",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        },
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        }
+      ]
+    },
+    {
+      "name": "reject_wildcard_identity",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        },
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        }
+      ]
+    },
+    {
+      "name": "reject_common_name_fallback",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        },
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        }
+      ]
+    },
+    {
+      "name": "reject_wrong_certificate_purpose",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        },
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        }
+      ]
+    },
+    {
+      "name": "reject_expired_certificate",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        },
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        }
+      ]
+    },
+    {
+      "name": "reject_key_certificate_mismatch",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": -13,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        }
+      ]
+    },
+    {
+      "name": "reject_blocking_socket",
+      "passed": true,
+      "processes": [
+        {
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "mTLS probe rejected or timed out\n"
+        },
+        {
+          "returncode": -13,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "fragmented",
+      "passed": true,
+      "result": {
+        "returncode": 0,
+        "reply": "pong",
+        "stdout": "authenticated TLS 1.3 application exchange passed\n",
+        "stderr": "",
+        "peer_error": null,
+        "seconds": 0.027628750016447157
+      }
+    },
+    {
+      "name": "missing-certificate",
+      "passed": true,
+      "result": {
+        "returncode": 1,
+        "reply": "",
+        "stdout": "",
+        "stderr": "mTLS probe rejected or timed out\n",
+        "peer_error": "[Errno 32] Broken pipe",
+        "seconds": 0.008424208004726097
+      }
+    },
+    {
+      "name": "tls12",
+      "passed": true,
+      "result": {
+        "returncode": 1,
+        "reply": "",
+        "stdout": "",
+        "stderr": "mTLS probe rejected or timed out\n",
+        "peer_error": "[SSL: TLSV1_ALERT_PROTOCOL_VERSION] tlsv1 alert protocol version (_ssl.c:1082)",
+        "seconds": 0.006734458002028987
+      }
+    },
+    {
+      "name": "plaintext",
+      "passed": true,
+      "result": {
+        "returncode": 1,
+        "reply": "",
+        "stdout": "",
+        "stderr": "mTLS probe rejected or timed out\n",
+        "peer_error": null,
+        "seconds": 0.006565292016603053
+      }
+    },
+    {
+      "name": "idle",
+      "passed": true,
+      "result": {
+        "returncode": 1,
+        "reply": "",
+        "stdout": "",
+        "stderr": "mTLS probe rejected or timed out\n",
+        "peer_error": null,
+        "seconds": 5.055944374995306
+      }
+    }
+  ],
+  "run_at_utc": "2026-09-22T17:10:10.089129+00:00",
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "openssl": "OpenSSL 3.6.4 25 Aug 2026 (Library: OpenSSL 3.6.4 25 Aug 2026)",
+  "python_openssl": "OpenSSL 3.6.4 25 Aug 2026",
+  "binary_sha256": "a20c28af7cfc2fa77aed55ebd1e4fafdf076741d4cad2451bf81cfb6ba0eea4d",
+  "source_sha256": {
+    "transport/mtls/openssl.odin": "5d029b368775df8aa5dc96ceb9036130fb1c17a861121dd3b1cac2508d56fb74",
+    "transport/mtls/mtls.odin": "406ae861380b5717f3f873d54f00d302c7de5f7f134a43e892b16cd8aca0b36a",
+    "internal/mtls_probe/main.odin": "d7d8d16cb67cd340f89c68714b5a181a435ec2e92b996f576c0d4681bab3b3fa",
+    "tools/check_mtls.py": "1c068a5f97b18c6ed2c06140ceb0b971e6c8251c48b5fd3633163ae524fcaa4a"
+  },
+  "scope": "optional native TLS primitive over inherited socket pairs; no SQL service, enrollment, dynamic membership, certificate rotation or production qualification",
+  "qualification_correction": "Initial harness treated SIGPIPE process death as an acceptable negative outcome. Original observations retained; this run is not passing qualification. The corrected harness requires exit 1 and the probe ignores SIGPIPE explicitly."
+}

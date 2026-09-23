@@ -1,0 +1,25 @@
+repeat=1 mode=sqlite_full_32
+repeat=1 mode=durable_3
+repeat=1 mode=durable_1
+repeat=1 mode=transaction_3_batch16
+repeat=1 mode=transaction_3
+repeat=1 mode=transaction_1
+repeat=1 mode=sqlite_full_1
+repeat=1 mode=transaction_1_batch16
+repeat=2 mode=sqlite_full_1
+repeat=2 mode=transaction_1
+repeat=2 mode=durable_3
+repeat=2 mode=transaction_3
+repeat=2 mode=transaction_3_batch16
+repeat=2 mode=durable_1
+repeat=2 mode=sqlite_full_32
+repeat=2 mode=transaction_1_batch16
+repeat=3 mode=durable_3
+repeat=3 mode=transaction_3_batch16
+repeat=3 mode=durable_1
+repeat=3 mode=sqlite_full_32
+repeat=3 mode=transaction_1
+repeat=3 mode=transaction_1_batch16
+repeat=3 mode=transaction_3
+repeat=3 mode=sqlite_full_1
+benchmarks/results/linux-journal-final-cost.json

@@ -1,0 +1,16 @@
+{
+  "macOS": {
+    "tests": 94,
+    "complete": true,
+    "output": "[INFO ] --- [2026-09-23 00:15:31] Starting test runner with 8 threads. Set with -define:ODIN_TEST_THREADS=n.\n[INFO ] --- [2026-09-23 00:15:31] The random seed sent to every test is: 9094024880070. Set with -define:ODIN_TEST_RANDOM_SEED=n.\n[INFO ] --- [2026-09-23 00:15:31] Memory tracking is enabled. Tests will log their memory usage if there's an issue.\n[INFO ] --- [2026-09-23 00:15:31] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]\n\nFinished 94 tests in 12.170161s. All tests were successful.\n\n"
+  },
+  "Linux": {
+    "tests": 94,
+    "complete": true,
+    "output": "[INFO ] --- [2026-09-23 00:12:33] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.\n[INFO ] --- [2026-09-23 00:12:33] The random seed sent to every test is: 17842402155495520. Set with -define:ODIN_TEST_RANDOM_SEED=n.\n[INFO ] --- [2026-09-23 00:12:33] Memory tracking is enabled. Tests will log their memory usage if there's an issue.\n[INFO ] --- [2026-09-23 00:12:33] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]\n\nFinished 94 tests in 284.852012ms. All tests were successful.\n\n"
+  },
+  "Linux_reference_group_commit_disabled": {
+    "complete": false,
+    "reason": "Optional additional compilation stopped after more than 15 minutes; no test result is claimed."
+  }
+}

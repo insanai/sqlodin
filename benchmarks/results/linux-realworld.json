@@ -1,0 +1,2563 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "started_utc": "2026-09-22T11:23:45.407504+00:00",
+  "host": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           48 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  16\nOn-line CPU(s) list:                     0-15\nVendor ID:                               AuthenticAMD\nModel name:                              AMD Ryzen 7 5800H with Radeon Graphics\nCPU family:                              25\nModel:                                   80\nThread(s) per core:                      2\nCore(s) per socket:                      8\nSocket(s):                               1\nStepping:                                0\nFrequency boost:                         enabled\nCPU(s) scaling MHz:                      58%\nCPU max MHz:                             4465.2612\nCPU min MHz:                             403.4880\nBogoMIPS:                                6388.59\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk clzero irperf xsaveerptr rdpru wbnoinvd cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip pku ospke vaes vpclmulqdq rdpid overflow_recov succor smca fsrm debug_swap\nVirtualization:                          AMD-V\nL1d cache:                               256 KiB (8 instances)\nL1i cache:                               256 KiB (8 instances)\nL2 cache:                                4 MiB (8 instances)\nL3 cache:                                16 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-15\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Mitigation; Safe RET\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Mitigation; Clear CPU buffers\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Mitigation; IBPB before exit to userspace\n",
+  "odin": "odin version dev-2026-09-nightly:a2fb372",
+  "paxos_pin": "a3e1fd78ec8f0429e5024710189ef77fc31961af",
+  "rqlite_version": "rqlited v10.2.7 linux amd64 go1.26.4 sqlite3.53.2 (commit a66a6f36d3b5a7f0da0bad3768014052a74ce4bc, compiler gc)",
+  "workload": {
+    "operations": 1200,
+    "warmup": 240,
+    "repeats": 3,
+    "network_concurrency": 4,
+    "embedded_concurrency": 1
+  },
+  "comparability": "No aggregate ranking: embedded and network/read consistency boundaries differ.",
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "comparison_dependencies": {
+    "pins": {
+      "raft": [
+        "https://github.com/cowsql/raft.git",
+        "v0.22.1",
+        "9edb176a7924ce2b943cb56552366dc4b5a1a6b7"
+      ],
+      "cowsql": [
+        "https://github.com/cowsql/cowsql.git",
+        "v1.15.9",
+        "783815b901470e27b7dfbcce3a67c888dad19e78"
+      ],
+      "go-cowsql": [
+        "https://github.com/cowsql/go-cowsql.git",
+        "v1.22.0",
+        "b0e46059265dcc795d35a15e86f44ee848e25252"
+      ]
+    },
+    "archives": {
+      "go1.24.4.linux-amd64.tar.gz": [
+        "https://go.dev/dl/",
+        "77e5da33bb72aeaef1ba4418b6fe511bc4d041873cbf82e5aa6318740df98717"
+      ],
+      "rqlite-v10.2.7-linux-amd64.tar.gz": [
+        "https://github.com/rqlite/rqlite/releases/download/v10.2.7/",
+        "0b4e8ffbbacc84e421c49915bbd82cc67ac6488e22d4ce58b678fc1219c6a38a"
+      ]
+    },
+    "packages": {
+      "libsqlite3-dev_3.46.1-7+deb13u2_amd64.deb": "56e1945d52292b506c1f0bcb77543fea289ccee857c478dcddded40226e1594d",
+      "autoconf_2.72-3.1_all.deb": "0de76b647b0afb6c7934999aaefeb463656c147672464a367df1019969e77af3",
+      "automake_1%3a1.17-4_all.deb": "8d4b172d4ff8070789c54b48a95585b53e4c65faeb07a2ae52da16cb364df635",
+      "libtool_2.5.4-4_all.deb": "be5361a8c1fce2758c3e19608bf97393d5f3afdb7e926aeb83e2818355bd885f",
+      "pkgconf-bin_1.8.1-4_amd64.deb": "54efef2aef4db5fcb5e0f5b7746465000c6a779b06f3686d0ec3d2a901b20aeb",
+      "autotools-dev_20240727.1_all.deb": "d07d476c1fcd713ed04695f25ac290c3ae2317e6fd974ad6b2168e3be1c795c3",
+      "libsqlite3-0_3.46.1-7+deb13u2_amd64.deb": "0a459adaffd901109f7811ab65f58e7a957b4907d05539cf3d1184efdcde0468",
+      "libltdl-dev_2.5.4-4_amd64.deb": "0f225ed11c06958274e2ff0ea27f283f23aa6cd6a03df04499b467f68fedfed4",
+      "libuv1-dev_1.50.0-2_amd64.deb": "a638490607f08b4369b2515c013ced6b33dabecbf985b0a1629d4ad53ec9c9d2",
+      "m4_1.4.19-8_amd64.deb": "221b3e224708c1da2a1a88b6824380593579b2254ae7d914afa14cbd5d343334",
+      "libpkgconf3_1.8.1-4_amd64.deb": "85087cd04e57fd4ab7d6e816d348c335047823ab60c78878336b74f07b352ca1",
+      "libuv1t64_1.50.0-2_amd64.deb": "5fec8035002e0c745b64d1c5b3e1dc42790d1a77574315b976cf3e4aab9ddc0a",
+      "autoconf-archive_20220903-3_all.deb": "9f13a50fa9038cb4381545b275f7440c0a40d43832046a7e7f515f47a4ecbac8",
+      "pkgconf_1.8.1-4_amd64.deb": "f1fcad470ca3ac80b4a0f4af6f03cd215089473996b07e508b3ee342bbb11af7"
+    },
+    "go": "go version go1.24.4 linux/amd64",
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "raft_configure": [
+      "--without-lz4"
+    ],
+    "cowsql_configure": [
+      "--disable-backtrace"
+    ],
+    "cowsql_demo_sha256": "270eba3d18f7a1f45bd0266aeade26884750e439a55fa8ed56d9fbe30138409e"
+  },
+  "durability": {
+    "schema_version": 1,
+    "run_at_utc": "2026-09-22T10:54:02.081571+00:00",
+    "source_sha256": {
+      "internal/durability_probe/main.odin": "92c5473e84c99c9bd486dd077a9da741b93d77f528f7daba76486130141fad20",
+      "src/durable/codec.odin": "1a98c7f0cbbcc42ae3d4bbc0fe49a68b1291bd938485ca53754fa40b1e833668",
+      "src/durable/host.odin": "eea0ee3d5ebdb67aae7d028821fd65da7c7b3af118dc5f0e4c02015ec207dc56",
+      "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+      "src/durable/journal.odin": "ea1257e8f2038f667baab4bd2d7c2502011ace26f10fdd5eae0dfa2b6955904c",
+      "src/durable/storage.odin": "53ba8332e5c52e03cf8e50503b88c3c572d8f95c8ca70d437594b1aa8eb3c81c",
+      "src/engine.odin": "017d57a55e833823ffd65ec299eec0096204107a41105ab7b346e3b4012a76f0",
+      "src/engine_dml.odin": "e57176f91d72837f1c5811eb332c4b5b2f998382ecf224f07b498dcf63dea5b3",
+      "src/errors.odin": "6a757bae504e82a8636a34a52baf29b03dccab5ee9f0028da78c66235f5d5d3c",
+      "src/mutation.odin": "4060ea874276995ace4d56af81d729c42b91e7c0214ac72c723018c99bdbd9fc",
+      "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+      "src/sqlite/sqlite3.odin": "4c7a413dbe2d3e1682066b04625f5e4857e1bc4de1756808d31c469ebaa06952",
+      "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+      "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f"
+    },
+    "native_dependencies": {
+      "sqlite": "3.51.3",
+      "sqlite_vec": "0.1.9",
+      "sources": {
+        "sqlite": [
+          "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+          {
+            "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+            "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+            "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+          }
+        ],
+        "vec": [
+          "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+          {
+            "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+            "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+          }
+        ]
+      },
+      "sqlite_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-DSQLITE_THREADSAFE=1",
+        "-DSQLITE_OMIT_LOAD_EXTENSION",
+        "-DSQLITE_OMIT_DEPRECATED",
+        "-DSQLITE_DQS=0",
+        "-DSQLITE_ENABLE_FTS5",
+        "-DHAVE_USLEEP=1"
+      ],
+      "vec_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-DSQLITE_CORE",
+        "-DSQLITE_VEC_STATIC",
+        "-DSQLITE_VEC_OMIT_FS"
+      ],
+      "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+      "archives_sha256": {
+        "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+        "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+      }
+    },
+    "scope": "process crash; not physical power-loss certification",
+    "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+    "checks": [
+      {
+        "case": "before",
+        "passed": true,
+        "verification": "verified rows=0 applied=1"
+      },
+      {
+        "case": "journal",
+        "passed": true,
+        "verification": "verified rows=1 applied=2"
+      },
+      {
+        "case": "application",
+        "passed": true,
+        "verification": "verified rows=1 applied=2"
+      },
+      {
+        "case": "ack",
+        "passed": true,
+        "verification": "verified rows=1 applied=2"
+      },
+      {
+        "case": "three_voters_killed_at_ack",
+        "passed": true,
+        "verification": "verified three voters: all 80 acknowledged writes survived"
+      }
+    ]
+  },
+  "zaxon_release": {
+    "repository": "https://github.com/insanai/zaxonlite",
+    "tag": "v0.7.0",
+    "asset_url": "https://github.com/insanai/zaxonlite/releases/download/v0.7.0/zaxon-0.7.0-x86_64-linux-musl.tar.gz",
+    "archive_sha256": "6e13ea5fe25f41675fea3f4148447555570d8510f0887c454b7e9090676752e4",
+    "binary_sha256": "6a8f7748405f580c28d4c27a69a9c3dbc6d65790ff84ee8addbc99edd65c2da1",
+    "version": "zaxon 0.7.0",
+    "published_checksums": "1dfbd970253f7724f655aa8401542d4bfed426b74d5236a7a4a751b0df1729c0  zaxon-0.7.0-aarch64-linux-musl.tar.gz\n577302dc5ac4a5a8c75e1877e081d28624e40c30fb1bceaa539a09b93aa648d0  zaxon-0.7.0-aarch64-macos.tar.gz\n6e13ea5fe25f41675fea3f4148447555570d8510f0887c454b7e9090676752e4  zaxon-0.7.0-x86_64-linux-musl.tar.gz\nc7f7b7f73c761d70d118e42cd0a7b09e6122c8a500ddeae8342ba3af1ab85818  zaxon-0.7.0-x86_64-macos.tar.gz\nd6e4d0ef78c5e1dc8a8d3fa9e37a2582c9edb1f01a5d8ad2f82bb6bfe4469f7b  zaxon-0.7.0-x86_64-windows-gnu.zip\n115935c40ad759e41db99ad47184f296ec5a8f22713f90acba9d11cacf079a5b  zxlite-0.7.0-cp312-abi3-macosx_10_15_x86_64.whl\nc9a631e109464f6ceb18f69b8c9ac6ca664985ce2102d65a00fd30f8959999cd  zxlite-0.7.0-cp312-abi3-macosx_11_0_arm64.whl\nc3bfd68ec18be20afa09f433920d9a56ca12baf72cf1a3e4eb3d38eeb1bf2084  zxlite-0.7.0-cp312-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl\nad868a00fbb5deb4c9be574d8a94c98830115fd1a0af196c1e0bdbdcbcb07bcc  zxlite-0.7.0-cp312-abi3-win_amd64.whl\n"
+  },
+  "realworld": [
+    {
+      "repeat": 1,
+      "operations": 1200,
+      "writes": 364,
+      "reads": 836,
+      "seconds": 28.669716949,
+      "operations_per_second": 41.85601141911015,
+      "reopen_ms": 279.826521,
+      "verified": true,
+      "latency_ms": {
+        "p50": 0.115457,
+        "p95": 115.34499500000001,
+        "p99": 128.246486
+      },
+      "system": "sqlodin",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 5.74,
+        "sampled_peak_aggregate_rss_bytes": 14512128,
+        "whole_lifecycle_seconds": 34.82340255752206,
+        "interval_ms": 10,
+        "scope": "one embedded process including all three database hosts and workload driver; entire lifecycle"
+      },
+      "disk": {
+        "logical_bytes": 40636416,
+        "allocated_bytes": 1094656,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "expected": {
+        "orders": 435,
+        "order_lines": 435,
+        "ledger_entries": 435,
+        "distinct_operations": 435,
+        "units_sold": 1124,
+        "revenue_cents": 5502013,
+        "negative_stock_rows": 0
+      },
+      "client_concurrency": 1,
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "boundary": "embedded host, three disk databases, in-process transport, local snapshot reads",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "journal_inspection": [
+        {
+          "file": "node-0.db",
+          "journal_records": 1736,
+          "chosen_slots": 798,
+          "skip_slots": 353,
+          "sql_slots": 445,
+          "applied_through": 798
+        },
+        {
+          "file": "node-1.db",
+          "journal_records": 1754,
+          "chosen_slots": 798,
+          "skip_slots": 353,
+          "sql_slots": 445,
+          "applied_through": 798
+        },
+        {
+          "file": "node-2.db",
+          "journal_records": 1757,
+          "chosen_slots": 798,
+          "skip_slots": 353,
+          "sql_slots": 445,
+          "applied_through": 798
+        }
+      ],
+      "on_disk_sqlite_images": [
+        "node-0.db",
+        "node-1.db",
+        "node-2.db"
+      ]
+    },
+    {
+      "repeat": 1,
+      "system": "zaxonlite",
+      "nodes": 3,
+      "initial_startup_ms": 421.61695193499327,
+      "schema_and_seed_ms": 1132.4072666466236,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 1200,
+          "reads": 836,
+          "writes": 364,
+          "concurrency": 4,
+          "seconds": 27.613268089480698,
+          "operations_per_second": 43.45736970037028,
+          "retry_attempts": 3,
+          "time_to_first_success_ms": 45.64991965889931,
+          "latency_ms": {
+            "all": {
+              "p50": 65.2378206141293,
+              "p95": 243.1980213150382,
+              "p99": 316.1101592704654,
+              "max": 378.28244362026453
+            },
+            "reads": {
+              "p50": 54.82270382344723,
+              "p95": 151.6389837488532,
+              "p99": 187.62844242155552,
+              "max": 224.49797298759222
+            },
+            "writes": {
+              "p50": 156.87124710530043,
+              "p95": 299.5301792398095,
+              "p99": 348.3807723969221,
+              "max": 378.28244362026453
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 1200,
+          "reads": 817,
+          "writes": 383,
+          "concurrency": 4,
+          "seconds": 25.595018427819014,
+          "operations_per_second": 46.88412330642161,
+          "retry_attempts": 5,
+          "time_to_first_success_ms": 45.10601796209812,
+          "latency_ms": {
+            "all": {
+              "p50": 61.19804736226797,
+              "p95": 206.26735500991344,
+              "p99": 265.78621100634336,
+              "max": 326.77765283733606
+            },
+            "reads": {
+              "p50": 52.768501453101635,
+              "p95": 134.9207628518343,
+              "p99": 179.85754180699587,
+              "max": 208.09566136449575
+            },
+            "writes": {
+              "p50": 130.3442483767867,
+              "p95": 251.3383124023676,
+              "p99": 307.9730374738574,
+              "max": 326.77765283733606
+            }
+          },
+          "restarted_node": 1,
+          "catch_up_ms": 10870.252575725317,
+          "caught_up_state": {
+            "1": [
+              818,
+              818,
+              818,
+              818,
+              2081,
+              10188540,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 1200,
+          "reads": 820,
+          "writes": 380,
+          "concurrency": 4,
+          "seconds": 26.342403238639235,
+          "operations_per_second": 45.553930259477276,
+          "retry_attempts": 27,
+          "time_to_first_success_ms": 486.6467211395502,
+          "latency_ms": {
+            "all": {
+              "p50": 57.71596357226372,
+              "p95": 214.0508685261011,
+              "p99": 326.4541579410434,
+              "max": 1119.9405835941434
+            },
+            "reads": {
+              "p50": 52.04638605937362,
+              "p95": 137.354776263237,
+              "p99": 186.30613572895527,
+              "max": 1007.3646232485771
+            },
+            "writes": {
+              "p50": 131.4832321368158,
+              "p95": 277.54714991897345,
+              "p99": 369.6202524006367,
+              "max": 1119.9405835941434
+            }
+          },
+          "crashed_node": 3,
+          "restarted_node_catch_up_ms": 10640.07337205112,
+          "caught_up_state": {
+            "3": [
+              1198,
+              1198,
+              1198,
+              1198,
+              3024,
+              14772306,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 2633.454428985715,
+        "state": {
+          "1": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ],
+          "2": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ],
+          "3": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 1198,
+          "order_lines": 1198,
+          "ledger_entries": 1198,
+          "distinct_operations": 1198,
+          "units_sold": 3024,
+          "revenue_cents": 14772306,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ],
+          "2": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ],
+          "3": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "2": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "3": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          }
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 48.28,
+        "sampled_peak_aggregate_rss_bytes": 187330560,
+        "whole_lifecycle_seconds": 112.17281387094408,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 165952685,
+        "allocated_bytes": 64989184,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite WAL NORMAL with separate full-sync Paxos log",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "zaxon-1/current.db",
+        "zaxon-2/current.db",
+        "zaxon-3/current.db"
+      ]
+    },
+    {
+      "repeat": 1,
+      "system": "rqlite",
+      "nodes": 3,
+      "initial_startup_ms": 3257.4040945619345,
+      "schema_and_seed_ms": 260.1300375536084,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 1200,
+          "reads": 836,
+          "writes": 364,
+          "concurrency": 4,
+          "seconds": 6.2854712614789605,
+          "operations_per_second": 190.91647230245104,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 2.076338976621628,
+          "latency_ms": {
+            "all": {
+              "p50": 15.946221072226763,
+              "p95": 60.28416007757187,
+              "p99": 72.45211768895388,
+              "max": 106.59460909664631
+            },
+            "reads": {
+              "p50": 1.120484434068203,
+              "p95": 26.56871173530817,
+              "p99": 35.31577903777361,
+              "max": 44.52250897884369
+            },
+            "writes": {
+              "p50": 46.294070314615965,
+              "p95": 69.54900175333023,
+              "p99": 88.8754976913333,
+              "max": 106.59460909664631
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 1200,
+          "reads": 817,
+          "writes": 383,
+          "concurrency": 4,
+          "seconds": 5.817019424401224,
+          "operations_per_second": 206.29121418543696,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 23.398500867187977,
+          "latency_ms": {
+            "all": {
+              "p50": 13.67001561447978,
+              "p95": 60.63548848032951,
+              "p99": 74.40343033522367,
+              "max": 107.93210752308369
+            },
+            "reads": {
+              "p50": 1.2355223298072815,
+              "p95": 19.98620107769966,
+              "p99": 29.3110404163599,
+              "max": 49.24911726266146
+            },
+            "writes": {
+              "p50": 45.52662651985884,
+              "p95": 67.20661465078592,
+              "p99": 92.54539385437965,
+              "max": 107.93210752308369
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 4661.427179351449,
+          "caught_up_state": {
+            "2": [
+              818,
+              818,
+              818,
+              818,
+              2081,
+              10188540,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 1200,
+          "reads": 820,
+          "writes": 380,
+          "concurrency": 4,
+          "seconds": 7.936557847075164,
+          "operations_per_second": 151.19904914978127,
+          "retry_attempts": 65,
+          "time_to_first_success_ms": 2342.6492558792233,
+          "latency_ms": {
+            "all": {
+              "p50": 14.379589352756739,
+              "p95": 53.54141816496849,
+              "p99": 72.51749094575644,
+              "max": 2534.26178265363
+            },
+            "reads": {
+              "p50": 1.3923980295658112,
+              "p95": 25.73355194181204,
+              "p99": 30.836007557809353,
+              "max": 2534.26178265363
+            },
+            "writes": {
+              "p50": 41.15420999005437,
+              "p95": 61.5870114415884,
+              "p99": 91.0851713269949,
+              "max": 2342.3474468290806
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 4789.321265183389,
+          "caught_up_state": {
+            "1": [
+              1198,
+              1198,
+              1198,
+              1198,
+              3024,
+              14772306,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 1465.7196197658777,
+        "state": {
+          "1": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ],
+          "2": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ],
+          "3": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 1198,
+          "order_lines": 1198,
+          "ledger_entries": 1198,
+          "distinct_operations": 1198,
+          "units_sold": 3024,
+          "revenue_cents": 14772306,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ],
+          "2": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ],
+          "3": [
+            1198,
+            1198,
+            1198,
+            1198,
+            3024,
+            14772306,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "sqlite_ok": true
+          },
+          "2": {
+            "sqlite_ok": true
+          },
+          "3": {
+            "sqlite_ok": true
+          }
+        }
+      },
+      "cli_evidence": {
+        "reachable_voters": 3,
+        "evidence_file": "rqlite-cli-final-nodes.txt"
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 10.67,
+        "sampled_peak_aggregate_rss_bytes": 84660224,
+        "whole_lifecycle_seconds": 35.997276570647955,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 38779321,
+        "allocated_bytes": 1318912,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite materialization with persistent Raft log and snapshots",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "rqlite-1/db.sqlite",
+        "rqlite-1/wsnapshots/2-524-1790074634024/data.db",
+        "rqlite-2/db.sqlite",
+        "rqlite-2/wsnapshots/3-1220-1790074651235/data.db",
+        "rqlite-3/db.sqlite",
+        "rqlite-3/wsnapshots/2-741-1790074637178/data.db"
+      ]
+    },
+    {
+      "repeat": 2,
+      "system": "rqlite",
+      "nodes": 3,
+      "initial_startup_ms": 3257.3865205049515,
+      "schema_and_seed_ms": 286.5914674475789,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 1200,
+          "reads": 833,
+          "writes": 367,
+          "concurrency": 4,
+          "seconds": 5.632603388279676,
+          "operations_per_second": 213.04535705406855,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 2.064463682472706,
+          "latency_ms": {
+            "all": {
+              "p50": 15.10407030582428,
+              "p95": 52.99630854278803,
+              "p99": 67.07059219479561,
+              "max": 82.01027754694223
+            },
+            "reads": {
+              "p50": 1.1943122372031212,
+              "p95": 24.344846606254578,
+              "p99": 32.18934591859579,
+              "max": 39.505597203969955
+            },
+            "writes": {
+              "p50": 37.91497368365526,
+              "p95": 65.45363739132881,
+              "p99": 76.83748938143253,
+              "max": 82.01027754694223
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 1200,
+          "reads": 852,
+          "writes": 348,
+          "concurrency": 4,
+          "seconds": 4.500533058308065,
+          "operations_per_second": 266.63508176765384,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 1.7849374562501907,
+          "latency_ms": {
+            "all": {
+              "p50": 10.120461694896221,
+              "p95": 45.7876231521368,
+              "p99": 61.69126555323601,
+              "max": 110.37955805659294
+            },
+            "reads": {
+              "p50": 1.2911534868180752,
+              "p95": 18.44788435846567,
+              "p99": 28.12970709055662,
+              "max": 48.94407372921705
+            },
+            "writes": {
+              "p50": 33.26771222054958,
+              "p95": 57.08674993366003,
+              "p99": 73.38817045092583,
+              "max": 110.37955805659294
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 876.8431469798088,
+          "caught_up_state": {
+            "2": [
+              794,
+              794,
+              794,
+              794,
+              1913,
+              9198627,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 1200,
+          "reads": 863,
+          "writes": 337,
+          "concurrency": 4,
+          "seconds": 7.064479812048376,
+          "operations_per_second": 169.8638869281523,
+          "retry_attempts": 62,
+          "time_to_first_success_ms": 2151.103213429451,
+          "latency_ms": {
+            "all": {
+              "p50": 10.887484531849623,
+              "p95": 48.22402074933052,
+              "p99": 65.2273315936327,
+              "max": 2367.170157842338
+            },
+            "reads": {
+              "p50": 1.1806916445493698,
+              "p95": 20.110448822379112,
+              "p99": 29.64685019105673,
+              "max": 2354.143436998129
+            },
+            "writes": {
+              "p50": 36.62923164665699,
+              "p95": 62.089391984045506,
+              "p99": 85.2670967578888,
+              "max": 2367.170157842338
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 417.31440648436546,
+          "caught_up_state": {
+            "1": [
+              1131,
+              1131,
+              1131,
+              1131,
+              2741,
+              13230210,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 1515.9335592761636,
+        "state": {
+          "1": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ],
+          "2": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ],
+          "3": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 1131,
+          "order_lines": 1131,
+          "ledger_entries": 1131,
+          "distinct_operations": 1131,
+          "units_sold": 2741,
+          "revenue_cents": 13230210,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ],
+          "2": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ],
+          "3": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "sqlite_ok": true
+          },
+          "2": {
+            "sqlite_ok": true
+          },
+          "3": {
+            "sqlite_ok": true
+          }
+        }
+      },
+      "cli_evidence": {
+        "reachable_voters": 3,
+        "evidence_file": "rqlite-cli-final-nodes.txt"
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 9.59,
+        "sampled_peak_aggregate_rss_bytes": 84992000,
+        "whole_lifecycle_seconds": 24.94061380904168,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 78517340,
+        "allocated_bytes": 868352,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite materialization with persistent Raft log and snapshots",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "rqlite-1/db.sqlite",
+        "rqlite-1/wsnapshots/2-812-1790074942057/data.db",
+        "rqlite-2/db.sqlite",
+        "rqlite-3/db.sqlite",
+        "rqlite-3/wsnapshots/3-923-1790074946630/data.db"
+      ]
+    },
+    {
+      "repeat": 2,
+      "operations": 1200,
+      "writes": 367,
+      "reads": 833,
+      "seconds": 27.430027154,
+      "operations_per_second": 43.747678165349875,
+      "reopen_ms": 277.12021500000003,
+      "verified": true,
+      "latency_ms": {
+        "p50": 0.118111,
+        "p95": 111.186355,
+        "p99": 121.49694199999999
+      },
+      "system": "sqlodin",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 5.7,
+        "sampled_peak_aggregate_rss_bytes": 14479360,
+        "whole_lifecycle_seconds": 34.40656730905175,
+        "interval_ms": 10,
+        "scope": "one embedded process including all three database hosts and workload driver; entire lifecycle"
+      },
+      "disk": {
+        "logical_bytes": 40321024,
+        "allocated_bytes": 1073664,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "expected": {
+        "orders": 446,
+        "order_lines": 446,
+        "ledger_entries": 446,
+        "distinct_operations": 446,
+        "units_sold": 1112,
+        "revenue_cents": 5319060,
+        "negative_stock_rows": 0
+      },
+      "client_concurrency": 1,
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "boundary": "embedded host, three disk databases, in-process transport, local snapshot reads",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "journal_inspection": [
+        {
+          "file": "node-0.db",
+          "journal_records": 1713,
+          "chosen_slots": 793,
+          "skip_slots": 337,
+          "sql_slots": 456,
+          "applied_through": 793
+        },
+        {
+          "file": "node-1.db",
+          "journal_records": 1736,
+          "chosen_slots": 793,
+          "skip_slots": 337,
+          "sql_slots": 456,
+          "applied_through": 793
+        },
+        {
+          "file": "node-2.db",
+          "journal_records": 1739,
+          "chosen_slots": 793,
+          "skip_slots": 337,
+          "sql_slots": 456,
+          "applied_through": 793
+        }
+      ],
+      "on_disk_sqlite_images": [
+        "node-0.db",
+        "node-1.db",
+        "node-2.db"
+      ]
+    },
+    {
+      "repeat": 2,
+      "system": "zaxonlite",
+      "nodes": 3,
+      "initial_startup_ms": 428.5992681980133,
+      "schema_and_seed_ms": 862.1904905885458,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 1200,
+          "reads": 833,
+          "writes": 367,
+          "concurrency": 4,
+          "seconds": 27.5862890612334,
+          "operations_per_second": 43.49987043695348,
+          "retry_attempts": 3,
+          "time_to_first_success_ms": 65.32169226557016,
+          "latency_ms": {
+            "all": {
+              "p50": 64.10111673176289,
+              "p95": 242.40226671099663,
+              "p99": 316.023301333189,
+              "max": 407.3074897751212
+            },
+            "reads": {
+              "p50": 53.78822889178991,
+              "p95": 145.16964461654425,
+              "p99": 194.84011735767126,
+              "max": 221.39729466289282
+            },
+            "writes": {
+              "p50": 162.34861873090267,
+              "p95": 298.2715116813779,
+              "p99": 388.37333116680384,
+              "max": 407.3074897751212
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 1200,
+          "reads": 852,
+          "writes": 348,
+          "concurrency": 4,
+          "seconds": 22.816054762341082,
+          "operations_per_second": 52.59454417074128,
+          "retry_attempts": 5,
+          "time_to_first_success_ms": 104.50857132673264,
+          "latency_ms": {
+            "all": {
+              "p50": 54.59349090233445,
+              "p95": 197.22594320774078,
+              "p99": 258.7946215644479,
+              "max": 322.6792113855481
+            },
+            "reads": {
+              "p50": 50.39646290242672,
+              "p95": 125.1107407733798,
+              "p99": 164.71292823553085,
+              "max": 197.1820779144764
+            },
+            "writes": {
+              "p50": 120.76217914000154,
+              "p95": 249.81245305389166,
+              "p99": 300.4962019622326,
+              "max": 322.6792113855481
+            }
+          },
+          "restarted_node": 1,
+          "catch_up_ms": 10523.749898187816,
+          "caught_up_state": {
+            "1": [
+              794,
+              794,
+              794,
+              794,
+              1913,
+              9198627,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 1200,
+          "reads": 863,
+          "writes": 337,
+          "concurrency": 4,
+          "seconds": 25.647609582170844,
+          "operations_per_second": 46.78798607548168,
+          "retry_attempts": 61,
+          "time_to_first_success_ms": 2808.5754746571183,
+          "latency_ms": {
+            "all": {
+              "p50": 54.1619760915637,
+              "p95": 199.6873402968049,
+              "p99": 270.3959681093693,
+              "max": 3062.9220325499773
+            },
+            "reads": {
+              "p50": 50.894749350845814,
+              "p95": 133.36998503655195,
+              "p99": 184.05323941260576,
+              "max": 2809.459177777171
+            },
+            "writes": {
+              "p50": 129.2253453284502,
+              "p95": 254.13450226187706,
+              "p99": 311.08797434717417,
+              "max": 3062.9220325499773
+            }
+          },
+          "crashed_node": 2,
+          "restarted_node_catch_up_ms": 9578.4518038854,
+          "caught_up_state": {
+            "2": [
+              1131,
+              1131,
+              1131,
+              1131,
+              2741,
+              13230210,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 2481.2615755945444,
+        "state": {
+          "1": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ],
+          "2": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ],
+          "3": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 1131,
+          "order_lines": 1131,
+          "ledger_entries": 1131,
+          "distinct_operations": 1131,
+          "units_sold": 2741,
+          "revenue_cents": 13230210,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ],
+          "2": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ],
+          "3": [
+            1131,
+            1131,
+            1131,
+            1131,
+            2741,
+            13230210,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "2": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "3": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          }
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 49.44,
+        "sampled_peak_aggregate_rss_bytes": 225329152,
+        "whole_lifecycle_seconds": 108.14460709039122,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 155052525,
+        "allocated_bytes": 59413504,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite WAL NORMAL with separate full-sync Paxos log",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "zaxon-1/current.db",
+        "zaxon-2/current.db",
+        "zaxon-3/current.db"
+      ]
+    },
+    {
+      "repeat": 3,
+      "system": "zaxonlite",
+      "nodes": 3,
+      "initial_startup_ms": 383.7537048384547,
+      "schema_and_seed_ms": 1078.6094330251217,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 1200,
+          "reads": 825,
+          "writes": 375,
+          "concurrency": 4,
+          "seconds": 29.15256884228438,
+          "operations_per_second": 41.16275332345527,
+          "retry_attempts": 3,
+          "time_to_first_success_ms": 45.090745203197,
+          "latency_ms": {
+            "all": {
+              "p50": 67.85589223727584,
+              "p95": 251.16295274347067,
+              "p99": 325.6699750199914,
+              "max": 418.1707324460149
+            },
+            "reads": {
+              "p50": 57.15406406670809,
+              "p95": 157.3577392846346,
+              "p99": 187.78923898935318,
+              "max": 253.51064652204514
+            },
+            "writes": {
+              "p50": 161.59227211028337,
+              "p95": 311.5892028436065,
+              "p99": 375.8620573207736,
+              "max": 418.1707324460149
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 1200,
+          "reads": 868,
+          "writes": 332,
+          "concurrency": 4,
+          "seconds": 22.904308706521988,
+          "operations_per_second": 52.391889027338365,
+          "retry_attempts": 5,
+          "time_to_first_success_ms": 45.22052127867937,
+          "latency_ms": {
+            "all": {
+              "p50": 54.26373053342104,
+              "p95": 201.4434551820159,
+              "p99": 268.31747218966484,
+              "max": 375.11084880679846
+            },
+            "reads": {
+              "p50": 50.421560648828745,
+              "p95": 135.30108332633972,
+              "p99": 170.1808487996459,
+              "max": 202.47055310755968
+            },
+            "writes": {
+              "p50": 126.18104042485356,
+              "p95": 253.9281863719225,
+              "p99": 307.9677792266011,
+              "max": 375.11084880679846
+            }
+          },
+          "restarted_node": 1,
+          "catch_up_ms": 9831.830556504428,
+          "caught_up_state": {
+            "1": [
+              781,
+              781,
+              781,
+              781,
+              1957,
+              9560797,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 1200,
+          "reads": 830,
+          "writes": 370,
+          "concurrency": 4,
+          "seconds": 26.16360849607736,
+          "operations_per_second": 45.8652330078977,
+          "retry_attempts": 30,
+          "time_to_first_success_ms": 602.7805991470814,
+          "latency_ms": {
+            "all": {
+              "p50": 56.03497568517923,
+              "p95": 218.2530015707016,
+              "p99": 315.29030576348305,
+              "max": 1149.3757711723447
+            },
+            "reads": {
+              "p50": 51.98567500337958,
+              "p95": 139.2178125679493,
+              "p99": 186.75605859607458,
+              "max": 1014.0273338183761
+            },
+            "writes": {
+              "p50": 133.04757699370384,
+              "p95": 274.31710436940193,
+              "p99": 365.87415635585785,
+              "max": 1149.3757711723447
+            }
+          },
+          "crashed_node": 3,
+          "restarted_node_catch_up_ms": 11109.098445624113,
+          "caught_up_state": {
+            "3": [
+              1151,
+              1151,
+              1151,
+              1151,
+              2871,
+              13741511,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 2488.759002648294,
+        "state": {
+          "1": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ],
+          "2": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ],
+          "3": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 1151,
+          "order_lines": 1151,
+          "ledger_entries": 1151,
+          "distinct_operations": 1151,
+          "units_sold": 2871,
+          "revenue_cents": 13741511,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ],
+          "2": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ],
+          "3": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "2": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          },
+          "3": {
+            "ok": true,
+            "sqlite_ok": true,
+            "chain_ok": true,
+            "payloads_ok": true
+          }
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 46.88,
+        "sampled_peak_aggregate_rss_bytes": 191025152,
+        "whole_lifecycle_seconds": 110.58791463356465,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 158880978,
+        "allocated_bytes": 62650880,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite WAL NORMAL with separate full-sync Paxos log",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "zaxon-1/current.db",
+        "zaxon-2/current.db",
+        "zaxon-3/current.db"
+      ]
+    },
+    {
+      "repeat": 3,
+      "system": "rqlite",
+      "nodes": 3,
+      "initial_startup_ms": 3205.7131147012115,
+      "schema_and_seed_ms": 262.696891091764,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 1200,
+          "reads": 825,
+          "writes": 375,
+          "concurrency": 4,
+          "seconds": 5.895617373287678,
+          "operations_per_second": 203.54102446285836,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 11.639207601547241,
+          "latency_ms": {
+            "all": {
+              "p50": 14.65226011350751,
+              "p95": 54.29718643426895,
+              "p99": 66.4772167801857,
+              "max": 83.7104581296444
+            },
+            "reads": {
+              "p50": 1.191447488963604,
+              "p95": 27.519513852894306,
+              "p99": 35.530807450413704,
+              "max": 49.66487269848585
+            },
+            "writes": {
+              "p50": 42.66028478741646,
+              "p95": 65.08279498666525,
+              "p99": 77.58831139653921,
+              "max": 83.7104581296444
+            }
+          }
+        },
+        {
+          "name": "one_follower_crashed",
+          "operations": 1200,
+          "reads": 868,
+          "writes": 332,
+          "concurrency": 4,
+          "seconds": 4.200304482132196,
+          "operations_per_second": 285.6935741455689,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 11.951912194490433,
+          "latency_ms": {
+            "all": {
+              "p50": 9.284530766308308,
+              "p95": 44.39974948763847,
+              "p99": 54.99844811856747,
+              "max": 70.54795976728201
+            },
+            "reads": {
+              "p50": 1.2089102528989315,
+              "p95": 18.56424193829298,
+              "p99": 28.68791203945875,
+              "max": 51.47369671612978
+            },
+            "writes": {
+              "p50": 33.205955289304256,
+              "p95": 54.25737239420414,
+              "p99": 61.56914960592985,
+              "max": 70.54795976728201
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 1189.1832742840052,
+          "caught_up_state": {
+            "2": [
+              781,
+              781,
+              781,
+              781,
+              1957,
+              9560797,
+              0
+            ]
+          }
+        },
+        {
+          "name": "leader_crashed",
+          "operations": 1200,
+          "reads": 830,
+          "writes": 370,
+          "concurrency": 4,
+          "seconds": 7.318005030043423,
+          "operations_per_second": 163.97911658621524,
+          "retry_attempts": 53,
+          "time_to_first_success_ms": 1765.4436416924,
+          "latency_ms": {
+            "all": {
+              "p50": 13.906749431043863,
+              "p95": 52.476488053798676,
+              "p99": 65.19021838903427,
+              "max": 1937.4761246144772
+            },
+            "reads": {
+              "p50": 1.253366470336914,
+              "p95": 26.48089174181223,
+              "p99": 30.479484237730503,
+              "max": 1937.4761246144772
+            },
+            "writes": {
+              "p50": 43.057676404714584,
+              "p95": 61.84092350304127,
+              "p99": 74.94845148175955,
+              "max": 1780.9379054233432
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 4911.180287599564,
+          "caught_up_state": {
+            "1": [
+              1151,
+              1151,
+              1151,
+              1151,
+              2871,
+              13741511,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 1566.1652982234955,
+        "state": {
+          "1": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ],
+          "2": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ],
+          "3": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 1151,
+          "order_lines": 1151,
+          "ledger_entries": 1151,
+          "distinct_operations": 1151,
+          "units_sold": 2871,
+          "revenue_cents": 13741511,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ],
+          "2": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ],
+          "3": [
+            1151,
+            1151,
+            1151,
+            1151,
+            2871,
+            13741511,
+            0
+          ]
+        },
+        "integrity": {
+          "1": {
+            "sqlite_ok": true
+          },
+          "2": {
+            "sqlite_ok": true
+          },
+          "3": {
+            "sqlite_ok": true
+          }
+        }
+      },
+      "cli_evidence": {
+        "reachable_voters": 3,
+        "evidence_file": "rqlite-cli-final-nodes.txt"
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 10.37,
+        "sampled_peak_aggregate_rss_bytes": 86425600,
+        "whole_lifecycle_seconds": 29.906778735108674,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 118082078,
+        "allocated_bytes": 521216,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite materialization with persistent Raft log and snapshots",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "rqlite-1/db.sqlite",
+        "rqlite-2/db.sqlite",
+        "rqlite-3/db.sqlite",
+        "rqlite-3/wsnapshots/2-801-1790075493764/data.db"
+      ]
+    },
+    {
+      "repeat": 3,
+      "operations": 1200,
+      "writes": 375,
+      "reads": 825,
+      "seconds": 27.400198668,
+      "operations_per_second": 43.79530289323959,
+      "reopen_ms": 280.18492699999996,
+      "verified": true,
+      "latency_ms": {
+        "p50": 0.110777,
+        "p95": 108.323643,
+        "p99": 127.48675200000001
+      },
+      "system": "sqlodin",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 5.57,
+        "sampled_peak_aggregate_rss_bytes": 14254080,
+        "whole_lifecycle_seconds": 34.11148874275386,
+        "interval_ms": 10,
+        "scope": "one embedded process including all three database hosts and workload driver; entire lifecycle"
+      },
+      "disk": {
+        "logical_bytes": 40407040,
+        "allocated_bytes": 1223168,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "expected": {
+        "orders": 449,
+        "order_lines": 449,
+        "ledger_entries": 449,
+        "distinct_operations": 449,
+        "units_sold": 1139,
+        "revenue_cents": 5631947,
+        "negative_stock_rows": 0
+      },
+      "client_concurrency": 1,
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "boundary": "embedded host, three disk databases, in-process transport, local snapshot reads",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "journal_inspection": [
+        {
+          "file": "node-0.db",
+          "journal_records": 1721,
+          "chosen_slots": 794,
+          "skip_slots": 335,
+          "sql_slots": 459,
+          "applied_through": 794
+        },
+        {
+          "file": "node-1.db",
+          "journal_records": 1739,
+          "chosen_slots": 794,
+          "skip_slots": 335,
+          "sql_slots": 459,
+          "applied_through": 794
+        },
+        {
+          "file": "node-2.db",
+          "journal_records": 1728,
+          "chosen_slots": 794,
+          "skip_slots": 335,
+          "sql_slots": 459,
+          "applied_through": 794
+        }
+      ],
+      "on_disk_sqlite_images": [
+        "node-0.db",
+        "node-1.db",
+        "node-2.db"
+      ]
+    }
+  ],
+  "sequential_writes": [
+    {
+      "repeat": 1,
+      "system": "zaxonlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 78.97297523822635,
+      "operations_per_second": 15.195071432729153,
+      "latency_ms": {
+        "p50": 53.97176556289196,
+        "p95": 126.188931055367,
+        "p99": 164.1043284907937,
+        "max": 177.62563284486532
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 38.06,
+        "sampled_peak_aggregate_rss_bytes": 115109888,
+        "whole_lifecycle_seconds": 96.6948456428945,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 48083665,
+        "allocated_bytes": 5701120,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite WAL NORMAL with separate full-sync Paxos log",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "zaxon-1/current.db",
+        "zaxon-2/current.db",
+        "zaxon-3/current.db"
+      ]
+    },
+    {
+      "repeat": 1,
+      "operations": 1200,
+      "writes": 1200,
+      "reads": 0,
+      "seconds": 54.096945115,
+      "operations_per_second": 22.18239860770371,
+      "reopen_ms": 500.15086799999995,
+      "verified": true,
+      "latency_ms": {
+        "p50": 45.512116,
+        "p95": 47.714701999999996,
+        "p99": 100.894013
+      },
+      "system": "sqlodin",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 9.59,
+        "sampled_peak_aggregate_rss_bytes": 13979648,
+        "whole_lifecycle_seconds": 66.05976900551468,
+        "interval_ms": 10,
+        "scope": "one embedded process including all three database hosts and workload driver; entire lifecycle"
+      },
+      "disk": {
+        "logical_bytes": 72376320,
+        "allocated_bytes": 1247232,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "expected": {
+        "rows": 1440
+      },
+      "client_concurrency": 1,
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "boundary": "embedded host, three disk databases, in-process transport, local snapshot reads",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "journal_inspection": [
+        {
+          "file": "node-0.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        },
+        {
+          "file": "node-1.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        },
+        {
+          "file": "node-2.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        }
+      ],
+      "on_disk_sqlite_images": [
+        "node-0.db",
+        "node-1.db",
+        "node-2.db"
+      ]
+    },
+    {
+      "repeat": 1,
+      "system": "rqlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 28.872709616087377,
+      "operations_per_second": 41.56173826274277,
+      "latency_ms": {
+        "p50": 25.14277631416917,
+        "p95": 30.27288895100355,
+        "p99": 35.49303486943245,
+        "max": 46.81835509836674
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 9.51,
+        "sampled_peak_aggregate_rss_bytes": 78671872,
+        "whole_lifecycle_seconds": 38.14860297739506,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 17764938,
+        "allocated_bytes": 472064,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite materialization with persistent Raft log and snapshots",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "rqlite-1/db.sqlite",
+        "rqlite-1/wsnapshots/2-557-1790074905773/data.db",
+        "rqlite-2/db.sqlite",
+        "rqlite-2/wsnapshots/2-878-1790074913806/data.db",
+        "rqlite-3/db.sqlite",
+        "rqlite-3/wsnapshots/2-820-1790074912911/data.db"
+      ]
+    },
+    {
+      "repeat": 2,
+      "operations": 1200,
+      "writes": 1200,
+      "reads": 0,
+      "seconds": 53.903610953,
+      "operations_per_second": 22.261959426916913,
+      "reopen_ms": 497.74590800000004,
+      "verified": true,
+      "latency_ms": {
+        "p50": 45.401711,
+        "p95": 47.817924,
+        "p99": 98.981649
+      },
+      "system": "sqlodin",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 9.39,
+        "sampled_peak_aggregate_rss_bytes": 14057472,
+        "whole_lifecycle_seconds": 65.89832518808544,
+        "interval_ms": 10,
+        "scope": "one embedded process including all three database hosts and workload driver; entire lifecycle"
+      },
+      "disk": {
+        "logical_bytes": 72376320,
+        "allocated_bytes": 1311744,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "expected": {
+        "rows": 1440
+      },
+      "client_concurrency": 1,
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "boundary": "embedded host, three disk databases, in-process transport, local snapshot reads",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "journal_inspection": [
+        {
+          "file": "node-0.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        },
+        {
+          "file": "node-1.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        },
+        {
+          "file": "node-2.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        }
+      ],
+      "on_disk_sqlite_images": [
+        "node-0.db",
+        "node-1.db",
+        "node-2.db"
+      ]
+    },
+    {
+      "repeat": 2,
+      "system": "zaxonlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 79.66575039830059,
+      "operations_per_second": 15.062934749254532,
+      "latency_ms": {
+        "p50": 53.51983057335019,
+        "p95": 140.9198511391878,
+        "p99": 173.38661942631006,
+        "max": 257.186415605247
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 37.660000000000004,
+        "sampled_peak_aggregate_rss_bytes": 109518848,
+        "whole_lifecycle_seconds": 97.94840389117599,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 48296541,
+        "allocated_bytes": 5707776,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite WAL NORMAL with separate full-sync Paxos log",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "zaxon-1/current.db",
+        "zaxon-2/current.db",
+        "zaxon-3/current.db"
+      ]
+    },
+    {
+      "repeat": 2,
+      "system": "rqlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 28.680277873761952,
+      "operations_per_second": 41.84059880039781,
+      "latency_ms": {
+        "p50": 24.78965697810054,
+        "p95": 26.8413033336401,
+        "p99": 33.316804096102715,
+        "max": 41.21361952275038
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 9.379999999999999,
+        "sampled_peak_aggregate_rss_bytes": 78819328,
+        "whole_lifecycle_seconds": 37.88637785241008,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 20218208,
+        "allocated_bytes": 523776,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite materialization with persistent Raft log and snapshots",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "rqlite-1/db.sqlite",
+        "rqlite-1/wsnapshots/2-621-1790075345816/data.db",
+        "rqlite-2/db.sqlite",
+        "rqlite-2/wsnapshots/2-499-1790075342846/data.db",
+        "rqlite-3/db.sqlite",
+        "rqlite-3/wsnapshots/2-540-1790075343878/data.db"
+      ]
+    },
+    {
+      "repeat": 3,
+      "system": "rqlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 28.83794318139553,
+      "operations_per_second": 41.61184424463969,
+      "latency_ms": {
+        "p50": 24.60435125976801,
+        "p95": 26.79743804037571,
+        "p99": 34.302130341529846,
+        "max": 44.393391348421574
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 9.3,
+        "sampled_peak_aggregate_rss_bytes": 79618048,
+        "whole_lifecycle_seconds": 38.100338724441826,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 18729737,
+        "allocated_bytes": 474624,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite materialization with persistent Raft log and snapshots",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "rqlite-1/db.sqlite",
+        "rqlite-1/wsnapshots/2-541-1790075556556/data.db",
+        "rqlite-2/db.sqlite",
+        "rqlite-2/wsnapshots/2-892-1790075565086/data.db",
+        "rqlite-3/db.sqlite",
+        "rqlite-3/wsnapshots/2-589-1790075557753/data.db"
+      ]
+    },
+    {
+      "repeat": 3,
+      "system": "zaxonlite",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 81.38540362939239,
+      "operations_per_second": 14.744658703967149,
+      "latency_ms": {
+        "p50": 54.06867805868387,
+        "p95": 147.49241434037685,
+        "p99": 180.55364396423101,
+        "max": 253.856566734612
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 37.67,
+        "sampled_peak_aggregate_rss_bytes": 112066560,
+        "whole_lifecycle_seconds": 99.73178914375603,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 48490205,
+        "allocated_bytes": 5714432,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "storage": "on-disk SQLite WAL NORMAL with separate full-sync Paxos log",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "on_disk_sqlite_images": [
+        "zaxon-1/current.db",
+        "zaxon-2/current.db",
+        "zaxon-3/current.db"
+      ]
+    },
+    {
+      "repeat": 3,
+      "operations": 1200,
+      "writes": 1200,
+      "reads": 0,
+      "seconds": 54.109743173,
+      "operations_per_second": 22.177152017952714,
+      "reopen_ms": 497.407691,
+      "verified": true,
+      "latency_ms": {
+        "p50": 45.4649095,
+        "p95": 49.396936000000004,
+        "p99": 93.714694
+      },
+      "system": "sqlodin",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 9.42,
+        "sampled_peak_aggregate_rss_bytes": 14348288,
+        "whole_lifecycle_seconds": 66.09509739931673,
+        "interval_ms": 10,
+        "scope": "one embedded process including all three database hosts and workload driver; entire lifecycle"
+      },
+      "disk": {
+        "logical_bytes": 72376320,
+        "allocated_bytes": 1247232,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "expected": {
+        "rows": 1440
+      },
+      "client_concurrency": 1,
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "boundary": "embedded host, three disk databases, in-process transport, local snapshot reads",
+      "sample_run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+      "journal_inspection": [
+        {
+          "file": "node-0.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        },
+        {
+          "file": "node-1.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        },
+        {
+          "file": "node-2.db",
+          "journal_records": 2886,
+          "chosen_slots": 1443,
+          "skip_slots": 2,
+          "sql_slots": 1441,
+          "applied_through": 1443
+        }
+      ],
+      "on_disk_sqlite_images": [
+        "node-0.db",
+        "node-1.db",
+        "node-2.db"
+      ]
+    },
+    {
+      "repeat": 1,
+      "system": "cowsql",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 9.68005729559809,
+      "operations_per_second": 123.96620839689535,
+      "latency_ms": {
+        "p50": 8.02701897919178,
+        "p95": 12.086243368685246,
+        "p99": 15.424506738781929,
+        "max": 32.77224861085415
+      },
+      "restart_verified": false,
+      "verified_before_restart": true,
+      "membership": {
+        "data-1/127.0.0.1:12101/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12100\n  Role: 0\n- ID: 14656249515882139309\n  Address: 127.0.0.1:12101\n  Role: 0\n- ID: 4221266359342427642\n  Address: 127.0.0.1:12102\n  Role: 0\n",
+        "data-2/127.0.0.1:12102/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12100\n  Role: 0\n- ID: 14656249515882139309\n  Address: 127.0.0.1:12101\n  Role: 0\n- ID: 4221266359342427642\n  Address: 127.0.0.1:12102\n  Role: 0\n",
+        "data-0/127.0.0.1:12100/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12100\n  Role: 0\n- ID: 14656249515882139309\n  Address: 127.0.0.1:12101\n  Role: 0\n- ID: 4221266359342427642\n  Address: 127.0.0.1:12102\n  Role: 0\n"
+      },
+      "storage": "in-memory SQLite materialization; durable Raft logs and snapshots",
+      "boundary": "stock go-cowsql demo PUT/GET; no arbitrary SQL workload",
+      "restart_error": "port did not become ready: ('127.0.0.1', 12000)",
+      "restart_logs": {
+        "cowsql-1-g2.log": "",
+        "cowsql-3-g2.log": "",
+        "cowsql-2-g2.log": ""
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 4.92,
+        "sampled_peak_aggregate_rss_bytes": 104779776,
+        "whole_lifecycle_seconds": 62.59945692587644,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 96879230,
+        "allocated_bytes": 2518528,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      }
+    },
+    {
+      "repeat": 2,
+      "system": "cowsql",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 9.593892027623951,
+      "operations_per_second": 125.07958152382868,
+      "latency_ms": {
+        "p50": 7.991465274244547,
+        "p95": 11.13024726510048,
+        "p99": 14.226281084120274,
+        "max": 48.13374765217304
+      },
+      "restart_verified": true,
+      "verified_before_restart": true,
+      "membership": {
+        "data-2/127.0.0.1:12302/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12300\n  Role: 0\n- ID: 4348839578100410666\n  Address: 127.0.0.1:12301\n  Role: 0\n- ID: 7492010350306428544\n  Address: 127.0.0.1:12302\n  Role: 0\n",
+        "data-1/127.0.0.1:12301/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12300\n  Role: 0\n- ID: 4348839578100410666\n  Address: 127.0.0.1:12301\n  Role: 0\n- ID: 7492010350306428544\n  Address: 127.0.0.1:12302\n  Role: 0\n",
+        "data-0/127.0.0.1:12300/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12300\n  Role: 0\n- ID: 4348839578100410666\n  Address: 127.0.0.1:12301\n  Role: 0\n- ID: 7492010350306428544\n  Address: 127.0.0.1:12302\n  Role: 0\n"
+      },
+      "storage": "in-memory SQLite materialization; durable Raft logs and snapshots",
+      "boundary": "stock go-cowsql demo PUT/GET; no arbitrary SQL workload",
+      "resources": {
+        "sampled_database_cpu_seconds": 5.73,
+        "sampled_peak_aggregate_rss_bytes": 115990528,
+        "whole_lifecycle_seconds": 47.52276123408228,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 122045050,
+        "allocated_bytes": 2518528,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      }
+    },
+    {
+      "repeat": 3,
+      "system": "cowsql",
+      "nodes": 3,
+      "workload": "sequential one-row durable autocommit",
+      "operations": 1200,
+      "payload_bytes": 256,
+      "seconds": 9.631058869883418,
+      "operations_per_second": 124.59689180723757,
+      "latency_ms": {
+        "p50": 7.934365421533585,
+        "p95": 11.88382413238287,
+        "p99": 15.660377219319344,
+        "max": 49.95283670723438
+      },
+      "restart_verified": true,
+      "verified_before_restart": true,
+      "membership": {
+        "data-0/127.0.0.1:12500/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12500\n  Role: 0\n- ID: 8104801999658224057\n  Address: 127.0.0.1:12501\n  Role: 0\n- ID: 16168288545107320834\n  Address: 127.0.0.1:12502\n  Role: 0\n",
+        "data-1/127.0.0.1:12501/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12500\n  Role: 0\n- ID: 8104801999658224057\n  Address: 127.0.0.1:12501\n  Role: 0\n- ID: 16168288545107320834\n  Address: 127.0.0.1:12502\n  Role: 0\n",
+        "data-2/127.0.0.1:12502/cluster.yaml": "- ID: 3297041220608546238\n  Address: 127.0.0.1:12500\n  Role: 0\n- ID: 8104801999658224057\n  Address: 127.0.0.1:12501\n  Role: 0\n- ID: 16168288545107320834\n  Address: 127.0.0.1:12502\n  Role: 0\n"
+      },
+      "storage": "in-memory SQLite materialization; durable Raft logs and snapshots",
+      "boundary": "stock go-cowsql demo PUT/GET; no arbitrary SQL workload",
+      "resources": {
+        "sampled_database_cpu_seconds": 6.03,
+        "sampled_peak_aggregate_rss_bytes": 116609024,
+        "whole_lifecycle_seconds": 47.662828331813216,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 122045054,
+        "allocated_bytes": 2516992,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      }
+    }
+  ],
+  "run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-112345",
+  "source_sha256": {
+    "bench/realworld/main.odin": "0371737d1abcfb66be0e1dfaf1949a655b454db87fed1b1b254ff5366a310822",
+    "benchmarks/vendor/zaxonlite/compare-rqlite-realworld-3node.py": "de6f59176811410c3ef0702082d9ecf872b38a9765470b43bba42654d7ed6a61",
+    "benchmarks/vendor/zaxonlite/driver.py": "e49639b870070f24f3abe6bdcf3f5901b7e5eba6ecd76c3f90c27f3f15833dba",
+    "benchmarks/vendor/zaxonlite/realworld_workload.py": "fc911c1066a28d4864bb547ac787e5ee189091e03299c785938381bcf3c4ae9a",
+    "src/durable/codec.odin": "1a98c7f0cbbcc42ae3d4bbc0fe49a68b1291bd938485ca53754fa40b1e833668",
+    "src/durable/host.odin": "eea0ee3d5ebdb67aae7d028821fd65da7c7b3af118dc5f0e4c02015ec207dc56",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "ea1257e8f2038f667baab4bd2d7c2502011ace26f10fdd5eae0dfa2b6955904c",
+    "src/durable/storage.odin": "53ba8332e5c52e03cf8e50503b88c3c572d8f95c8ca70d437594b1aa8eb3c81c",
+    "src/engine.odin": "017d57a55e833823ffd65ec299eec0096204107a41105ab7b346e3b4012a76f0",
+    "src/engine_dml.odin": "e57176f91d72837f1c5811eb332c4b5b2f998382ecf224f07b498dcf63dea5b3",
+    "src/errors.odin": "6a757bae504e82a8636a34a52baf29b03dccab5ee9f0028da78c66235f5d5d3c",
+    "src/mutation.odin": "4060ea874276995ace4d56af81d729c42b91e7c0214ac72c723018c99bdbd9fc",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "4c7a413dbe2d3e1682066b04625f5e4857e1bc4de1756808d31c469ebaa06952",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "tools/compare_realworld.py": "369d583150b7049abdad6066b4089a6ceda94eacd69347d304d6e86df00b8859"
+  },
+  "filesystem": "SOURCE                          FSTYPE OPTIONS\nlocal/containers/agy01[/rootfs] zfs    rw,relatime,idmapped,xattr,posixacl,casesensitive\n",
+  "reused_sql_run": {
+    "started_utc": "2026-09-22T10:54:02.144632+00:00",
+    "finished_utc": "2026-09-22T11:16:48.321865+00:00",
+    "run_directory": "/home/insan/projects/sqlodin/build/comparison-runs/20260922-105402",
+    "source_sha256": {
+      "bench/realworld/main.odin": "0371737d1abcfb66be0e1dfaf1949a655b454db87fed1b1b254ff5366a310822",
+      "benchmarks/vendor/zaxonlite/compare-rqlite-realworld-3node.py": "de6f59176811410c3ef0702082d9ecf872b38a9765470b43bba42654d7ed6a61",
+      "benchmarks/vendor/zaxonlite/driver.py": "e49639b870070f24f3abe6bdcf3f5901b7e5eba6ecd76c3f90c27f3f15833dba",
+      "benchmarks/vendor/zaxonlite/realworld_workload.py": "fc911c1066a28d4864bb547ac787e5ee189091e03299c785938381bcf3c4ae9a",
+      "src/durable/codec.odin": "1a98c7f0cbbcc42ae3d4bbc0fe49a68b1291bd938485ca53754fa40b1e833668",
+      "src/durable/host.odin": "eea0ee3d5ebdb67aae7d028821fd65da7c7b3af118dc5f0e4c02015ec207dc56",
+      "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+      "src/durable/journal.odin": "ea1257e8f2038f667baab4bd2d7c2502011ace26f10fdd5eae0dfa2b6955904c",
+      "src/durable/storage.odin": "53ba8332e5c52e03cf8e50503b88c3c572d8f95c8ca70d437594b1aa8eb3c81c",
+      "src/engine.odin": "017d57a55e833823ffd65ec299eec0096204107a41105ab7b346e3b4012a76f0",
+      "src/engine_dml.odin": "e57176f91d72837f1c5811eb332c4b5b2f998382ecf224f07b498dcf63dea5b3",
+      "src/errors.odin": "6a757bae504e82a8636a34a52baf29b03dccab5ee9f0028da78c66235f5d5d3c",
+      "src/mutation.odin": "4060ea874276995ace4d56af81d729c42b91e7c0214ac72c723018c99bdbd9fc",
+      "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+      "src/sqlite/sqlite3.odin": "4c7a413dbe2d3e1682066b04625f5e4857e1bc4de1756808d31c469ebaa06952",
+      "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+      "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+      "tools/compare_realworld.py": "418e110bc16c7950e79c7a48049d6c4e0f75bf5fda109b3ece5702cf8404836e"
+    },
+    "binaries_sha256": {
+      "sqlodin": "1bc7d46a00d53bdd5f728717296508990592b1add602d94dd16d9f1660beb34f",
+      "zaxonlite": "6a8f7748405f580c28d4c27a69a9c3dbc6d65790ff84ee8addbc99edd65c2da1",
+      "rqlite": "175ad4a5e75aeb91281e30540ba9505b704ea856fb1d3d8312a60bc7ef4600ce",
+      "dqlite": "a63163e64cbac210a1c3ebe623e7291c189c84f598d74bf309e4eae4f82d46ec"
+    },
+    "native_dependencies": {
+      "sqlite": "3.51.3",
+      "sqlite_vec": "0.1.9",
+      "sources": {
+        "sqlite": [
+          "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+          {
+            "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+            "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+            "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+          }
+        ],
+        "vec": [
+          "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+          {
+            "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+            "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+          }
+        ]
+      },
+      "sqlite_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-DSQLITE_THREADSAFE=1",
+        "-DSQLITE_OMIT_LOAD_EXTENSION",
+        "-DSQLITE_OMIT_DEPRECATED",
+        "-DSQLITE_DQS=0",
+        "-DSQLITE_ENABLE_FTS5",
+        "-DHAVE_USLEEP=1"
+      ],
+      "vec_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-DSQLITE_CORE",
+        "-DSQLITE_VEC_STATIC",
+        "-DSQLITE_VEC_OMIT_FS"
+      ],
+      "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+      "archives_sha256": {
+        "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+        "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+      }
+    },
+    "comparison_dependencies": {
+      "pins": {
+        "dqlite": [
+          "https://github.com/canonical/dqlite.git",
+          "v1.18.7",
+          "91e3e2f90874e4ec3b45cde965f266342846531b"
+        ],
+        "go-dqlite": [
+          "https://github.com/canonical/go-dqlite.git",
+          "v3.0.4",
+          "d046c957251f7c77565d878eab950de4ff3bba5b"
+        ]
+      },
+      "archives": {
+        "go1.24.4.linux-amd64.tar.gz": [
+          "https://go.dev/dl/",
+          "77e5da33bb72aeaef1ba4418b6fe511bc4d041873cbf82e5aa6318740df98717"
+        ],
+        "rqlite-v10.2.7-linux-amd64.tar.gz": [
+          "https://github.com/rqlite/rqlite/releases/download/v10.2.7/",
+          "0b4e8ffbbacc84e421c49915bbd82cc67ac6488e22d4ce58b678fc1219c6a38a"
+        ]
+      },
+      "packages": {
+        "libsqlite3-dev_3.46.1-7+deb13u2_amd64.deb": "56e1945d52292b506c1f0bcb77543fea289ccee857c478dcddded40226e1594d",
+        "autoconf_2.72-3.1_all.deb": "0de76b647b0afb6c7934999aaefeb463656c147672464a367df1019969e77af3",
+        "automake_1%3a1.17-4_all.deb": "8d4b172d4ff8070789c54b48a95585b53e4c65faeb07a2ae52da16cb364df635",
+        "libtool_2.5.4-4_all.deb": "be5361a8c1fce2758c3e19608bf97393d5f3afdb7e926aeb83e2818355bd885f",
+        "pkgconf-bin_1.8.1-4_amd64.deb": "54efef2aef4db5fcb5e0f5b7746465000c6a779b06f3686d0ec3d2a901b20aeb",
+        "autotools-dev_20240727.1_all.deb": "d07d476c1fcd713ed04695f25ac290c3ae2317e6fd974ad6b2168e3be1c795c3",
+        "libsqlite3-0_3.46.1-7+deb13u2_amd64.deb": "0a459adaffd901109f7811ab65f58e7a957b4907d05539cf3d1184efdcde0468",
+        "libltdl-dev_2.5.4-4_amd64.deb": "0f225ed11c06958274e2ff0ea27f283f23aa6cd6a03df04499b467f68fedfed4",
+        "libuv1-dev_1.50.0-2_amd64.deb": "a638490607f08b4369b2515c013ced6b33dabecbf985b0a1629d4ad53ec9c9d2",
+        "m4_1.4.19-8_amd64.deb": "221b3e224708c1da2a1a88b6824380593579b2254ae7d914afa14cbd5d343334",
+        "libpkgconf3_1.8.1-4_amd64.deb": "85087cd04e57fd4ab7d6e816d348c335047823ab60c78878336b74f07b352ca1",
+        "libuv1t64_1.50.0-2_amd64.deb": "5fec8035002e0c745b64d1c5b3e1dc42790d1a77574315b976cf3e4aab9ddc0a",
+        "autoconf-archive_20220903-3_all.deb": "9f13a50fa9038cb4381545b275f7440c0a40d43832046a7e7f515f47a4ecbac8",
+        "pkgconf_1.8.1-4_amd64.deb": "f1fcad470ca3ac80b4a0f4af6f03cd215089473996b07e508b3ee342bbb11af7"
+      },
+      "go": "go version go1.24.4 linux/amd64",
+      "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+      "dqlite_configure": [
+        "--disable-backtrace",
+        "--without-lz4"
+      ],
+      "dqlite_demo_sha256": "a63163e64cbac210a1c3ebe623e7291c189c84f598d74bf309e4eae4f82d46ec"
+    },
+    "zaxon_release": {
+      "repository": "https://github.com/insanai/zaxonlite",
+      "tag": "v0.7.0",
+      "asset_url": "https://github.com/insanai/zaxonlite/releases/download/v0.7.0/zaxon-0.7.0-x86_64-linux-musl.tar.gz",
+      "archive_sha256": "6e13ea5fe25f41675fea3f4148447555570d8510f0887c454b7e9090676752e4",
+      "binary_sha256": "6a8f7748405f580c28d4c27a69a9c3dbc6d65790ff84ee8addbc99edd65c2da1",
+      "version": "zaxon 0.7.0",
+      "published_checksums": "1dfbd970253f7724f655aa8401542d4bfed426b74d5236a7a4a751b0df1729c0  zaxon-0.7.0-aarch64-linux-musl.tar.gz\n577302dc5ac4a5a8c75e1877e081d28624e40c30fb1bceaa539a09b93aa648d0  zaxon-0.7.0-aarch64-macos.tar.gz\n6e13ea5fe25f41675fea3f4148447555570d8510f0887c454b7e9090676752e4  zaxon-0.7.0-x86_64-linux-musl.tar.gz\nc7f7b7f73c761d70d118e42cd0a7b09e6122c8a500ddeae8342ba3af1ab85818  zaxon-0.7.0-x86_64-macos.tar.gz\nd6e4d0ef78c5e1dc8a8d3fa9e37a2582c9edb1f01a5d8ad2f82bb6bfe4469f7b  zaxon-0.7.0-x86_64-windows-gnu.zip\n115935c40ad759e41db99ad47184f296ec5a8f22713f90acba9d11cacf079a5b  zxlite-0.7.0-cp312-abi3-macosx_10_15_x86_64.whl\nc9a631e109464f6ceb18f69b8c9ac6ca664985ce2102d65a00fd30f8959999cd  zxlite-0.7.0-cp312-abi3-macosx_11_0_arm64.whl\nc3bfd68ec18be20afa09f433920d9a56ca12baf72cf1a3e4eb3d38eeb1bf2084  zxlite-0.7.0-cp312-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl\nad868a00fbb5deb4c9be574d8a94c98830115fd1a0af196c1e0bdbdcbcb07bcc  zxlite-0.7.0-cp312-abi3-win_amd64.whl\n"
+    },
+    "source_report_sha256": "9f70dea3a3062cd9f837def623c30759b08cfcabd07b22ddb6b61e7272e508cd"
+  },
+  "binaries_sha256": {
+    "sqlodin": "1bc7d46a00d53bdd5f728717296508990592b1add602d94dd16d9f1660beb34f",
+    "zaxonlite": "6a8f7748405f580c28d4c27a69a9c3dbc6d65790ff84ee8addbc99edd65c2da1",
+    "rqlite": "175ad4a5e75aeb91281e30540ba9505b704ea856fb1d3d8312a60bc7ef4600ce",
+    "cowsql": "270eba3d18f7a1f45bd0266aeade26884750e439a55fa8ed56d9fbe30138409e"
+  },
+  "finished_utc": "2026-09-22T11:26:23.478597+00:00",
+  "storage_inspected_utc": "2026-09-22T11:26:38.624372+00:00",
+  "storage_inspector_sha256": "80f5074cc68a43b516cc30c05d326edc190a376fd80cc9a15b3691a65d38f369"
+}

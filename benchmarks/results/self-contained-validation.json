@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "scope": "Static dependencies; bounded correctness tests, not production qualification or performance benchmark",
+  "reports": {
+    "local-static-build": {
+      "sha256": "cff3e851eee7827dc9c9e86f45993f0c55cdc75ff1b774f191caaf66ebf8055b",
+      "checks": 0
+    },
+    "linux-static-build": {
+      "sha256": "ce0161af684d238bb4092855e05a6c7824c1cc4ca31044dc44f56f3eb032f351",
+      "checks": 0
+    },
+    "local-static-python-features": {
+      "sha256": "9275fb60c4422cb61bf31e3c6beab1bf970b01aa50b51fc172471f369b96aa95",
+      "checks": 21
+    },
+    "linux-static-python-features": {
+      "sha256": "ecb1dd462c27a55c0d0f380ae970b6b239cd37ef1dfdfdfe1790eeff6d5ed6fe",
+      "checks": 21
+    },
+    "local-static-mtls": {
+      "sha256": "c18acb98be3711d7967241d42ccad5e17e36577fe90be6a546eb352398ea2150",
+      "checks": 15
+    },
+    "linux-static-mtls": {
+      "sha256": "2c83ba235c2b453b3df3564558c48dc31bdf4862f2128571cce6ab2b6e0caace",
+      "checks": 15
+    },
+    "linux-static-three-host": {
+      "sha256": "7187fb268c7d92d497e8ace002d5f1f52bea9c5c83085995ca2886156400d76f",
+      "checks": 19
+    },
+    "local_engine": {
+      "tests": 91,
+      "log": "[INFO ] --- [2026-09-22 23:46:19] Starting test runner with 8 threads. Set with -define:ODIN_TEST_THREADS=n.\n[INFO ] --- [2026-09-22 23:46:19] The random seed sent to every test is: 9051998070242. Set with -define:ODIN_TEST_RANDOM_SEED=n.\n[INFO ] --- [2026-09-22 23:46:19] Memory tracking is enabled. Tests will log their memory usage if there's an issue.\n[INFO ] --- [2026-09-22 23:46:19] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]\n\nFinished 91 tests in 11.848972s. All tests were successful.\n\n"
+    },
+    "linux_engine": {
+      "tests": 91,
+      "log": "[INFO ] --- [2026-09-22 23:50:21] Starting test runner with 16 threads. Set with -define:ODIN_TEST_THREADS=n.\n[INFO ] --- [2026-09-22 23:50:21] The random seed sent to every test is: 17838147941702080. Set with -define:ODIN_TEST_RANDOM_SEED=n.\n[INFO ] --- [2026-09-22 23:50:21] Memory tracking is enabled. Tests will log their memory usage if there's an issue.\n[INFO ] --- [2026-09-22 23:50:21] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]\n\nFinished 91 tests in 266.297619ms. All tests were successful.\n\n"
+    }
+  }
+}

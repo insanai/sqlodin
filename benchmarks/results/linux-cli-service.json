@@ -1,0 +1,144 @@
+{
+  "complete": true,
+  "passed": true,
+  "scope": "three native mTLS SQL service processes on one host; disk WAL FULL",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "started_utc": "2026-09-23T05:15:01.456583+00:00",
+  "checks": [
+    {
+      "name": "native_cli_status_write_and_query",
+      "passed": true
+    },
+    {
+      "name": "native_cluster_schema",
+      "passed": true
+    },
+    {
+      "name": "write_any_node_fenced_rows",
+      "passed": true
+    },
+    {
+      "name": "typed_parameters_and_results",
+      "passed": true
+    },
+    {
+      "name": "atomic_batch_rollback_and_next_sequence",
+      "passed": true
+    },
+    {
+      "name": "readonly_policy_and_result_limit",
+      "passed": true
+    },
+    {
+      "name": "untrusted_unlisted_and_peer_as_client_rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed_frames_close_only_offending_connection",
+      "passed": true
+    },
+    {
+      "name": "six_concurrent_sessions_mixed_writes_and_fenced_reads",
+      "passed": true
+    },
+    {
+      "name": "cross_master_durable_deduplication",
+      "passed": true
+    },
+    {
+      "name": "minority_no_ack_and_explicit_stale_read",
+      "passed": true
+    },
+    {
+      "name": "recover_uncertain_write_after_quorum_restored",
+      "passed": true
+    },
+    {
+      "name": "all_process_sigkill_reopen_fenced_convergence",
+      "passed": true
+    },
+    {
+      "name": "graceful_shutdown_and_exclusive_creation",
+      "passed": true
+    }
+  ],
+  "binary_sha256": "e9920de70aecc0e781ba4662b6fa94e72c29005a9aa7e41d8956c0f0fc477503",
+  "source_sha256": {
+    "src/durable/batch.odin": "79ad08b40fde740a8fb67ea6938d0bcc6ca4936506765c8e460143789eb1b04c",
+    "src/durable/codec.odin": "190d3370ca3b6ce275f6f11d69d887641a7b8fdac6d0f0cc27a763e87610e7d8",
+    "src/durable/host.odin": "6f8cb285a746e903df63bda5a3255a97c8882bd716d99a63a79444faca0246db",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "aa970e1d220622ac8b4e1b0c61e8d414a9987eec2a18bbba23a2a32059698b42",
+    "src/durable/packing.odin": "13cb17865f88841fb1718ef8ce4800b28b1be1fb6d75f4e5e1e3de5ec39ef8e9",
+    "src/durable/reads.odin": "ba9fe24170ccd4c45829091e003f4d7c138d3c681ecceae5b1d2e6f4ebd6f7e6",
+    "src/durable/storage.odin": "5ddedd597ccd4821f66abad1e512c7537a14bfdb1d743ee3cb1ba598ccc3bc75",
+    "src/durable/transition_group.odin": "e50e3199a5d33aac2bb16294791701e1f8debbb18dbe684fd642a03676d5aeb4",
+    "src/engine.odin": "68acc036cb6934f25ed8a01ca83e1562341d599d24668d43f3ede3cc14b62825",
+    "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+    "src/engine_optimistic.odin": "51d96626ea32c3c0d8c681dd331e0d863bb9c8794b95c2ca45d6b5b2978802e6",
+    "src/engine_outcomes.odin": "009ec855c746bdba633a611ec6df4a742dda92d837ae52a138c1a514bcb4f68d",
+    "src/engine_policy.odin": "a486216061037920cff8c883d61d37884305e310b29b725da24dfcc4b00d7db6",
+    "src/engine_query.odin": "4b7bd3904d2eb7094ebc1740021e8c2b62a2d404add9eecfee927c96e90e8dc3",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_sessions.odin": "ddaaaa6e7a8cf866656bfd866b82c0342a98d9cb0a2d3c11dc191569f2912c33",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "06afab34611f6b83d4b1e01971188ca4522a840839f3f704ec9724dad58d3743",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "cc4a4a91673f1402bb464b0ae0391dcf33859acc43b0fb3eeab47fde936f0dd5",
+    "src/sqlite/sqlite_vec.odin": "fcf7db3ae460173b06eb0836fbf504569efb223915eb208d4d7a9cf806deae22",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "00570fbbb4a9636dd5b8a98cc58af33f0384f906da5e7adc047650257486cc39",
+    "service/client.odin": "9c5a647f215785dffd3072b0ec48f6a8e13ba10fa9b4546939b4d79e8e938f73",
+    "service/config.odin": "98e7c9b93d26c7a7c43d05ca1b78244a94735dac60bf2319ec4014446855ec70",
+    "service/framing.odin": "da5584cc8f1ab99817c5198e9835a3f3f9a73a1e284cadd70cf41c946ee56ce4",
+    "service/requests.odin": "28ebe27c7f9460b817f032ad609d0d2557fac447f9a851ded284390a954de2db",
+    "service/server.odin": "084760a07e3b0e7154f30b2261eec6ae261f51e1435c0fb3414e1a2af6414cc9",
+    "service/signals.odin": "18286d1f33fa7094abb0bd1cd15f5b1b200f071163dbce5d93f18bccca84475e",
+    "service/socket.odin": "03f52e602867ceb4b93739aa457d123382c646a7c616b7c4236f910df1f2f99c",
+    "service/transactions.odin": "05a297ccd4d888deba08d6f140bd336ba4443b8aa117e197c914ba0a09102349",
+    "service/types.odin": "a9b7ad1ee502505b67ef589262fff34c238883f9685b6b463c40ccb7fd5c6d58",
+    "service/wire.odin": "5692a99151985acc57ea25ee933d6ac43aea09e2002116adba79b5d39feff664",
+    "transport/mtls/mtls.odin": "92210183e6c50cc8516f4978403502bcbab7e06f8ca91a5307392a99c975b47d",
+    "transport/mtls/openssl.odin": "29eef6739ecbd318e86d6fbf71ff80770a04b637febe4755fab5915689f35580",
+    "cli/diagnostics.odin": "28f1a274e20f964e0c596a44550799aa35a06aa3b9766520fdfaf459dc028d7a",
+    "cli/local.odin": "5db301b48abcef9f3c05fba24924389018748b2cbce580471a560d2c714aca15",
+    "cli/main.odin": "78b62d9bdfb56ebb28646fe4c72bafd4b3d6f982f1160e4632bec2e6ca1b4181",
+    "cli/shell_commands.odin": "a0b2f5a1f9517eb1e1b56febb16046e13c5d3033cd24fb3179062b2549106817",
+    "cli/shell_editor.odin": "358851ca2c1a5f2ce762cf36df0b40fbc4e0fe422ce72dddfa83e0864cb6efda",
+    "cli/shell_input.odin": "f4289b9f740f5a8ff581a649baf176325b22af9a15b96e5362595e0ecf6ba10c",
+    "cli/shell_output.odin": "02fede92b7a2274bbf95c44230da9e5367bfb62f15419691f5034dc615179173",
+    "cli/shell_sql.odin": "a31c59169f45ef80b541003be21a91014a65db29728018792cb047b75eed18ca",
+    "cli/shell_state.odin": "a61fff3fc895934b7e247a9b3838512a1974f6a90639d583c3efdb0bbe38f490",
+    "languages/python/src/sqlodin/__init__.py": "98fec146ab428962e09d4362aa3271111752b627c7b9942a32be434232c08b54",
+    "languages/python/src/sqlodin/client.py": "b16879732bd801ad8ddfa377071ddee7d3ae4ee653b837434f3a0ff90b3142f3",
+    "languages/python/src/sqlodin/dbapi.py": "1b1290264f23a946a937b17014f564f7b0934922d3f36c692baa7789655c2f9b",
+    "languages/python/src/sqlodin/errors.py": "2207c01fe7b1e115f32d1d1237b37242fe7ecfef74fb9d02496b92cd89bdccb5",
+    "languages/python/src/sqlodin/parameters.py": "7705bba70912e01397c137610c5790869fbbaf4ba8e015dd62e8689c837a6464",
+    "languages/python/src/sqlodin/results.py": "ab73e7b554a817e7dc7d13b4062c50751935bb57c947af088d64aa05096da310",
+    "languages/python/src/sqlodin/search.py": "678a506c39a2d2de4425e3ba4712cc5085a5aae1dafcaa89a4bd3aeb04d910dc",
+    "languages/python/src/sqlodin/sqlalchemy.py": "4a59ae581a5afdbbd1cf39f6d8bae8f32b124fa35f1df1a643d6955877e955d6",
+    "languages/python/src/sqlodin/transaction.py": "66cfc8b8c12fe52e9ed7151c1945242c01526b5fd8adcd2ffdab355de5ef5542",
+    "languages/python/src/sqlodin/transport.py": "5051f293062b21977b18216397c689c921d6570762df320cb1000f99a6c44282",
+    "languages/python/src/sqlodin/vector.py": "07c14a567fbd5cb5c98e40a0bc1c7097463805278d3611daa136d19c30fe5212"
+  },
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "logs": {
+    "node1.log": "SQLodin node 1 listening on 127.0.0.1:57809 (mTLS, cluster network-qualification)\nSQLodin node 1 listening on 127.0.0.1:57809 (mTLS, cluster network-qualification)\nSQLodin node 1 listening on 127.0.0.1:57809 (mTLS, cluster network-qualification)\n",
+    "node2.log": "SQLodin node 2 listening on 127.0.0.1:45097 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 127.0.0.1:45097 (mTLS, cluster network-qualification)\nSQLodin node 2 listening on 127.0.0.1:45097 (mTLS, cluster network-qualification)\n",
+    "node3.log": "SQLodin node 3 listening on 127.0.0.1:38565 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 127.0.0.1:38565 (mTLS, cluster network-qualification)\nSQLodin node 3 listening on 127.0.0.1:38565 (mTLS, cluster network-qualification)\n"
+  }
+}

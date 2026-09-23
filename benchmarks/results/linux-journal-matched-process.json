@@ -1,0 +1,462 @@
+{
+  "complete": true,
+  "started_utc": "2026-09-22T16:14:57.276144+00:00",
+  "scope": "one Linux machine; three processes and disk directories per sample; same mixed SQL, fresh fenced reads and controller scheduling; FULL durability; journal-group flag is the sole build difference; not production service capacity",
+  "source_sha256": {
+    "internal/process_probe/main.odin": "317a7446966a346bf0176dba3c682ee0889a72acba2898ad0aaf60d901b33002",
+    "internal/process_probe/wire.odin": "228bf1a752aae59c40253cb36b58cdce9d774883b4a9cadd93bea0c24df8399d",
+    "src/durable/batch.odin": "79ad08b40fde740a8fb67ea6938d0bcc6ca4936506765c8e460143789eb1b04c",
+    "src/durable/codec.odin": "8252dafef72a2460ec01f5023fe7a9e6f4f4693946097e2c320c9be11a0b6654",
+    "src/durable/host.odin": "6f8cb285a746e903df63bda5a3255a97c8882bd716d99a63a79444faca0246db",
+    "src/durable/ids.odin": "9527f93cedc1348d822bcbba8a233924ad552bb216d110831e4ad481350cf151",
+    "src/durable/journal.odin": "aa970e1d220622ac8b4e1b0c61e8d414a9987eec2a18bbba23a2a32059698b42",
+    "src/durable/packing.odin": "43b6463698a49cfeb78f01fe730daf595c67caa9bbef20d52a2f8d6c3508c4ba",
+    "src/durable/reads.odin": "ba9fe24170ccd4c45829091e003f4d7c138d3c681ecceae5b1d2e6f4ebd6f7e6",
+    "src/durable/storage.odin": "e1124440683e725a3a0c3bdb667bc96451caa7a42da0ac219eeb6cc9776c0858",
+    "src/durable/transition_group.odin": "e50e3199a5d33aac2bb16294791701e1f8debbb18dbe684fd642a03676d5aeb4",
+    "src/engine.odin": "68acc036cb6934f25ed8a01ca83e1562341d599d24668d43f3ede3cc14b62825",
+    "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+    "src/engine_outcomes.odin": "ffea59aa2c49b48698ad0373d1581128ca012ac7ea71d2b5147c95b75ed33550",
+    "src/engine_policy.odin": "f70c25c75cd505bfc8962bb868c92a0e59100d8ff6f1ff04d2fc05332d67bbce",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_sessions.odin": "ae0719387678c5ff38e9c01b684e3c9aa453764748fd86dc2b48148a36972edb",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "1e1e5a5c52658f6899fcedfdefa32d55362336842caf3cccecf0425dbed5d635",
+    "src/paxos.odin": "5bc06677653491ae8a5ba43b0fa3c22ab785327ec8ad49e7a0fcb63ec43d6091",
+    "src/sqlite/sqlite3.odin": "344c301ddde7c98d885bf82c18c1c2fcf0fd40dea56247c8a1ef6cee9b006fbd",
+    "src/sqlite/sqlite_vec.odin": "11fc6171452c3373f833765fedf021d2affefbe240908caa6e8a1fbaf26a0963",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "0b4475c7a88fcddde46cdb1af73c1417f9096f58979b3974d313c1f115e9193a",
+    "tools/check_process_cluster.py": "601d69de2b4a0e0999f21048ad605ff7f8fe894f6f28a64f0822f14f16f19904",
+    "tools/compare_process_journal.py": "61798e16567841bb33fbcbc031e137d8406804872c31cab97077919c24a7a2f0"
+  },
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "fstype": "zfs",
+        "source": "local/containers/agy01[/rootfs]",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "run_directory": "/home/insan/projects/sqlodin/build/process-comparisons/journal-s9tck39f",
+  "operations": 2400,
+  "repeats": 3,
+  "durability_evidence": {
+    "True": {
+      "path": "benchmarks/results/linux-journal-final-durability.json",
+      "sha256": "f5184a1571e1f6fcb4da584a6f8eb2e0966eb6dd4dc084d267b42949a10d94be"
+    },
+    "False": {
+      "path": "benchmarks/results/linux-journal-reference-durability.json",
+      "sha256": "d08cfab398a4d164ec643f95f97eeeb636612c79398c1f0ce2931e1f8fdf0b7d"
+    }
+  },
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "sources": {
+      "sqlite": [
+        "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      ],
+      "vec": [
+        "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      ]
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+    "archives_sha256": {
+      "libsqlite3.a": "1b084c83a70167fcd021ddb6192862e56b495fefed214301d2e30295fb56889d",
+      "libsqlite_vec.a": "fbe1003199f6eda8db6da5f39c38e5508c93e24da938810525f446c497b47b6f"
+    }
+  },
+  "binary_sha256": {
+    "reference": "31c0915b80f9bad53880d62e65a942268978658fe6c5f69a2247df499fdedfbe",
+    "grouped": "2882efd7c05aaba91497302bc10931b410c6f4ca95d4e2cd89c4723a0ce58e7f"
+  },
+  "samples": [
+    {
+      "repeat": 1,
+      "mode": "reference",
+      "seed": 20260922,
+      "sample": {
+        "operations": 2400,
+        "reads": 1677,
+        "writes": 723,
+        "seconds": 64.7612875951454,
+        "operations_per_second": 37.05917669524389,
+        "voter_cpu_seconds_timed": 22.189999999999998,
+        "controller_boundary": "closed-loop waves, at most 12 writes or 3 fenced reads outstanding",
+        "read_latency_ms": {
+          "p50": 48.26609883457422,
+          "p95": 84.66065116226673,
+          "p99": 110.05053110420704
+        },
+        "write_latency_ms": {
+          "p50": 107.69333317875862,
+          "p95": 203.72234750539064,
+          "p99": 239.14833273738623
+        },
+        "verified_transfers_including_fault_phases": 745,
+        "peak_rss_bytes_per_voter": [
+          10002432,
+          10055680,
+          10903552
+        ],
+        "checks": [
+          "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+          "fresh_ordered_read_barrier_on_every_voter",
+          "all_processes_sigkill_uncertain_retry_other_master",
+          "acknowledged_retry_other_master_after_restart",
+          "minority_cannot_complete_fenced_read",
+          "minority_no_ack_heal_retry",
+          "restarted_stale_voter_fenced_read_observes_acknowledged_writes",
+          "surviving_quorum_writes_offline_voter_catchup",
+          "all_acknowledged_transactions_survive_final_sigkill"
+        ]
+      },
+      "worker_pids": [
+        181083,
+        181084,
+        181085,
+        181102,
+        181103,
+        181104,
+        181105,
+        181106,
+        181107,
+        181108
+      ],
+      "run_directory": "/home/insan/projects/sqlodin/build/process-comparisons/journal-s9tck39f/1-reference"
+    },
+    {
+      "repeat": 1,
+      "mode": "grouped",
+      "seed": 20260922,
+      "sample": {
+        "operations": 2400,
+        "reads": 1677,
+        "writes": 723,
+        "seconds": 47.367057903669775,
+        "operations_per_second": 50.6681247731466,
+        "voter_cpu_seconds_timed": 18.8,
+        "controller_boundary": "closed-loop waves, at most 12 writes or 3 fenced reads outstanding",
+        "read_latency_ms": {
+          "p50": 35.91491095721722,
+          "p95": 70.63466962426901,
+          "p99": 94.28178984671831
+        },
+        "write_latency_ms": {
+          "p50": 59.18171629309654,
+          "p95": 120.85494585335255,
+          "p99": 140.67431073635817
+        },
+        "verified_transfers_including_fault_phases": 745,
+        "peak_rss_bytes_per_voter": [
+          10297344,
+          10457088,
+          11526144
+        ],
+        "checks": [
+          "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+          "fresh_ordered_read_barrier_on_every_voter",
+          "all_processes_sigkill_uncertain_retry_other_master",
+          "acknowledged_retry_other_master_after_restart",
+          "minority_cannot_complete_fenced_read",
+          "minority_no_ack_heal_retry",
+          "restarted_stale_voter_fenced_read_observes_acknowledged_writes",
+          "surviving_quorum_writes_offline_voter_catchup",
+          "all_acknowledged_transactions_survive_final_sigkill"
+        ]
+      },
+      "worker_pids": [
+        181109,
+        181110,
+        181111,
+        181115,
+        181116,
+        181117,
+        181118,
+        181119,
+        181120,
+        181121
+      ],
+      "run_directory": "/home/insan/projects/sqlodin/build/process-comparisons/journal-s9tck39f/1-grouped"
+    },
+    {
+      "repeat": 2,
+      "mode": "grouped",
+      "seed": 20260923,
+      "sample": {
+        "operations": 2400,
+        "reads": 1677,
+        "writes": 723,
+        "seconds": 46.898809652775526,
+        "operations_per_second": 51.17400671293936,
+        "voter_cpu_seconds_timed": 19.16,
+        "controller_boundary": "closed-loop waves, at most 12 writes or 3 fenced reads outstanding",
+        "read_latency_ms": {
+          "p50": 33.13185553997755,
+          "p95": 69.77380160242319,
+          "p99": 89.600570499897
+        },
+        "write_latency_ms": {
+          "p50": 55.03140576183796,
+          "p95": 115.28303660452366,
+          "p99": 128.59112489968538
+        },
+        "verified_transfers_including_fault_phases": 745,
+        "peak_rss_bytes_per_voter": [
+          10883072,
+          10493952,
+          11485184
+        ],
+        "checks": [
+          "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+          "fresh_ordered_read_barrier_on_every_voter",
+          "all_processes_sigkill_uncertain_retry_other_master",
+          "acknowledged_retry_other_master_after_restart",
+          "minority_cannot_complete_fenced_read",
+          "minority_no_ack_heal_retry",
+          "restarted_stale_voter_fenced_read_observes_acknowledged_writes",
+          "surviving_quorum_writes_offline_voter_catchup",
+          "all_acknowledged_transactions_survive_final_sigkill"
+        ]
+      },
+      "worker_pids": [
+        181122,
+        181123,
+        181124,
+        181138,
+        181139,
+        181140,
+        181141,
+        181142,
+        181143,
+        181144
+      ],
+      "run_directory": "/home/insan/projects/sqlodin/build/process-comparisons/journal-s9tck39f/2-grouped"
+    },
+    {
+      "repeat": 2,
+      "mode": "reference",
+      "seed": 20260923,
+      "sample": {
+        "operations": 2400,
+        "reads": 1677,
+        "writes": 723,
+        "seconds": 61.4611188210547,
+        "operations_per_second": 39.04907762886076,
+        "voter_cpu_seconds_timed": 22.64,
+        "controller_boundary": "closed-loop waves, at most 12 writes or 3 fenced reads outstanding",
+        "read_latency_ms": {
+          "p50": 44.42988522350788,
+          "p95": 81.94645494222641,
+          "p99": 103.16338948905468
+        },
+        "write_latency_ms": {
+          "p50": 96.03145066648722,
+          "p95": 169.97413709759712,
+          "p99": 200.77009871602058
+        },
+        "verified_transfers_including_fault_phases": 745,
+        "peak_rss_bytes_per_voter": [
+          10477568,
+          10010624,
+          11022336
+        ],
+        "checks": [
+          "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+          "fresh_ordered_read_barrier_on_every_voter",
+          "all_processes_sigkill_uncertain_retry_other_master",
+          "acknowledged_retry_other_master_after_restart",
+          "minority_cannot_complete_fenced_read",
+          "minority_no_ack_heal_retry",
+          "restarted_stale_voter_fenced_read_observes_acknowledged_writes",
+          "surviving_quorum_writes_offline_voter_catchup",
+          "all_acknowledged_transactions_survive_final_sigkill"
+        ]
+      },
+      "worker_pids": [
+        181145,
+        181146,
+        181147,
+        181151,
+        181152,
+        181153,
+        181154,
+        181155,
+        181156,
+        181157
+      ],
+      "run_directory": "/home/insan/projects/sqlodin/build/process-comparisons/journal-s9tck39f/2-reference"
+    },
+    {
+      "repeat": 3,
+      "mode": "reference",
+      "seed": 20260924,
+      "sample": {
+        "operations": 2400,
+        "reads": 1717,
+        "writes": 683,
+        "seconds": 52.990461718291044,
+        "operations_per_second": 45.291169810124096,
+        "voter_cpu_seconds_timed": 21.12,
+        "controller_boundary": "closed-loop waves, at most 12 writes or 3 fenced reads outstanding",
+        "read_latency_ms": {
+          "p50": 37.917349487543106,
+          "p95": 68.27215570956469,
+          "p99": 88.69534637778997
+        },
+        "write_latency_ms": {
+          "p50": 84.37014184892178,
+          "p95": 158.3450948819518,
+          "p99": 178.24108246713877
+        },
+        "verified_transfers_including_fault_phases": 705,
+        "peak_rss_bytes_per_voter": [
+          10444800,
+          9998336,
+          10964992
+        ],
+        "checks": [
+          "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+          "fresh_ordered_read_barrier_on_every_voter",
+          "all_processes_sigkill_uncertain_retry_other_master",
+          "acknowledged_retry_other_master_after_restart",
+          "minority_cannot_complete_fenced_read",
+          "minority_no_ack_heal_retry",
+          "restarted_stale_voter_fenced_read_observes_acknowledged_writes",
+          "surviving_quorum_writes_offline_voter_catchup",
+          "all_acknowledged_transactions_survive_final_sigkill"
+        ]
+      },
+      "worker_pids": [
+        181158,
+        181159,
+        181160,
+        181174,
+        181175,
+        181176,
+        181179,
+        181180,
+        181181,
+        181182
+      ],
+      "run_directory": "/home/insan/projects/sqlodin/build/process-comparisons/journal-s9tck39f/3-reference"
+    },
+    {
+      "repeat": 3,
+      "mode": "grouped",
+      "seed": 20260924,
+      "sample": {
+        "operations": 2400,
+        "reads": 1717,
+        "writes": 683,
+        "seconds": 44.058059725910425,
+        "operations_per_second": 54.473574527127134,
+        "voter_cpu_seconds_timed": 18.69,
+        "controller_boundary": "closed-loop waves, at most 12 writes or 3 fenced reads outstanding",
+        "read_latency_ms": {
+          "p50": 31.032181344926357,
+          "p95": 66.10326375812292,
+          "p99": 87.64561451971531
+        },
+        "write_latency_ms": {
+          "p50": 53.1194768846035,
+          "p95": 106.71516787260771,
+          "p99": 122.28650692850351
+        },
+        "verified_transfers_including_fault_phases": 705,
+        "peak_rss_bytes_per_voter": [
+          10846208,
+          10493952,
+          11513856
+        ],
+        "checks": [
+          "mixed_transactions_indexes_triggers_foreign_keys_all_voters",
+          "fresh_ordered_read_barrier_on_every_voter",
+          "all_processes_sigkill_uncertain_retry_other_master",
+          "acknowledged_retry_other_master_after_restart",
+          "minority_cannot_complete_fenced_read",
+          "minority_no_ack_heal_retry",
+          "restarted_stale_voter_fenced_read_observes_acknowledged_writes",
+          "surviving_quorum_writes_offline_voter_catchup",
+          "all_acknowledged_transactions_survive_final_sigkill"
+        ]
+      },
+      "worker_pids": [
+        181183,
+        181184,
+        181185,
+        181189,
+        181190,
+        181191,
+        181192,
+        181193,
+        181194,
+        181195
+      ],
+      "run_directory": "/home/insan/projects/sqlodin/build/process-comparisons/journal-s9tck39f/3-grouped"
+    }
+  ],
+  "odin_version": "odin version dev-2026-09-nightly:a2fb372",
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "cpu_model": "AMD Ryzen 7 5800H with Radeon Graphics",
+  "load_before": "1.28 0.95 0.91 1/1110 347075",
+  "cgroup_limits": {
+    "cpu.max": "max 100000",
+    "memory.max": "max"
+  },
+  "finished_utc": "2026-09-22T16:22:30.093524+00:00",
+  "load_after": "2.32 1.93 1.38 1/1107 348331"
+}
