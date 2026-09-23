@@ -50,11 +50,13 @@ Error :: enum {
 	Sqlite_Corrupt,
 
 	// Multi-master mutation errors
+	Snowflake_Exhausted,
 	Invalid_Mutation,
 	Payload_Too_Large,
 	Serialization_Failed,
 	Deserialization_Failed,
 	Stale_Watermark,
+	Query_Limit,
 
 	// Vector search and FTS5 errors
 	Vector_Dimension_Mismatch,
@@ -66,6 +68,12 @@ Error :: enum {
 // Every error explains itself: a title, the cause, and a corrective `Hint:`.
 @(rodata)
 EXPLANATIONS := [Error]string{
+	.Query_Limit = `
+-- QUERY RESOURCE LIMIT --------------------------------------------------------
+
+The local read exceeded its row or SQLite instruction budget; its result is incomplete.
+Hint: Use indexed, bounded queries or paginate. Do not treat partial rows as a successful result.
+`,
 	.None = "No error.",
 	.Empty_Membership = `
 -- EMPTY MEMBERSHIP ------------------------------------------------------------
@@ -82,7 +90,7 @@ Hint: Reduce the member slice or deliberately raise MAX_MEMBERS.
 	.Invalid_Node_Id = `
 -- INVALID NODE ID -------------------------------------------------------------
 
-Node ID zero is reserved as a sentinel.
+Node ID zero is reserved; the SQLite engine requires a 10-bit ID (1..1023).
 Hint: Assign every logical member a stable, non-zero ID.
 `,
 	.Duplicate_Node_Id = `
@@ -277,6 +285,12 @@ Hint: Run schema migrations before submitting mutations to this table.
 The SQLite database file reported corruption (SQLITE_CORRUPT).
 Hint: Recover from state anchor and replay committed journal suffix.
 `,
+	.Snowflake_Exhausted = `
+-- SNOWFLAKE EXHAUSTED ---------------------------------------------------------
+
+The logical millisecond counter exceeds the 42-bit Snowflake timestamp field.
+Hint: Use timestamps within a defined epoch and persist the ID frontier across restarts.
+`,
 	.Invalid_Mutation = `
 -- INVALID MUTATION -------------------------------------------------------------
 
@@ -334,6 +348,6 @@ Hint: Check query syntax; words with hyphens must be quoted in FTS5 syntax.
 }
 
 // Explains an error with actionable remediation diagnostics.
-explain_error :: proc(err: Error) -> string {
+explain_engine_error :: proc(err: Error) -> string {
 	return EXPLANATIONS[err]
 }

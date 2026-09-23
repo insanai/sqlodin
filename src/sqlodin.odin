@@ -38,6 +38,4 @@ applied_through :: proc{
 	engine_applied_through,
 }
 
-explain :: proc{
-	explain_error,
-}
+explain :: explain_error
