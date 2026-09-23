@@ -4,7 +4,7 @@
 #let sod-created = "YYYY-MM-DD"
 #let sod-discussion = "Draft discussion note"
 #let sod-labels = ("documentation", "engineering")
-#let sod-authors = ("Your Name <you@insan.ai>")
+#let sod-authors = ("Vikrant Rathore, with assistance from Ronak Rathore",)
 #let sod-category = "Engineering Discussion"
 #let sod-status = "Internal Draft"
 #let sod-last-updated = "None"

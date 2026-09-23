@@ -1,61 +1,53 @@
-#import "theme.typ": blue, gray, callout
+#import "theme.typ": callout
 
-= Consistency Models & Distributed Reads
-
-== Read Spectrum in Replicated Databases
-
-In a distributed database, read operations can offer different consistency guarantees depending on
-latency and freshness trade-offs:
-
-#table(
-  columns: (100pt, 120pt, 100pt, 120pt),
-  align: center + horizon,
-  table.header([*Read Level*], [*Coordination*], [*Latency*], [*Freshness*]),
-  [Local Snapshot], [Zero (Local WAL)], [< 100 microseconds], [Monotonic local view],
-  [Read-Your-Writes], [Local Watermark Check], [< 100 microseconds], [Fresh to client's writes],
-  [Linearizable Read], [Quorum Read Exchange], [1 RTT (~15-40ms)], [Strict real-time global],
-)
+= Consistency and Reads
 
 == Local Snapshot Reads
 
-For high-throughput read workloads (such as vector KNN indexing or full-text analytics), clients
-can read directly from any node's local SQLite database without participating in consensus:
+`engine_read_snapshot` uses the durable host's read-only connection and returns the number
+of result rows. It rejects write statements and propagates stepping errors. It does not return a
+network result set or coordinate a distributed read. The host must serialize access to the engine
+and its applied watermark. A local replica may lag other replicas.
+
+File-backed engines enable SQLite WAL. The historical `:memory:` benchmarks do not measure WAL
+read concurrency or file-backed latency. Query cost depends on data, indexes and storage; no fixed
+microsecond latency is guaranteed.
+
+== Read-Your-Writes with an Applied Watermark
 
 ```odin
-rows, err := engine_read_snapshot(&engine, "SELECT * FROM docs WHERE ...")
+rows, err := engine_read_snapshot(&engine, query, min_watermark = committed_slot)
 ```
 
-Because SQLite WAL mode provides point-in-time Snapshot Isolation (readers do not block writers and
-writers do not block readers), local reads execute in sub-millisecond time (typically 10 to 40
-microseconds) without locking or network overhead.
+If `engine.applied_through` is lower than the requested slot, the engine returns `Stale_Watermark`.
+Otherwise it executes the query locally. The host can wait for catch-up or route to another replica.
+The token must refer to the client's observed committed outcome, not merely the initial proposed
+slot: revocation can cause resubmission in a later slot.
 
-== Read-Your-Writes Watermarks
+This mechanism can supply read-your-writes when a host routes tokens correctly and restores a
+valid applied state. Switching replicas without carrying a token does not guarantee a monotonic
+view. The library does not implement client routing or waiting.
 
-A classic defect of multi-master systems is the *casual consistency anomaly*:
-+ A user posts a comment on Node 1. The write commits in slot 42.
-+ The user refreshes the page, routing to Node 2 (geographically closer).
-+ If Node 2 is lagging at slot 40, the user does not see their own comment!
+== Linearizable Reads
 
-SQLodin solves this with *Watermark Reads*:
+A local watermark check alone does not prove that no newer write completed elsewhere before the
+read. The durable host now supplies an ordered-barrier reference API: `begin_read` reserves a fresh
+durable identifier after invocation and proposes a unique no-op marker. `poll_read` opens a local
+SQLite snapshot only after that exact marker and its contiguous prefix have applied. A write
+acknowledged before invocation must precede this marker in that prefix.
 
-```odin
-engine_read_watermark :: proc(
-    e: ^Engine,
-    sql: string,
-    min_watermark: Slot,
-) -> (int, Error) {
-    if e.applied_through < min_watermark {
-        return 0, .Stale_Watermark
-    }
-    return engine_read_snapshot(e, sql)
-}
-```
+A host allows one active ticket. Completion consumes it even if the query fails; cancellation or
+restart retires it. If another value occupies the proposed slot, `Displaced` requires a fresh barrier.
+An isolated minority cannot complete the barrier. Callers must keep delivering messages and ticks,
+serialize host access and treat the initial proposal slot as pending rather than a completed fence.
 
-When a client executes a write on Node 1, SQLodin returns the committed `Slot` number (e.g. `42`).
-When the client subsequent issues a read request to any node, it passes `min_watermark = 42`.
-- If the node has applied slot 42 or higher, the query executes immediately.
-- If the node has only applied slot 40, it returns `.Stale_Watermark`. The client or routing proxy
-  can await replication catch-up or retry against an up-to-date node.
+This is a consensus write for each read, with the corresponding disk and quorum costs. It is not
+a lease optimization. The three-process tests exercise fresh fences at every voter, minority
+isolation and a stale restarted voter observing already acknowledged writes. The native service
+now adds authentication and typed results; full service-level history qualification remains open.
 
-This delivers guaranteed *Read-Your-Writes Consistency* across a distributed multi-master cluster
-with zero consensus coordination during read queries.
+The count-only reference API bounds reads to one statement, 4 KiB SQL, 65,536 rows and
+approximately one million SQLite VM instructions. A query exceeding its work budget returns
+`Query_Limit`; partial rows are not a successful result. The progress budget never decides a
+replicated write's outcome. The native value-result API tightens the row limit to 4096 and adds
+a 256 KiB internal result budget. Applications should use bounded, indexed queries and pagination.

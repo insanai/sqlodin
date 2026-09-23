@@ -1,181 +1,95 @@
-// SQLodin Discussions (SOD) Specification Frame & Helper Library
-// Modeled on the Paxos Odin Discussions (POD) from paxos-odin and ZDS from zenfmt.
-
-#import "theme.typ": primary-color, secondary-color, accent-color, muted-color, bg-light, border-color
-
+// SQLodin discussion records: portable type, explicit lifecycle, stable metadata.
+#import "theme.typ": *
 #let sod-placeholder-number = "XXXXX"
-
-#let sod-state-fill(state) = {
-  if state == "published" {
-    rgb("dbeafe") // blue
-  } else if state == "discussion" {
-    rgb("dcfce7") // green
-  } else if state == "committed" {
-    rgb("ede9fe") // purple
-  } else if state == "abandoned" {
-    rgb("e5e7eb") // gray
-  } else {
-    rgb("fef3c7") // yellow
-  }
-}
-
-#let sod-chip(label, fill) = box(
-  inset: (x: 0.5em, y: 0.25em),
-  radius: 999pt,
-  fill: fill,
-  stroke: none,
-)[
-  #text(8.5pt, weight: "bold", fill: rgb("1e293b"))[#label]
+#let sod-state-fill(state) = if state == "committed" { rgb("e7f0eb") }
+  else if state == "abandoned" { rgb("edf0f1") } else { rgb("faf1df") }
+#let sod-chip(label, fill) = box(inset: (x: 6pt, y: 3pt), fill: fill)[
+  #text(font: "New Computer Modern Sans", size: 8pt, weight: "bold")[#label]
 ]
+#let sod-title(number, title) = [SOD #number: #title]
+#let sod-label(label) = text(font: "New Computer Modern Sans", size: 8pt,
+  tracking: 0.4pt, weight: "bold", fill: muted-color)[#upper(label)]
+#let sod-value(body) = text(size: 10pt, fill: primary-color)[#body]
 
-#let sod-title(number, title) = {
-  if number == sod-placeholder-number {
-    [SOD #sod-placeholder-number: #title]
-  } else {
-    [SOD #number: #title]
-  }
-}
-
-#let sod-label(label) = text(8.5pt, weight: "bold", fill: rgb("64748b"))[#upper(label)]
-#let sod-value(body) = text(9.5pt, fill: rgb("0f172a"))[#body]
-
-#let sod-document(
-  number,
-  title,
-  body,
-  authors: (),
-  state: "discussion",
-  created: "YYYY-MM-DD",
-  discussion: "",
-  labels: (),
-  category: "Engineering Discussion",
-  status: "Draft",
-  last-updated: "None",
-) = {
+#let sod-document(number, title, body, authors: (project-authorship,),
+  state: "prediscussion", created: "YYYY-MM-DD", discussion: "", labels: (),
+  category: "Engineering Discussion", status: "Draft", last-updated: "None") = {
   set document(title: [SOD #number: #title], author: authors)
-  set page(
-    paper: "a4",
-    margin: (x: 2cm, top: 2.5cm, bottom: 2.5cm),
-    numbering: "1",
+  set page(paper: "a4", margin: (x: 23mm, top: 23mm, bottom: 23mm), numbering: "1",
     header: context {
-      if counter(page).get().first() > 1 {
-        text(9pt, fill: muted-color, font: ("Liberation Sans", "DejaVu Sans", "Helvetica Neue", "Arial"))[
-          SOD #number: #title
-          #h(1fr)
-          SQLodin Discussions
-        ]
-      }
-    },
-    footer: context {
-      text(9pt, fill: muted-color, font: ("Liberation Sans", "DejaVu Sans", "Helvetica Neue", "Arial"))[
-        #h(1fr)
-        Page #counter(page).display()
-      ]
-    },
-  )
-
-  set text(
-    font: ("Liberation Sans", "DejaVu Sans", "Helvetica Neue", "Arial"),
-    size: 10.5pt,
-    fill: primary-color,
-    lang: "en",
-    hyphenate: true,
-    costs: (orphan: 100%, widow: 100%),
-  )
-
-  set smartquote(enabled: false)
-
-  set par(
-    justify: true,
-    linebreaks: "optimized",
-    leading: 0.72em,
-  )
-
-  show raw: set text(hyphenate: false)
-  show table: set par(justify: false)
-  show heading: set par(justify: false)
-
-  // Document Header
-  v(0.5cm)
-  grid(
-    columns: (1fr, auto),
-    gutter: 1cm,
-    [
-      #text(20pt, weight: "bold", fill: rgb("0f172a"))[#sod-title(number, title)]
-    ],
-    [
-      #sod-chip(upper(state), sod-state-fill(state))
+      set text(font: "New Computer Modern Sans", size: 8pt, fill: muted-color)
+      grid(columns: (1fr, auto), [SQLodin Discussions], [SOD #number])
+      line(length: 100%, stroke: 0.5pt + border-color)
+    }, footer: context {
+      set text(font: "New Computer Modern Sans", size: 8pt, fill: muted-color)
+      grid(columns: (1fr, auto), [DESIGN & IMPLEMENTATION RECORD], counter(page).display())
+    })
+  show: typography
+  set heading(numbering: "1.1")
+  counter(heading).update(0)
+  v(4mm)
+  grid(columns: (1fr, auto), align: horizon,
+    sod-label([SOD #number / #category]), sod-chip(upper(state), sod-state-fill(state)))
+  v(6mm)
+  block[
+    #set par(justify: false)
+    #text(font: "New Computer Modern Sans", size: 25pt, weight: "bold", hyphenate: false)[#title]
+  ]
+  v(4mm)
+  text(size: 11pt)[#authors.join(", ")]
+  v(5mm)
+  line(length: 30mm, stroke: 1.5pt + accent-color)
+  v(5mm)
+  block(width: 100%, fill: bg-light, inset: 11pt)[
+    #set par(justify: false)
+    #grid(columns: (1.6fr, 1fr), column-gutter: 15pt, row-gutter: 8pt,
+      [#sod-label("Intended status")\ #sod-value(status)],
+      [#sod-label("Created / updated")\ #sod-value([#created / #last-updated])],
+      [#sod-label("Discussion")\ #sod-value(discussion)],
+      [#sod-label("Topics")\ #sod-value(labels.join(", "))])
+  ]
+  v(4mm)
+  text(size: 9pt, fill: muted-color)[
+    *Status of this record.* #if number == sod-placeholder-number [
+      A provisional draft for review. Proposed behavior and targets are not implemented guarantees.
+    ] else [
+      A numbered project record. Its lifecycle state does not certify implementation completeness
+      or production readiness; consult its implementation status and evidence.
     ]
-  )
-  v(0.5cm)
-
-  let authors-str = if type(authors) == array { authors.join(", ") } else { str(authors) }
-  let labels-str = if type(labels) == array { labels.join(", ") } else { str(labels) }
-
-  // Metadata Box
-  block(
-    width: 100%,
-    fill: bg-light,
-    stroke: 0.5pt + border-color,
-    radius: 6pt,
-    inset: 12pt,
-    [
-      #grid(
-        columns: (1fr, 1fr),
-        row-gutter: 10pt,
-        column-gutter: 20pt,
-        [#sod-label("Category")\ #sod-value(category)],
-        [#sod-label("Status")\ #sod-value(status)],
-        [#sod-label("Authors")\ #sod-value(authors-str)],
-        [#sod-label("Created")\ #sod-value(created)],
-        [#sod-label("Last Updated")\ #sod-value(last-updated)],
-        [#sod-label("Labels")\ #sod-value(labels-str)],
-      )
-    ]
-  )
-
-  v(0.8cm)
-  line(length: 100%, stroke: 0.5pt + border-color)
-  v(0.5cm)
-
+  ]
+  v(4mm)
   body
 }
 
-#let sod-index-page(sod-documents) = {
-  set document(title: "SQLodin Discussions Index", author: "SQLodin Contributors")
-  set page(
-    paper: "a4",
-    margin: (x: 2cm, top: 2.5cm, bottom: 2.5cm),
-    numbering: "1",
-    header: text(9pt, fill: muted-color, font: ("Liberation Sans", "DejaVu Sans", "Helvetica Neue", "Arial"))[SQLodin Discussions (SOD) Index],
-    footer: context {
-      text(9pt, fill: muted-color, font: ("Liberation Sans", "DejaVu Sans", "Helvetica Neue", "Arial"))[#h(1fr) Page #counter(page).display()]
-    },
-  )
-  set text(font: ("Liberation Sans", "DejaVu Sans", "Helvetica Neue", "Arial"), size: 10pt)
-
-  v(0.5cm)
-  text(22pt, weight: "bold", fill: rgb("0f172a"))[SQLodin Discussions (SOD)]
-  v(0.2cm)
-  text(11pt, fill: muted-color)[Formal design proposals, multi-master consensus derivations, and operational RFCs for SQLodin.]
-  v(0.8cm)
-
-  table(
-    columns: (auto, auto, 2fr, 3fr),
-    stroke: 0.5pt + border-color,
-    fill: (col, row) => if row == 0 { rgb("f1f5f9") } else { none },
-    inset: 8pt,
-    align: (col, row) => (
-      if col == 0 { center }
-      else if col == 1 { center }
-      else { left }
-    ),
-    [*SOD*], [*State*], [*Title*], [*Summary*],
-    ..sod-documents.map(doc => (
-      [#strong(doc.number)],
-      sod-chip(upper(doc.state), sod-state-fill(doc.state)),
-      [#strong(doc.title)\ #text(8pt, fill: muted-color)[#doc.category]],
-      text(9pt)[#doc.summary],
-    )).flatten()
-  )
-}
+#let sod-index-page(sod-documents) = configure-document(title: "SQLodin Discussions", [
+  #text(font: "New Computer Modern Sans", size: 8pt, tracking: 1pt, fill: accent-color)[
+    DESIGN / RATIONALE / EVIDENCE]
+  #v(6mm)
+  #text(font: "New Computer Modern Sans", size: 28pt, weight: "bold")[SQLodin Discussions]
+  #v(4mm)
+  #project-authorship
+  #v(5mm)
+  Design proposals and implementation records. Numbered records retain their lifecycle states;
+  placeholder drafts remain provisional. A committed design is not a production certification.
+  #v(6mm)
+  #for doc in sod-documents [
+    #block(width: 100%, breakable: false, inset: 9pt,
+      stroke: (top: 0.6pt + border-color), below: 3mm)[
+      #grid(columns: (1fr, auto), gutter: 10pt,
+        text(font: "New Computer Modern Sans", size: 13pt, weight: "bold")[SOD #doc.number],
+        sod-chip(upper(doc.state), sod-state-fill(doc.state)))
+      #v(3pt)
+      #text(size: 12pt, weight: "bold")[#doc.title]
+      #v(4pt)
+      #doc.summary
+      #v(4pt)
+      #text(size: 8.5pt, fill: muted-color)[#doc.category / Updated #doc.updated]
+    ]
+  ]
+  #block(breakable: false)[
+    #text(font: "New Computer Modern Sans", size: 13pt, weight: "bold")[Active draft]
+    #v(4pt)
+    *Pinned Upstream Paxos and SQLite Application Correctness* remains an unnumbered integration
+    draft, available as a standalone PDF. The production implementation plan is now SOD 0004.
+  ]
+])

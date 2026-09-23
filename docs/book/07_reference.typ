@@ -1,84 +1,48 @@
-#import "theme.typ": blue, gray, callout
+#import "theme.typ": callout
 
-= Architecture & API Reference
+= Architecture and API Reference
 
-== Package Types & Struct Layouts
+== Package Boundaries
 
-SQLodin is organized around pure, fixed-size data structures designed for mechanical sympathy and
-zero runtime heap allocations.
+`src/paxos.odin` aliases the complete upstream protocol types and transitions. `MultiMaster_Node`
+is `paxos.Node`, and `Effects` is the upstream effects type. Their capacity parameters and storage
+layout are defined by the pinned dependency. SQLodin adds mutation construction and validation,
+SQLite application, and its small rotating-ownership adapter.
 
-=== MultiMaster_Node
+`Engine` owns a writer connection, applied watermark statement and eight cached DML statements.
+The durable host also opens a read-only connection for local queries.
+Close it explicitly with `engine_close`. Borrowed mutation text/vector bindings are reset and cleared
+before application returns. The version string returned by `sqlite.vec_version` is caller-owned and
+must be deleted with its allocation context.
 
-The central consensus participant:
+The consensus kernel uses fixed-capacity storage. SQLite and the host still allocate. The reusable
+in-process host remains an embedding/benchmark fixture. The separate `service` package owns
+the native mTLS event loop exposed through `sqlodin serve`.
 
-```odin
-MultiMaster_Node :: struct(
-    $Value: typeid,
-    $MAX_MEMBERS: int = DEFAULT_MAX_MEMBERS,
-    $WINDOW_SLOTS: int = DEFAULT_WINDOW_SLOTS,
-    $CHUNK_SLOTS: int = DEFAULT_CHUNK_SLOTS,
-    $GATE: Durability_Gate = .Enforced,
-) where intrinsics.type_is_comparable(Value)
-```
-
-=== Effects
-
-The pure output of a single state transition:
-
-```odin
-Effects :: struct(
-    $Value: typeid,
-    $MAX_MEMBERS: int = DEFAULT_MAX_MEMBERS,
-    $WINDOW_SLOTS: int = DEFAULT_WINDOW_SLOTS,
-    $CHUNK_SLOTS: int = DEFAULT_CHUNK_SLOTS,
-    $GATE: Durability_Gate = .Enforced,
-) where intrinsics.type_is_comparable(Value) {
-    writes:         small_array.Small_Array(2 * CHUNK_SLOTS + 1, Write(Value)),
-    messages:       small_array.Small_Array(MAX_MEMBERS * CHUNK_SLOTS + 2 * MAX_MEMBERS + 1, Envelope(Value)),
-    committed:      small_array.Small_Array(WINDOW_SLOTS + 1, Committed(Value)),
-    writes_pending: bool,
-}
-```
-
-=== Engine
-
-The embedded SQLite state machine runtime:
-
-```odin
-Engine :: struct {
-    db:              sqlite.sqlite3,
-    node_id:         Node_Id,
-    applied_through: Slot,
-    in_memory:       bool,
-    snowflake_seq:   u16,
-}
-```
-
-== Core API Procedures
+== Public Entry Points
 
 #table(
-  columns: (180pt, 250pt),
+  columns: (1fr, 1.4fr),
   align: left + horizon,
-  table.header([*Procedure*], [*Description*]),
-  [`node_init(...) -> Error`], [Initializes a multi-master consensus participant.],
-  [`propose_owned(...) -> Error`], [Fast-path 1-RTT write into the node's next owned slot.],
-  [`node_step(...) -> Error`], [Evaluates one incoming wire message through the state machine.],
-  [`engine_open(...) -> (Engine, Error)`], [Opens or creates local SQLite database with WAL & sqlite-vec.],
-  [`engine_close(...)`], [Flushes WAL and closes database handle safely.],
-  [`engine_apply_slot(...) -> Error`], [Applies committed mutation to local SQLite state machine.],
-  [`engine_read_snapshot(...) -> (int, Error)`], [Executes point-in-time snapshot read with optional watermark.],
-  [`snowflake_generate(...) -> u64`], [Generates conflict-free 64-bit cluster-unique key.],
-  [`explain_error(err) -> string`], [Returns Elm-style diagnostics with banner and recovery hint.],
+  inset: (x: 5pt, y: 3.5pt),
+  table.header([*Entry point*], [*Contract*]),
+  [`durable.open`, `durable.close`], [Own a disk journal, engine and locked replica identity.],
+  [`durable.propose`, `step`, `tick`], [Persist effects before application and outgoing packets.],
+  [`durable.propose_batch`], [Validate up to sixteen independent proposals; slots are not acknowledgements.],
+  [`durable.step_batch`], [Group up to sixteen received transitions with owned effects and FULL persistence.],
+  [`durable.outcome`], [Read a durable success/rejection for the expected chosen value.],
+  [`durable.acknowledged`], [Check the expected value is durably chosen and applied.],
+  [`durable.next_id`], [Reserve ID blocks durably, including across clock rollback and restart.],
+  [`durable.begin_read`, `poll_read`], [Wait for a fresh ordered barrier, then consume its single-use read ticket.],
+  [`node_init`, `node_restore`], [Enable rotating ownership and install a no-op.],
+  [`node_propose`], [Returns a proposed slot and `Consensus_Error`; proposal is not completion.],
+  [`node_step`, `node_tick`], [Emit effects; the host honors durability and borrowed-value lifetimes.],
+  [`engine_open`, `engine_close`], [Own one SQLite connection and its statement cache.],
+  [`engine_apply_slot`, `engine_apply_batch`], [Atomically apply a contiguous decided prefix and watermark.],
+  [`engine_query`, `query_result_free`], [Own bounded column names and typed values; all-or-error results.],
+  [`engine_read_snapshot`], [Count read-only result rows, optionally requiring a minimum watermark.],
+  [`engine_next_id_checked`], [Generate an ID within one live engine; restart frontier is a host obligation.],
+  [`mutation_make_insert`], [Construct an insert from a caller-provided key.],
+  [`mutation_make_transaction`], [Construct bounded SQL with durable session/sequence retry identity.],
+  [`explain_error`], [Describe either a local application error or an upstream consensus error.],
 )
-
-== Elm-Style Diagnostic Format
-
-Every error variant in `Error` resolves to an explanatory diagnosis formatted as follows:
-
-```
--- INVALID MEMBERSHIP ----------------------------------------------------------
-
-A cluster membership was initialized with zero voting members or duplicate IDs.
-
-Hint: Provide at least one valid node ID in 1..=65535 with no duplicate entries.
-```

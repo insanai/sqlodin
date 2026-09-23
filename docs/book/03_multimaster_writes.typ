@@ -1,68 +1,46 @@
-#import "theme.typ": blue, gray, callout
+#import "theme.typ": callout
 
-= Multi-Master Ingestion & Conflict-Free Keys
+= Multi-Master Writes and Keys
 
-== The Primary Key Collision Problem
+== Admission and Conflict Resolution
 
-In a single-leader database, primary keys are typically generated via SQLite's `AUTOINCREMENT` counter.
-SQLite queries its internal `sqlite_sequence` table, increments the counter, and assigns the next integer.
+Each member can propose writes into its own slots. All replicas still apply the same global slot
+order. The tests submit conflicting writes from all three masters before delivering messages and
+check the final value and applied watermark on every replica. This verifies concurrent admission
+in the in-process model; it does not measure parallel execution on different machines.
 
-In a multi-master cluster where Node 1 and Node 2 simultaneously insert new rows into table `users`,
-independent `AUTOINCREMENT` sequences will generate duplicate primary keys:
-- Node 1 inserts user "Alice" with ID `1`.
-- Node 2 inserts user "Bob" with ID `1`.
+Structured inserts use `INSERT OR REPLACE`, updates modify the named columns, and deletes of a
+missing row are no-ops. For writes to the same row, the later applied slot determines the result
+subject to SQLite constraints and triggers. Replacement semantics can fire triggers or affect
+foreign keys, so they are not interchangeable with every form of SQL upsert.
 
-When these transactions are replicated across the cluster, the second insert will violate SQLite's
-unique primary key constraint, throwing a hard constraint error and halting database replication.
+== Generating Unique Keys
 
-== 64-bit Snowflake Identifiers
-
-SQLodin resolves this at the protocol level by equipping each engine with a hardware-timed
-*64-bit Snowflake Generator*:
+`mutation_make_insert` takes an explicit primary key. It does not generate one. The process-local engine API is
+`engine_next_id_checked`. A durable host uses `durable.next_id` to generate a Snowflake value with 42 timestamp bits, 10 node bits and
+12 sequence bits. The checked API accepts node IDs 1 through 1023, advances logical milliseconds
+when the sequence exhausts, and does not move its clock backward during a process lifetime.
 
 ```odin
-snowflake_generate :: proc(node_id: Node_Id, timestamp_ms: u64, seq: ^u16) -> u64 {
-    seq^ = (seq^ + 1) & 0x0FFF
-    time_part := timestamp_ms & 0x3FFFFFFFFFF  // 42 bits
-    node_part := u64(node_id & 0x03FF)         // 10 bits (0..1023)
-    seq_part  := u64(seq^)                     // 12 bits (0..4095)
-    return (time_part << 22) | (node_part << 12) | seq_part
-}
+id, err := durable.next_id(host, timestamp_ms)
+// Check err before constructing a mutation with id.
+mutation, err := mutation_make_insert(engine.node_id, timestamp_ms, id, "documents")
 ```
 
-The 64-bit integer is structured into three disjoint bitfields:
-+ *Timestamp (42 bits):* Milliseconds since custom epoch. Provides 139 years of monotonically
-  increasing identifiers and rough chronological sorting.
-+ *Node Identifier (10 bits):* Uniquely identifies the proposing master ($0 dots 1023$). Guarantees
-  that two masters can never produce the same identifier even at the identical millisecond.
-+ *Per-Node Sequence (12 bits):* Rolls over from $0 dots 4095$, allowing a single node to generate
-  up to 4,096,000 unique keys per second.
+Disjoint bit fields make distinct in-range input tuples map to distinct keys. They do not ensure
+that a host never repeats an input tuple. The host must assign unique node IDs. `durable.next_id` reserves a whole logical millisecond
+(4096 IDs) in a FULL-synchronous transaction before issuing IDs. Restart discards the unused
+portion and advances beyond the stored frontier. The lower-level engine generator remains
+process-local. Exhaustion of the 42-bit timestamp returns an error.
 
-Every insert mutation constructed by SQLodin (`mutation_make_insert`) automatically populates the
-primary key using `snowflake_generate`. Because the bitfields are mathematically disjoint, primary
-key collisions across concurrent masters are mathematically impossible.
+The low-level `snowflake_generate` helper masks its inputs and wraps its sequence. It is an unchecked
+bit packer, not the recommended generator for a long-running service. SQLite INTEGER keys are
+signed 64-bit values; applications using the full unsigned key range must account for that when
+sorting and exposing IDs.
 
-== Idempotent Deletes
+== Retries and Deterministic Outcomes
 
-In distributed systems, concurrent deletes and updates can arrive out of order depending on client
-arrival times. For instance:
-+ Client A deletes item with PK `1005` on Node 1.
-+ Client B reads or updates item `1005` on Node 2.
-
-To guarantee that all replicas reach identical database state regardless of local application timing,
-SQLodin enforces *idempotent delete mechanics*:
-
-```sql
-DELETE FROM <table> WHERE id = <primary_key>;
-```
-
-If the row with `<primary_key>` does not exist (or has already been deleted by a prior slot), SQLite
-executes the statement as a no-op, affecting 0 rows without raising an error. The slot commits,
-the state machine advances, and convergence is preserved.
-
-== Deterministic Conflict Resolution
-
-When two masters concurrently update the same row in different slots, the final state is determined
-strictly by the *total order of the consensus log*. Replicas apply slot $S_1$ followed by slot $S_2$.
-The mutation in the higher slot index wins. Because all replicas apply slots in the identical sequence,
-every replica holds the identical value for every column.
+A duplicate delete is harmless to row state; a duplicate insert with triggers may not be. Slot replay
+is skipped using the persisted applied watermark, but the same client request chosen in a new slot
+is a new application. The host must track request identity and its committed outcome when retries
+or upstream resubmission are possible. Unique row keys alone do not provide exactly-once execution.

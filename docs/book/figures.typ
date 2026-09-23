@@ -4,7 +4,7 @@
 #let diagram_box(title: none, content) = {
   align(center)[
     #block(
-      width: 95%,
+      width: 100%,
       stroke: 0.5pt + rule,
       radius: 4pt,
       fill: rgb("fafafa"),
@@ -29,19 +29,20 @@
       [
         #block(
           width: 100%,
-          stroke: 0.8pt + red,
-          fill: rgb("fff5f5"),
+          stroke: 0.8pt + blue,
+          fill: blue_light,
           inset: 8pt,
           radius: 3pt,
           [
-            #text(weight: "bold", fill: red, size: 9pt)[Single Leader (Zaxonlite)]
+            #text(weight: "bold", fill: blue, size: 9pt)[Single-Leader Routing]
             #v(4pt)
-            #text(size: 8pt)[
+            #set align(left)
+            #text(size: 9pt)[
               - Client writes to Node 2
-              - *WAN Forward Hop (+21ms)* to Leader (Node 1)
+              - *Forward request* to Leader (Node 1)
               - Node 1 proposes and broadcasts
-              - *WAN Ack Hop (+21ms)* back to Node 2
-              - *Total Penalty: ~42ms per write!*
+              - *Return result* back to Node 2
+              - *Cost depends on network placement*
             ]
           ]
         )
@@ -50,18 +51,19 @@
         #block(
           width: 100%,
           stroke: 0.8pt + green,
-          fill: rgb("f0fdf4"),
+          fill: green_light,
           inset: 8pt,
           radius: 3pt,
           [
             #text(weight: "bold", fill: green, size: 9pt)[SQLodin Multi-Master]
             #v(4pt)
-            #text(size: 8pt)[
+            #set align(left)
+            #text(size: 9pt)[
               - Client writes to Node 2
-              - Node 2 owns Slot 2 ($2 mod 3 = 2$)
+              - Node 2 owns Slot 2
               - *1-RTT Direct Accept* to peers in Round 0
-              - Quorum acks: Committed immediately!
-              - *Total Penalty: 0.00ms (Local Fast-Path)*
+              - Quorum acks: Slot chosen
+              - *Then wait for durable application*
             ]
           ]
         )
@@ -74,7 +76,7 @@
   title: "Rotating Slot Log Partitioning & Deterministic Application",
   [
     #table(
-      columns: (60pt, 80pt, 80pt, 80pt, 100pt),
+      columns: (0.45fr, 0.8fr, 1fr, 1.1fr, 1.25fr),
       align: center + horizon,
       table.header([*Slot*], [*Slot Owner*], [*Ballot*], [*Mutation*], [*State Machine*]),
       [1], [Node 1], [`(0, 0, 1)`], [INSERT doc 1], [Applied to WAL],
@@ -87,7 +89,7 @@
 )
 
 #let effect_pipeline_figure() = diagram_box(
-  title: "Zero-Heap Pure Effect Machine Transition",
+  title: "The upstream effect machine and its host boundary",
   [
     #grid(
       columns: (1fr, 20pt, 1fr, 20pt, 1fr),
@@ -101,7 +103,7 @@
       [#text(fill: blue, size: 14pt)[#sym.arrow]],
       [
         #block(fill: rgb("f8fafc"), stroke: 1.2pt + blue, inset: 8pt, radius: 4pt)[
-          *SQLodin Consensus*\
+          *paxos-odin*\
           Pure State Machine\
           (Zero Heap Allocations)
         ]
@@ -111,7 +113,7 @@
         #block(fill: green_light, stroke: 0.8pt + green, inset: 6pt, radius: 3pt)[
           *Effects(V)*\
           `writes` (Durable WAL)\
-          `messages` (UDP/TCP)\
+          `messages` (host transport)\
           `committed` (SQLite)
         ]
       ]

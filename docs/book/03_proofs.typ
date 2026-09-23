@@ -1,208 +1,86 @@
-#import "theme.typ": blue, gray, callout, ink, rule
+#import "theme.typ": callout
 
-= Mathematical Foundations & Formal Safety Proofs
+= Safety Argument and Host Obligations
 
-== Abstract Model & Axiomatization
+This chapter is an implementation review and proof sketch. It is not a machine-checked proof of
+SQLodin, SQLite, the network host, or crash recovery. The executable evidence is the pinned upstream
+suite, SQLodin integration tests and seeded fault simulations described in the benchmark chapter.
 
-To establish rigorous guarantees of safety, serializability, and liveness for multi-master SQLite
-replication, SQLodin is grounded in the formal asynchronous model of distributed consensus.
+== Agreement per Slot
 
-Let $cal(N) = {1, 2, dots, N}$ denote the finite set of $N$ participating nodes (replicas), where
-$N >= 1$. The system operates over an asynchronous network without physical clock synchronization.
+Membership has a stable sorted order. Slot $s$ belongs to member at index $(s-1) mod N$; member IDs
+need not be consecutive. Only that owner may propose at round zero in that slot. This is an explicit
+acceptor check in upstream `on_accept`, not a consequence of unique ballot integers alone. An
+acceptor rejects conflicting values at the same ballot, and rejects ballots below its global or
+per-slot promise. The owner must never reuse a slot and ballot for another value after a restart.
 
-#callout(title: "Axioms of the SQLodin Consensus Model", kind: "note")[
-  - *Axiom A1 (Processes & Crash-Recovery).* Each process $i in cal(N)$ executes sequential state
-    transitions. A process may crash at any time. Upon restart, a process recovers exclusively the
-    state confirmed durable to stable storage (`Ledger`). Volatile state is cleanly reconstructed.
-  - *Axiom A2 (Asynchronous Non-Byzantine Network).* Network channels may arbitrarily delay,
-    reorder, lose, or duplicate messages. Messages are never forged or corrupted. An envelope
-    addressed to node $j$ with sender $i$ was authentically transmitted by node $i$.
-  - *Axiom A3 (Quorum Intersection Principle).* A write quorum $Q_w subset.eq cal(N)$ is any subset
-    of size $|Q_w| = floor(N/2) + 1$. A read quorum $Q_r subset.eq cal(N)$ satisfies
-    $|Q_r| + |Q_w| > N$. Consequently, for any two quorums $Q, Q'$, $Q inter Q' != emptyset$.
-  - *Axiom A4 (Strict Durability Barrier).* For every transition generating effects
-    $E = (W, M, C)$ (writes, messages, committed entries), the host system MUST append and flush
-    writes $W$ to persistent media before transmitting any message in $M$ or applying any entry in $C$.
-  - *Axiom A5 (Deterministic Transition Semantics).* The SQLite state machine transition function
-    $T: (D B, v) |-> D B'$ is strictly deterministic: identical initial states $D B$ and mutation $v$
-    yield identical successor states $D B'$.
+When another node recovers a stalled range, it runs Phase 1 at a higher ballot. Intersecting quorums
+and selection of the highest accepted vote preserve any previously chosen value. This argument
+requires that promises and votes survive crashes. Merely sending acknowledgements before a durable
+barrier invalidates the argument. Authentic membership and non-Byzantine peers are also assumptions.
+
+SQLodin imports the whole pinned `paxos-odin` package. Its adapter enables rotating ownership on
+initialization and restore, and supplies the deterministic no-op. It does not maintain a second copy
+of the consensus algorithm.
+
+== Convergence after Application
+
+Agreement supplies at most one value for each decided slot. It does not guarantee that every slot
+will eventually decide under arbitrary message loss. For a contiguous decided prefix, replicas
+starting from identical state converge if they apply identical deterministic mutations in slot order.
+`engine_apply_batch` checks continuity, applies mutations and stores the applied watermark in one
+SQLite transaction. Failure rolls back the whole batch and leaves the watermark unchanged.
+
+The legacy engine batch path stops on a decided SQL error. Format 2's durable host instead records
+expected SQL rejections with its watermark and session fence. Unknown/storage errors remain fatal.
+These outcomes still require deterministic execution; total ordering alone is insufficient.
+
+== Progress and Latency
+
+Idle owners fill gaps with no-ops. Live peers can recover an unavailable owner's range using a
+higher ballot, while retransmission and range learning repair loss. Progress still needs a reachable
+quorum, eventual message delivery, fair scheduling and an eventually successful recovery proposer.
+A minority partition cannot independently commit writes.
+
+Healthy slot choice can use one quorum round trip, plus durable vote barriers. Client completion
+also depends on earlier slots being decided and on SQLite application. Skewed traffic, slow owners
+and recovery can therefore delay every replica's applied prefix. Multi-master admission does not
+remove this ordering dependency and does not imply a throughput multiplier.
+
+== Durability, Retry and History Contracts
+
+#callout(title: "The supplied in-process harness is not a durable database service", kind: "warning")[
+  The historical memory benchmark host uses `Host_Managed` effects with memory-only databases and no consensus
+  journal. The fault simulator has a separate in-memory durable-state model. Neither establishes
+  power-loss safety, filesystem correctness, a wire protocol or a production recovery service.
 ]
 
-== Definitions & Mathematical Constructs
+The separate `src/durable` host uses checked durable frontiers and a checked disk journal; the
+per-transition reference also retains upstream's enforced gate. Its process-crash
+tests extend the tested boundary; they do not certify physical power-loss behavior.
 
-#callout(title: "Definition D1: Ballot Tuple & Total Ordering", kind: "note")[
-  A ballot $b in cal(B)$ is a packed 64-bit integer encoding the triple
-  $("round", "priority", "node") in NN_0 times NN_0 times cal(N)$:
-  $ b = ("round" << 24) | ("priority" << 16) | "node" $
-  Ballots are totally ordered by standard integer comparison, which corresponds strictly to the
-  lexicographic ordering:
-  $ b_1 prec b_2 <==> ("round"_1 < "round"_2) or
-    ("round"_1 = "round"_2 and "priority"_1 < "priority"_2) or
-    ("round"_1 = "round"_2 and "priority"_1 = "priority"_2 and "node"_1 < "node"_2) $
-]
+A durable host must persist the required Paxos effects before releasing dependent messages or
+committed entries, retain accepted/chosen payloads, restore the ledger correctly, and serve history
+or snapshots after trimming. Borrowed values in effects must be consumed or copied before another
+transition overwrites their storage. SQLodin's packet queue snapshots them for that reason.
 
-#callout(title: "Definition D2: Static Rotating Slot Partitioning", kind: "note")[
-  Let $cal(S) = {1, 2, 3, dots} = NN^+$ be the unbounded sequence of log decree slots.
-  The slot ownership function $"Owner": cal(S) -> cal(N)$ is defined as:
-  $ "Owner"(s) = ((s - 1) mod N) + 1 $
-  The slot space is partitioned into $N$ mutually disjoint sets $cal(S)_i = {s in cal(S) : "Owner"(s) = i}$:
-  $ cal(S)_i inter cal(S)_j = emptyset #h(1.5em) (forall i != j), #h(2em) union.big_(i in cal(N)) cal(S)_i = cal(S) $
-]
+The integration harness advances its memory floor only through the minimum applied prefix across
+all replicas. The simulator additionally keeps each replica's own applied history and serves range
+requests from that history. Its canonical decision oracle is used only to check agreement.
 
-#callout(title: "Definition D3: Chosen Value", kind: "note")[
-  A mutation value $v$ is defined as *chosen* in slot $s$ with ballot $b$ if and only if a write
-  quorum $Q_w$ has durably cast votes for $(b, v)$ in slot $s$:
-  $ "Chosen"(s, b, v) <==> exists Q_w subset.eq cal(N), |Q_w| >= floor(N/2) + 1, forall a in Q_w : "Voted"_a (s, b, v) $
-]
+Owner revocation may resubmit a value in another slot. A proposal's initial slot is therefore not a
+client completion token until the host observes its committed outcome. Durable request IDs and
+application-level deduplication are needed for retry safety. Format-2 transaction requests supply
+these with bounded session sequences; raw/structured mutations and the volatile examples do not.
 
-#callout(title: "Definition D4: Conflict-Free Snowflake Primary Key", kind: "note")[
-  A Snowflake key $K in NN_0$ is generated by function $f: (t, i, "seq") |-> "uint64"$ where
-  $t in [0, 2^(42)-1]$ is the local timestamp in milliseconds, $i in [0, 2^(10)-1]$ is the node ID,
-  and $"seq" in [0, 2^(12)-1]$ is the monotonic sequence counter:
-  $ K = (t << 22) | (i << 12) | "seq" $
-]
+== Data Layout and Complexity
 
-== Fundamental Lemmas
+The upstream ledger uses fixed-capacity slot arrays; SQLodin's bounded mutation values keep vector
+storage shared across columns. This avoids reserving a full embedding for every scalar column, but
+small writes still copy a fixed-size mutation through the protocol. The benchmark records that size.
+SQLite, statement preparation and the host packet queue still allocate memory.
 
-#callout(title: "Lemma 1 (Quorum Intersection Witness)", kind: "note")[
-  *Statement:* Let $Q_1, Q_2 subset.eq cal(N)$ be any two majority quorums. Then there exists at
-  least one process $w in Q_1 inter Q_2$.
-  
-  *Proof:* By Axiom A3, $|Q_1| >= floor(N/2) + 1$ and $|Q_2| >= floor(N/2) + 1$.
-  By the Pigeonhole Principle:
-  $ |Q_1 inter Q_2| = |Q_1| + |Q_2| - |Q_1 union Q_2| >= (floor(N/2) + 1) + (floor(N/2) + 1) - N >= 1 $
-  Thus, $Q_1 inter Q_2 != emptyset$. The intersecting process $w$ serves as the witness. $qed$
-]
-
-#callout(title: "Lemma 2 (Unique Round-0 Proposer Authority)", kind: "note")[
-  *Statement:* For any slot $s in cal(S)$, exactly one process in $cal(N)$ has the authority to
-  propose with round 0, namely $i = "Owner"(s)$. No other node $j != i$ can construct an identical ballot.
-
-  *Proof:* By Definition D1, the lower 16 bits of a ballot uniquely encode the proposing node ID.
-  For round 0, $b_0(i) = (0 << 24) | (0 << 16) | i = i$. For any other node $j != i$,
-  $b_0(j) = j != i$. Since $i = "Owner"(s)$ is uniquely determined by Definition D2, exactly one
-  proposer can issue $b_0(i)$ for slot $s$. $qed$
-]
-
-#callout(title: "Lemma 3 (Fast-Path Phase 1 Elimination)", kind: "note")[
-  *Statement:* Proposing mutation $v$ into an owned slot $s in cal(S)_i$ using ballot $b_0(i)$
-  without executing Phase 1 satisfies Lamport's condition $B_3(b_0(i))$.
-
-  *Proof:* In Classical Paxos, Phase 1 (`Prepare`) serves to discover whether any value has already
-  been accepted in slot $s$ with a ballot $b' prec b$. For ballot $b_0(i)$, the round is 0.
-  By protocol construction, all ballots $b'$ have non-negative rounds:
-  - If $"round"(b') >= 1$, then $b' succ b_0(i)$, so $b'$ cannot precede $b_0(i)$.
-  - If $"round"(b') = 0$, by Lemma 2, only node $i$ can vote with round 0 in slot $s$.
-  
-  Prior to node $i$'s proposal, node $i$ has not voted in slot $s$. Therefore, no vote with ballot
-  $b' prec b_0(i)$ can possibly exist anywhere in the cluster. The set of preceding accepted votes
-  is vacuously empty. Hence, Lamport's condition $B_3(b_0(i))$ is trivially satisfied without
-  network exchange. $qed$
-]
-
-#callout(title: "Lemma 4 (Lamport's Invariant B3 Preservation under Preemption)", kind: "note")[
-  *Statement:* If a value $v$ is chosen in slot $s$ with ballot $b$, then any ballot $b' succ b$
-  issued during slot preemption will propose the identical value $v$.
-
-  *Proof:* By induction on ballots. Suppose $v$ is chosen with ballot $b$ in slot $s$.
-  Then a write quorum $Q_w$ voted for $(b, v)$ (Definition D3).
-  Let $b'$ be the smallest ballot greater than $b$ to propose in slot $s$.
-  The proposer of $b'$ must first gather promises from a read quorum $Q_r$.
-  By Lemma 1, $Q_r inter Q_w != emptyset$. Let $w in Q_r inter Q_w$.
-  Process $w$ voted for $(b, v)$ and promised not to accept ballots smaller than $b'$.
-  In its `Promise` response to $b'$, process $w$ reports its vote $(b, v)$.
-  Because $b'$ is the smallest ballot after $b$, no votes exist with ballot $b''$ such that
-  $b prec b'' prec b'$.
-  The proposer selects the value with the highest ballot reported in $Q_r$, which is $(b, v)$.
-  Therefore, ballot $b'$ proposes $v$. By mathematical induction, all higher ballots $b'' succ b'$
-  must also propose $v$. $qed$
-]
-
-#callout(title: "Lemma 5 (Conflict-Free Snowflake Injectivity)", kind: "note")[
-  *Statement:* The mapping $f: (t, i, "seq") |-> K$ defined in Definition D4 is an injective homomorphism.
-  No two concurrent insertions across any nodes in $cal(N)$ can produce colliding primary keys.
-
-  *Proof:* Suppose $f(t_1, i_1, "seq"_1) = f(t_2, i_2, "seq"_2)$.
-  The integer $K$ is formed by concatenating bitfields occupying disjoint bit intervals:
-  - Bits $[0..11]$ contain $"seq"$.
-  - Bits $[12..21]$ contain $i$ ($"node_id"$).
-  - Bits $[22..63]$ contain $t$ ($"timestamp"$).
-  
-  Bitwise extraction functions $pi_"seq"(K) = K "mod" 2^(12)$,
-  $pi_i(K) = floor(K / 2^(12)) "mod" 2^(10)$, and
-  $pi_t(K) = floor(K / 2^(22))$ are single-valued mathematical projections.
-  Equating the keys implies:
-  $ pi_i(K_1) = pi_i(K_2) ==> i_1 = i_2 $
-  $ pi_t(K_1) = pi_t(K_2) ==> t_1 = t_2 $
-  $ pi_"seq"(K_1) = pi_"seq"(K_2) ==> "seq"_1 = "seq"_2 $
-  Thus $(t_1, i_1, "seq"_1) = (t_2, i_2, "seq"_2)$. Distinct proposals always yield distinct primary keys. $qed$
-]
-
-== Main Theorems
-
-#callout(title: "Theorem 1 (Agreement / Single-Value Invariance)", kind: "tip")[
-  *Statement:* For every slot $s in cal(S)$, at most one mutation value can ever be chosen.
-  $ "Chosen"(s, b_1, v_1) and "Chosen"(s, b_2, v_2) ==> v_1 = v_2 $
-
-  *Proof:*
-  Case 1: $b_1 = b_2$. By Definition D1, every ballot has a unique proposer. A node only proposes one
-  value per ballot. Therefore, $v_1 = v_2$.
-  
-  Case 2: $b_1 != b_2$. Without loss of generality, assume $b_1 prec b_2$.
-  By Definition D3, $"Chosen"(s, b_1, v_1)$ implies a write quorum $Q_1$ voted for $(b_1, v_1)$.
-  $"Chosen"(s, b_2, v_2)$ implies a write quorum $Q_2$ voted for $(b_2, v_2)$, which requires that
-  the proposer of $b_2$ proposed $v_2$.
-  By Lemma 4, any ballot $b_2 succ b_1$ is constrained to propose $v_1$.
-  Therefore, $v_2 = v_1$.
-  
-  Contradiction is impossible: no two distinct values can ever be chosen in the same slot. $qed$
-]
-
-#callout(title: "Theorem 2 (Contiguous State Machine Convergence)", kind: "tip")[
-  *Statement:* If all nodes in $cal(N)$ apply chosen mutations strictly in sequential slot order
-  $s = 1, 2, 3, dots$, then all replicas converge to the identical relational SQLite state.
-
-  *Proof:*
-  Let $D B_0$ be the identical initial empty database state on all nodes.
-  By Theorem 1, for every slot $s >= 1$, there exists a unique chosen mutation $v_s$ (which may be a
-  concrete mutation or a deterministic `Skip`).
-  By Axiom A5, SQLite's execution engine is deterministic.
-  Let $D B_k$ denote the database state after applying the sequence of mutations $(v_1, v_2, dots, v_k)$:
-  $ D B_k = T(dots T(T(D B_0, v_1), v_2) dots, v_k) $
-  Because the sequence $(v_1, dots, v_k)$ is totally ordered and unique across all nodes,
-  every node that has applied through watermark slot $k$ computes the identical state $D B_k$. $qed$
-]
-
-#callout(title: "Theorem 3 (1-RTT Fast-Path Optimality)", kind: "tip")[
-  *Statement:* In the fault-free fast path, SQLodin commits a write across a majority quorum in
-  strictly 1 Round-Trip Time (1 RTT) with zero leader-forwarding hops.
-
-  *Proof:*
-  Let client submit write $W$ to node $i$.
-  Node $i$ owns slot $s in cal(S)_i$.
-  By Lemma 3, Phase 1 is omitted.
-  At $t = 0$, node $i$ records its local vote and transmits `Accept` to peer nodes $j in cal(N), j != i$.
-  At $t = 0.5 "RTT"$, peers receive `Accept`, record vote, and return `Accepted`.
-  At $t = 1.0 "RTT"$, node $i$ receives acknowledgements from $floor(N/2)$ peers.
-  Combined with its own vote, node $i$ holds $|Q_w| = floor(N/2) + 1$ votes.
-  By Definition D3, the value is chosen.
-  The write commits and returns to the client in $1.0 "RTT"$.
-  This matches the theoretical lower bound for replicated consensus in asynchronous systems. $qed$
-]
-
-== Computational & Mechanical Asymptotics
-
-SQLodin's implementation is engineered to achieve optimal algorithmic complexity and mechanical
-sympathy on modern CPU architectures:
-
-#table(
-  columns: (120pt, 90pt, 90pt, 140pt),
-  align: center + horizon,
-  table.header([*Operation*], [*Time*], [*Space*], [*Hardware Mechanism*]),
-  [Slot Ring Lookup], [$cal(O)(1)$], [$cal(O)(1)$], [Bitwise mask `(s - 1) & (W - 1)` (1 cycle)],
-  [Quorum Cardinality], [$cal(O)(1)$], [$cal(O)(1)$], [Hardware `POPCNT` instruction (1 cycle)],
-  [Bitmap Next Free], [$cal(O)(1)$], [$cal(O)(1)$], [Hardware `CTZ` / `CLZ` instructions (1 cycle)],
-  [Snowflake Key Gen], [$cal(O)(1)$], [$cal(O)(1)$], [Bit-shifts and masks (2 cycles)],
-  [Consensus Transition], [$cal(O)(M)$], [$cal(O)(1)$], [Zero heap allocations, fixed stack array],
-  [Dense Vector KNN], [$cal(O)(d)$], [$cal(O)(1)$], [SIMD AVX-512 / NEON floating-point dot],
-)
+Slot lookup is constant-time. Protocol work depends on membership, recovery range and effect
+capacity; exact instruction counts depend on generated code and hardware. Exact vector scanning
+cost also depends on the number of candidate vectors as well as their dimensions. No constant-cycle
+or universally optimal CPU/memory claim is made.

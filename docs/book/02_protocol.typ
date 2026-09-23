@@ -19,26 +19,27 @@ Every slot $S$ is pre-assigned to a unique owner:
 
 #rotating_slot_timeline()
 
-== The 1-RTT Fast-Path Commit
+== Healthy Slot Choice
 
 When a client submits a write to Node $i$:
 + *Slot Allocation:* Node $i$ selects its next unallocated owned slot $S = "own\_next"$.
 + *Round 0 Ballot:* Node $i$ constructs ballot $B = "ballot\_make"(0, 0, i)$. Under SQLodin's
   protocol rules, ballot round 0 is permanently reserved for the slot's designated owner.
 + *Phase 2 Broadcast:* Because Node $i$ owns slot $S$, Phase 1 is completely bypassed. Node $i$
-  records its own vote locally and broadcasts an `Accept(S, B, V)` message directly to all peers.
+  durably records its own vote before it broadcasts an `Accept(S, B, V)` message directly to all peers.
 + *Quorum Acknowledgement:* When peers receive `Accept(S, B, V)` with round 0 from owner $i$,
-  they verify $B >= "promised"(S)$, record $V$, and return `Accepted(S, B, i)`.
+  they verify $B >= "promised"(S)$, durably record $V$ before returning `Accepted(S, B, i)`.
 + *Local Commit:* As soon as a majority quorum of acceptances is gathered, the slot is chosen.
-  The client write returns successfully in *exactly one round-trip time (1 RTT)*.
+  Healthy slot choice uses one quorum round trip. Client success must additionally wait for
+  durability and contiguous SQLite application.
 
-#callout(title: "Eliminating the 42ms Forwarding Hop", kind: "tip")[
-  In Zaxonlite, follower writes required: `Client -> Follower -> Leader -> Peers -> Leader -> Follower -> Client`
-  (2 WAN round trips + 1 local RTT = ~42ms).
-  In SQLodin, any master performs: `Client -> Master -> Peers -> Master -> Client`
-  (1 direct RTT = < 1ms on LAN, ~15ms on WAN).
+#callout(title: "Direct Owner Proposals", kind: "tip")[
+  Any owner proposes directly to peers without a standing-leader forwarding hop. This is a protocol
+  path distinction, not a measured latency saving. Network placement, durable barriers and earlier
+  undecided slots determine the observed application latency.
 ]
 
+#pagebreak()
 == Log Continuity and Idle Skip Ticks
 
 State machines require *gap-free, contiguous log playback*. A database cannot apply slot $S+1$ until
@@ -60,9 +61,8 @@ mutation_make_skip :: proc(origin: Node_Id, ts: u64) -> Mutation {
 }
 ```
 
-When a node observes that peers have proposed slots far ahead of its own owned slots, or when its
-`heartbeat_ticks` elapse without client writes, it automatically proposes a lightweight `Skip`
-mutation into its current slot. When replicas receive and commit a `Skip`, the state machine simply
+When a node observes that peers have proposed slots far ahead of its own owned slots, during a logical tick, it automatically proposes a lightweight `Skip`
+mutation through normal quorum voting into an eligible owned slot. When replicas receive and commit a `Skip`, the state machine simply
 increments its applied watermark without modifying the underlying SQLite tables.
 
 == Preemption and Phase 1 Revocation
@@ -70,9 +70,9 @@ increments its applied watermark without modifying the underlying SQLite tables.
 If a node crashes or becomes partitioned, its owned slots will not advance, threatening to block the
 cluster state machine.
 
-When a live node detects that a peer's slot has stalled beyond `stall_timeout_ticks`:
+When a live node detects that a peer's slot has stalled beyond the upstream `election_timeout_ticks`:
 + The live node campaigns to take over the stalled slot by issuing a *Phase 1 `Prepare`* with round $r > 0$.
 + Quorum members return their highest accepted vote for that slot.
 + If the stalled owner already had an accepted value $V$, the rescuer proposes $V$ in Phase 2.
-+ If no value was accepted, the rescuer proposes a `Skip` mutation, revoking the dead node's slot
++ If no value was reported accepted by the successful Phase 1 quorum, the rescuer proposes a `Skip` mutation, revoking the dead node's slot
   and allowing the cluster to advance.

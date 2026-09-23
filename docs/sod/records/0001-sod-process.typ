@@ -4,7 +4,7 @@
 #let sod-created = "2026-09-22"
 #let sod-discussion = "The SOD process, the Zen of Odin for InsanAI, and its enforced structural constraints"
 #let sod-labels = ("process", "documentation", "cli", "standards")
-#let sod-authors = ("Vikrant Rathore <vikrant@insan.ai>", "SQLodin Contributors")
+#let sod-authors = ("Vikrant Rathore, with assistance from Ronak Rathore",)
 #let sod-category = "Process Memo"
 #let sod-status = "Committed"
 #let sod-last-updated = "2026-09-22"
@@ -37,7 +37,9 @@ Committed records may be corrected with a dated update; published records are fr
   columns: (auto, auto, 1fr), inset: 5pt,
   [*SOD*], [*State*], [*Implementation or evidence boundary*],
   [0001], [Committed], [Active process, Typst editorial policy, and Zen structural limits.],
-  [0002], [Committed], [Multi-master architecture, rotating slot protocol, 1-RTT zero-penalty commit, sqlite-vec, and FTS5.],
+  [0002], [Committed], [Multi-master architecture, rotating slot protocol, healthy one-round slot choice, sqlite-vec, and FTS5.],
+  [0003], [Committed], [Conditional protocol proof sketches; no machine-checked implementation proof.],
+  [0004], [Committed], [Accepted production SQL and throughput plan; implementation in progress and release gates open.],
 )
 
 The active specification suite updates contracts in place, retains attributable historical measurements, and links references across records. New proposals must distinguish current behavior, proposed behavior, validation gates, and open questions using the RFC template (`docs/sod/template/rfc-template.typ`). A diagram should explain a boundary or invariant; it need not appear in a process record solely for decoration.
@@ -82,7 +84,7 @@ The `sqlodin` automation manages the entire lifecycle:
 Every promoted record is registered in `docs/sod/registry.typ`. The document suite is compiled to PDF using the installed `typst` binary:
 - Individual records: `docs/build/sod-NNNN-<slug>.pdf`
 - Master Index: `docs/build/sod-index.pdf`
-- Complete Book: `docs/build/sqlodin-spec.pdf`
+- Complete Book: `docs/build/sqlodin-book.pdf`
 
 = The Zen of Odin for InsanAI
 
@@ -90,6 +92,7 @@ Every SOD, and every line of Odin in this repository, is written under one short
 
 #block(
   width: 100%,
+  breakable: false,
   inset: 12pt,
   radius: 4pt,
   fill: rgb("f8fafc"),
@@ -118,30 +121,30 @@ Every SOD, and every line of Odin in this repository, is written under one short
 
 The creed is enforced by `tools/check_style.py`, which `make vet`, `make check`, and the `sqlodin check` command run before anything else. A hard limit fails the build.
 
-== 1. File boundary
+== File boundary
 
 - *Maximum file length:* a single source file must not exceed 1,408 physical lines, including comments and blank lines. The core protocol and engine are organized into modular files, each with a single responsibility.
 
-== 2. Line width boundaries
+== Line width boundaries
 
 - *Soft limit (99 columns):* lines should be wrapped at or before 99 columns; the checker lists offenders with `--soft`.
 - *Hard limit (108 columns):* no line may exceed 108 columns; a longer line fails the build. Tabs count as four columns.
 
-== 3. Procedure code density
+== Procedure code density
 
 - *Maximum scope (70 lines):* the body of a procedure must not exceed 70 lines of actual execution logic.
 - *Exclusions:* blank lines, whitespace-only lines, comment lines, and ornamental divider lines are not counted.
 
-== 4. Elm-style error handling and diagnostics
+== Elm-style error handling and diagnostics
 
 - *Actionable reporting:* an error does not merely state what failed; it explains why and provides an actionable path to resolution. In code this is the `Error` enum plus `explain_error`, a static table with one entry per value, and a test that fails when a value has no entry.
 - *Diagnostic structure:* every error block or runtime diagnostic carries three parts: the *context* (the failing input or state), the *hint* (the assumption or constraint that was breached), and the *remediation* (how to fix it).
 
-== 5. Performance and longevity architecture
+== Performance and longevity architecture
 
 - *Resource-optimum design:* memory layouts favour mechanical sympathy: contiguous arrays (the `Ledger` columns and bitmaps, inline small array effect buffers), predictable transformations, and no redundant heap allocations during consensus transitions.
 - *Safety through visibility:* performance never justifies unvetted cleverness. The library relies on Odin's type checking, explicit compile-time bounds (`#assert`), and runtime durability gates rather than implicit trust.
-- *Elimination of the single-leader penalty:* the protocol is designed from the ground up for multi-master operation with zero WAN forwarding hops and 1-RTT commits.
+- *Direct owner admission:* the adapter enables upstream rotating ownership. Healthy slot choice can take one quorum round; durable SQL completion also waits for persistence and the contiguous prefix.
 
 = Documentation Policy and Editorial Guidance
 
