@@ -7,6 +7,7 @@ import "core:strconv"
 import "core:strings"
 import "core:time"
 import sqlodin "../src"
+import service "../service"
 
 VERSION :: "0.1.0"
 
@@ -23,12 +24,8 @@ run_system_cmd :: proc(cmd: string) -> int {
 	defer delete(c_cmd)
 	status := int(libc.system(c_cmd))
 	if status != 0 {
-		fmt.eprintln(
-			"-- COMMAND FAILED ------------------------------------------------------\n\n" +
-			"The requested command did not complete successfully.\n" +
-			"Hint: Fix the diagnostic printed above, then rerun the command:",
-			cmd,
-		)
+		cli_diagnostic("COMMAND FAILED", "The requested command did not complete successfully.",
+			fmt.tprintf("Fix the diagnostic above, then rerun: %s", cmd))
 		os.exit(1)
 	}
 	return 0
@@ -39,17 +36,21 @@ print_usage :: proc() {
 	fmt.println("Usage: sqlodin <command> [arguments]")
 	fmt.println("")
 	fmt.println("Commands:")
+	fmt.println("  connect <client.json> [options]    Interactive mTLS cluster SQL client")
+	fmt.println("  local [database] [SQL] [options]   Full bundled SQLite shell for local files")
+	fmt.println("  serve <config.json> [--create]      Run the native mTLS SQL service")
+	fmt.println("  request <client.json> <request.json> Send an authenticated protocol request")
 	fmt.println("  build [all|test|sim|bench|cli]      Build binaries or test runner")
 	fmt.println("  test                                Run test suite with odin test")
 	fmt.println("  vet                                 Run Zen constraints and strict style")
 	fmt.println("  check                               Run full verification suite")
 	fmt.println("  sim [--seed=N] [--steps=N]          Run chaos simulator")
 	fmt.println("  bench                               Run multi-master benchmark")
-	fmt.println("  docs [all|book|index|sod|html]      Compile Typst documentation")
+	fmt.println("  docs [all|book|index|sod]      Compile Typst documentation")
 	fmt.println("  sod list                            List registered SOD records and drafts")
 	fmt.println("  sod new <slug>                      Create docs/sod/records/XXXXX-<slug>.typ")
 	fmt.println("  sod promote <slug>                  Assign next number and register the SOD")
-	fmt.println("  sql <path> <query>                  Execute SQL query on local SQLite engine")
+	fmt.println("  sql <path> <query>                  Alias for the local SQLite shell")
 	fmt.println("  version                             Print CLI and core version")
 	fmt.println("  help                                Display this help text")
 }
@@ -67,15 +68,16 @@ cmd_build :: proc(args: []string) {
 	case "bench":
 		run_system_cmd("odin build bench -out:bin/sqlodin-bench -o:speed")
 	case "cli":
-		run_system_cmd("odin build cli -out:bin/sqlodin")
+		run_system_cmd("python3 tools/build_cli.py")
 	case "all":
 		run_system_cmd("odin build sim -out:bin/sqlodin-sim")
 		run_system_cmd("odin build bench -out:bin/sqlodin-bench -o:speed")
-		run_system_cmd("odin build cli -out:bin/sqlodin")
+		run_system_cmd("python3 tools/build_cli.py")
 		fmt.println("All targets built successfully in bin/")
 	case:
-		fmt.printf("Unknown build target: %s\n", target)
-		fmt.println("Valid targets: all, test, sim, bench, cli")
+		cli_diagnostic("UNKNOWN BUILD TARGET", fmt.tprintf("Unknown build target: %s", target),
+			"Use sqlodin build all, test, sim, bench or cli.")
+		os.exit(2)
 	}
 }
 
@@ -115,34 +117,18 @@ cmd_bench :: proc(args: []string) {
 	run_system_cmd(strings.to_string(cmd_buf))
 }
 
-cmd_sql :: proc(args: []string) {
-	if len(args) < 2 {
-		fmt.println("Usage: sqlodin sql <path> <query>")
-		return
-	}
-	path, sql := args[0], args[1]
-	e, err := sqlodin.engine_open(path, 1, memory = (path == ":memory:"))
-	if err != .None {
-		fmt.eprintln("Failed to open SQLite database:", sqlodin.explain_error(err))
-		return
-	}
-	defer sqlodin.engine_close(&e)
-
-	rows, r_err := sqlodin.engine_read_snapshot(&e, sql)
-	if r_err != .None {
-		fmt.eprintln("Query execution failed:", sqlodin.explain_error(r_err))
-		return
-	}
-	fmt.printf("Executed query successfully, matched %d row(s).\n", rows)
-}
-
 @(private="file")
 _vet_keep_instantiations :: proc() {
 	m: sqlodin.Membership(1)
 	ids := [1]sqlodin.Node_Id{1}
 	_ = sqlodin.membership_init(&m, ids[:])
-	eff: sqlodin.Effects(sqlodin.Mutation, 1, 64, 16, .Host_Managed)
+	eff: sqlodin.Effects(u64, 1, 4, 1, .Host_Managed)
 	_ = sqlodin.effects_messages_slice(&eff)
+	node: sqlodin.MultiMaster_Node(u64, 1, 4, 1, .Host_Managed)
+	noop := u64(0)
+	_ = sqlodin.node_init(&node, 1, m, noop)
+	_ = sqlodin.node_tick(&node, &eff)
+	_ = sqlodin.node_step(&node, sqlodin.Envelope(u64){}, &eff)
 }
 
 // -------------------------------------------------------------
@@ -196,32 +182,13 @@ replace_meta_val :: proc(src: string, key: string, val: string) -> string {
 cmd_docs :: proc(args: []string) {
 	target := "all"
 	if len(args) > 0 do target = args[0]
-	_ = os.make_directory(BUILD_DIR)
-
-	root_dir := get_repo_root()
-	defer delete(root_dir)
-
-	if target == "book" || target == "all" {
-		cmd := fmt.tprintf(
-			"typst compile --root %s %s %s/sqlodin-book.pdf",
-			root_dir, BOOK_PATH, BUILD_DIR,
-		)
-		if run_system_cmd(cmd) == 0 do fmt.println("  Generated docs/build/sqlodin-book.pdf")
+	if target != "all" && target != "book" && target != "index" && target != "sod" {
+		cli_diagnostic("INVALID DOCS ARGUMENT", "The documentation target is not recognized.",
+			"Use sqlodin docs all, book, index or sod.")
+		os.exit(2)
 	}
-	if target == "index" || target == "all" {
-		cmd := fmt.tprintf(
-			"typst compile --root %s %s %s/sod-index.pdf",
-			root_dir, INDEX_PATH, BUILD_DIR,
-		)
-		if run_system_cmd(cmd) == 0 do fmt.println("  Generated docs/build/sod-index.pdf")
-	}
-	if target == "sod" || target == "all" {
-		cmd := fmt.tprintf(
-			"typst compile --root %s %s %s/sod-bundle.pdf",
-			root_dir, BUNDLE_PATH, BUILD_DIR,
-		)
-		if run_system_cmd(cmd) == 0 do fmt.println("  Generated docs/build/sod-bundle.pdf")
-	}
+	code := run_system_cmd(fmt.tprintf("python3 tools/build_docs.py %s", target))
+	if code != 0 do os.exit(1)
 }
 
 sod_list :: proc() {
@@ -368,13 +335,29 @@ cmd_sod :: proc(args: []string) {
 main :: proc() {
 	args := os.args[1:]
 	if len(args) == 0 {
-		print_usage()
-		return
+		os.exit(cmd_local(nil))
 	}
 	cmd := args[0]
 	rest := args[1:]
 
 	switch cmd {
+	case "local": os.exit(cmd_local(rest))
+	case "connect": os.exit(cmd_connect(rest))
+	case "serve":   cmd_serve(rest)
+	case "request":
+		if len(rest) != 2 {
+			cli_diagnostic("REQUEST FILES REQUIRED",
+				"Both a client config and a request file are required.",
+				"Use sqlodin request CLIENT.json REQUEST.json, or sqlodin connect " +
+					"CLIENT.json for the SQL shell.")
+			os.exit(2)
+		}
+		code := service.request_file(rest[0], rest[1])
+		if code != 0 do cli_diagnostic("REQUEST DID NOT SUCCEED",
+			"The protocol request did not return a verified successful result.",
+			"Check the response and client config. If a write outcome is " +
+				"uncertain, retry the same request file.")
+		os.exit(code)
 	case "build":   cmd_build(rest)
 	case "test":    cmd_test()
 	case "vet":     cmd_vet()
@@ -383,11 +366,26 @@ main :: proc() {
 	case "bench":   cmd_bench(rest)
 	case "docs":    cmd_docs(rest)
 	case "sod":     cmd_sod(rest)
-	case "sql":     cmd_sql(rest)
+	case "sql":     os.exit(cmd_local(rest))
 	case "version": fmt.printf("sqlodin %s\n", VERSION)
-	case "help":    print_usage()
+	case "help", "--help", "-h": print_usage()
 	case:
-		fmt.printf("Unknown command: %s\n", cmd)
-		print_usage()
+		cli_diagnostic("UNKNOWN COMMAND", fmt.tprintf("Unknown command: %s", cmd),
+			"Run sqlodin help. Use sqlodin connect CLIENT.json or sqlodin local DATABASE.")
+		os.exit(2)
+	}
+}
+
+cmd_serve :: proc(args: []string) {
+	if len(args) < 1 || len(args) > 2 || len(args) == 2 && args[1] != "--create" {
+		cli_diagnostic("INVALID SERVICE ARGUMENTS", "Expected a node configuration and optional --create.",
+			"Use sqlodin serve NODE.json; add --create only for a new data directory.")
+		os.exit(2)
+	}
+	if !service.run(args[0], len(args) == 2) {
+		cli_diagnostic("SERVICE STOPPED", "The SQL service could not continue; see the diagnostic above.",
+			"Check config, TLS identities, bind address and data permissions. " +
+				"Preserve existing data before repair.")
+		os.exit(1)
 	}
 }
