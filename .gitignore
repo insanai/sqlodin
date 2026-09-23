@@ -1,6 +1,8 @@
 # Build outputs
 bin/
+build/
 docs/build/
+*.dSYM/
 
 # Object files and dynamic libraries
 *.o
@@ -18,3 +20,15 @@ Thumbs.db
 # Python caches
 __pycache__/
 *.py[cod]
+
+# Python development environments
+.venv/
+.pytest_cache/
+
+# Python distribution artifacts
+languages/python/dist/
+
+# Private CLI session and unresolved write state
+*.shell.db
+*.shell.db-*
+*.shell.db.lock

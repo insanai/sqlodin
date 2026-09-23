@@ -5,9 +5,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+git submodule update --init --recursive
+
 mkdir -p bin
 echo "==> Building SQLodin CLI (bin/sqlodin)..."
-odin build cli -out:bin/sqlodin -o:speed
+python3 tools/build_cli.py
 
 echo "==> CLI built successfully."
 echo "You can now run:"

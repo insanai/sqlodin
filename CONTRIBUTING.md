@@ -18,7 +18,7 @@ SQLodin adheres to strict mechanical constraints defined in [SOD-0001](docs/sod/
 3. **Procedure Logic Limit:** No single procedure may exceed **70 lines of executable logic** (excluding
    blank lines, comments, and `#assert` declarations). Break complex flows into small, focused sub-procedures.
 4. **Zero-Heap Consensus Transitions:** The core consensus state machine (`MultiMaster_Node`, `Ledger`,
-   `Effects`, `consensus.odin`, `ownership.odin`) MUST NEVER allocate on the heap during normal transitions.
+   `Effects` in the pinned `deps/paxos-odin` library) MUST NEVER allocate on the heap during normal transitions.
    Fixed capacity arrays and small-array collections are used exclusively.
 5. **Clear Failure Modes:** Every error returned by the library must have an Elm-style diagnostic
    entry in `src/errors.odin` featuring a `-- BANNER --` header, concise explanation, and an actionable `Hint:`.
@@ -69,3 +69,15 @@ This assigns the next sequential SOD number, renames the file, and registers it 
 make docs
 ```
 Compiles `docs/build/sqlodin-book.pdf`, `docs/build/sod-index.pdf`, and `docs/build/sod-bundle.pdf`.
+
+## Consensus dependency
+
+Initialize the complete pinned library with `make deps` (or clone with `--recurse-submodules`).
+Do not copy protocol code into SQLodin or edit files inside the submodule for application changes.
+Change the dependency through an explicit reviewed gitlink update and update `tools/check.py`'s tested
+revision. Run upstream and SQLodin tests in both profiles before adopting a new pin.
+
+`src/paxos.odin` is an adapter, not a second Paxos implementation. Consensus operations return
+`Consensus_Error` (the upstream enum); application operations return SQLodin's `Error`.
+`explain_error` accepts either. Host code must consume/copy all borrowed effect payloads before
+stepping that node again. Follow the host obligations in README.md.
