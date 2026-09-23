@@ -1,0 +1,3 @@
+[submodule "deps/paxos-odin"]
+	path = deps/paxos-odin
+	url = https://github.com/insanai/paxos-odin.git
