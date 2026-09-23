@@ -7,9 +7,13 @@ import sqlodin "../src"
 test_multimaster_fastpath_1rtt :: proc(t: ^testing.T) {
 	c := cluster_create()
 	defer cluster_destroy(c)
+	for &e in c.engines {
+		err := sqlodin.engine_exec(&e, "CREATE TABLE t1 (x INT);")
+		testing.expect(t, err == .None)
+	}
 
 	// Node 1 proposes into its owned slot 1
-	m, _ := sqlodin.mutation_make_raw_sql(1, 100, "CREATE TABLE t1 (x INT);")
+	m, _ := sqlodin.mutation_make_raw_sql(1, 100, "INSERT INTO t1 VALUES (1);")
 	slot, err := sqlodin.node_propose(&c.nodes[0], m, &c.effects[0])
 	testing.expect(t, err == .None)
 	testing.expect_value(t, slot, sqlodin.Slot(1))
@@ -33,6 +37,10 @@ test_multimaster_fastpath_1rtt :: proc(t: ^testing.T) {
 test_concurrent_multimaster_proposals :: proc(t: ^testing.T) {
 	c := cluster_create()
 	defer cluster_destroy(c)
+	for &e in c.engines {
+		err := sqlodin.engine_exec(&e, "CREATE TABLE t1 (x INT);")
+		testing.expect(t, err == .None)
+	}
 
 	// All 3 nodes propose concurrently into their respective owned slots
 	m1, _ := sqlodin.mutation_make_raw_sql(1, 100, "INSERT INTO t1 VALUES (1);")
@@ -68,6 +76,10 @@ test_concurrent_multimaster_proposals :: proc(t: ^testing.T) {
 test_idle_skip_unblocks_contiguous_commit :: proc(t: ^testing.T) {
 	c := cluster_create()
 	defer cluster_destroy(c)
+	for &e in c.engines {
+		err := sqlodin.engine_exec(&e, "CREATE TABLE t1 (x INT);")
+		testing.expect(t, err == .None)
+	}
 
 	// Node 1 proposes slot 1
 	m1, _ := sqlodin.mutation_make_raw_sql(1, 100, "INSERT INTO t1 VALUES (10);")

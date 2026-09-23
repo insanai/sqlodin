@@ -5,15 +5,17 @@ import "core:os"
 import "core:strconv"
 import "core:strings"
 import sqlodin "../src"
+import sqlite "../src/sqlite"
+import host "../internal/inmemory"
 
 MAX_NODES :: 5
 SIM_WINDOW :: 64
 SIM_CHUNK :: 16
 
 Sim_Node :: sqlodin.MultiMaster_Node(
-	sqlodin.Mutation, MAX_NODES, SIM_WINDOW, SIM_CHUNK, .Host_Managed,
+	sqlodin.Mutation, MAX_NODES, SIM_WINDOW, SIM_CHUNK, .Enforced,
 )
-Sim_Effects :: sqlodin.Effects(sqlodin.Mutation, MAX_NODES, SIM_WINDOW, SIM_CHUNK, .Host_Managed)
+Sim_Effects :: sqlodin.Effects(sqlodin.Mutation, MAX_NODES, SIM_WINDOW, SIM_CHUNK, .Enforced)
 
 Sim_Packet :: struct {
 	env: sqlodin.Envelope(sqlodin.Mutation),
@@ -53,31 +55,38 @@ Simulation :: struct {
 	membership: sqlodin.Membership(MAX_NODES),
 	packets:    [dynamic]Sim_Packet,
 	prng:       Prng,
-	seq:        u16,
 	crashes:    int,
+	issued:     u64,
+	admitted:   int,
+	max_queued: int,
+	durable:    [MAX_NODES]sqlodin.Ledger(sqlodin.Mutation, SIM_WINDOW),
+	decisions:  [dynamic]sqlodin.Mutation,
+	history:    [MAX_NODES][dynamic]sqlodin.Mutation,
 }
 
 sim_init :: proc(s: ^Simulation, node_count: int, seed: u64) {
 	s.node_count = node_count
 	prng_init(&s.prng, seed)
-	s.packets = make([dynamic]Sim_Packet)
+	s.packets = make([dynamic]Sim_Packet, 0, 512)
+	s.decisions = make([dynamic]sqlodin.Mutation)
 
 	ids: [MAX_NODES]sqlodin.Node_Id
 	for i in 0..<node_count {
 		ids[i] = sqlodin.Node_Id(i + 1)
 	}
-	sqlodin.membership_init(&s.membership, ids[:node_count])
+	host.must(sqlodin.membership_init(&s.membership, ids[:node_count]))
 
 	noop := sqlodin.mutation_make_skip(0, 0)
 	for i in 0..<node_count {
 		node_id := sqlodin.Node_Id(i + 1)
-		sqlodin.node_init(&s.nodes[i], node_id, s.membership, noop)
-		e, _ := sqlodin.engine_open(":memory:", node_id, memory = true)
+		host.must(sqlodin.node_init(&s.nodes[i], node_id, s.membership, noop))
+		e, open_err := sqlodin.engine_open(":memory:", node_id, memory = true)
+		host.must(open_err)
 		s.engines[i] = e
-		sqlodin.engine_exec(
+		host.must(sqlodin.engine_exec(
 			&s.engines[i],
 			"CREATE TABLE items (id INTEGER PRIMARY KEY, v INTEGER);",
-		)
+		))
 	}
 }
 
@@ -86,33 +95,87 @@ sim_close :: proc(s: ^Simulation) {
 		sqlodin.engine_close(&s.engines[i])
 	}
 	delete(s.packets)
+	delete(s.decisions)
+	for history in s.history do delete(history)
 }
 
-sim_drain_node :: proc(s: ^Simulation, idx: int) {
-	committed := sqlodin.effects_committed_slice(&s.effects[idx])
-	for c in committed {
-		sqlodin.engine_apply_slot(&s.engines[idx], c.slot, c.value)
-	}
-	msgs := sqlodin.effects_messages_slice(&s.effects[idx])
-	for env in msgs {
-		val: sqlodin.Mutation
-		if v, ok := sqlodin.message_value(env.message); ok {
-			val = v^
+sim_enqueue :: proc(s: ^Simulation, env: sqlodin.Envelope(sqlodin.Mutation)) {
+	// Overflow models packet loss and bounds the transport, even during recovery bursts.
+	if len(s.packets) >= 512 do return
+	val: sqlodin.Mutation
+	if value, ok := sqlodin.message_value(env.message); ok do val = value^
+	append(&s.packets, Sim_Packet{env = env, val = val})
+}
+
+sim_serve_history :: proc(s: ^Simulation, idx: int) {
+	for request in sqlodin.effects_requests_slice(&s.effects[idx]) {
+		switch r in request {
+		case sqlodin.Serve_Range_Request:
+			for offset in 0..<int(r.count) {
+				slot := r.first + sqlodin.Slot(offset)
+				if slot > sqlodin.Slot(len(s.history[idx])) do break
+				sim_enqueue(s, sqlodin.Envelope(sqlodin.Mutation){
+					from = sqlodin.Node_Id(idx + 1), to = r.peer,
+					message = sqlodin.Commit_Message(sqlodin.Mutation){
+						slot = slot, value = &s.history[idx][int(slot) - 1],
+					},
+				})
+			}
 		}
-		append(&s.packets, Sim_Packet{env = env, val = val})
 	}
+}
+
+// Models a journal in memory. This tests ordering/replay, not power-loss durability.
+sim_drain_node :: proc(s: ^Simulation, idx: int) {
+	e := &s.effects[idx]
+	for write in sqlodin.effects_writes_slice(e) {
+		host.must(sqlodin.ledger_apply(&s.durable[idx], write))
+	}
+	sqlodin.effects_confirm_writes_durable(e)
+	committed := sqlodin.effects_committed_slice(e)
+	for entry in committed {
+		if int(entry.slot) > len(s.decisions) {
+			if int(entry.slot) != len(s.decisions) + 1 do panic("Decision gap")
+			append(&s.decisions, entry.value^)
+		} else if s.decisions[int(entry.slot) - 1] != entry.value^ {
+			panic("Conflicting replicated decision")
+		}
+	}
+	host.must(sqlodin.engine_apply_batch(&s.engines[idx], committed))
+	for entry in committed {
+		if int(entry.slot) != len(s.history[idx]) + 1 do panic("Host history gap")
+		append(&s.history[idx], entry.value^)
+	}
+	for env in sqlodin.effects_messages_slice(e) do sim_enqueue(s, env)
+	sim_serve_history(s, idx)
+	s.max_queued = max(s.max_queued, len(s.packets))
+	sqlodin.effects_reset(e)
+	floor := s.engines[0].applied_through
+	for &engine in s.engines[:s.node_count] do floor = min(floor, engine.applied_through)
+	for &node in s.nodes[:s.node_count] do host.must(sqlodin.node_advance_memory_floor(&node, floor))
+}
+
+sim_restart :: proc(s: ^Simulation) {
+	idx := prng_int_max(&s.prng, s.node_count)
+	noop := sqlodin.mutation_make_skip(0, 0)
+	host.must(sqlodin.node_restore(&s.nodes[idx], sqlodin.Node_Id(idx + 1),
+		s.membership, s.durable[idx], noop, s.engines[idx].applied_through))
+	s.crashes += 1
 }
 
 sim_propose_random :: proc(s: ^Simulation) {
 	proposer := prng_int_max(&s.prng, s.node_count)
 	node_id := sqlodin.Node_Id(proposer + 1)
-	pk := sqlodin.snowflake_generate(node_id, prng_next_u64(&s.prng) % 1000000, &s.seq)
-
-	m, _ := sqlodin.mutation_make_insert(node_id, 100, pk, "items")
-	val := i64(prng_next_u64(&s.prng) % 1000)
-	sqlodin.mutation_add_int(&m, "v", val)
-
-	sqlodin.node_propose(&s.nodes[proposer], m, &s.effects[proposer])
+	s.issued += 1
+	m, err := sqlodin.mutation_make_insert(node_id, 100, s.issued, "items")
+	host.must(err)
+	host.must(sqlodin.mutation_add_int(&m, "v", i64(s.issued % 1000)))
+	_, propose_err := sqlodin.node_propose(&s.nodes[proposer], m, &s.effects[proposer])
+	if propose_err == .None {
+		s.admitted += 1
+	} else if propose_err != .Window_Full && propose_err != .Not_Leader {
+		host.must(propose_err)
+	}
 	sim_drain_node(s, proposer)
 }
 
@@ -136,19 +199,18 @@ sim_step_network :: proc(s: ^Simulation) {
 	}
 
 	sqlodin.effects_reset(&s.effects[target])
-	sqlodin.node_step(&s.nodes[target], env, &s.effects[target])
+	host.must(sqlodin.node_step(&s.nodes[target], env, &s.effects[target]))
 	sim_drain_node(s, target)
 
 	// Simulated duplicate (5%)
-	if prng_chance(&s.prng, 50) {
+	if prng_chance(&s.prng, 50) && len(s.packets) < 512 {
 		append(&s.packets, pkt)
 	}
 }
 
 sim_step_network_reliable :: proc(s: ^Simulation) {
 	if len(s.packets) == 0 do return
-	pkt := s.packets[0]
-	ordered_remove(&s.packets, 0)
+	pkt := pop(&s.packets)
 
 	target := int(pkt.env.to - 1)
 	if target < 0 || target >= s.node_count do return
@@ -161,20 +223,20 @@ sim_step_network_reliable :: proc(s: ^Simulation) {
 	}
 
 	sqlodin.effects_reset(&s.effects[target])
-	sqlodin.node_step(&s.nodes[target], env, &s.effects[target])
+	host.must(sqlodin.node_step(&s.nodes[target], env, &s.effects[target]))
 	sim_drain_node(s, target)
 }
 
 sim_tick_nodes :: proc(s: ^Simulation) {
 	for i in 0..<s.node_count {
-		sqlodin.node_tick(&s.nodes[i], &s.effects[i])
+		host.must(sqlodin.node_tick(&s.nodes[i], &s.effects[i]))
 		sim_drain_node(s, i)
 	}
 }
 
 sim_quiesce :: proc(s: ^Simulation) {
 	rounds := 0
-	for (len(s.packets) > 0 || rounds < 20) && rounds < 200 {
+	for (len(s.packets) > 0 || rounds < 100) && rounds < 1000 {
 		rounds += 1
 		sim_tick_nodes(s)
 		for len(s.packets) > 0 {
@@ -183,15 +245,39 @@ sim_quiesce :: proc(s: ^Simulation) {
 	}
 }
 
-sim_verify :: proc(s: ^Simulation) {
-	base_watermark := sqlodin.engine_applied_through(&s.engines[0])
-	base_rows, _ := sqlodin.engine_read_snapshot(&s.engines[0], "SELECT count(*) FROM items;")
+// Hash actual stored values in primary-key order, not the one-row count(*) result.
+sim_digest :: proc(e: ^sqlodin.Engine) -> (count: int, hash: u64) {
+	stmt, err := sqlodin.engine_prepare(e, "SELECT id, v FROM items ORDER BY id;")
+	host.must(err)
+	defer sqlite.sqlite3_finalize(stmt)
+	hash = 14695981039346656037
+	for {
+		rc := sqlite.sqlite3_step(stmt)
+		if rc == sqlite.DONE do break
+		if rc != sqlite.ROW do panic("Digest query failed")
+		id := u64(sqlite.sqlite3_column_int64(stmt, 0))
+		value := u64(sqlite.sqlite3_column_int64(stmt, 1))
+		if value != id % 1000 do panic("Corrupt mutation data")
+		hash = (hash ~ id) * 1099511628211
+		hash = (hash ~ value) * 1099511628211
+		count += 1
+	}
+	return
+}
 
-	for i in 1..<s.node_count {
-		w := sqlodin.engine_applied_through(&s.engines[i])
-		rows, _ := sqlodin.engine_read_snapshot(&s.engines[i], "SELECT count(*) FROM items;")
-		assert(w == base_watermark, "Replica applied watermark mismatch")
-		assert(rows == base_rows, "Replica table row count mismatch")
+sim_verify :: proc(s: ^Simulation) {
+	watermark := s.engines[0].applied_through
+	count, hash := sim_digest(&s.engines[0])
+	if s.admitted == 0 || count == 0 do panic("Simulation made no progress")
+	for i in 0..<s.node_count {
+		rows, digest := sim_digest(&s.engines[i])
+		if s.engines[i].applied_through != watermark || rows != count || digest != hash {
+			fmt.eprintf("node=%d applied=%d expected=%d rows=%d/%d hash=%d/%d highest=%d floor=%d\n",
+				i+1, s.engines[i].applied_through, watermark, rows, count, digest, hash,
+				s.nodes[i].highest_seen, s.nodes[i].memory_floor)
+			panic("Replica state diverged")
+		}
+		if s.nodes[i].highest_seen > watermark do panic("Replica stalled after network recovery")
 	}
 }
 
@@ -227,7 +313,9 @@ main :: proc() {
 		case action < 4:
 			sim_propose_random(sim)
 		case action < 8:
-			sim_step_network(sim)
+			for _ in 0..<8 do sim_step_network(sim)
+		case action == 8:
+			sim_restart(sim)
 		case:
 			sim_tick_nodes(sim)
 		}
@@ -237,7 +325,8 @@ main :: proc() {
 	sim_verify(sim)
 
 	fmt.printf(
-		"PASS simulation: nodes=%d, seed=%d, steps=%d, applied=%d, Crashes=%d\n",
-		node_count, seed, steps, sqlodin.engine_applied_through(&sim.engines[0]), sim.crashes,
+		"PASS simulation: nodes=%d, seed=%d, steps=%d, applied=%d, restarts=%d, max_queue=%d\n",
+		node_count, seed, steps, sqlodin.engine_applied_through(&sim.engines[0]),
+		sim.crashes, sim.max_queued,
 	)
 }

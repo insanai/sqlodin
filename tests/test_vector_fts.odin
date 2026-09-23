@@ -38,6 +38,7 @@ test_sqlite_vec_embeddings :: proc(t: ^testing.T) {
 	defer sqlodin.engine_close(&e)
 
 	ver := sqlite.vec_version(e.db)
+	defer delete(ver)
 	testing.expect(t, len(ver) > 0)
 
 	// Create vec0 virtual table for 4-dimensional float embeddings
