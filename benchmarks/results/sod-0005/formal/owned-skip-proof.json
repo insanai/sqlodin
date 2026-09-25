@@ -1,0 +1,14 @@
+{
+  "complete": true,
+  "passed": true,
+  "scope": "unbounded durable-history/prefix seam and owned no-op determinacy; not a full consensus/refinement proof",
+  "model": "OwnedSkipProof",
+  "tool_revision": "7824dab",
+  "distribution_sha256": "a2860384bc89c4c5b2c73ec367e29f44d829e4d4a2698ab295139f829219331c",
+  "executable_sha256": "d8debcba59db1bd5814d6693e3b25e3db1a8221e499bdf8b548594e2f857ede5",
+  "source_sha256": "46043907e0f67447023272960a3163e50bb6ba8f088f0b19f409c9966998219f",
+  "output": "(* created new \".tlacache/OwnedSkipProof.tlaps/OwnedSkipProof.thy\" *)\n(* fingerprints written in \".tlacache/OwnedSkipProof.tlaps/fingerprints\" *)\nFile \"./OwnedSkipProof.tla\", line 1, character 1 to line 91, character 77:\n[INFO]: All 41 obligations proved.\n",
+  "exit_code": 0,
+  "obligations": 41,
+  "seconds": 0.4160353625193238
+}

@@ -1,0 +1,46 @@
+PASS style: files <= 1408 lines, lines <= 108 columns, procedures <= 70 logic lines
+PASS style: Zen constraints, vet, strict style
+PASS unit tests (-debug)
+PASS pinned upstream tests (-debug)
+PASS unit tests (-o:speed)
+PASS pinned upstream tests (-o:speed)
+PASS individual-journal/application reference configuration
+PASS mixed SQL: all three replicas verify order/ledger/stock invariants before and after restart
+PASS compile-fail zero_window
+PASS compile-fail zero_chunk
+PASS compile-fail window_not_power_of_two
+PASS compile-fail chunk_exceeds_window
+PASS compile-fail zero_members
+PASS compile-fail too_many_members
+PASS durability messages_before_confirm -debug
+PASS durability reset_before_confirm -debug
+PASS durability correct_order -debug
+PASS durability zero_value_is_ready -debug
+PASS durability messages_before_confirm -o:speed
+PASS durability reset_before_confirm -o:speed
+PASS durability correct_order -o:speed
+PASS durability zero_value_is_ready -o:speed
+PASS 30 simulations across 1, 3, and 5 nodes (150000 fault steps)
+PASS multi-master vector/FTS search example
+PASS benchmark smoke and six JSON profiles
+PASS no shared SQLite/sqlite-vec/OpenSSL dependencies: /home/insan/projects/sqlodin-perf/build/test-tmp/sqlodin-check-5th72tsb/cli
+PASS CLI propagates subprocess failure with recovery hint
+All SQLodin checks passed.
+
+PASS network5 10s
+PASS network4 10s
+FAIL(1) history 0s
+FAIL(1) history2 0s
+FAIL(1) orm 11s
+PASS majority 107s
+PASS sessions 3s
+PASS snapshot 4s
+PASS catchup 121s
+PASS admission 3s
+FAIL(1) python 11s
+FAIL(1) cli 0s
+PASS history 55s
+PASS history2 41s
+PASS orm 15s
+PASS python 12s
+PASS cli 5s

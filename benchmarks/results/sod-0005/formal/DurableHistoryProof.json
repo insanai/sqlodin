@@ -1,0 +1,14 @@
+{
+  "complete": true,
+  "passed": true,
+  "scope": "unbounded durable-history/prefix seam and owned no-op determinacy; not a full consensus/refinement proof",
+  "model": "DurableHistoryProof",
+  "tool_revision": "7824dab",
+  "distribution_sha256": "a2860384bc89c4c5b2c73ec367e29f44d829e4d4a2698ab295139f829219331c",
+  "executable_sha256": "d8debcba59db1bd5814d6693e3b25e3db1a8221e499bdf8b548594e2f857ede5",
+  "source_sha256": "8f317555384ecfb8c2dec9cca6c68e7c6474e8afd5dfbe58509c110764e28765",
+  "output": "(* created new \".tlacache/DurableHistoryProof.tlaps/DurableHistoryProof.thy\" *)\n(* fingerprints written in \".tlacache/DurableHistoryProof.tlaps/fingerprints\" *)\nFile \"./DurableHistoryProof.tla\", line 1, character 1 to line 47, character 77:\n[INFO]: All 12 obligations proved.\n",
+  "exit_code": 0,
+  "obligations": 12,
+  "seconds": 0.24306166917085648
+}

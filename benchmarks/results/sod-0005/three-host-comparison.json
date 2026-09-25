@@ -1,0 +1,77 @@
+{
+  "complete": true,
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "client": "insan@10.175.52.18",
+  "samples": [
+    {
+      "label": "baseline",
+      "repeat": 0,
+      "stamp": "20260925T055832719935Z",
+      "write_ms_median": 59.97728509828448,
+      "read_ms_median": 55.47780357301235,
+      "writes_24_per_s": 116.20515082909506,
+      "mixed70_24_per_s": 170.71050157918586,
+      "verified": true
+    },
+    {
+      "label": "sod0005",
+      "repeat": 0,
+      "stamp": "20260925T055900172745Z",
+      "write_ms_median": 19.43667186424136,
+      "read_ms_median": 0.5838321521878242,
+      "writes_24_per_s": 522.459886580795,
+      "mixed70_24_per_s": 475.157364011957,
+      "verified": true
+    },
+    {
+      "label": "baseline",
+      "repeat": 1,
+      "stamp": "20260925T055911174177Z",
+      "write_ms_median": 54.570837412029505,
+      "read_ms_median": 57.93012212961912,
+      "writes_24_per_s": 132.69650937086672,
+      "mixed70_24_per_s": 190.25535658332936,
+      "verified": true
+    },
+    {
+      "label": "sod0005",
+      "repeat": 1,
+      "stamp": "20260925T055935912402Z",
+      "write_ms_median": 19.160759169608355,
+      "read_ms_median": 0.5898019298911095,
+      "writes_24_per_s": 650.7972685855405,
+      "mixed70_24_per_s": 580.8400927708241,
+      "verified": true
+    },
+    {
+      "label": "baseline",
+      "repeat": 2,
+      "stamp": "20260925T055946292455Z",
+      "write_ms_median": 43.9602374099195,
+      "read_ms_median": 43.896465096622705,
+      "writes_24_per_s": 160.76351589613265,
+      "mixed70_24_per_s": 214.2533883496732,
+      "verified": true
+    },
+    {
+      "label": "sod0005",
+      "repeat": 2,
+      "stamp": "20260925T060007785113Z",
+      "write_ms_median": 19.301080610603094,
+      "read_ms_median": 0.5238400772213936,
+      "writes_24_per_s": 660.7212586017718,
+      "mixed70_24_per_s": 518.688843004984,
+      "verified": true
+    }
+  ],
+  "scope": "three voters on separate hosts; one client host; closed-loop; not a capacity test",
+  "binaries": {
+    "baseline": "aa36f6bbe368fd42b0e59fcfe98cc3f5a65cf41dd4937a5c6a3a7e2ac19a5769",
+    "sod0005": "245b6c36b7a1b67e474b7944af97262838d562504fb6f956d00125798ef89359"
+  },
+  "harness_sha256": "fb31feb2d744f15557a4380b2022185e5210185d76f7186b7504f92d36c69310"
+}

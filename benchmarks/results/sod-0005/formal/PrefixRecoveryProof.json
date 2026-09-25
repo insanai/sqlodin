@@ -1,0 +1,14 @@
+{
+  "complete": true,
+  "passed": true,
+  "scope": "unbounded durable-history/prefix seam and owned no-op determinacy; not a full consensus/refinement proof",
+  "model": "PrefixRecoveryProof",
+  "tool_revision": "7824dab",
+  "distribution_sha256": "a2860384bc89c4c5b2c73ec367e29f44d829e4d4a2698ab295139f829219331c",
+  "executable_sha256": "d8debcba59db1bd5814d6693e3b25e3db1a8221e499bdf8b548594e2f857ede5",
+  "source_sha256": "beda3b1a713d32c9c687189ad33b07af94e6982f2847fa26f7cd4ae70a7c0676",
+  "output": "(* created new \".tlacache/PrefixRecoveryProof.tlaps/PrefixRecoveryProof.thy\" *)\n(* fingerprints written in \".tlacache/PrefixRecoveryProof.tlaps/fingerprints\" *)\nFile \"./PrefixRecoveryProof.tla\", line 1, character 1 to line 76, character 77:\n[INFO]: All 36 obligations proved.\n",
+  "exit_code": 0,
+  "obligations": 36,
+  "seconds": 0.562321207486093
+}
