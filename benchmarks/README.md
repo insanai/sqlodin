@@ -53,6 +53,20 @@ The plotter requires matplotlib; its default output is `docs/book/plots/`.
 Update the book chapter's JSON path when adopting a new run. Never overwrite a
 failed report with a successful rerun, or merge results from different hosts.
 
+## SOD 0005 comparisons
+
+The same-host matrix uses `tools/calibrate_native_mixed.py` with the SQLite reference measured in
+each run; compare ratios within one report, because `.18` is shared. The three-host comparison
+provisions voters over SSH and runs the workload from a separate client host:
+
+```sh
+python3 tools/compare_three_hosts.py --hosts insan@10.175.52.19 insan@10.175.52.20 insan@10.175.52.21 \
+  --client insan@10.175.52.18 --binary baseline PATH --binary candidate PATH --repeats 3 \
+  --output benchmarks/results/sod-0005/three-host-comparison-next.json
+```
+
+Results and failed attempts are in `results/sod-0005/`.
+
 ## Historical embedded benchmark
 
 The book imports [`results/linux-latest.json`](results/linux-latest.json) directly.
