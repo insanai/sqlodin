@@ -16,7 +16,7 @@ test_replicated_fts_transaction_policy :: proc(t: ^testing.T) {
 		"INSERT INTO docs(rowid,title,body) VALUES(2,'Vector','nearest neighbors');",
 		"UPDATE docs SET body='safe durable consensus' WHERE rowid=1;",
 	}) {
-		m, made := sql.mutation_make_transaction(1, {{0 = 77}, u64(i + 1)}, text)
+		m, made := sql.mutation_make_transaction(1, {{0 = 77}, u64(i + 1), 0}, text)
 		testing.expect(t, made == .None)
 		testing.expect(t, sql.engine_apply_outcome(&e, u64(i + 1), &m) == .None)
 		out, complete, out_err := sql.engine_outcome(&e, u64(i + 1))
@@ -41,7 +41,7 @@ test_fts_shadow_writes_rejected :: proc(t: ^testing.T) {
 		"UPDATE docs_content SET c0='tampered';",
 		"INSERT INTO docs(rowid,body) VALUES(2,'still usable');",
 	}) {
-		m, _ := sql.mutation_make_transaction(1, {{0 = 78}, u64(i + 1)}, text)
+		m, _ := sql.mutation_make_transaction(1, {{0 = 78}, u64(i + 1), 0}, text)
 		testing.expect(t, sql.engine_apply_outcome(&e, u64(i + 1), &m) == .None)
 		out, complete, err := sql.engine_outcome(&e, u64(i + 1))
 		testing.expect(t, err == .None && complete)
@@ -65,7 +65,7 @@ test_fts_duplicate_is_durable_constraint :: proc(t: ^testing.T) {
 		"INSERT INTO docs(rowid,body) VALUES(1,'duplicate');",
 		"INSERT INTO docs(rowid,body) VALUES(3,'after rejection');",
 	}) {
-		m, _ := sql.mutation_make_transaction(1, {{0 = 79}, u64(i + 1)}, text)
+		m, _ := sql.mutation_make_transaction(1, {{0 = 79}, u64(i + 1), 0}, text)
 		testing.expect(t, sql.engine_apply_outcome(&e, u64(i + 1), &m) == .None)
 		out, complete, err := sql.engine_outcome(&e, u64(i + 1))
 		testing.expect(t, err == .None && complete)

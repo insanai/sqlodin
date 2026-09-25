@@ -7,14 +7,18 @@ import sql "../src"
 import durable "../src/durable"
 import db "../src/sqlite"
 
-Durable_Test :: struct { dir: string, paths: [3]string, hosts: [3]^durable.Host }
-durable_test_open :: proc(t: ^testing.T, count: int) -> ^Durable_Test {
+Durable_Test :: struct {
+	dir: string, paths, consensus_paths: [3]string, hosts: [3]^durable.Host,
+}
+durable_test_open :: proc(t: ^testing.T, count: int, separated: bool = false) -> ^Durable_Test {
 	c := new(Durable_Test)
 	c.dir, _ = os.make_directory_temp("", "sqlodin-durable-", context.allocator)
 	ids := [3]sql.Node_Id{1, 2, 3}
 	for i in 0..<count {
 		c.paths[i] = fmt.aprintf("%s/node-%d.db", c.dir, i)
-		h, err := durable.open(c.paths[i], "test", ids[i], ids[:count], create = true)
+		if separated do c.consensus_paths[i] = fmt.aprintf("%s/consensus-%d.db", c.dir, i)
+		h, err := durable.open(c.paths[i], "test", ids[i], ids[:count], create = true,
+			consensus_path = c.consensus_paths[i])
 		testing.expect(t, err == .None)
 		assert(h != nil)
 		c.hosts[i] = h
@@ -26,6 +30,7 @@ durable_test_close :: proc(c: ^Durable_Test) {
 	for h in c.hosts do durable.close(h)
 	os.remove_all(c.dir)
 	for path in c.paths do if path != "" do delete(path)
+	for path in c.consensus_paths do if path != "" do delete(path)
 	delete(c.dir)
 	free(c)
 }
@@ -33,7 +38,8 @@ durable_test_close :: proc(c: ^Durable_Test) {
 durable_test_reopen :: proc(t: ^testing.T, c: ^Durable_Test, idx, count: int) {
 	durable.close(c.hosts[idx])
 	ids := [3]sql.Node_Id{1, 2, 3}
-	h, err := durable.open(c.paths[idx], "test", ids[idx], ids[:count])
+	h, err := durable.open(c.paths[idx], "test", ids[idx], ids[:count],
+		consensus_path = c.consensus_paths[idx])
 	testing.expect(t, err == .None)
 	assert(h != nil)
 	c.hosts[idx] = h
