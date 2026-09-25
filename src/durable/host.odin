@@ -124,6 +124,7 @@ open :: proc(
 	}
 	if sql.engine_open_reader(&h.engine, path) != .None do return nil, .Storage
 	good = true
+	if !application_cache_mode(h) do return nil, .Storage
 	return h, .None
 }
 

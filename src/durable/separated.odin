@@ -18,6 +18,17 @@ stage_journal_skips :: proc(h: ^Host, entries: []sql.Committed(sql.Mutation)) ->
 	return sql.engine_stage_skip_prefix(&h.engine, entries)
 }
 
+// SOD 0005 M4: a separated application database is a replayable cache of the
+// FULL journal (J1-J3), so its commits need no sync barrier. WAL NORMAL keeps
+// every crash state a committed prefix no older than the last checkpoint, and
+// recovery replays the retained chosen suffix. Opening, creation and generation
+// builds run at FULL; only a fully recovered live host switches. Format 4 keeps
+// the journal in this database and therefore stays FULL.
+application_cache_mode :: proc(h: ^Host) -> bool {
+	if h.consensus == nil do return true
+	return db.exec(h.engine.db, "PRAGMA synchronous=NORMAL;")
+}
+
 @(private)
 open_consensus :: proc(h: ^Host, path: string, create: bool) -> bool {
 	if path == "" || path == ":memory:" || strings.has_prefix(path, "file:") ||
