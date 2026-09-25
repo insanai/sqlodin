@@ -76,6 +76,8 @@ dispatch :: proc(s: ^Server, c: ^Connection, r: Request) -> bool {
 		if r.op == "snapshot_offer" do return receive_snapshot_offer(s, c, r)
 		if r.op == "snapshot_fetch" do return send_snapshot_chunk(s, c, r)
 		if r.op == "snapshot_chunk" do return receive_snapshot_chunk(s, c, r)
+		if r.op == "frontier" do return respond_frontier(s, c, r)
+		if r.op == "frontier_reply" do return receive_frontier(s, c, r)
 		if r.op != "packet" || r.packet.from != c.peer || r.packet.to != s.config.node do return false
 		packet: durable.Packet
 		if !wire_decode(r.packet, &packet) do return false

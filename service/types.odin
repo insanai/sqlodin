@@ -33,6 +33,7 @@ Request :: struct {
 	read_version: u64, read_parameters: []Parameter,
 	protocol: int, node: u16, sequence: u64, timeout_ms: int,
 	parameters: []Parameter, packet: Wire,
+	frontier: u64, // peer-only quorum-read frontier reply (SOD 0005 M6)
 }
 Response :: struct {
 	snapshot_requested, snapshot_prefix, snapshot_sealed, generation_prefix: sql.Slot,
@@ -58,6 +59,7 @@ Connection :: struct {
 	header: [4]u8, header_used, input_used: int, input: []u8,
 	out: [MAX_QUEUED_FRAMES][]u8, out_head, out_count, out_offset, queued: int,
 	pending: Pending, value: sql.Mutation, slot: sql.Slot, ticket: durable.Read_Ticket,
+	frontier_replied: u64, // cohort token this peer answered
 	local_read: bool, transaction_begin, preview, session_info: bool, query_value: sql.Mutation,
 }
 Server :: struct {
@@ -70,6 +72,8 @@ Server :: struct {
 	work_ready: bool,
 	write_cursor: int,
 	read_cohort: durable.Read_Ticket,
+	frontier_token: u64, frontier_high: sql.Slot, frontier_replies: int, frontier_ready: bool,
+	frontier_sent: time.Tick,
 	allowed: [32]string, allowed_count: int,
 	fingerprint: string, last_tick, last_dial, last_repair, last_snapshot_receipt: time.Tick, fatal: bool,
 }
