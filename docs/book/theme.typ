@@ -12,7 +12,7 @@
 #let rule = rgb("d5dfe2")
 
 #let book(body) = {
-  set document(title: "SQLodin: Architecture, Durability and Performance",
+  set document(title: "SQLodin: Use, Design and Evidence",
     author: project-authorship,
     keywords: ("Paxos", "SQLite", "multi-master", "Odin", "durability"))
   set page(paper: "a4", margin: (inside: 24mm, outside: 22mm, top: 23mm, bottom: 23mm),
@@ -20,7 +20,7 @@
     header: context {
       if here().page() > 1 {
         set text(font: "New Computer Modern Sans", size: 8pt, fill: gray)
-        grid(columns: (1fr, auto), [SQLodin], [ARCHITECTURE / DURABILITY / PERFORMANCE])
+        grid(columns: (1fr, auto), [SQLodin], [USE / DESIGN / EVIDENCE])
         line(length: 100%, stroke: 0.5pt + rule)
       }
     },
@@ -29,6 +29,8 @@
       grid(columns: (1fr, auto), [SQLodin / September 2026], counter(page).display())
     })
   show: typography
+  set figure(kind: image, supplement: [Figure])
+  set heading(supplement: [Chapter])
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
     block(above: 4mm, below: 6mm)[
