@@ -43,7 +43,7 @@
   block(width: 100%, fill: bg-light, inset: 11pt)[
     #set par(justify: false)
     #grid(columns: (1.6fr, 1fr), column-gutter: 15pt, row-gutter: 8pt,
-      [#sod-label("Intended status")\ #sod-value(status)],
+      [#sod-label("Record status")\ #sod-value(status)],
       [#sod-label("Created / updated")\ #sod-value([#created / #last-updated])],
       [#sod-label("Discussion")\ #sod-value(discussion)],
       [#sod-label("Topics")\ #sod-value(labels.join(", "))])
@@ -51,7 +51,11 @@
   v(4mm)
   text(size: 9pt, fill: muted-color)[
     *Status of this record.* #if number == sod-placeholder-number [
-      A provisional draft for review. Proposed behavior and targets are not implemented guarantees.
+      #if state == "abandoned" [
+        A closed proposal. Consult the successor records named below for the accepted design.
+      ] else [
+        A provisional draft for review. Proposed behavior and targets are not implemented guarantees.
+      ]
     ] else [
       A numbered project record. Its lifecycle state does not certify implementation completeness
       or production readiness; consult its implementation status and evidence.
@@ -69,7 +73,7 @@
   #v(4mm)
   #project-authorship
   #v(5mm)
-  Design proposals and implementation records. Numbered records retain their lifecycle states;
+  Design decisions, alternatives and discussion. Numbered records retain their lifecycle states;
   placeholder drafts remain provisional. A committed design is not a production certification.
   #v(6mm)
   #for doc in sod-documents [
@@ -87,9 +91,9 @@
     ]
   ]
   #block(breakable: false)[
-    #text(font: "New Computer Modern Sans", size: 13pt, weight: "bold")[Active draft]
+    #text(font: "New Computer Modern Sans", size: 13pt, weight: "bold")[Closed draft]
     #v(4pt)
-    *Pinned Upstream Paxos and SQLite Application Correctness* remains an unnumbered integration
-    draft, available as a standalone PDF. The production implementation plan is now SOD 0004.
+    *Pinned Upstream Paxos and SQLite Application Correctness* is abandoned as superseded.
+    Its accepted design and discussion are incorporated into SODs 0002–0004.
   ]
 ])

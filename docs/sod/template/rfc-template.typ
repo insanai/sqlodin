@@ -85,6 +85,13 @@ List the main rejected options and why they were rejected.
 
 Capture unresolved questions that must be answered before the document can move to active discussion or publication.
 
+= Discussion and Revision Notes
+
+Record dated design discussions: the concern, decision, rationale and consequence. Link evidence
+without copying run logs. Preserve superseded measurements as historical observations. Update the
+current design and registry together; do not leave contradictory implementation-status paragraphs.
+State who authorized a scope or acceptance change when known. Do not invent review consensus.
+
 = References
 
 - Add links to related SOD documents, code, or external papers.

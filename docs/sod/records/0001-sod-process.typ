@@ -7,7 +7,7 @@
 #let sod-authors = ("Vikrant Rathore, with assistance from Ronak Rathore",)
 #let sod-category = "Process Memo"
 #let sod-status = "Committed"
-#let sod-last-updated = "2026-09-22"
+#let sod-last-updated = "2026-09-25"
 
 #import "../../shared/sod.typ": sod-document
 
@@ -27,7 +27,7 @@
 
 = Abstract
 
-This document defines the *SQLodin Discussions (SOD)* RFC process, metadata schema, authoring lifecycle, and CLI tooling for `sqlodin`. Modeled directly after the Paxos Odin Discussions (POD) from `paxos-odin` and the Zen Discussion Series (ZDS) from `zenfmt`, SOD records serve as versioned architectural specifications, multi-master consensus derivations, and process memos for distributed SQLite engineering.
+This document defines the *SQLodin Discussions (SOD)* RFC process, metadata schema, authoring lifecycle, and CLI tooling for `sqlodin`. Modeled directly after the Paxos Odin Discussions (POD) from `paxos-odin` and the Zen Discussion Series (ZDS) from `zenfmt`, SOD records serve as versioned architectural specifications, multi-master consensus derivations, and process memos for distributed SQLite engineering. Their purpose is to explain decisions, alternatives and unresolved questions, not to collect implementation logs.
 
 = Status and Implementation Boundary
 
@@ -37,12 +37,46 @@ Committed records may be corrected with a dated update; published records are fr
   columns: (auto, auto, 1fr), inset: 5pt,
   [*SOD*], [*State*], [*Implementation or evidence boundary*],
   [0001], [Committed], [Active process, Typst editorial policy, and Zen structural limits.],
-  [0002], [Committed], [Multi-master architecture, rotating slot protocol, healthy one-round slot choice, sqlite-vec, and FTS5.],
-  [0003], [Committed], [Conditional protocol proof sketches; no machine-checked implementation proof.],
-  [0004], [Committed], [Accepted production SQL and throughput plan; implementation in progress and release gates open.],
+  [0002], [Committed], [Implemented fixed-voter architecture, durable SQL, native service, fresh reads and bounded clients.],
+  [0003], [Committed], [Compositional protocol and host arguments, bounded models and selected inductive proofs; no whole-executable proof.],
+  [0004], [Committed], [Implemented fixed-voter host; correctness qualification accepted with disclosed performance shortfalls.],
 )
 
-The active specification suite updates contracts in place, retains attributable historical measurements, and links references across records. New proposals must distinguish current behavior, proposed behavior, validation gates, and open questions using the RFC template (`docs/sod/template/rfc-template.typ`). A diagram should explain a boundary or invariant; it need not appear in a process record solely for decoration.
+The registry is the index of accepted decisions, not an implementation checklist. Keep lifecycle
+state separate from implementation status. Committed means accepted; Published requires an explicit
+finalization decision and freezes the record. Passing tests alone does not publish a SOD.
+
+= Record Structure and Revision Rules
+
+Use `docs/sod/template/rfc-template.typ` for engineering proposals. Keep these sections in order:
+Abstract; Status and Implementation Boundary; Introduction; Terminology and Scope; Problem Statement;
+Goals and Non-Goals; Design Overview; Detailed Design; Security & Correctness Considerations;
+Operational Considerations; Validation and Acceptance Gates; Alternatives Considered; Open Questions;
+Discussion and Revision Notes; References. A process memo may use policy-specific sections, as this
+record does. Explain any inapplicable engineering section rather than silently losing its purpose.
+
+The status section dates the review and distinguishes implemented behavior, proposed behavior,
+qualified scope and known limits. Validation names the evidence and its revision boundary; it does
+not turn a hypothesis into an achieved guarantee. Alternatives explain the choice and its cost.
+Open questions identify unresolved decisions, with future scope separated from release blockers.
+
+Discussion notes record the problem raised, the decision, its reason and its consequence. Attribute
+owner decisions where known; do not invent reviewer consensus or meeting history. Fold historical
+development into the relevant SOD. Do not create separate progress diaries or historical document
+collections. Keep raw results in `benchmarks/results/` and protocol contracts and models in `specs/`.
+The existing release record binds a candidate's qualification; it is not another design proposal.
+
+For a committed-record revision, update the current design in place, add a dated decision note and
+update the registry date and summary together. Preserve original measurement attribution and failed
+results. Do not append a new status that contradicts an obsolete “current” section above it. A
+materially different proposal should reference the decision it replaces. A superseded draft becomes
+Abandoned with a successor pointer; it does not need a number merely to close it. Published records
+are frozen: a replacement needs a new record and an explicit supersession reference.
+
+A diagram should explain a boundary or invariant; it is not mandatory decoration. Before accepting
+a revision, compile the registry, bundle and affected records, check their links and inspect the
+rendered pages. Use Typst directly for PDF and PNG output. No elapsed soak or capacity requirement
+is implied by this editorial process.
 
 = Introduction
 
@@ -150,11 +184,17 @@ The creed is enforced by `tools/check_style.py`, which `make vet`, `make check`,
 
 Typst is the canonical format for project documentation. Markdown is reserved for GitHub-facing entry pages (`README.md`, `CONTRIBUTING.md`).
 
-Keep teaching material in `docs/book/`, design and process records in `docs/sod/records/`. Benchmark drivers belong under `bench/`. Temporary notes do not belong in the repository.
+Keep teaching material in `docs/book/`, design and process records in `docs/sod/records/`. Benchmark drivers belong under `bench/`. Historical design discussion belongs in the relevant SOD; raw evidence remains separate. Temporary notes do not belong in the repository.
+
+= Discussion and Revision Notes
+
+*22 September 2026:* Established the numbered Typst discussion process and structural code policy.
+
+*25 September 2026:* Clarified the template, revision rules and separation of lifecycle state from
+implementation qualification. Consolidated development history into the relevant SODs at the owner's
+request. SODs 0002–0004 remain Committed; no publication or new release gate is implied.
 
 = References
 
-- POD 0001: The Paxos Odin Discussion Process (`paxos-odin`).
-- POD 0002: Paxos-Odin: Architecture and Pure State Machine Design (`paxos-odin`).
-- Lamport, Leslie. "The Part-Time Parliament." ACM TOCS, 1998.
-- Mao, Yanhua, Junqueira, Flavio P., and Marzullo, Keith. "Mencius: Building Efficient Replicated State Machines for WANs." OSDI, 2008.
+POD 0001 defines the upstream discussion process. POD 0002 records the pure state-machine
+architecture. The SQLodin engineering template is `docs/sod/template/rfc-template.typ`.

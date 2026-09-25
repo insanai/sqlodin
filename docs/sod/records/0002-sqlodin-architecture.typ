@@ -2,12 +2,12 @@
 #let sod-title = "SQLodin Architecture: Multi-Master Replicated SQLite Protocol"
 #let sod-state = "committed"
 #let sod-created = "2026-09-22"
-#let sod-discussion = "Complete architectural specification of the multi-master SQLite protocol, direct owner proposals, sqlite-vec, and FTS5 integration"
+#let sod-discussion = "Fixed-voter SQL ordering, host boundaries and client semantics"
 #let sod-labels = ("architecture", "sqlite", "multi-master", "consensus", "sqlite-vec", "fts5")
 #let sod-authors = ("Vikrant Rathore, with assistance from Ronak Rathore",)
 #let sod-category = "Architectural Specification"
 #let sod-status = "Committed"
-#let sod-last-updated = "2026-09-22"
+#let sod-last-updated = "2026-09-25"
 
 #import "../../shared/sod.typ": sod-document
 
@@ -25,175 +25,178 @@
   last-updated: sod-last-updated,
 )
 
-= Implementation Status Note (2026-09-22)
-
-This historical design is superseded at the implementation boundary by the pinned upstream integration
-SOD draft. SQLodin now supplies a fixed-membership durable Paxos journal and restart replay, but no production transport. Watermark reads are
-implemented; quorum read fences, client response routing are not supplied; durable mutation serialization is implemented.
-The durability gate checks a host acknowledgment; it cannot verify that the host actually fsynced data.
-Earlier fixed latency and throughput claims are withdrawn. Consult the dated review and current README.
-
 = Abstract
 
-This document specifies the architecture of `sqlodin` version `0.1.0`: a high-performance, bounded, data-oriented multi-master replicated SQLite database engine written in Odin. `sqlodin` provides concurrent multi-master inserts, deletes, and reads across all cluster nodes without the single-leader forwarding bottleneck in its proposal path; comparative latency requires a matched distributed benchmark.
-
-The engine integrates Odin's SQLite engine with the `sqlite-vec` vector similarity search extension and SQLite FTS5 full-text search. The consensus core is implemented as a pure, deterministic effect machine with zero heap allocations during consensus transitions and an enforced durability gate.
+SQLodin orders bounded SQL transactions through a fixed set of voters. Any voter can admit a
+write. Each replica applies the same chosen prefix to SQLite. This record explains why the
+system separates consensus, durable storage, SQL execution and client service. SOD 0003 states
+the proof obligations; SOD 0004 records the durable host and qualification decisions.
 
 = Status and Implementation Boundary
 
-This committed specification describes the implemented core protocol, consensus layer, SQLite mutation state machine, and vector/FTS search integration:
+*Committed; reviewed 25 September 2026.* The accepted architecture is implemented and qualified
+for the fixed three-voter scope in `docs/releases/2026-09-25.typ`. This is not a frozen Published
+specification. Qualification does not establish arbitrary SQL support, live membership changes,
+Byzantine tolerance or increasing write throughput with each added replica.
 
-#table(
-  columns: (auto, auto, 1fr), inset: 5pt,
-  [*Component*], [*State*], [*Implementation or evidence boundary*],
-  [Multi-Master Consensus], [Committed], [Rotating slot ownership protocol, 1-RTT fast path, zero forwarding.],
-  [Mutation Engine], [Committed], [Deterministic logical mutation log, Snowflake primary key partition.],
-  [SQLite State Machine], [Committed], [Contiguous slot application into SQLite WAL mode, idempotent deletes.],
-  [Search Extensions], [Committed], [Static sqlite-vec (vec0) registration and SQLite FTS5 integration.],
-  [Read Consistency], [Committed], [Local snapshot reads and confirmed-write slot watermarks; distributed read fences remain planned.],
-)
+The service uses store format 5, SQL policy 9 and peer wire 3. Native CLI and Python package
+versions are separate. The complete paxos-odin dependency is pinned at
+`c3d197016c1f938db23fdf7f1fe87fbdbb86ac1c`; SQLodin does not maintain a partial protocol copy.
 
-= The Multi-Master Problem and Direct Proposals
+= Introduction
 
-== Ordering Logical Transactions
+SQLite supplies a transactional application store. Consensus supplies an order across machines.
+Neither supplies the other's guarantees. A chosen command can still be waiting for local SQL
+application. A local commit can still be unsafe to acknowledge if the ordering evidence was not
+made durable. The host must connect these boundaries explicitly.
 
-SQLodin accepts transaction proposals at any configured voter, orders them in one consensus log,
-and applies the same logical operations to each SQLite database. Proposal admission can be
-concurrent while application remains serialized at each replica. Independently produced database
-page images cannot simply be merged in arrival order. The protocol therefore agrees on logical
-transactions before each replica executes their SQL.
+= Terminology and Scope
 
-The design separates three obligations: direct proposal admission, quorum-backed durable ordering,
-and contiguous local application before acknowledgement. Their combined cost must be measured;
-the consensus fast path alone does not establish client latency or sustained write capacity.
+A *voter* persists promises and accepted values. A *slot* names one position in the ordered log.
+A value is *chosen* after a durable majority accepts it. The *applied prefix* is the contiguous
+sequence executed locally. An *owner* has the initial proposal right for a slot; it is not the
+sole writer for the database. Membership is fixed for the qualified configuration.
 
-== The SQLodin Multi-Master Protocol
+= Problem Statement
 
-SQLodin configures the pinned paxos-odin implementation for direct owner proposals:
+Concurrent entry points must agree on one SQL history without forwarding every proposal to a
+standing leader. An idle or failed owner must not leave an unfillable hole. Crash recovery must
+preserve both the voting evidence and the application prefix. Client retries must not repeat
+an already executed effect.
 
-#block(
-  width: 100%,
-  inset: 10pt,
-  radius: 4pt,
-  fill: rgb("f8fafc"),
-  stroke: 0.5pt + rgb("cbd5e1"),
-)[
-  *1. Rotating Slot Ownership (Log Partitioning):* For an $N$-node cluster, slot ownership is partitioned statically: Node $i$ owns every slot $S$ where $S equiv i (mod N)$. \
-  *2. 1-RTT Fast-Path Commit:* When Node $i$ receives a local write (insert, delete, or transaction), it assigns the proposal directly to its next pre-owned slot $S$. Because Node $i$ is the designated owner of slot $S$ with ballot `ballot_make(0, 0, node_id)`, *no Phase 1 (Prepare/Promise) is executed*. Node $i$ broadcasts `Accept` directly to its peers. Peers verify `ballot >= promised` and reply `Accepted`. Upon receiving a majority quorum, the slot can be chosen in *one quorum round trip*, plus persistence barriers. Durable client completion also waits for contiguous application. \
-  *3. Zero Forwarding:* Any node is a master for its incoming writes. Proposal admission needs no standing-leader forwarding hop; completion still waits for quorum durability and contiguous application.
+= Goals and Non-Goals
+
+== Goals
+
+- Admit writes at any configured voter and preserve one agreed execution order.
+- Keep consensus transitions deterministic, bounded and separate from I/O.
+- Acknowledge only after quorum durability and local durable application.
+- Offer explicit read consistency and bounded, durable retry identities.
+
+== Non-Goals
+
+Live voter enrollment, sharding, Byzantine agreement and arbitrary extensions are outside this
+design. Replication gives availability and read placement; every replica still executes the
+ordered writes through one SQLite writer.
+
+= Design Overview
+
+#block(fill: rgb("f1f5f9"), inset: 10pt, breakable: false)[
+  CLI / Python / embedded caller → bounded request admission \
+  → pinned Paxos state machine → owned durable effects \
+  → chosen contiguous prefix → SQLite data + outcome + applied watermark \
+  → client acknowledgement
 ]
 
-== Skip Coordination and Contiguous Progress
+The upstream core emits effects into caller-owned storage. It does not perform disk or network
+I/O. The SQLodin host owns persistence, transport, application and responses. Explicit ownership
+keeps borrowed buffers from outliving their input and prevents workers from mutating protocol state.
 
-Because replicas apply transactions in contiguous slot order ($1, 2, 3, 4, dots$), an idle master with no incoming writes must not block the commit line. SQLodin provides:
+= Detailed Design
 
-1. *Lightweight Skips:* An idle node periodically issues a `Skip` message (a zero-payload no-op proposal in its owned slot) through ordinary quorum voting.
-2. *Revocation of Stalled Slots:* If a node crashes or becomes unresponsive, any active peer after a configurable stall timeout initiates a bounded Phase 1 campaign (revocation) to claim the stalled slot and propose a no-op, unblocking the global log line.
+== Rotating ownership and recovery
 
-= Deterministic Logical Mutations vs Raw WAL Frames
+For voters numbered 1 through $N$, slot ownership is
+$ "owner"(s) = ((s - 1) mod N) + 1. $
+The reserved owner ballot may begin with Accept. A healthy, uncontested slot can be chosen in
+one quorum exchange, including its durable voting barriers. This is not end-to-end SQL latency.
 
-To support concurrent multi-master writes while ensuring all replicas converge to identical database states, SQLodin replaces physical page replication with a deterministic logical mutation log.
+Idle positions are closed with quorum-chosen no-ops. A stalled owner can be recovered through a
+higher-ballot prepare. Recovery must adopt the highest accepted value reported by that quorum;
+it may use a no-op only when the protocol permits it. Bounded demand frontiers and fair recovery
+service prevent idle slot selection from manufacturing an endless stream of new work.
 
-== Logical Transaction Descriptor
+== Logical transactions
 
-A proposed write is packaged into a deterministic `Mutation` record:
-- `.Insert`: table name, column list, row values, and pre-assigned primary key.
-- `.Delete`: table name and target primary key.
-- `.Update`: table name, modified columns, new values, target key.
-- `.Raw_SQL`: caller-supplied SQL without retry identity or bound parameters.
-- `.Transaction`: bounded SQL, typed parameters and a durable session/sequence identity.
+Replicas agree on SQL and typed parameters, not independently modified SQLite pages. The durable
+SQL policy admits a constrained deterministic subset. A transaction carries a session, sequence,
+epoch and canonical request identity. The outcome and applied watermark commit with the data.
+Reusing an identity for different content is rejected. Retirement advances a durable epoch fence;
+old requests cannot silently become new requests after outcome rows are reclaimed.
 
-== Conflict-Free Primary Key Partitioning (Snowflake IDs)
+Structured mutation helpers remain available. Generated Snowflake-style IDs are explicitly
+reserved and supplied by the caller; ordinary SQL inserts do not automatically use them. Unique
+node identities and durable reservation frontiers are required to prevent reuse after restart.
+Total ordering does not make raw SQL retries idempotent.
 
-To guarantee that concurrent inserts on different masters never collide on auto-increment IDs, SQLodin exposes a 64-bit Snowflake-style ID generator (not UUIDv7):
+== Reads and interactive transactions
 
-```
-bits 63..22: timestamp_ms (42 bits, ~139 years of millisecond precision)
-bits 21..12: node_id      (10 bits; supported IDs 1..1023)
-bits 11..0:  sequence     (12 bits, up to 4096 unique IDs per ms per node)
-```
+Local reads use the replica's current snapshot. Watermark reads wait for a confirmed applied
+prefix. Fresh reads join a closed cohort before its ordered marker is allocated, then execute
+after that marker applies. Reusing an earlier marker would not establish freshness.
 
-Callers reserve an ID with `durable.next_id` and supply it explicitly. SQL inserts do not
-automatically receive Snowflake IDs. No-reuse guarantees require unique node identities and durable
-reservation frontiers. Other unique constraints can still conflict.
+Interactive and ORM transactions use a private preview and an ordered commit that validates the
+database revision. Any intervening revision can cause a conflict. This conservative rule covers
+predicate reads, at the cost of conflicts even when two writes touch different rows. Rollback
+and savepoints operate within the bounded transaction contract.
 
-== Multi-Master Deletes and Idempotency
+== Search and service boundary
 
-Structured deletes target a primary key. Deleting an absent row can be a no-op, but a retry in a
-later slot is not generally idempotent: intervening writes or trigger effects can matter. Use a
-format-2 transaction request for durable retry deduplication. Total ordering establishes execution
-order; it does not make arbitrary SQL idempotent.
+FTS5 and scalar sqlite-vec distance functions support full-text and exact vector queries.
+The durable SQL policy excludes `vec0` virtual tables; extension availability is not permission
+to replicate every extension operation. Hybrid ranking combines query results under the chosen
+read contract. Exact distance scans do not promise indexed nearest-neighbor performance.
 
-== Non-Deterministic Functions
+The native service authenticates configured peers and clients with mTLS and rejects incompatible
+identities and protocol versions. The CLI supplies interactive SQL and cluster operations. Python
+supplies typed requests, search helpers and SQLAlchemy integration. The embedded API places
+transport and durable-effect obligations on its host.
 
-Functions that depend on local node state (such as `CURRENT_TIMESTAMP`, `random()`, or client UUIDs)
-must be evaluated and bound by the caller before proposal. The format-2 durable host rejects
-functions outside its allowlist, including defaults omitted by the SQLite authorizer. Arbitrary SQL
-determinism and engine/schema/ordering compatibility remain open production gates.
+= Security & Correctness Considerations
 
+Authentication does not make a malicious voter safe. The model assumes non-Byzantine members,
+fixed membership, deterministic admitted SQL and storage that honors successful synchronization.
+SOD 0003 explains the composition. Unknown execution or storage failures stop progress; the host
+must not invent a deterministic SQL rejection or open an empty replacement store to continue.
 
-= Integrated Vector Search (sqlite-vec) and Full-Text Search (FTS5)
+= Operational Considerations
 
-The embedded engine and volatile examples support sqlite-vec and FTS5. These features are not
-yet qualified for the stricter durable transaction policy:
+Memory is bounded at admission, protocol windows, effect queues and result construction. SQLite,
+TLS and storage still consume memory outside the allocation-free consensus transition. The
+qualified build pins SQLite, sqlite-vec and OpenSSL; operating-system runtime libraries remain.
+Backup, restore, offline migration and coordinated certificate renewal have explicit procedures.
+Dynamic resizing and rolling upgrades require separate accepted designs.
 
-1. *`sqlite-vec` Dense Vector Indexing:*
-   - Integrated as a static extension via `sqlite3_vec_init`.
-   - Supports `vec0` virtual tables for storing high-dimensional float32 embeddings (the current mutation binding permits at most 384 dimensions per vector).
-   - Fast vector similarity search using cosine distance (`vec_distance_cosine`) and L2 Euclidean distance (`vec_distance_l2`).
-   - Mutations containing vector embeddings replicate across the multi-master log and update vector indexes atomically on all replicas.
+= Validation and Acceptance Gates
 
-2. *SQLite FTS5 Full-Text Search:*
-   - Built-in FTS5 full-text search engine with BM25 ranking.
-   - Text documents inserted into virtual tables (`USING fts5(...)`) are indexed concurrently across nodes.
-   - Any replica can serve hybrid queries combining vector similarity, full-text match, and relational SQL filters with zero network overhead.
+The release record binds the tested source, binaries and JSON evidence. Targeted tests exercise
+all-owner admission, one-voter loss, restart, retries, SQL conflicts, read freshness, malformed
+input and resource backpressure. Model checks and induction proofs address the abstract seams;
+implementation tests connect them to code. Neither test duration nor a throughput target proves
+agreement. Performance limitations are disclosed under SOD 0004.
 
-= Read Consistency Levels
+= Alternatives Considered
 
-The design distinguishes three read contracts; only the local and watermark APIs currently exist:
+A standing leader simplifies admission but changes the requested multi-master interface. The
+selected rotating scheme retains direct proposals and pays for gap recovery. Independent page
+replication was rejected because concurrent SQLite page changes do not define a mergeable SQL
+history. A local protocol copy was rejected because it duplicates upstream reasoning and tests.
+Database-wide optimistic validation was selected over row-only conflict checks because SQL
+predicates, constraints and triggers can depend on rows the transaction did not directly update.
 
-1. *Local Snapshot Read (`.Local`):*
-   - Executed immediately against the local SQLite WAL snapshot.
-   - *Latency:* no network coordination; execution time depends on the query and storage.
-   - Suitable for read-heavy workloads, analytics, and vector search where eventual consistency is acceptable.
+= Open Questions
 
-2. *Monotonic Read / Read-Your-Writes (`.Watermark`):*
-   - The client supplies the slot watermark $W$ returned by its previous write.
-   - The local node serves the read immediately if its applied slot $A >= W$.
-   - If $A < W$, the node awaits local state machine catch-up before serving the snapshot.
-   - Supplies read-your-writes only when the token names a confirmed applied write and is carried across replicas.
+No unresolved architecture question blocks the declared fixed-voter scope. Finer conflict
+validation, dynamic membership and sharding remain future design subjects, not hidden current
+features or new release conditions.
 
-3. *Linearizable Read (proposed):*
-   - The serving node confirms cluster freshness via a quorum read fence before serving the query, ensuring no unapplied committed writes exist.
-   - A correct multi-owner barrier is required. The new SOD uses an ordered barrier as its initial reference; a no-log read fence needs a separate proof.
+= Discussion and Revision Notes
 
-= Pure Effect Machine Consensus Core
+*22 September:* Review found the partial upstream copy, unchecked application boundaries and
+ambiguous raw-SQL retry semantics. The integration proposal selected the complete library,
+atomic application watermarks, checked bindings and bounded shared vector storage. Its intent
+is incorporated here; the unnumbered draft is abandoned as superseded.
 
-Following the engineering principles established in POD 0002, SQLodin's consensus engine is a pure state machine:
-
-1. *Deterministic Inputs:* `step(&node, envelope, &effects)`, `propose(&node, mutation, &effects)`, `tick(&node, &effects)`.
-2. *Pure Transitions:* The core performs no direct I/O, allocates nothing on the heap, and accesses no clocks or sockets.
-3. *Explicit Effects:* All output actions are appended to caller-owned buffers:
-   - `writes`: durable journal records that must be persisted to disk.
-   - `messages`: outbound network packets to cluster peers.
-   - `committed`: slots ready to be applied by the SQLite state machine.
-   - `requests`: host work such as historical range service; the host constructs client responses.
-4. *Durability Gate:* The gate requires host confirmation before dependent effects are consumed.
-   The host must actually synchronize storage before confirming; the type cannot detect a false confirmation.
-
-= Verification and Acceptance Gates
-
-SQLodin is verified through an extensive suite of automated checks:
-1. *Style & Zen Constraints:* `tools/check_style.py` enforces file length (<= 1408 lines), column width (<= 108 columns), and procedure logic density (<= 70 lines).
-2. *Unit Test Suite:* Deterministic tests in `tests/` covering ballots, rotating slot ownership, fast-path 1-RTT commits, Snowflake generation, mutation serialization, SQLite state application, vector search, and FTS5.
-3. *Seeded Chaos Simulator:* `sim/simulation.odin` drives multi-master clusters under packet loss, reordering, node crashes, and restarts, validating that all SQLite databases reach byte-level or content-level convergence.
-4. *In-Process Benchmarks:* `bench/` measures successful replication and SQLite application with a matched single-leader mode. It excludes sockets, consensus fsync and WAN forwarding; no fixed latency saving is established.
+*23–25 September:* The durable host, native service, fresh read markers and optimistic ORM
+transactions replaced the earlier volatile and watermark-only boundary. Early `vec0` examples
+do not define the durable policy. The initial “no production transport” note and planned read
+fences are superseded. Historical layout measurements remain attributable in benchmark JSON;
+they are not the current memory contract. Qualification and performance decisions are in SOD 0004.
 
 = References
 
-- SOD 0001: The SQLodin Discussion Process.
-- POD 0002: Paxos-Odin: Architecture and Pure State Machine Design (`paxos-odin`).
-- POD 0010: Rotating Slot Ownership (`paxos-odin`).
-- Mao, Yanhua, Junqueira, Flavio P., and Marzullo, Keith. "Mencius: Building Efficient Replicated State Machines for WANs." OSDI, 2008.
-- SQLite Consortium. "Write-Ahead Logging." `https://www.sqlite.org/wal.html`.
-- sqlite-vec: "A vector search SQLite extension that runs anywhere." `https://github.com/asg017/sqlite-vec`.
+- SOD 0001: process and revision rules; SOD 0003: proof obligations; SOD 0004: durable host decisions.
+- `specs/multimaster-refinement.typ`: protocol-to-host composition and code map.
+- `specs/sql-policy.typ`, `specs/transaction-order.typ`, `specs/session-retirement.typ`.
+- `docs/guides/network-service.typ`, `docs/guides/orm-transactions.typ`.
+- `src/paxos.odin`, `src/durable/`, `deps/paxos-odin/`: adapter, host and complete protocol source.
