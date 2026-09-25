@@ -19,6 +19,8 @@ read_marker :: proc(id: sql.Node_Id, token: u64) -> sql.Mutation {
 begin_read :: proc(h: ^Host, timestamp_ms: u64) -> (ticket: Read_Ticket, err: Error) {
 	if h.poisoned do return {}, .Poisoned
 	if h.active_read.token != 0 do return {}, .Backpressure
+	err = history_admission(h)
+	if err != .None do return
 	token := next_id(h, timestamp_ms) or_return
 	slot := propose_internal(h, read_marker(h.node.id, token)) or_return
 	h.active_read = Read_Ticket{slot, token}

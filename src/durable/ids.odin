@@ -16,8 +16,9 @@ next_id :: proc(h: ^Host, timestamp_ms: u64) -> (u64, Error) {
 }
 
 reserve_ids :: proc(h: ^Host, timestamp_ms: u64) -> bool {
-	if !db.begin_tx(h.engine.db) do return false
-	defer db.rollback_tx(h.engine.db)
+	if !history_record_room(h) do return false
+	if !db.begin_tx(journal_db(h)) do return false
+	defer db.rollback_tx(journal_db(h))
 	s, ok := prepare(h, "SELECT ms FROM _sqlodin_ids WHERE id=1")
 	if !ok do return false
 	defer db.sqlite3_finalize(s)
@@ -30,10 +31,10 @@ reserve_ids :: proc(h: ^Host, timestamp_ms: u64) -> bool {
 	if !prepared do return false
 	defer db.sqlite3_finalize(update)
 	if db.sqlite3_bind_int64(update, 1, i64(ms)) != db.OK do return false
-	if db.sqlite3_step(update) != db.DONE || db.sqlite3_changes(h.engine.db) != 1 {
+	if db.sqlite3_step(update) != db.DONE || db.sqlite3_changes(journal_db(h)) != 1 {
 		return false
 	}
-	if !db.commit_tx(h.engine.db) do return false
+	if !db.commit_tx(journal_db(h)) do return false
 	h.id_next = ms << 22 | u64(h.node.id) << 12
 	h.id_end = h.id_next + 4096
 	return true

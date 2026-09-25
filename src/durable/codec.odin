@@ -11,7 +11,7 @@ WIRE_CAPACITY :: 8192 + sql.MAX_SQL_LEN + 4 * sql.MAX_MUTATION_VEC_VALUES
 Codec :: struct {
 	bytes: [WIRE_CAPACITY]u8,
 	pos: int,
-	reading: bool,
+	reading, legacy: bool,
 }
 Record :: struct {
 	seq: u64,
@@ -20,6 +20,7 @@ Record :: struct {
 	slot: sql.Slot,
 	ballot: sql.Ballot,
 	value: sql.Mutation,
+	legacy: bool, // Read-only compatibility with pre-epoch record encoding.
 }
 
 scalar :: proc(c: ^Codec, value: ^$T) {
@@ -55,6 +56,7 @@ mutation_codec :: proc(c: ^Codec, m: ^sql.Mutation) {
 	scalar(c, &m.kind)
 	for &v in m.request.session do scalar(c, &v)
 	scalar(c, &m.request.sequence)
+	if !c.legacy do scalar(c, &m.request.epoch)
 	scalar(c, &m.read_version)
 	scalar(c, &m.origin_node)
 	scalar(c, &m.timestamp_ms)

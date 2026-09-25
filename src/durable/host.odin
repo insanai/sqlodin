@@ -3,8 +3,11 @@ package durable
 
 import "core:container/queue"
 import "core:strings"
+import snap "../snapshot"
+import "core:time"
 import "core:sys/posix"
 import sql ".."
+import db "../sqlite"
 
 MAX_MEMBERS :: 5
 WINDOW :: 64
@@ -22,8 +25,29 @@ Host :: struct {
 	node: sql.MultiMaster_Node(sql.Mutation, MAX_MEMBERS, WINDOW, CHUNK, DURABILITY_GATE),
 	effects: sql.Effects(sql.Mutation, MAX_MEMBERS, WINDOW, CHUNK, DURABILITY_GATE),
 	engine: sql.Engine,
+	configuration: [32]u8,
+	genesis: Backup_Manifest,
+	genesis_hash: [32]u8,
+	application_path, consensus_path, store_root: string,
+	history_root, history_current, history_previous: string, // detached writer budget scope
+	store_current, generation_previous: string,
+	compaction: ^Generation_Work,
+	store_guard: posix.FD,
+	store_guard_owned: bool,
+	snapshot: ^Snapshot_State,
+	snapshot_busy: bool,
+	snapshot_sealed: snap.Certificate,
+	snapshot_seal_slot: sql.Slot,
+	snapshot_requests: [MAX_MEMBERS]bool,
+	generation_base: snap.Certificate,
+	generation_image: snap.Candidate,
+	generation_image_name: string,
+	generation_seal: sql.Slot,
+	consensus: db.Sqlite3, // nil for the legacy combined format-4 store
+	consensus_lock: posix.FD,
 	packets: queue.Queue(Packet),
 	sequence: u64,
+	chosen_stmt: db.Sqlite3_Stmt,
 	durable_sequence: u64,
 	transition_group: ^Transition_Group,
 	head: [32]u8,
@@ -31,6 +55,7 @@ Host :: struct {
 	id_end: u64,
 	lock: posix.FD,
 	poisoned: bool,
+	recovery: Recovery_Stats,
 	active_read: Read_Ticket,
 	// Test-only interruption points. Production callers leave this at None.
 	fault: Fault,
@@ -41,6 +66,7 @@ Host :: struct {
 // The parent directory must already exist on durable storage. IDs and membership are immutable.
 open :: proc(
 	path, cluster: string, id: sql.Node_Id, members: []sql.Node_Id, create: bool = false,
+	consensus_path: string = "", cancel: ^u32 = nil,
 ) -> (^Host, Error) {
 	if path == "" || path == ":memory:" || strings.has_prefix(path, "file:") ||
 	   cluster == "" || strings.contains(cluster, ";") {
@@ -54,20 +80,38 @@ open :: proc(
 	fd, locked := lock_database(path, create)
 	if !locked do return nil, .Locked
 	h := new(Host)
-	h.lock = fd
+	h.lock, h.consensus_lock = fd, -1
+	h.application_path = strings.clone(path)
+	if consensus_path != "" {
+		if consensus_path == path || !open_consensus(h, consensus_path, create) {
+			close(h)
+			return nil, .Storage
+		}
+	}
 	good := false
 	defer if !good do close(h)
 	if queue.init(&h.packets, 32) != nil do return nil, .Storage
 	engine, err := sql.engine_open(path, id)
 	if err != .None do return nil, .Storage
 	h.engine = engine
+	maintenance_handlers(h, cancel)
+	defer maintenance_handlers(h, nil)
+	started := time.tick_now()
 	if !check_storage(h) do return nil, .Storage
-	ident := identity(cluster, id, members)
+	h.recovery.integrity = time.tick_since(started)
+	if !load_genesis(h, cluster) do return nil, .Storage
+	ident := store_identity(h, cluster, id, members)
 	defer delete(ident)
-	if create && (!initialize(h, ident) || !sync_directory(path)) do return nil, .Storage
-	if !check_identity(h, ident) || sql.engine_install_limits(&h.engine) != .None ||
-	   sql.engine_install_function_policy(&h.engine) != .None ||
-	   !recover_ledger(h) || !recover_application(h) {
+	if !application_identity(h, cluster, members, create) do return nil, .Storage
+	if create && (!initialize(h, ident) || !sync_directory(path) ||
+		consensus_path != "" && !sync_directory(consensus_path)) { return nil, .Storage }
+	configuration := store_identity(h, cluster, 0, members)
+	h.configuration = digest(transmute([]u8)configuration)
+	delete(configuration)
+	h.node.membership = membership
+	if generation_redirected(h) || !check_identity(h, ident) ||
+	   sql.engine_install_limits(&h.engine) != .None ||
+	   sql.engine_install_function_policy(&h.engine) != .None || !recover_measured(h, cancel) {
 		return nil, .Storage
 	}
 	ledger := new(type_of(h.node.ledger))
@@ -85,10 +129,25 @@ open :: proc(
 
 close :: proc(h: ^Host) {
 	if h == nil do return
+	generation_release_worker(h)
+	snapshot_close(h)
+	if h.chosen_stmt != nil do db.sqlite3_finalize(h.chosen_stmt)
 	sql.engine_close(&h.engine)
+	if h.consensus != nil do db.close(h.consensus)
+	if h.consensus_lock >= 0 do posix.close(h.consensus_lock)
 	if h.transition_group != nil do free(h.transition_group)
 	queue.destroy(&h.packets)
 	if h.lock >= 0 do posix.close(h.lock)
+	if h.store_guard_owned do posix.close(h.store_guard)
+	delete(h.generation_image_name)
+	delete(h.history_current)
+	delete(h.history_previous)
+	delete(h.history_root)
+	delete(h.store_root)
+	delete(h.store_current)
+	delete(h.generation_previous)
+	delete(h.application_path)
+	delete(h.consensus_path)
 	free(h)
 }
 
@@ -100,6 +159,7 @@ poison :: proc(h: ^Host) -> Error {
 propose :: proc(h: ^Host, value: sql.Mutation) -> (sql.Slot, Error) {
 	// Nonzero no-op keys are reserved for host-generated, fresh read barriers.
 	if value.kind == .Skip && value.primary_key != 0 do return 0, .Invalid
+	if err := history_admission(h); err != .None do return 0, err
 	return propose_internal(h, value)
 }
 
@@ -144,6 +204,12 @@ serve :: proc(h: ^Host, request: sql.Serve_Range_Request) -> bool {
 	for i in 0..<min(request.count, u32(CHUNK)) {
 		slot := request.first + u64(i)
 		if slot < request.first || slot > h.engine.applied_through do break
+		if slot <= max(h.generation_base.key.prefix, h.genesis.prefix) {
+			for member, index in sql.membership_slice(&h.node.membership) {
+				if member == request.peer do h.snapshot_requests[index] = true
+			}
+			return true
+		}
 		value, found, ok := chosen(h, slot)
 		if !ok || !found do return false
 		env := sql.Envelope(sql.Mutation){from = h.node.id, to = request.peer,
@@ -157,7 +223,7 @@ finish :: proc(h: ^Host) -> Error {
 	if !persist(h) do return poison(h)
 	if h.sequence != h.durable_sequence do return poison(h)
 	sql.effects_confirm_writes_durable(&h.effects)
-	if sql.engine_apply_outcomes(&h.engine, sql.effects_committed_slice(&h.effects)) != .None {
+	if !apply_host_entries(h, sql.effects_committed_slice(&h.effects)) {
 		return poison(h)
 	}
 	if h.checkpoint != nil do h.checkpoint(.After_Application_Commit)

@@ -50,8 +50,13 @@ sync_directory :: proc(path: string) -> bool {
 }
 
 prepare :: proc(h: ^Host, text: string) -> (db.Sqlite3_Stmt, bool) {
-	s, err := sql.engine_prepare(&h.engine, text)
-	return s, err == .None
+	s: db.Sqlite3_Stmt
+	rc := db.sqlite3_prepare_v2(journal_db(h), cstring(raw_data(text)), c.int(len(text)), &s, nil)
+	if rc != db.OK || s == nil {
+		if s != nil do db.sqlite3_finalize(s)
+		return nil, false
+	}
+	return s, true
 }
 
 bind_blob :: proc(s: db.Sqlite3_Stmt, index: c.int, bytes: []u8) -> bool {
@@ -64,9 +69,10 @@ column_blob :: proc(s: db.Sqlite3_Stmt, index: c.int) -> []u8 {
 	return p[:n]
 }
 
-identity :: proc(cluster: string, id: sql.Node_Id, members: []sql.Node_Id) -> string {
-	return fmt.aprintf("sqlodin-journal-v4;sql=4096;policy=6;vec=%d;cluster=%s;node=%d;" +
-		"members=%v;sqlite=%x", sql.MAX_MUTATION_VEC_VALUES, cluster, id, members,
+identity :: proc(cluster: string, id: sql.Node_Id, members: []sql.Node_Id,
+	policy: int = sql.REPLICATION_POLICY) -> string {
+	return fmt.aprintf("sqlodin-journal-v4;sql=4096;policy=%d;vec=%d;cluster=%s;node=%d;" +
+		"members=%v;sqlite=%x", policy, sql.MAX_MUTATION_VEC_VALUES, cluster, id, members,
 		sql.engine_build_fingerprint())
 }
 
@@ -78,17 +84,18 @@ initialize :: proc(h: ^Host, ident: string) -> bool {
 		"CREATE INDEX _sqlodin_journal_slot ON _sqlodin_journal(kind,slot); " +
 		"CREATE TABLE _sqlodin_ids(id INTEGER PRIMARY KEY CHECK(id=1), ms INTEGER NOT NULL); " +
 		"INSERT INTO _sqlodin_ids VALUES(1,-1);"
-	if !db.begin_tx(h.engine.db) do return false
-	defer db.rollback_tx(h.engine.db)
-	if !db.exec(h.engine.db, ddl) do return false
+	if !db.begin_tx(journal_db(h)) do return false
+	defer db.rollback_tx(journal_db(h))
+	if !db.exec(journal_db(h), ddl) || !store_genesis(h) do return false
 	s, ok := prepare(h, "INSERT INTO _sqlodin_journal_meta VALUES(1,?,0,zeroblob(32))")
 	if !ok do return false
 	defer db.sqlite3_finalize(s)
 	if db.sqlite3_bind_text(s, 1, cstring(raw_data(ident)), c.int(len(ident)), nil) != db.OK {
 		return false
 	}
-	return db.sqlite3_step(s) == db.DONE && sql.engine_initialize_outcomes(&h.engine) &&
-		db.commit_tx(h.engine.db)
+	return db.sqlite3_step(s) == db.DONE &&
+		(h.consensus != nil || sql.engine_initialize_outcomes(&h.engine)) &&
+		db.commit_tx(journal_db(h))
 }
 
 check_identity :: proc(h: ^Host, ident: string) -> bool {
@@ -108,21 +115,25 @@ check_identity :: proc(h: ^Host, ident: string) -> bool {
 }
 
 check_storage :: proc(h: ^Host) -> bool {
-	// FULL commits sync the WAL. fullfsync requests the stronger macOS device barrier.
-	if !db.exec(h.engine.db, "PRAGMA fullfsync=ON; PRAGMA checkpoint_fullfsync=ON; " +
-		"PRAGMA foreign_keys=ON;") {
-		return false
-	}
+	if !check_database_storage(h.engine.db) do return false
+	return h.consensus == nil || check_database_storage(h.consensus)
+}
+
+check_database_storage :: proc(database: db.Sqlite3) -> bool {
+	if !db.exec(database, "PRAGMA fullfsync=ON; PRAGMA checkpoint_fullfsync=ON; " +
+		"PRAGMA foreign_keys=ON;") { return false }
 	wants := [3]string{"wal", "2", "ok"}
 	for query, i in ([?]string{
 		"PRAGMA journal_mode", "PRAGMA synchronous", "PRAGMA integrity_check",
 	}) {
-		s, ok := prepare(h, query)
-		if !ok do return false
+		s: db.Sqlite3_Stmt
+		if db.sqlite3_prepare_v2(database, cstring(raw_data(query)), c.int(len(query)), &s, nil) != db.OK {
+			if s != nil do db.sqlite3_finalize(s)
+			return false
+		}
 		rc := db.sqlite3_step(s)
 		value := string(db.sqlite3_column_text(s, 0))
-		want := wants[i]
-		good := rc == db.ROW && value == want
+		good := rc == db.ROW && value == wants[i] && db.sqlite3_step(s) == db.DONE
 		db.sqlite3_finalize(s)
 		if !good do return false
 	}

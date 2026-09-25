@@ -64,8 +64,8 @@ persist_transition_group :: proc(h: ^Host, packets: []Packet) -> (count: int, ok
 	g := h.transition_group
 	g.packet_count, g.entry_count, g.request_count = 0, 0, 0
 	g.required_sequence = h.sequence
-	if h.sequence != h.durable_sequence || !db.begin_tx(h.engine.db) do return 0, false
-	defer if db.sqlite3_get_autocommit(h.engine.db) == 0 do db.rollback_tx(h.engine.db)
+	if h.sequence != h.durable_sequence || !db.begin_tx(journal_db(h)) do return 0, false
+	defer if db.sqlite3_get_autocommit(journal_db(h)) == 0 do db.rollback_tx(journal_db(h))
 	for &packet in packets {
 		if !group_has_room(g) do break
 		if sql.node_step(&h.node, envelope(&packet), &h.effects) != .None do return 0, false
@@ -73,14 +73,14 @@ persist_transition_group :: proc(h: ^Host, packets: []Packet) -> (count: int, ok
 		count += 1
 	}
 	entries := g.entries[:g.entry_count]
-	through, err := sql.engine_stage_skip_prefix(&h.engine, entries)
+	through, err := stage_journal_skips(h, entries)
 	if err != .None || !commit_group_journal(h) do return count, false
 	h.engine.applied_through = through
 	if h.checkpoint != nil do h.checkpoint(.After_Journal_Commit)
 	if h.fault == .After_Journal_Commit do return count, false
 	if g.required_sequence > h.durable_sequence do return count, false
 	sql.effects_confirm_writes_durable(&h.effects)
-	if sql.engine_apply_outcomes(&h.engine, entries) != .None do return count, false
+	if !apply_host_entries(h, entries) do return count, false
 	if h.checkpoint != nil do h.checkpoint(.After_Application_Commit)
 	if h.fault == .After_Application_Commit do return count, false
 	for &packet in g.packets[:g.packet_count] {
@@ -131,16 +131,16 @@ stage_transition :: proc(h: ^Host, g: ^Transition_Group) -> bool {
 
 @(private)
 commit_group_journal :: proc(h: ^Host) -> bool {
-	if h.sequence == h.durable_sequence do return db.commit_tx(h.engine.db)
+	if h.sequence == h.durable_sequence do return db.commit_tx(journal_db(h))
 	s, ok := prepare(h, "UPDATE _sqlodin_journal_meta SET seq=?,digest=? WHERE id=1")
 	if !ok do return false
 	defer db.sqlite3_finalize(s)
 	if db.sqlite3_bind_int64(s, 1, i64(h.sequence)) != db.OK || !bind_blob(s, 2, h.head[:]) ||
-	   db.sqlite3_step(s) != db.DONE || db.sqlite3_changes(h.engine.db) != 1 {
+	   db.sqlite3_step(s) != db.DONE || db.sqlite3_changes(journal_db(h)) != 1 {
 		return false
 	}
 	if h.checkpoint != nil do h.checkpoint(.Before_Journal_Commit)
-	if h.fault == .Before_Journal_Commit || !db.commit_tx(h.engine.db) do return false
+	if h.fault == .Before_Journal_Commit || !db.commit_tx(journal_db(h)) do return false
 	h.durable_sequence = h.sequence
 	return true
 }
