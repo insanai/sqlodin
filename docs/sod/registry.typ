@@ -58,4 +58,18 @@
     source: "docs/sod/records/0004-production-sql-and-durable-throughput.typ",
     pdf: "sod-0004-production-sql-and-durable-throughput.pdf",
   ),
+  (
+    number: "0005",
+    slug: "durable-turn-and-fast-skip-learning",
+    title: "Durable Turns, Fast Learning, Quorum Reads and a Journal-Backed Application",
+    state: "discussion",
+    area: "performance",
+    category: "Engineering Discussion",
+    status: "In Discussion",
+    created: "2026-09-25",
+    updated: "2026-09-25",
+    summary: "Measured sync-barrier chains; one barrier per turn, Mencius no-op learning, quorum-frontier reads and a WAL NORMAL application cache, with models and proofs.",
+    source: "docs/sod/records/0005-durable-turn-and-fast-skip-learning.typ",
+    pdf: "sod-0005-durable-turn-and-fast-skip-learning.pdf",
+  ),
 )
