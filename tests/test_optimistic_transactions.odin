@@ -8,14 +8,14 @@ import durable "../src/durable"
 test_optimistic_commit_conflict_retry_and_reopen :: proc(t: ^testing.T) {
 	c := durable_test_open(t, 1)
 	defer durable_test_close(c)
-	setup, _ := sql.mutation_make_transaction(1, {{0 = 90}, 1},
+	setup, _ := sql.mutation_make_transaction(1, {{0 = 90}, 1, 0},
 		"CREATE TABLE optimistic(id INTEGER PRIMARY KEY, value INTEGER);" +
 		"INSERT INTO optimistic VALUES(1,10);")
 	slot, err := durable.propose(c.hosts[0], setup)
 	testing.expect(t, err == .None && durable.acknowledged(c.hosts[0], slot, &setup))
 	version, read_err := sql.engine_read_version(&c.hosts[0].engine)
 	testing.expect(t, read_err == .None)
-	write, _ := sql.mutation_make_transaction(1, {{0 = 91}, 1},
+	write, _ := sql.mutation_make_transaction(1, {{0 = 91}, 1, 0},
 		"UPDATE optimistic SET value=11 WHERE id=1;")
 	write.read_version = version
 	slot, err = durable.propose(c.hosts[0], write)
@@ -45,10 +45,10 @@ test_application_group_validates_each_read_version :: proc(t: ^testing.T) {
 	e, _ := sql.engine_open(":memory:", 1, memory = true)
 	defer sql.engine_close(&e)
 	testing.expect(t, sql.engine_initialize_outcomes(&e))
-	setup, _ := sql.mutation_make_transaction(1, {{0 = 93}, 1}, "CREATE TABLE optimistic(n);")
+	setup, _ := sql.mutation_make_transaction(1, {{0 = 93}, 1, 0}, "CREATE TABLE optimistic(n);")
 	testing.expect(t, sql.engine_apply_outcome(&e, 1, &setup) == .None)
 	version, _ := sql.engine_read_version(&e)
-	first, _ := sql.mutation_make_transaction(1, {{0 = 94}, 1}, "INSERT INTO optimistic VALUES(1);")
+	first, _ := sql.mutation_make_transaction(1, {{0 = 94}, 1, 0}, "INSERT INTO optimistic VALUES(1);")
 	second := first
 	first.read_version, second.read_version = version, version
 	second.request.session[0] = 95
@@ -65,13 +65,13 @@ test_preview_rolls_back_and_preserves_read_version :: proc(t: ^testing.T) {
 	e, _ := sql.engine_open(":memory:", 1, memory = true)
 	defer sql.engine_close(&e)
 	testing.expect(t, sql.engine_initialize_outcomes(&e))
-	setup, _ := sql.mutation_make_transaction(1, {{0 = 96}, 1},
+	setup, _ := sql.mutation_make_transaction(1, {{0 = 96}, 1, 0},
 		"CREATE TABLE optimistic(id INTEGER PRIMARY KEY,n);")
 	testing.expect(t, sql.engine_apply_outcome(&e, 1, &setup) == .None)
 	version, _ := sql.engine_read_version(&e)
-	write, _ := sql.mutation_make_transaction(1, {{0 = 97}, 1}, "INSERT INTO optimistic(n) VALUES(42);")
+	write, _ := sql.mutation_make_transaction(1, {{0 = 97}, 1, 0}, "INSERT INTO optimistic(n) VALUES(42);")
 	write.read_version = version
-	query, _ := sql.mutation_make_transaction(1, {{0 = 98}, 1}, "SELECT n FROM optimistic;")
+	query, _ := sql.mutation_make_transaction(1, {{0 = 98}, 1, 0}, "SELECT n FROM optimistic;")
 	r, out, changes, id, err := sql.engine_preview(&e, &write, &query)
 	defer sql.query_result_free(&r)
 	testing.expect(t, err == .None && out.kind == .Applied && changes == 1 && id == 1)

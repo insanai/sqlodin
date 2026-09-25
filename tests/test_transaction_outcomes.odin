@@ -148,12 +148,17 @@ test_transaction_function_policy_rejects_local_state :: proc(t: ^testing.T) {
 		"PRAGMA user_version=5;",
 		"SELECT * FROM pragma_compile_options;",
 		"SELECT sql FROM sqlite_schema;",
+		"INSERT INTO t SELECT data_version FROM PrAgMa_data_version;",
+		"INSERT INTO t SELECT data_version FROM PRAGMA_DATA_VERSION;",
+		"INSERT INTO t VALUES(1) RETURNING v;",
+		"UPDATE t SET v=2 RETURNING v;",
+		"DELETE FROM t RETURNING v;",
 	}) {
 		m := transaction_test_request(t, u64(i + 1), text)
 		testing.expect(t, transaction_test_submit(t, h, m).kind == .Policy, text)
 	}
 	expect_rows(t, &h.engine, "SELECT * FROM t;", 0)
-	m := transaction_test_request(t, 12, "INSERT INTO t VALUES('random()');")
+	m := transaction_test_request(t, 17, "INSERT INTO t VALUES('random()');")
 	testing.expect(t, transaction_test_submit(t, h, m).kind == .Applied)
 }
 

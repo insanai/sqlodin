@@ -9,7 +9,13 @@ import db "../src/sqlite"
 // Compare SQL state, every outcome, and retry fences after each group and reopen.
 @(test)
 test_application_group_matches_individual_history :: proc(t: ^testing.T) {
-	a, b := durable_test_open(t, 1), durable_test_open(t, 1)
+	for separated in ([2]bool{false, true}) {
+		group_history_layout(t, separated)
+	}
+}
+
+group_history_layout :: proc(t: ^testing.T, separated: bool) {
+	a, b := durable_test_open(t, 1, separated), durable_test_open(t, 1, separated)
 	defer durable_test_close(a)
 	defer durable_test_close(b)
 	schema := "CREATE TABLE p(id INTEGER PRIMARY KEY); INSERT INTO p VALUES(1); " +
@@ -84,6 +90,7 @@ group_history_compare :: proc(t: ^testing.T, a, b: ^durable.Host) {
 		"SELECT printf('%d/%d/%d',id,v,pid) FROM t ORDER BY id",
 		"SELECT printf('%d/%d',rowid,v) FROM audit ORDER BY rowid",
 		"SELECT name||'/'||seq FROM sqlite_sequence ORDER BY name",
+		"SELECT printf('%d/%d',version,epoch) FROM _sqlodin_tx_revision WHERE id=1",
 		"SELECT printf('%d/%d/%d/%d/%d',slot,kind,code,changes,origin_slot) " +
 			"FROM _sqlodin_outcomes ORDER BY slot",
 		"SELECT hex(session)||'/'||hex(hash)||'/'||printf('%d/%d/%d/%d/%d'," +

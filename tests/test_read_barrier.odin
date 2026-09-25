@@ -66,6 +66,60 @@ test_read_barrier_waits_for_quorum_and_prior_writes :: proc(t: ^testing.T) {
 }
 
 @(test)
+test_stale_voter_cannot_reuse_read_fence_after_remote_write :: proc(t: ^testing.T) {
+	c := durable_test_open(t, 3)
+	defer durable_test_close(c)
+	setup, _ := sql.mutation_make_raw_sql(1, 0, "CREATE TABLE t(v); INSERT INTO t VALUES(1);")
+	_, err := durable.propose(c.hosts[0], setup)
+	testing.expect(t, err == .None)
+	for _ in 0..<16 {
+		for h in c.hosts do testing.expect(t, durable.tick(h) == .None)
+		durable_test_drain(t, c)
+	}
+	reader := c.hosts[2]
+	old, read_err := durable.begin_read(reader, 100)
+	testing.expect(t, read_err == .None)
+	for _ in 0..<16 {
+		for h in c.hosts do testing.expect(t, durable.tick(h) == .None)
+		durable_test_drain(t, c)
+	}
+	result, poll_err := durable.poll_read(reader, old, "SELECT * FROM t WHERE v=1;")
+	testing.expect(t, poll_err == .None && result.status == .Ready && result.rows == 1)
+
+	// A different quorum acknowledges a write while this reader is disconnected.
+	write, _ := sql.mutation_make_raw_sql(1, 0, "INSERT INTO t VALUES(2);")
+	slot: sql.Slot
+	slot, err = durable.propose(c.hosts[0], write)
+	testing.expect(t, err == .None)
+	for _ in 0..<24 {
+		for h in c.hosts[:2] do testing.expect(t, durable.tick(h) == .None)
+		durable_test_drain(t, c, 2)
+	}
+	testing.expect(t, durable.acknowledged(c.hosts[0], slot, &write))
+	expect_rows(t, &reader.engine, "SELECT * FROM t WHERE v=2;", 0)
+	_, poll_err = durable.poll_read(reader, old, "SELECT * FROM t;")
+	testing.expect(t, poll_err == .Invalid)
+
+	ticket, begin_err := durable.begin_read(reader, 101)
+	testing.expect(t, begin_err == .None)
+	result, poll_err = durable.poll_read(reader, ticket, "SELECT * FROM t WHERE v=2;")
+	testing.expect(t, poll_err == .None && result.status == .Pending)
+	for _ in 0..<64 {
+		testing.expect(t, durable.catch_up(reader, 1) == .None)
+		for h in c.hosts do testing.expect(t, durable.tick(h) == .None)
+		durable_test_drain(t, c)
+		result, poll_err = durable.poll_read(reader, ticket, "SELECT * FROM t WHERE v=2;")
+		testing.expect(t, poll_err == .None)
+		if result.status == .Ready do break
+		if result.status == .Displaced {
+			ticket, begin_err = durable.begin_read(reader, 102)
+			testing.expect(t, begin_err == .None)
+		}
+	}
+	testing.expect(t, result.status == .Ready && result.rows == 1 && result.sql_error == .None)
+}
+
+@(test)
 test_local_read_budget_does_not_poison_writer :: proc(t: ^testing.T) {
 	c := durable_test_open(t, 1)
 	defer durable_test_close(c)

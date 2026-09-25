@@ -8,7 +8,7 @@ test_query_owned_values_and_bindings :: proc(t: ^testing.T) {
 	e, err := sql.engine_open(":memory:", 1, memory = true)
 	testing.expect(t, err == .None)
 	defer sql.engine_close(&e)
-	m, _ := sql.mutation_make_transaction(1, {{0 = 1}, 1}, "SELECT ?1 AS name, ?2 AS number;")
+	m, _ := sql.mutation_make_transaction(1, {{0 = 1}, 1, 0}, "SELECT ?1 AS name, ?2 AS number;")
 	_ = sql.transaction_add_text(&m, "a\x00b")
 	_ = sql.transaction_add_int(&m, 9223372036854775807)
 	r, error := sql.engine_query(&e, sql.mutation_sql(&m), &m)
