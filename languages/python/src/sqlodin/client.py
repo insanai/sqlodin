@@ -23,6 +23,7 @@ class PendingWrite:
     sql: str
     parameters: tuple[Value, ...] = ()
     read_version: int = 0
+    epoch: int = 0
 
     def __post_init__(self):
         if not re.fullmatch(r'[0-9a-f]{32}', self.session) or int(self.session, 16) == 0:
@@ -33,6 +34,8 @@ class PendingWrite:
             raise ValueError("Invalid pending SQL body")
         if type(self.read_version) is not int or not 0 <= self.read_version < 2**63:
             raise ValueError("Invalid transaction read version")
+        if type(self.epoch) is not int or not 0 <= self.epoch < 2**63:
+            raise ValueError("Invalid session epoch")
         object.__setattr__(self, 'parameters', tuple(self.parameters))
         if len(self.parameters) > 16:
             raise ValueError("Too many parameters")
@@ -45,7 +48,7 @@ class PendingWrite:
         """Save securely before recovery; contains SQL and parameter values."""
         parameters = [{"vector": list(v)} if isinstance(v, Vector) else v for v in self.parameters]
         return json.dumps(dict(session=self.session, sequence=self.sequence, sql=self.sql,
-                               parameters=parameters, read_version=self.read_version), allow_nan=False)
+                               parameters=parameters, read_version=self.read_version, epoch=self.epoch), allow_nan=False)
 
     @classmethod
     def from_json(cls, text: str) -> 'PendingWrite':
@@ -67,6 +70,7 @@ class Connection:
         self._session = pending.session if pending else secrets.token_hex(16)
         self._sequence = pending.sequence if pending else 1
         self._pending = pending
+        self._epoch = pending.epoch if pending else None
         self._transport = Transport(tls)
         self._index = 0
         self._lock = threading.RLock()
@@ -105,7 +109,9 @@ class Connection:
     def _execute_prepared(self, text, values, read_version=0):
         if self._pending is not None:
             raise PendingWriteError("Resolve the outstanding write before submitting another")
-        self._pending = PendingWrite(self._session, self._sequence, text, values, read_version)
+        if self._epoch is None:
+            self._epoch = self.session_epoch()
+        self._pending = PendingWrite(self._session, self._sequence, text, values, read_version, self._epoch)
         return self._resolve()
 
     def resolve_pending(self) -> WriteResult:
@@ -119,7 +125,7 @@ class Connection:
     def _resolve(self):
         pending = self._pending
         request = dict(op='execute', sql=pending.sql, session=pending.session,
-                       sequence=pending.sequence, read_version=pending.read_version, parameters=[encode(v) for v in pending.parameters])
+                       sequence=pending.sequence, session_epoch=pending.epoch, read_version=pending.read_version, parameters=[encode(v) for v in pending.parameters])
         try:
             response = self._call(request)
         except ConnectionError as exc:
@@ -166,7 +172,58 @@ class Connection:
             self._ready()
             result = self._call(dict(op='status'))
             self._raise_query(result)
-            return {k: result[k] for k in ('cluster', 'node', 'protocol', 'applied')}
+            return {k: result[k] for k in ('cluster', 'node', 'protocol', 'policy', 'applied',
+                    'snapshot_prefix', 'snapshot_sealed', 'snapshot_error', 'generation_prefix') if k in result}
+
+    def session_epoch(self) -> int:
+        """Read the current retry-session epoch through a fresh quorum barrier."""
+        with self._lock:
+            self._ready()
+            response = self._call(dict(op='session_epoch'))
+            # Pre-epoch services never retire session rows and have only epoch zero.
+            if response.get('error') == 'Unsupported':
+                return 0
+            self._raise_query(response)
+            epoch = response.get('session_epoch')
+            if type(epoch) is not int or not 0 <= epoch < 2**63:
+                raise ConnectionError('Malformed session epoch')
+            return epoch
+
+    def retire_sessions(self, *, expected_epoch: int) -> int:
+        """Fence the old epoch and reclaim its session rows.
+
+        Quiesce clients and resolve their pending writes first. Old pending writes
+        then fail with Expired; never relabel them into a new epoch. After a lost
+        response, retry this same expected_epoch. Open new connections afterwards.
+        """
+        if type(expected_epoch) is not int or not 0 <= expected_epoch < 2**63-1:
+            raise ValueError('Invalid expected session epoch')
+        with self._lock:
+            self._ready()
+            if self._pending is not None or self._transaction:
+                raise PendingWriteError('Resolve pending work before retiring sessions')
+            response = self._call(dict(op='retire_sessions', session_epoch=expected_epoch))
+            self._raise_query(response)
+            epoch = response.get('session_epoch')
+            if type(epoch) is not int or epoch < expected_epoch+1:
+                raise ConnectionError('Malformed retirement response; retry the same expected_epoch')
+            return epoch
+
+    def request_snapshot(self) -> int:
+        """Request a distributed snapshot; return its proposed checkpoint slot.
+
+        This is admission, not certification or a backup completion guarantee.
+        Inspect status()['snapshot_sealed'] for the locally learned certificate.
+        A displaced checkpoint may require a new request.
+        """
+        with self._lock:
+            self._ready()
+            response = self._call(dict(op='snapshot'))
+            self._raise_query(response)
+            slot = response.get('snapshot_requested')
+            if type(slot) is not int or slot <= 0:
+                raise ConnectionError('Malformed snapshot admission result')
+            return slot
 
     @staticmethod
     def _raise_query(response):
@@ -217,6 +274,11 @@ class Connection:
             self._ready()
             response = self._call(dict(op='begin'))
             self._raise_query(response)
+            epoch = response.get('session_epoch', 0)
+            if type(epoch) is not int or not 0 <= epoch < 2**63:
+                raise ConnectionError('Malformed transaction session epoch')
+            if self._epoch is None:
+                self._epoch = epoch
             version = response.get('read_version')
             if type(version) is not int or not 1 <= version < 2**63:
                 raise ConnectionError('Invalid transaction read version')

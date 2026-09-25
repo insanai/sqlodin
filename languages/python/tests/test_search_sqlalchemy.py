@@ -76,6 +76,7 @@ def test_dbapi_uncertain_identity_not_returned_to_pool(monkeypatch):
     monkeypatch.setattr(Transport, 'exchange', fail)
     db = dbapi.connect(sqlodin.Endpoint('127.0.0.1:1', 'one'), cluster='x', tls=None,
                        timeout=0.02, autocommit=True)
+    monkeypatch.setattr(db.native, 'session_epoch', lambda: 0)
     monkeypatch.setattr(db.native, '_begin_optimistic', lambda: 1)
     monkeypatch.setattr(db.native, '_preview', lambda *a: {'changes': 1, 'lastrowid': 0})
     try:

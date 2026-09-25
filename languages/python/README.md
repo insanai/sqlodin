@@ -220,7 +220,7 @@ client SAN, and discard the affected pooled connection. Its saved read revision 
 part of the retry identity. An unresolved commit blocks rollback/pool reset and new
 writes. Do not start a fresh transaction as a substitute for resolving it.
 
-See [the ORM transaction contract](../../docs/orm-transactions.md) for the execution
+See [the ORM transaction contract](../../docs/guides/orm-transactions.typ) for the execution
 model, retry example, resource bounds and serializability argument.
 
 ## Compatibility and verification

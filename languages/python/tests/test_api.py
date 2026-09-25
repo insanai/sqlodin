@@ -37,10 +37,14 @@ def test_rows_and_duplicate_names():
         sqlodin.Rows((), (), 0, 1).one()
 
 
-def make_db(monkeypatch, exchange):
+def make_db(monkeypatch, exchange, epoch=0):
     monkeypatch.setattr(Transport, '__init__', lambda self, tls: None)
     monkeypatch.setattr(Transport, 'close', lambda self: None)
-    monkeypatch.setattr(Transport, 'exchange', exchange)
+    def serving(self, endpoint, request, deadline):
+        if request['op'] == 'session_epoch' and epoch is not None:
+            return dict(reply(request), session_epoch=epoch)
+        return exchange(self, endpoint, request, deadline)
+    monkeypatch.setattr(Transport, 'exchange', serving)
     return sqlodin.connect([sqlodin.Endpoint('127.0.0.1:1', 'one'), sqlodin.Endpoint('127.0.0.1:2', 'two')],
                            cluster='test', tls=None, timeout=0.05)
 
@@ -117,3 +121,49 @@ def test_malformed_write_reply_remains_pending(monkeypatch):
         with pytest.raises(sqlodin.UnknownOutcome):
             db.execute('DELETE FROM x')
         assert db.pending.sequence == 1
+
+
+def test_epoch_discovery_is_once_and_expired_pending_is_never_relabelled(monkeypatch):
+    requests = []
+    def exchange(self, endpoint, request, deadline):
+        requests.append(dict(request))
+        if request['op'] == 'session_epoch':
+            return dict(reply(request), session_epoch=7)
+        return reply(request, 'Expired')
+    with make_db(monkeypatch, exchange, epoch=None) as db:
+        with pytest.raises(sqlodin.SessionError, match='Expired'):
+            db.execute('UPDATE x SET n=n+1')
+        pending = db.pending
+        assert pending.epoch == 7
+        assert sqlodin.PendingWrite.from_json(pending.to_json()) == pending
+        with pytest.raises(sqlodin.SessionError, match='Expired'):
+            db.resolve_pending()
+        assert db.pending == pending
+    assert [r['op'] for r in requests] == ['session_epoch', 'execute', 'execute']
+    assert requests[1]['session_epoch'] == requests[2]['session_epoch'] == 7
+    legacy = json.loads(pending.to_json())
+    legacy.pop('epoch')
+    assert sqlodin.PendingWrite.from_json(json.dumps(legacy)).epoch == 0
+
+
+def test_failed_epoch_discovery_never_creates_or_submits_pending_write(monkeypatch):
+    requests = []
+    def exchange(self, endpoint, request, deadline):
+        requests.append(request['op'])
+        raise sqlodin.ConnectionError('No quorum')
+    with make_db(monkeypatch, exchange, epoch=None) as db:
+        with pytest.raises(sqlodin.ConnectionError):
+            db.execute('DELETE FROM x')
+        assert db.pending is None
+    assert requests and set(requests) == {'session_epoch'}
+
+
+def test_retirement_keeps_explicit_expected_epoch(monkeypatch):
+    requests = []
+    def exchange(self, endpoint, request, deadline):
+        requests.append(dict(request))
+        return dict(reply(request), session_epoch=4)
+    with make_db(monkeypatch, exchange) as db:
+        assert db.retire_sessions(expected_epoch=3) == 4
+        assert db.retire_sessions(expected_epoch=3) == 4
+    assert [(r['op'], r['session_epoch']) for r in requests] == [('retire_sessions', 3)]*2
