@@ -13,6 +13,10 @@ MAX_INCOMING_HANDSHAKES :: 4
 MAX_INPUT :: 65536
 MAX_OUTPUT :: 1024 * 1024
 MAX_QUEUED :: 2 * 1024 * 1024
+// Frames per connection; MAX_QUEUED remains the byte bound.
+MAX_QUEUED_FRAMES :: 256
+// Peer packets buffered for one service turn, stepped in MAX_STEP_BATCH groups.
+MAX_INCOMING :: 128
 Member :: struct { id: sql.Node_Id, address, identity: string }
 Config :: struct {
 	storage_format: int, // omitted/5 = managed separated store; explicit 4 = legacy migration source
@@ -52,7 +56,7 @@ Connection :: struct {
 	read_wait, write_wait, handshake_wait: mtls.Status,
 	born, activity, pending_since: time.Tick, timeout: time.Duration,
 	header: [4]u8, header_used, input_used: int, input: []u8,
-	out: [64][]u8, out_head, out_count, out_offset, queued: int,
+	out: [MAX_QUEUED_FRAMES][]u8, out_head, out_count, out_offset, queued: int,
 	pending: Pending, value: sql.Mutation, slot: sql.Slot, ticket: durable.Read_Ticket,
 	local_read: bool, transaction_begin, preview, session_info: bool, query_value: sql.Mutation,
 }
@@ -62,7 +66,7 @@ Server :: struct {
 	maintenance_error: string,
 	config: Config, host: ^durable.Host, tls: mtls.Context, listener: posix.FD,
 	connections: [MAX_CONNECTIONS]Connection,
-	incoming: [durable.MAX_STEP_BATCH]durable.Packet, incoming_count: int,
+	incoming: [MAX_INCOMING]durable.Packet, incoming_count: int,
 	work_ready: bool,
 	write_cursor: int,
 	read_cohort: durable.Read_Ticket,

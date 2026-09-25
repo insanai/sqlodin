@@ -168,8 +168,15 @@ run :: proc(config_path: string, create: bool = false, duration_seconds: int = 0
 			if !drive_connection(s, &c) do connection_close(s, &c)
 			if s.fatal do break
 		}
-		if !apply_packets(s) && s.fatal do break
 		if !finish_read_cohort(s) do break
+		// Responses produced above must not wait behind this turn's sync barrier.
+		for &c in s.connections {
+			if c.state == .Ready && c.out_count > 0 && !flush_ready(s, &c) do connection_close(s, &c)
+		}
+		// SOD 0005 M1/M3: peer votes, new proposals, the tick
+		// and the skips triggered by this turn's Accepts share one journal barrier.
+		if durable.turn_begin(s.host) != .None { s.fatal = true; break }
+		if !apply_packets(s) && s.fatal do break
 		if !begin_read_cohort(s) do break
 		if !admit_writes(s) do break
 		if time.tick_since(s.last_tick) >= 100 * time.Millisecond {
@@ -179,6 +186,7 @@ run :: proc(config_path: string, create: bool = false, duration_seconds: int = 0
 		}
 		err := durable.progress(s.host)
 		if err != .None && err != .Backpressure { s.fatal = true; break }
+		if durable.turn_commit(s.host) != .None { s.fatal = true; break }
 		route_packets(s)
 		if !drive_snapshots(s) do break
 		wait_io(s)
@@ -223,9 +231,17 @@ repair_peers :: proc(s: ^Server) {
 // durable host withholds every dependent message until the group is committed.
 apply_packets :: proc(s: ^Server) -> bool {
 	if s.incoming_count == 0 do return true
-	err := durable.step_batch(s.host, s.incoming[:s.incoming_count])
-	if err == .Backpressure do return false
-	if err != .None { s.fatal = true; return false }
+	for first := 0; first < s.incoming_count; first += durable.MAX_STEP_BATCH {
+		last := min(first + durable.MAX_STEP_BATCH, s.incoming_count)
+		err := durable.step_batch(s.host, s.incoming[first:last])
+		if err == .Backpressure {
+			// Keep the unstepped suffix for the next turn; stepped packets are gone.
+			copy(s.incoming[:], s.incoming[first:s.incoming_count])
+			s.incoming_count -= first
+			return false
+		}
+		if err != .None { s.fatal = true; return false }
+	}
 	s.incoming_count = 0
 	s.work_ready = true
 	return true
