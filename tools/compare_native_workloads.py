@@ -222,6 +222,7 @@ def main():
     parser.add_argument('--systems', nargs='+', default=['sqlodin','zaxonlite','rqlite','cowsql'],
                         choices=['sqlodin','zaxonlite','rqlite','cowsql'])
     parser.add_argument('--sqlodin-bin', type=Path, default=ROOT/'bin/sqlodin')
+    parser.add_argument('--sqlodin-build', type=Path, help='Build manifest for the selected SQLodin binary')
     parser.add_argument('--zaxon-bin', default=str(ROOT/'build/comparison-tools/zaxon-release/zaxon'))
     parser.add_argument('--rqlited-bin', default=str(ROOT/'build/comparison-tools/rqlite-v10.2.7-linux-amd64/rqlited'))
     parser.add_argument('--rqlite-cli', default=str(ROOT/'build/comparison-tools/rqlite-v10.2.7-linux-amd64/rqlite'))
@@ -245,15 +246,19 @@ def main():
                   cpu=previous.command('lscpu'), filesystem=filesystem, run_directory=str(work),
                   workload=dict(operations=args.operations,warmup=args.warmup,concurrency=args.concurrency,repeats=args.repeats,
                                 read_percent=70,write_percent=30), realworld=[],sequential_writes=[],failures=[],
-                  sqlodin_build=json.loads((ROOT/'bin/sqlodin.build.json').read_text()),
-                  comparison_build=json.loads((ROOT/'build/comparison-tools/build.json').read_text()),
-                  zaxon_release=json.loads((ROOT/'build/comparison-tools/zaxon-release/release.json').read_text()),
+                  sqlodin_build=(json.loads((args.sqlodin_build or Path(str(args.sqlodin_bin)+'.build.json')).read_text())
+                                 if 'sqlodin' in args.systems else None),
+                  comparison_build=(json.loads((ROOT/'build/comparison-tools/build.json').read_text())
+                                    if any(s in args.systems for s in ('rqlite','cowsql')) else None),
+                  zaxon_release=(json.loads((ROOT/'build/comparison-tools/zaxon-release/release.json').read_text())
+                                 if 'zaxonlite' in args.systems else None),
                   source_sha256={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()
                                  for p in [Path(__file__), ROOT/'tools/compare_realworld.py', *previous.VENDOR.glob('*.py')]})
     report['binaries_sha256'] = {name:hashlib.sha256(Path(path).read_bytes()).hexdigest() for name,path in
         [('sqlodin',args.sqlodin_bin),('zaxonlite',args.zaxon_bin),('rqlite',args.rqlited_bin),
-         ('cowsql',ROOT/'build/comparison-tools/cowsql-demo')]}
-    assert report['binaries_sha256']['sqlodin'] == report['sqlodin_build']['binary_sha256']
+         ('cowsql',ROOT/'build/comparison-tools/cowsql-demo')] if name in args.systems}
+    if 'sqlodin' in args.systems:
+        assert report['binaries_sha256']['sqlodin'] == report['sqlodin_build']['binary_sha256']
     if args.resume_from:
         earlier=json.loads(args.resume_from.read_text())
         source=args.resume_source or args.resume_from.with_name('linux18-native-initial-runner.py')

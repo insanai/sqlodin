@@ -31,12 +31,28 @@ def control(cfg,index,*words):
     return json.loads(result.stdout)
 
 
-def connect(cfg,index=0,pending=None,single=False):
+def connect(cfg,index=0,pending=None,single=False,timeout=45):
     members=cfg['members']; members=[members[index]] if single else members[index:]+members[:index]
     root=Path(cfg['root'])
     return sqlodin.connect([sqlodin.Endpoint(m['address'],m['identity']) for m in members],
                            cluster='native-soak',tls=sqlodin.TLS(root/'ca.pem',root/'client.pem',root/'client.key'),
-                           timeout=45,pending=pending)
+                           timeout=timeout,pending=pending)
+
+
+def wait_ready(cfg, node, seconds=60):
+    """A PID is only process liveness. Require a fresh ordered read on this voter."""
+    started = time.monotonic()
+    last_error = None
+    while time.monotonic() - started < seconds:
+        remaining = seconds - (time.monotonic() - started)
+        try:
+            with connect(cfg, node, single=True, timeout=min(5, remaining)) as db:
+                assert db.query('SELECT 1').scalar() == 1
+                return dict(node=node+1, seconds=time.monotonic()-started, quorum_read=True)
+        except sqlodin.ConnectionError as exc:
+            last_error = repr(exc)
+        time.sleep(min(.05, max(0, seconds-(time.monotonic()-started))))
+    raise TimeoutError(f'Voter {node+1} did not become quorum-ready: {last_error}')
 
 
 SETUP=('CREATE TABLE accounts(id INTEGER PRIMARY KEY,balance INTEGER CHECK(balance>=0));'
@@ -91,6 +107,7 @@ def main():
         for node in range(3):
             control(cfg,node,'start','create')
             assert control(cfg,node,'status')['binary_sha256']==cfg['binary_sha256']
+        report['initial_readiness']=[wait_ready(cfg,n) for n in range(3)]
         clients=[connect(cfg,n%3) for n in range(12)]
         clients[0].execute(SETUP)
         start=time.monotonic(); deadline=start+args.seconds; next_check=start+60; next_fault=start+args.fault_interval
@@ -124,7 +141,8 @@ def main():
                         assert surviving.query('SELECT sum(balance) FROM accounts').scalar()==3000000
                         surviving.execute('UPDATE accounts SET balance=balance WHERE id=1')
                 finally: control(cfg,victim,'start')
-                report['faults'].append(dict(node=victim+1,epoch=time.time(),kind='SIGKILL, surviving-quorum read/write, reopen'))
+                readiness=wait_ready(cfg,victim)
+                report['faults'].append(dict(node=victim+1,epoch=time.time(),kind='SIGKILL, surviving-quorum read/write, reopen',readiness=readiness))
                 next_fault+=args.fault_interval
             if time.monotonic()>=next_check:
                 verify(cfg,verified+1,writes,balances); verified=writes; progress(start); next_check=time.monotonic()+60

@@ -18,7 +18,7 @@ import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
-PIN = 'a3e1fd78ec8f0429e5024710189ef77fc31961af'
+PIN = 'c3d197016c1f938db23fdf7f1fe87fbdbb86ac1c'
 VARIANTS = {
     'reference': ['-define:SQLODIN_SHAPE_CACHE=false', '-define:SQLODIN_QUEUE_INITIAL_CAPACITY=256'],
     'shape_cache': ['-define:SQLODIN_QUEUE_INITIAL_CAPACITY=256'],

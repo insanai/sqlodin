@@ -30,6 +30,11 @@ TLS_FLAGS = ['no-shared', 'no-dso', 'no-module', 'no-engine', 'no-zlib',
              '--libdir=lib', '--openssldir=/sqlodin/no-system-openssl']
 
 
+def vec_identity():
+    contract = dict(domain='SQLodin/sqlite-vec-build/v1', pin=PINS['vec'], flags=VEC_FLAGS)
+    return hashlib.sha256(json.dumps(contract, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+
+
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -112,7 +117,15 @@ def build(args):
         sources('vec', args.vec_source, args.offline)
         for name, flags, library in [('sqlite3', SQLITE_FLAGS, 'sqlite3'), ('sqlite-vec', VEC_FLAGS, 'sqlite_vec')]:
             print('Compiling', library, flush=True)
-            run([cc, *flags, '-I', OUT, '-c', OUT / f'{name}.c', '-o', OUT / f'{name}.o'])
+            source = OUT / f'{name}.c'
+            if library == 'sqlite_vec':
+                # Compile the stamp in the same translation unit as the verified
+                # source. Runtime policy checks cannot accidentally stamp a different archive.
+                source = OUT / 'sqlite-vec-build.c'
+                source.write_text('#include "sqlite-vec.c"\n'
+                                  'const char *sqlodin_vec_identity(void) { return "' +
+                                  vec_identity() + '"; }\n')
+            run([cc, *flags, '-I', OUT, '-c', source, '-o', OUT / f'{name}.o'])
             temporary = OUT / f'lib{library}.new.a'
             temporary.unlink(missing_ok=True)
             run([ar, 'rcs', temporary, OUT / f'{name}.o'])

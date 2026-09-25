@@ -13,19 +13,30 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'build/native'
 
 
-def main():
-    pins = json.loads((ROOT / 'tools/native_sources.json').read_text())
+def pinned_shell_source(pins):
     shell_pin = pins['sqlite_shell']
     if shell_pin['version'] != pins['sqlite']['version'] or shell_pin['url'] != pins['sqlite']['url']:
         raise SystemExit('SQLite engine and shell pins must match')
     expected = shell_pin['files']['shell.c']
     archive = ROOT / 'build/downloads' / pins['sqlite']['url'].rsplit('/', 1)[1]
-    with zipfile.ZipFile(archive) as bundle:
-        names = [p for p in bundle.namelist() if p.endswith('/shell.c')]
-        if len(names) != 1: raise SystemExit('Missing/ambiguous SQLite shell source')
-        source = bundle.read(names[0])
+    if archive.is_file():
+        with zipfile.ZipFile(archive) as bundle:
+            names = [p for p in bundle.namelist() if p.endswith('/shell.c')]
+            if len(names) != 1: raise SystemExit('Missing/ambiguous SQLite shell source')
+            source = bundle.read(names[0])
+    else:
+        # Source-only/offline native builds may retain the extracted pinned
+        # source without its download archive. Apply the same checksum below.
+        source = (OUT / 'shell.c').read_bytes()
     if hashlib.sha256(source).hexdigest() != expected:
         raise SystemExit('SQLite shell source checksum mismatch')
+    return source
+
+
+def main():
+    pins = json.loads((ROOT / 'tools/native_sources.json').read_text())
+    expected = pins['sqlite_shell']['files']['shell.c']
+    source = pinned_shell_source(pins)
     (OUT / 'shell.c').write_bytes(source)
     cc, ar = shutil.which(os.environ.get('CC', 'cc')), shutil.which(os.environ.get('AR', 'ar'))
     flags = ['-O2', '-fPIC', '-DSQLITE_THREADSAFE=1', '-DSQLITE_OMIT_LOAD_EXTENSION',
