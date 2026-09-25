@@ -27,7 +27,8 @@ test_service_write_batch_shrinks_without_early_acknowledgement :: proc(t: ^testi
 		conn.state, conn.pending = .Ready, .Write
 	}
 	// Only six owner slots remain in the 64-slot window. The first attempt
-	// shrinks 16 -> 8 -> 4, then fills the remainder before returning Busy.
+	// shrinks 16 -> 8 -> 4, then fills the remainder. A full window is
+	// transient: unproposed requests stay pending instead of receiving Busy.
 	testing.expect(t, service.admit_writes(s))
 	for conn, i in s.connections[:16] {
 		testing.expect(t, (conn.slot != 0) == (i < 4))
@@ -43,7 +44,9 @@ test_service_write_batch_shrinks_without_early_acknowledgement :: proc(t: ^testi
 			testing.expect(t, conn.out_count == 0)
 		}
 	}
-	testing.expect(t, s.connections[6].pending == .None && s.connections[6].out_count == 1)
+	for conn in s.connections[6:16] {
+		testing.expect(t, conn.pending == .Write && conn.slot == 0 && conn.out_count == 0)
+	}
 	for _ in 0..<32 {
 		durable_test_drain(t, c)
 		for h in c.hosts do testing.expect(t, durable.progress(h) == .None)
@@ -53,7 +56,7 @@ test_service_write_batch_shrinks_without_early_acknowledgement :: proc(t: ^testi
 		testing.expect(t, durable.acknowledged(s.host, conn.slot, &conn.value))
 	}
 	testing.expect(t, service.admit_writes(s))
-	for conn in s.connections[7:16] do testing.expect(t, conn.slot != 0)
+	for conn in s.connections[6:16] do testing.expect(t, conn.slot != 0)
 }
 
 @(test)

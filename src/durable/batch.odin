@@ -34,3 +34,9 @@ proposal_error :: proc(err: paxos.Error) -> Error {
 	if err == .Window_Full do return .Backpressure
 	return .Consensus
 }
+
+// Window and packet-queue pressure clears as decisions apply and packets drain.
+// History-space pressure needs maintenance, so callers should reject promptly.
+backpressure_transient :: proc(h: ^Host) -> bool {
+	return !h.poisoned && history_admission(h) == .None
+}

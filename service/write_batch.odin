@@ -7,7 +7,8 @@ import durable "../src/durable"
 // There is no batching timer and no extra queue: connections own their values.
 // Paxos admits each attempted batch atomically; shrink on window pressure so
 // a small available suffix still makes progress. A Busy response is sent only
-// for requests that have not been proposed, preserving retry/unknown semantics.
+// for requests that have not been proposed, preserving retry/unknown semantics:
+// immediately for history-space pressure, at the request timeout for a full window.
 admit_writes :: proc(s: ^Server) -> bool {
 	values: [durable.CHUNK]sql.Mutation
 	slots: [durable.CHUNK]sql.Slot
@@ -27,6 +28,9 @@ admit_writes :: proc(s: ^Server) -> bool {
 		assigned, err := durable.propose_batch(s.host, values[:count], slots[:count])
 		if err == .Backpressure {
 			if count > 1 { count /= 2; continue }
+			// A full window is transient: keep the unproposed request pending.
+			// drive_connection still answers Busy if its own timeout expires.
+			if durable.backpressure_transient(s.host) do return true
 			clients[0].pending = .None
 			s.write_cursor = (indexes[0] + 1) % len(s.connections)
 			if !respond(s, clients[0], "Busy") do connection_close(s, clients[0])
