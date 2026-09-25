@@ -28,14 +28,19 @@ the consensus transition itself performs no heap allocation.
 
 The 32-connection pool admits at most 24 authenticated clients and four incoming
 handshakes/rejected-client connections. Fixed peers retain capacity. Each connection
-has a bounded frame buffer and at most 64 queued frames, also capped at 2 MiB total.
+has a bounded frame buffer and at most 256 queued frames, also capped at 2 MiB total.
 JSON nesting is checked before recursive decoding.
 
-The owner considers clients in bounded turns. It may admit up to sixteen already waiting
-writes and share a fresh marker among already waiting reads. Peer receive and output
-bursts are bounded at eight steps. This amortizes work without waiting for a batching
-timer to collect requests. Slow-peer traffic can be dropped for retransmission rather
-than accumulated without limit.
+The owner works in bounded turns. A turn steps the peer packets that arrived (up to
+128, in groups of sixteen), admits up to sixteen already waiting writes, runs the timer
+and ownership progress, and crosses one journal barrier for all of them (SOD 0005).
+Already waiting reads share one quorum frontier, which needs no barrier. A peer link
+drains its output until the socket would block, and receives until the turn's packet
+buffer is full. Responses are flushed before the turn's barrier. This amortizes work
+without waiting for a batching timer to collect requests. A full consensus window keeps
+unproposed writes pending until their own timeout; history-space pressure still answers
+`Busy` at once. Slow-peer traffic beyond the byte bound can be dropped for retransmission
+rather than accumulated without limit.
 
 #figure(steps((
   ([Admit], [Bound clients, frames and already waiting work.]),

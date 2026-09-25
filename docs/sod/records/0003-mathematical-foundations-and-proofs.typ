@@ -269,6 +269,10 @@ introduced release blockers. Membership changes require their own quorum-transit
   Bounded ownership, durable-history, prefix-recovery and host-seam evidence now support the scoped release decision. Historical failures and tool output remain in the evidence reports.
 ]
 
+#decision-box(title: "25 September 2026: SOD 0005 Additions (in discussion)")[
+  SOD 0005 adds `OwnedSkip` (seven configurations, three negative controls), `JournalCache` (three, two negative) and `QuorumRead` (three, two negative) models. It also adds `OwnedSkipProof`, 41 TLAPS obligations proving that an owner's round-zero no-op fixes the slot for unbounded ballots and values. The counts above describe the qualified release candidate; the additions cover the post-release performance mechanisms only.
+]
+
 = References
 
 - SOD 0002: Architecture; SOD 0004: Host decisions.

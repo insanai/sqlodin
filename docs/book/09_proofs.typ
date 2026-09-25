@@ -106,6 +106,17 @@ than merely fail to parse or run out of resources.
   [`SessionRetirement`], [Reclaimed sessions cannot replay old writes.], [Lose or omit the epoch fence.],
 )
 
+SOD 0005 adds three models and one inductive proof for the performance mechanisms that
+post-date the qualified release candidate. They are reproduced by the same runners:
+
+#table(columns: (1.05fr, 1.55fr, 1.25fr),
+  table.header([Model], [Property checked], [Negative control]),
+  [`OwnedSkip`], [A no-op learned from the owner's Accept, or a value learned from this voter's vote plus the owner's, never disagrees with a decision.], [Revoker offers any value; owner forgets its vote; learn without voting.],
+  [`JournalCache`], [An unsynchronized application database recovers every acknowledged outcome from the journal.], [Apply before the journal barrier; trim without a durable image.],
+  [`QuorumRead`], [A quorum frontier read observes every write completed before invocation.], [Peers report applied prefixes; answer without a peer.],
+  [`OwnedSkipProof`], [41 TLAPS obligations: an owner's round-zero no-op fixes the slot for unbounded ballots and values.], [—],
+)
+
 The rotating-window model explores independent delivery, learning and applied frontiers.
 Fairness represents eventual service and successful retransmission. It does not prove a
 millisecond deadline or progress during endless contention. The read models assume an

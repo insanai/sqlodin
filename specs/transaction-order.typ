@@ -7,7 +7,29 @@ boundary, and deterministic SQL transition contract checked separately by R1/R2.
 It establishes the read/transaction ordering consequence of those assumptions;
 it is not a proof of the compiler, network or arbitrary SQLite execution.
 
-== Fresh reads
+== Fresh reads (service): quorum frontier
+Since SOD 0005 the native service crosses a quorum-read barrier. `begin_read_cohort`
+closes a cohort of already accepted reads, then observes this voter's
+`highest_seen` and sends a peer-only `frontier` request. Replies from
+`read_quorum - 1` distinct peers, each for this cohort's token and each produced
+after the cohort closed, give the frontier $H$ (their maximum with the local
+value). `finish_read_cohort` answers the members once the contiguous applied prefix
+reaches $H$, before any further application or consensus transition.
+
+Let write $w$ be acknowledged before a member's invocation. It was chosen at slot
+$s$, so a write quorum holds durable votes for $s$. The queried set is a read quorum
+and intersects it. `highest_seen` is at least every slot a voter has durably voted
+for or decided, never decreases within a process, and resumes above the durable
+ledger after restart. Every observation follows invocation, so $H >= s$ and the
+snapshot includes $w$. If an earlier read returned a prefix $A$, every slot up to
+$A$ was chosen before the later invocation, so $H >= A$. The snapshot may include
+later concurrent decisions; that only moves its linearization point forward within
+the invocation/response interval. No journal write or sync barrier is involved.
+`QuorumRead.tla` checks this argument, with negative controls that report applied
+prefixes instead of `highest_seen` or answer without a peer. Unanswered requests
+repeat every 200 ms, and a minority cannot complete a frontier.
+
+== Fresh reads (embedded durable host): markers
 `durable.begin_read` allocates a new durable marker identity after invocation.
 The service may share that marker among a closed cohort of already accepted
 reads; every member invocation precedes marker allocation. Later arrivals wait
@@ -86,11 +108,11 @@ release-candidate integration remains R7. No elapsed soak requirement is imposed
 
 == Closed-cohort refinement
 `service/read_batch.odin` closes membership in `begin_read_cohort` on the serialized
-owner, with no connection dispatch during allocation. `finish_read_cohort` consumes
-the host ticket exactly once and executes each member snapshot before another
-application/consensus transition. A displaced marker leaves members pending for a
-fresh cohort. `release_read` removes one waiter without cancelling other members;
-only the last member cancels the host wait. Connection admission bounds cohort size.
+owner, with no connection dispatch between the membership scan and the frontier
+observation. `finish_read_cohort` executes each member snapshot before another
+application/consensus transition. A reply for another cohort token, or a second
+reply from the same peer, is ignored. `release_read` removes one waiter without
+cancelling other members; only the last member retires the cohort. Connection admission bounds cohort size.
 Generation publication retains the host's active ticket and applied-prefix checks.
 
 The `ReadCohort` model checks 180,443 reachable states under the immutable-log
@@ -100,4 +122,7 @@ before marker application, and cancellation that invalidates another waiter.
 `tests/test_service_read_batch.odin` require quorum, preserve another waiter after
 cancellation, and require a later read following a completed write to use a newer
 marker and observe that write. Cohorts change amortized barrier cost, not the
-freshness contract or the durable host ticket's single-use semantics.
+freshness contract. The same regressions now cover the quorum frontier: a reply
+for another cohort does not count, and a voter that missed a write acknowledged by
+the other two waits for the frontier before answering
+(`test_read_cohort_waits_for_frontier_above_write_acknowledged_elsewhere`).

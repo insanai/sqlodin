@@ -6,33 +6,41 @@ A read can return an old but internally consistent SQLite snapshot. That is not 
 for an application that expects to observe writes completed before the read began.
 SQLodin's default read path establishes a fresh ordering point before opening the snapshot.
 
-== A read marker is used once
+== A quorum frontier bounds every completed write
 
-After accepting a read, the host allocates a new marker identity and proposes it through
-Paxos. It verifies that the expected marker was chosen and that the local contiguous
-applied prefix includes it. The service then consumes the ticket and runs the query in
-the same serialized owner turn. No application transition slips between the check and
-the snapshot acquisition.
+After accepting a read, the service closes a cohort of already waiting reads. It then
+observes its own highest seen slot and asks peers for theirs. Once a read quorum has
+answered, including this voter, the largest reported slot $H$ is the read's frontier. The
+cohort is answered when the local contiguous applied prefix reaches $H$. No application
+transition slips between that check and the snapshot acquisition.
 
-A write acknowledged before the read's invocation already has an immutable chosen slot.
-A fresh marker cannot authorize a snapshot that skips it. The actual snapshot may also
-include later concurrent writes; that places the read later within its invocation/response
-interval and is permitted by linearizability.
+A write acknowledged before the read's invocation was chosen, so a write quorum durably
+voted for its slot $s$. That quorum intersects the queried read quorum. Every voter's
+highest seen slot is at least every slot for which it holds a durable vote, and it never
+decreases, even across restart. Hence $H >= s$, and the snapshot includes the write. The
+same argument orders reads: a read that returned a prefix $A$ only did so after every slot
+up to $A$ was chosen, so a later read obtains $H >= A$. The actual snapshot may also include
+later concurrent writes. That places the read later within its invocation/response interval,
+which linearizability permits. The barrier writes nothing and needs no sync. This is Paxos
+Quorum Reads (Charapko, Ailijiang and Demirbas, 2019), whose "rinse" phase is the wait for
+the applied prefix.
 
 #figure(steps((
-  ([Accept read], [The invocation now exists.]),
-  ([Apply fresh marker], [Check the expected value and contiguous prefix.]),
-  ([Read snapshot], [Consume the ticket; execute before another owner transition.]),
-)), caption: [The marker establishes order. The SQLite snapshot supplies the rows.])
+  ([Accept read], [The invocation now exists; the cohort closes.]),
+  ([Observe frontier], [Own highest seen slot and a read quorum of peers, all after closing.]),
+  ([Read snapshot], [When applied reaches the frontier; before another owner transition.]),
+)), caption: [The frontier establishes order. The SQLite snapshot supplies the rows.])
 
-Already accepted reads can share one marker as a closed cohort. Every member must arrive
-before the marker is allocated. A later read cannot join, even while the cohort waits.
-Suppose a write finishes after marker creation but before that later read arrives: reusing
-the marker could return a snapshot older than the completed write.
+Already accepted reads share one frontier as a closed cohort. Every member must arrive
+before the frontier is observed. A later read cannot join, even while the cohort waits.
+Suppose a write finishes after the observation but before that later read arrives:
+reusing the frontier could return a snapshot older than the completed write.
 
 Cancelling one cohort member leaves the other members' wait intact. Cancelling the last
-member cancels the host wait. A displaced proposal requires a fresh marker; finding a
-different value at its proposed slot is not enough.
+member retires the cohort. A reply for another cohort is ignored, and each peer counts
+once. Unanswered requests are repeated every 200 ms; a minority cannot complete a frontier.
+The embedded durable host keeps its single-use marker barrier (`begin_read`/`poll_read`)
+for callers without a peer transport.
 
 `consistency="local"` explicitly omits this barrier and permits stale state. `status()`
 also reports only local state. Neither can establish that a quorum is available.
@@ -40,8 +48,8 @@ also reports only local state. Neither can establish that a quorum is available.
 #pagebreak()
 == An optimistic transaction validates its predecessor
 
-Let $r$ denote the application revision. Begin obtains $r$ after a fresh marker. Each
-preview obtains another fresh marker, checks that the current revision is still $r$,
+Let $r$ denote the application revision. Begin obtains $r$ after a fresh read barrier. Each
+preview crosses another fresh barrier, checks that the current revision is still $r$,
 replays the staged body privately, reads its effects, and rolls back.
 
 At the ordered commit slot, a writing transaction checks
@@ -49,7 +57,7 @@ At the ordered commit slot, a writing transaction checks
 $ r_("current") = r_("begin"). $
 
 If the equality fails, it returns a conflict before executing the body. A successful
-application write advances the revision atomically with data and outcome. Read markers,
+application write advances the revision atomically with data and outcome. Read barriers,
 duplicate retries and rejected requests do not. Session retirement does advance it.
 
 Thus every successful preview sees one committed predecessor plus the transaction's own

@@ -117,6 +117,9 @@ boundaries; 146 Odin tests; five restored-genesis model configurations;
 certificate lifecycle checks; and retained-binary migration/rollback checks.
 Reports preserve source/binary hashes, failures and the actual filesystem.
 SIGKILL evidence is process-crash testing, not physical power-loss certification.
-Durability assumes SQLite FULL commits and a filesystem/device honoring sync.
+Durability assumes FULL journal commits and a filesystem/device honoring sync. The
+separated application database commits with WAL NORMAL; after power loss it is a
+committed prefix no older than its last checkpoint, and recovery replays the
+retained chosen suffix (SOD 0005 M4).
 No model proves the compiler, cryptography, OS or hardware. Final-candidate
 qualification and the release decision remain R7, without an elapsed soak gate.

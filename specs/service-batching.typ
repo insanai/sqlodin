@@ -13,9 +13,11 @@ higher-index connections.
 
 The pinned ownership implementation checks every target slot before changing
 the batch. On window pressure the service halves the attempted prefix until it
-fits or even one request cannot be proposed. Only then can it respond Busy for
-that unsubmitted request. Other bounded pending requests remain eligible on
-subsequent turns. A timeout before any slot assignment is also Busy; after slot
+fits or even one request cannot be proposed. A full window is transient: the
+unsubmitted request stays pending, and the existing timeout answers Busy if it is
+still unproposed. History-space pressure, which needs maintenance, answers Busy at
+once (`durable.backpressure_transient`). Other bounded pending requests remain
+eligible on subsequent turns. A timeout before any slot assignment is also Busy; after slot
 assignment it remains Unknown_Outcome. A displaced submitted request retains
 the existing retry path and identity. Storage failure stops service.
 
@@ -29,14 +31,15 @@ argument. Read barriers retain their existing fresh, single-use semantics.
 
 The durable wrapper validates the complete batch, obtains distinct slots through
 the whole pinned library and calls `finish` before releasing dependent packets.
-It returns proposal slots, not acknowledgement authority. Journal and application
-FULL barriers, per-request savepoints, reference fallback and retry identity
+It returns proposal slots, not acknowledgement authority. Inside a service turn the
+proposal joins the turn's single journal barrier (SOD 0005 M1); nothing is released
+before it. Per-request savepoints, reference fallback and retry identity
 handling remain unchanged. A crash before the response is resolved by replay and
 the same session identity, including a crash after durable batching but before
 the service stores the returned slot numbers in its volatile connections.
 
-The window-pressure regression fills the owner window, checks shrinking and Busy
-without premature responses, then drains the quorum and checks every admitted
+The window-pressure regression fills the owner window, checks shrinking and that
+unproposed requests stay pending without premature responses, then drains the quorum and checks every admitted
 outcome. The fairness regression makes an early connection return while later
 connections wait and verifies the later connections receive earlier slots.
 Native transaction histories, minority/retry/restart checks and the before/after
@@ -44,15 +47,22 @@ calibration qualify the integration. Benchmark results must identify the source
 and binary; the existence of batching alone is not a throughput claim.
 
 == Bounded peer draining
-Authenticated peer connections drain up to eight complete consensus frames per
-turn, allowing the existing sixteen-packet durable group to fill across two
-peers. A partial frame, unavailable input or snapshot control stops the burst.
-Clients retain one-frame dispatch. Peer output likewise advances at most eight
-bounded TLS writes per turn; queue and byte limits are unchanged. The service
-still persists each transition group before releasing its dependent packets.
-This amortizes existing durability boundaries; it does not defer or remove them.
+Authenticated peer connections receive complete consensus frames until the turn's
+128-packet buffer is full; the turn steps them in sixteen-packet durable groups
+inside one journal transaction. A partial frame, unavailable input or snapshot
+control stops the burst. Clients retain one-frame dispatch. Peer output drains
+until TLS would block, bounded by the 256-frame and 2 MiB per-connection limits.
+Responses are flushed before the turn's barrier. The service still persists each
+turn before releasing its dependent packets. SOD 0005 measured that the earlier
+eight-frame bursts, not bytes, bounded the per-turn packet rate. This amortizes
+durability boundaries; it does not defer or remove them.
 
 == Measured calibration and remaining target gap
+
+The measurements in this section describe the release candidate before SOD 0005.
+The post-SOD-0005 measurements and their same-run SQLite ratios are recorded in
+`docs/sod/records/0005-durable-turn-and-fast-skip-learning.typ` and
+`benchmarks/results/sod-0005/`.
 
 The retained `workload-matrix-analysis-linux.json` binds 32 case reports to
 `workload-matrix-linux.json`. All 91,840 native operations complete without an

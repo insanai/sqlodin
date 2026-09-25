@@ -21,7 +21,7 @@ sequence. It does not stream query rows. INSERT/UPDATE/DELETE RETURNING is rejec
 before stepping under policy 8. Use the read API for result rows and the supported
 ORM generated-key path for inserts. Statement errors roll back the whole request;
 SQL conflict actions cannot commit or discard another request in a grouped commit.
-The outer FULL commit gates acknowledgement. Read-only SELECT statements inside
+The outer application commit, after the FULL journal barrier, gates acknowledgement. Read-only SELECT statements inside
 a write body may validate expressions but do not return a client result stream.
 
 == Functions, schema and extensions

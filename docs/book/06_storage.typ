@@ -39,8 +39,12 @@ transaction between the two files: ordering and replay bridge the possible crash
   [After reply], [Recovery must preserve the acknowledged outcome and data.],
 )
 
-SQLite uses WAL and `synchronous=FULL` for the durable stores. Required standalone
-files and directories also cross explicit synchronization barriers. These rules assume
+SQLite uses WAL and `synchronous=FULL` for the consensus journal, catalogs, images and the
+embedded engine. The separated service store treats its application database as a cache of
+the journal (SOD 0005): it commits with WAL `synchronous=NORMAL`, which keeps every crash state
+a committed prefix, and recovery replays the retained chosen suffix. An entry is applied only
+after the journal barrier containing its decision. Required standalone files and directories
+also cross explicit synchronization barriers. These rules assume
 the filesystem and device honor successful synchronization. SIGKILL and injected syscall
 failures test software boundaries; they are not physical power-cut certification.
 
@@ -66,9 +70,10 @@ could repair an earlier violation that the reference path would have rejected. S
 that unacknowledged attempt and retries through individual reference transactions.
 Unknown storage or execution failures are not semantic fallback: they fail closed.
 
-Savepoint release does not acknowledge a write. The outer FULL commit is the publication
-point for the group. Separate journal grouping combines persistence for incoming Paxos
-transitions while preserving the same durable-before-send rule. Owned copies keep effect
+Savepoint release does not acknowledge a write. The outer commit is the publication
+point for the group; its durability comes from the FULL journal barrier that preceded it.
+Journal grouping combines persistence for every Paxos transition of a service turn while
+preserving the same durable-before-send rule. Owned copies keep effect
 payloads valid when the next protocol transition reuses its working storage.
 
 == Why ordered SQL still needs a policy

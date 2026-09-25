@@ -90,6 +90,19 @@ The earlier healthy-path 100 ms ownership wait has a deterministic no-tick regre
 Missing-owner recovery still uses failure detection. Changing one timer or language cannot
 remove storage barriers, prefix dependencies and application work at the same time.
 
+== After SOD 0005: fewer sequential barriers
+
+The measurements above describe the qualified release candidate. SOD 0005 traced up to seven
+sequential sync barriers per write and per fresh read. It then introduced one barrier per service
+turn, one-message learning of owner no-ops (and, with three voters, of values this voter also voted
+for), a WAL NORMAL application cache of the FULL journal, and quorum-frontier reads. The same
+calibration matrix, with SQLite measured in the same run on `.18`, moved from 1.7–10.5% to
+6.8–40.6% of SQLite; the absolute gain is 1.9–10.5× per case. On three separate hosts, 24-client
+pure writes rose from 133 to 651 per second, and a sequential fresh read fell from 55.5 to 0.58 ms.
+Thirty-two-client pure writes remain far below the 25% goal on the shared-disk host. The reports,
+including failed attempts, are in `benchmarks/results/sod-0005/`, and SOD 0005 records the method
+and the remaining gaps.
+
 == Earlier cross-system evaluation
 
 The retained comparison ran three voter processes per system on `.18`, using native

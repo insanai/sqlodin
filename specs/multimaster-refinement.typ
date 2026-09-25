@@ -50,7 +50,11 @@ the complete values and effects. Wire/codec tests check ownership of copied payl
 `durable.persist` and `commit_group_journal` write promises, votes and decisions
 before `effects_confirm_writes_durable` exposes their dependent messages. A local
 acceptor's loopback messages cross the same durable transition boundary. Journal
-grouping changes the number of FULL commits, not the ordering of the barrier.
+grouping changes the number of FULL commits, not the ordering of the barrier; a
+service turn stages all of its transitions behind one barrier (SOD 0005 M1). The
+host may step an owner's round-zero Accept as a Commit when it carries the host
+no-op, or, with a write quorum of two, when this voter's own vote for the same
+value is in the same group (SOD 0005 M2/M5; `OwnedSkip.tla`, `OwnedSkipProof.tla`).
 Replay folds the durable records before the node resumes accepting requests.
 
 Chosen slots apply contiguously. Application data, request fences, outcomes,

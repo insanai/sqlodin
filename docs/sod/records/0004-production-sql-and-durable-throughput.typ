@@ -363,6 +363,15 @@ qualified. The old multi-transaction replay loop fails its retained negative reg
 loop passes. A 64 MiB current fixture restarted in 1.32 s. The owner accepted the performance
 shortfalls and closed the agreed scope without asserting arbitrary capacity or sustained throughput.
 
+== 25 September (later): follow-up in SOD 0005
+
+The open question above has an answer. Traces show up to seven *sequential* sync barriers per
+write and per fresh read, and eight-frame peer bursts limiting packets per turn. SOD 0005 adopts one
+barrier per service turn, Mencius-style no-op learning, voter-plus-owner value learning for three
+voters, a journal-backed WAL NORMAL application database and quorum-frontier reads. The queue bound
+quoted in P4 becomes 256 frames, with the 2 MiB byte bound unchanged. The 64-frame text and the
+measurements here describe the qualified release candidate.
+
 == Historical cost attribution supporting the batching decision
 
 The following diagnostic describes the early serial host, not the current service. It is retained

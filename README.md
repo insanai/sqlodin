@@ -55,7 +55,9 @@ See the [native service contract](docs/guides/network-service.typ) and
   `INSERT OR REPLACE`; this is an explicit overwrite policy, not conflict detection.
 - `engine_apply_batch` applies a contiguous prefix and its `_sqlodin_state.applied` watermark
   atomically. Failed begin, SQL, or commit rolls back and leaves the watermark unchanged.
-- File databases use WAL with `synchronous=FULL`. The applied watermark survives reopening.
+- Embedded engine databases use WAL with `synchronous=FULL`. The applied watermark survives reopening.
+  The service's separated store keeps its consensus journal FULL and commits its application
+  database with WAL NORMAL as a replayable cache of that journal ([SOD 0005](docs/sod/records/0005-durable-turn-and-fast-skip-learning.typ)).
 - Eight cached prepared DML statements per engine reduce repeated prepare/finalize work.
   Text/vector bindings borrow mutation storage only until execution and binding cleanup finish.
 - Consensus transitions allocate no heap memory. SQLite and host queues do allocate.
@@ -112,6 +114,22 @@ SIGKILL/restart checks against the durable host. Simulator journals remain model
 process-crash tests do not certify physical power-loss behavior.
 
 ## Performance and memory
+
+[SOD 0005](docs/sod/records/0005-durable-turn-and-fast-skip-learning.typ) removed most sequential
+sync barriers from the durable service path. Its changes are:
+
+- one journal barrier per service turn;
+- Mencius-style owner no-op learning, and learning a value this voter also voted for, with three voters;
+- a WAL NORMAL application cache of the FULL journal;
+- quorum-frontier fresh reads.
+
+On `.18`, with SQLite measured in the same runs, the calibration matrix moved from 1.7–10.5% to
+6.8–40.6% of SQLite; the absolute gain is 1.9–10.5×. On three separate hosts, 24-client pure writes
+rose from 133 to 651 per second, and a sequential fresh read fell from 55.5 to 0.58 ms. These gains
+post-date the qualified 25 September candidate, which the release record still describes. The 1,000
+pure-write/s and 25%-of-SQLite goals remain unmet at 32 clients. Reports and failed attempts are in
+[`benchmarks/results/sod-0005/`](benchmarks/results/sod-0005/).
+
 
 The historical memory suite compares rotating ownership, single-leader operation and the local SQLite application
 engine. It records seven repetitions per build/workload, verified replica contents, warmup, throughput,

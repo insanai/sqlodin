@@ -27,8 +27,10 @@ Session epochs are explicit ordered controls and preserve their own atomic fence
 transition rather than being treated as user SQL.
 
 RELEASE ends a request's savepoint but never acknowledges it. Only a successful
-outer FULL commit advances the published applied watermark. The durable host
-also requires the chosen journal frontier before application. If the process
+outer commit advances the published applied watermark. The durable host
+also requires the chosen journal frontier before application: in the separated
+store the application commit uses WAL NORMAL and the FULL journal barrier that
+precedes it provides durability (SOD 0005 M4, `JournalCache.tla`). If the process
 dies before acknowledgement, retry/recovery uses durable request identities and
 outcomes. Prefixes committed by reference fallback are recoverable even if a later
 request fails. This argument assumes SQLite savepoint/transaction semantics and

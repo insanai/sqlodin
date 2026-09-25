@@ -135,10 +135,12 @@ their identity and a different client identity cannot reuse that
 session. Certificate rotation preserving the SAN preserves the
 namespace; a changed SAN does not.
 
-`query` defaults to `consistency: "linearizable"`. The service proposes
-a fresh read marker after invocation, waits for its applied prefix,
-consumes the ticket, then executes the read-only query in the same
-serialized event-loop turn. Results include column names and typed
+`query` defaults to `consistency: "linearizable"`. After invocation the
+service observes the highest seen slot of a read quorum (itself and at
+least one peer in a three-voter cluster), waits until its applied prefix
+reaches that frontier, then executes the read-only query in the same
+serialized event-loop turn. The barrier writes nothing and needs no sync
+(SOD 0005). Results include column names and typed
 values (Null/Integer/Real/Text/Blob; BLOB bytes are base64 on the wire).
 Queries return the whole bounded result or an error, never a partial
 success. `consistency: "local"` bypasses the quorum barrier and may be

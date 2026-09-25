@@ -283,6 +283,10 @@ features or new release conditions.
   The durable host, native service, fresh read markers and optimistic ORM transactions replaced the earlier volatile and watermark-only boundary. Replaced text ASCII sketches with formal CeTZ layer diagrams and Fletcher execution lifecycles.
 ]
 
+#decision-box(title: "25 September 2026: Revision under SOD 0005 (in discussion)")[
+  The service's fresh reads now cross a quorum frontier instead of a proposed marker, and one journal barrier covers each service turn. The separated application database is a WAL NORMAL cache of the FULL journal. Owners' round-zero no-ops, and with three voters values this voter has also voted for, are learned without waiting for the owner's Commit. The read-order contract above is unchanged; see SOD 0005 for proofs, models and measurements.
+]
+
 = References
 
 - SOD 0001: The SQLodin Discussion Process; SOD 0003: Proof obligations; SOD 0004: Durable host decisions.
