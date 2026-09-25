@@ -74,6 +74,19 @@ CASES = (
     ('ManifestDurability', 'ManifestDurability', None),
     ('ManifestDurability', 'ManifestNoFileSync', 'Invariant SuccessSurvives is violated'),
     ('ManifestDurability', 'ManifestNoDirectorySync', 'Invariant SuccessSurvives is violated'),
+    ('OwnedSkip', 'OwnedSkip', None),
+    ('OwnedSkip', 'OwnedSkipDown1', None),
+    ('OwnedSkip', 'OwnedSkipDown2', None),
+    ('OwnedSkip', 'OwnedSkipDown3', None),
+    ('OwnedSkip', 'OwnedSkipAnyRevoke', 'Invariant LearnedAgreement is violated'),
+    ('OwnedSkip', 'OwnedSkipAmnesia', 'Invariant LearnedAgreement is violated'),
+    ('OwnedSkip', 'OwnedSkipLearnUnvoted', 'Invariant LearnedAgreement is violated'),
+    ('JournalCache', 'JournalCache', None),
+    ('JournalCache', 'JournalApplyStaged', 'Invariant AckedRecoverable is violated'),
+    ('JournalCache', 'JournalTrimWithoutImage', 'Invariant AckedRecoverable is violated'),
+    ('QuorumRead', 'QuorumRead', None),
+    ('QuorumRead', 'QuorumReadApplied', 'Invariant RealTimeOrder is violated'),
+    ('QuorumRead', 'QuorumReadNoPeers', 'Invariant RealTimeOrder is violated'),
 )
 
 

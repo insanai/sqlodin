@@ -21,7 +21,7 @@ def main():
     p.add_argument('--tools', type=Path, required=True, help='Directory containing pinned archive and unpacked tlapm/')
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--timeout', type=int, default=60)
-    p.add_argument('--case', choices=('DurableHistoryProof', 'PrefixRecoveryProof'), default='DurableHistoryProof')
+    p.add_argument('--case', choices=('DurableHistoryProof', 'PrefixRecoveryProof', 'OwnedSkipProof'), default='DurableHistoryProof')
     args = p.parse_args()
     if args.output.exists() or args.timeout < 1: p.error('Choose a new output path and positive timeout')
     if hashlib.sha256((args.tools / ARCHIVE).read_bytes()).hexdigest() != SHA256:
@@ -30,7 +30,7 @@ def main():
     version = subprocess.check_output([str(executable), '--version'], text=True).strip()
     if version != VERSION: p.error(f'Unexpected proof checker revision: {version}')
     source = ROOT/'specs'/f'{args.case}.tla'
-    report = dict(complete=False, passed=False, scope='unbounded durable-history/prefix seam; not a consensus/refinement proof',
+    report = dict(complete=False, passed=False, scope='unbounded durable-history/prefix seam and owned no-op determinacy; not a full consensus/refinement proof',
                   model=args.case,
                   tool_revision=version, distribution_sha256=SHA256,
                   executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
@@ -44,7 +44,7 @@ def main():
                                     capture_output=True, text=True, timeout=args.timeout)
             output = result.stdout + result.stderr
             report.update(output=output, exit_code=result.returncode)
-            expected = 12 if args.case == 'DurableHistoryProof' else 36
+            expected = {'DurableHistoryProof': 12, 'PrefixRecoveryProof': 36, 'OwnedSkipProof': 41}[args.case]
             counts = re.findall(r'All (\d+) obligations proved\.', output)
             if result.returncode != 0 or counts != [str(expected)]:
                 raise RuntimeError('The full set of proof obligations was not discharged')
