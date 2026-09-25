@@ -74,6 +74,7 @@ def checked_odin_test(package, binary, *flags):
 
 def check_style():
     run([sys.executable, 'tools/check_style.py'])
+    run([sys.executable, 'tools/test_compare_three_hosts.py'])
     for package in PACKAGES:
         flags = ['-no-entry-point'] if package in ('tests', 'service', 'transport/mtls') else []
         run([ODIN, 'check', package, '-vet', '-strict-style', *flags])

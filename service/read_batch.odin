@@ -32,6 +32,7 @@ begin_read_cohort :: proc(s: ^Server) -> bool {
 	}
 	s.frontier_high = sql.node_highest_seen(&s.host.node)
 	s.frontier_replies = 0
+	s.frontier_voters = {}
 	s.frontier_ready = sql.membership_read_quorum(&s.host.node.membership) <= 1
 	for &c in s.connections do c.frontier_replied = 0
 	send_frontier_requests(s)
@@ -58,10 +59,13 @@ respond_frontier :: proc(s: ^Server, c: ^Connection, r: Request) -> bool {
 
 receive_frontier :: proc(s: ^Server, c: ^Connection, r: Request) -> bool {
 	token := s.read_cohort.token
-	if token == 0 || r.sequence != token || s.frontier_ready || c.frontier_replied == token {
+	index, member := sql.membership_index_of(&s.host.node.membership, c.peer)
+	if !member || c.peer == s.host.node.id || !c.hello do return false
+	if token == 0 || r.sequence != token || s.frontier_ready || s.frontier_voters[index] {
 		return true // A reply for a finished or cancelled cohort is harmless.
 	}
 	c.frontier_replied = token
+	s.frontier_voters[index] = true
 	s.frontier_high = max(s.frontier_high, r.frontier)
 	s.frontier_replies += 1
 	if s.frontier_replies >= sql.membership_read_quorum(&s.host.node.membership) - 1 {

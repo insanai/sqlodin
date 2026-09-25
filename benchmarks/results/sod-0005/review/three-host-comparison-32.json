@@ -1,0 +1,70 @@
+{
+  "complete": true,
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "client": "insan@10.175.52.18",
+  "samples": [
+    {
+      "label": "baseline",
+      "repeat": 0,
+      "stamp": "20260925T072312245919Z",
+      "write_ms_median": 52.351017482578754,
+      "read_ms_median": 54.24942122772336,
+      "clients": 32,
+      "write_workload": {
+        "per_second": 164.7807258749066,
+        "completed": 800,
+        "writes": 800,
+        "expected_writes": 800,
+        "seconds": 4.8549367394298315
+      },
+      "mixed_workload": {
+        "per_second": 284.6152614162486,
+        "completed": 960,
+        "writes": 286,
+        "expected_writes": 286,
+        "seconds": 3.372974433004856
+      },
+      "writes_32_per_s": 164.7807258749066,
+      "mixed70_32_per_s": 284.6152614162486,
+      "expected_balance": 1126,
+      "verified": true
+    },
+    {
+      "label": "reviewed",
+      "repeat": 0,
+      "stamp": "20260925T072335984954Z",
+      "write_ms_median": 19.32605914771557,
+      "read_ms_median": 0.5951640196144581,
+      "clients": 32,
+      "write_workload": {
+        "per_second": 791.5480870455971,
+        "completed": 800,
+        "writes": 800,
+        "expected_writes": 800,
+        "seconds": 1.010677699930966
+      },
+      "mixed_workload": {
+        "per_second": 628.3488096819531,
+        "completed": 960,
+        "writes": 286,
+        "expected_writes": 286,
+        "seconds": 1.5278138276189566
+      },
+      "writes_32_per_s": 791.5480870455971,
+      "mixed70_32_per_s": 628.3488096819531,
+      "expected_balance": 1126,
+      "verified": true
+    }
+  ],
+  "scope": "three voters on separate hosts; one client host; closed-loop; not a capacity test",
+  "clients": 32,
+  "binaries": {
+    "baseline": "aa36f6bbe368fd42b0e59fcfe98cc3f5a65cf41dd4937a5c6a3a7e2ac19a5769",
+    "reviewed": "7d80b109de2ee8567d1cdb01b744bdd1d27aa1c5fe377c18d9d12b8c650f7647"
+  },
+  "harness_sha256": "9d3d353ce432b6831e8150f2b3e7b05186ceab25a498be853339c8b0e458a9c5"
+}

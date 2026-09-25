@@ -57,8 +57,9 @@ and preview snapshot acquisition. The preview replays the staged body privately,
 then reads its effects, and always rolls back. No mutable preview workspace or
 SQLite transaction is retained between requests.
 
-An applied application transaction advances the global revision in the same FULL
-transaction as its data and request outcome. Duplicate/rejected requests and read
+An applied application transaction advances the global revision atomically with
+its data and request outcome. For a separated store, NORMAL application commits
+are recovered from the retained FULL journal under SOD 0005 J1–J3. Duplicate/rejected requests and read
 markers do not advance it. Explicit session retirement also advances it. At the
 ordered write slot, `engine_run_outcome` compares the original revision before
 executing any SQL. If any application transition intervened, the transaction
@@ -126,3 +127,12 @@ freshness contract. The same regressions now cover the quorum frontier: a reply
 for another cohort does not count, and a voter that missed a write acknowledged by
 the other two waits for the frontier before answering
 (`test_read_cohort_waits_for_frontier_above_write_acknowledged_elsewhere`).
+
+== Reconnect identity boundary
+
+A read quorum counts distinct configured voter identities, including the requester,
+not distinct sockets. Cohort-level membership survives connection replacement.
+`QuorumReadReconnect` checks this five-voter seam; `QuorumReadConnectionCount`
+reproduces a stale read when a stale peer reconnects and is counted twice. The
+implementation regression uses two connection objects for the same peer. This
+extends the host-seam evidence, not the qualified deployment membership.

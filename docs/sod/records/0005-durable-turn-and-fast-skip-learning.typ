@@ -29,8 +29,7 @@
 #show raw: set text(size: 8.5pt)
 
 = Abstract
-
-The durable service performs up to seven *sequential* synchronization barriers per write and per
+The pre-SOD durable service performed up to seven *sequential* synchronization barriers per write and per
 fresh read. Group commit amortizes them across concurrent requests, but it cannot remove barriers
 that depend on one another. This record measures where the barriers come from, then adopts six
 changes. Each has a stated proof obligation, a model or proof, and a negative control:
@@ -51,7 +50,6 @@ that remain.
 architecture, durable storage design, and throughput optimization for SQLodin.
 
 = Status and Implementation Boundary
-
 *In discussion; opened 25 September 2026.* The record follows SOD 0004's open question: measure
 the saturation point first, then choose mechanisms. It adds no alternate consensus algorithm, dynamic
 membership or weaker acknowledgement, and it changes no `paxos-odin` source. The journal keeps
@@ -61,8 +59,23 @@ embedded durable host keeps its marker read barrier; only the network service us
 This work post-dates the qualified 25 September release candidate. It needs its own qualification
 before any release record may cite it.
 
-= Measured Problem
 
+The implementation is available for review, but Discussion is not an acceptance decision. The
+review corrections below have separate evidence; historical measurements keep their original
+binary hashes. Quorum-frontier reads require homogeneous service capability, and the peer
+fingerprint now explicitly identifies that capability.
+
+= Introduction & Background
+SOD 0004 identified synchronization and host scheduling as measurable costs. This discussion
+keeps the fixed-membership SQL contract and examines where durable work can be shared or replayed.
+
+= Terminology and Scope
+A turn is one serialized service iteration, possibly split by capacity limits into multiple journal
+groups. A learned entry has either quorum decision evidence or the specific M2 no-op determinacy
+argument. A quorum frontier observes distinct configured voters after the read cohort closes.
+The application cache remains a transactional SQLite database; its FULL journal is the recovery source.
+
+= Problem Statement
 On `.18`, with three local voters, ZFS storage, pinned SQLite 3.51.3 and the unchanged
 `calibrate_native_mixed.py` harness, the current candidate measured the following. Each case used
 100 operations per client, 256-byte values and the FULL SQLite reference with groups of at most 16.
@@ -97,8 +110,19 @@ A fresh read proposes a marker, so it follows the same chain. The service loop a
 durability transitions. A busy turn can therefore sync four or more times. A further CPU cost is
 that each journal record re-measures the history budget, opening the catalog database and running `lstat`/`statvfs`.
 
-= Cost Model
+= Goals and Non-Goals
+== Goals
 
+Reduce sequential barriers and fresh-read log work without losing acknowledged SQL effects,
+retry fences, agreement or read freshness. Retain bounded service work and attributable measurements.
+
+== Non-Goals
+
+No dynamic membership, alternate Paxos library, unrestricted SQL or weaker durable acknowledgement.
+No throughput guarantee follows from the latency model. The prior release qualification is not
+automatically qualification of this changed host.
+
+= High-Level Architecture & Workflow
 Let $d$ be one FULL sync barrier, $delta$ one one-way message delay, and $a$ the application CPU
 time of a request. Write $L$ for the acknowledgement latency of an uncontended write. Then:
 
@@ -121,13 +145,12 @@ Today the dominant term is the sync count per turn, not the window. With one bar
 $L_"new"$ near 30 ms, the window bound is about 2,100 slots/s. That remains well above the current
 throughput. Raising $W$ is a later decision, to be made only if measurement shows the window saturating.
 
-= Proposed Mechanisms
-
+= Detailed Subsystem Design
 == M1: one durable barrier per service turn
 
 A *turn* opens one journal transaction. It stages every protocol transition of the loop iteration
-into that transaction in this order: authenticated peer packets, then new client proposals, then
-the read-cohort marker, then ownership progress, then the timer tick. It commits once and applies
+into that transaction: authenticated peer packets, new client proposals, the timer tick when due,
+and ownership progress. Network read cohorts use M6 and do not propose a marker. It commits once and applies
 the released contiguous prefix. Only then does it release messages and host requests. The existing
 `Transition_Group` already does this for up to sixteen packets. M1 extends it to every transition
 kind. A group that would exceed its message, decision or request capacity commits early, and the
@@ -237,8 +260,8 @@ J1 holds by construction: application follows the group's journal commit. J2 hol
 copy every record with slot $>$ base and sync the certified image; retirement never removes the active
 journal; within a generation the journal is append-only. J3 is the determinism assumption used for
 replica agreement. The embedded `Engine` API, where the database is the only record, keeps FULL.
-`check_storage` requires NORMAL for the separated application database and FULL for the journal, so a
-misconfiguration fails at open.
+`check_storage` checks both databases at FULL during open and recovery. Only after recovery does
+`application_cache_mode` switch the separated application connection to NORMAL. The journal stays FULL.
 
 This mechanism follows the same structure as rqlite, which runs SQLite unsynchronized and rebuilds it
 from the Raft log and snapshot. It is deliberately more conservative: rqlite uses `synchronous=OFF`,
@@ -273,8 +296,9 @@ applied prefix reaches $H$.
   A write acknowledged before invocation is chosen at some slot $s$, so a write quorum holds durable
   votes for $s$. The queried read quorum intersects it. `highest_seen` is at least every slot a voter
   has durably voted for or decided, never decreases in a process, and resumes above the durable ledger
-  after restart. Every observation follows invocation, so $H >= s$. If an earlier read returned prefix
-  $A$, all slots up to $A$ were chosen before the later invocation, so $H >= A$. $square$
+  after restart. Every observation follows invocation, so $H >= s$. For an earlier read, every state-changing slot it observed likewise has a voting quorum.
+  An M2-only learned no-op need not have a voting quorum, but skipping its observation cannot
+  change a SQL result. Freshness is a claim about application history, not every no-op frontier. $square$
 ]
 
 `QuorumRead.tla` checks this argument exhaustively for three voters and two slots. Its negative
@@ -295,32 +319,59 @@ until its own timeout, while history-space pressure still answers `Busy`. Respon
 turn are flushed before its barrier rather than after it. None of these changes a durability or
 acknowledgement rule.
 
-= Alternatives Considered
+= Invariants & Correctness Guarantees
+Keep the fixed, authenticated, non-Byzantine membership and deterministic SQL assumptions from
+SOD 0003. M2 expands the learner's justification: an owner no-op is uniquely determined even
+before a voting quorum is known. It does not turn arbitrary Accept messages into decisions.
+M5 still requires the owner's durable vote and this voter's matching vote. Read-frontier quorums
+must count voter identities across reconnects, not connection objects. The old DurableHistoryProof
+quorum premise is not a literal invariant for every M2-only no-op; OwnedSkip determinacy supplies
+that additional seam. A complete mechanized composition remains unclaimed.
 
-#table(
-  columns: (1.3fr, 2.2fr),
-  table.header([*Alternative*], [*Disposition*]),
-  [Owner sends Accept in parallel with its own sync], [Saves one $d$, but violates the upstream durability gate and P2 above. Would need an upstream proof change. Deferred.],
-  [Apply before the owner's decision barrier], [Saves one barrier for the owner's own writes, but lets application state become durable ahead of its decision evidence, which recovery rejects. Rejected.],
-  [Owner self-learning of its own no-ops], [Not needed for the measured chain; the owner learns through replies. Not implemented.],
-  [`synchronous=OFF` for the application database], [Allows corruption after OS crash, which would force a rebuild. Rejected in favor of NORMAL.],
-  [Dedicated sync thread with pipelined turns], [Overlaps the sync with network I/O. Larger change to a single-owner design. Revisit if the turn rate saturates after M1.],
-  [Larger window $W$], [Only if Little's-law saturation is measured.],
-)
+NORMAL application commits rely on the retained FULL journal and a durable generation base.
+A process kill alone does not simulate loss of the OS cache. A targeted regression restores an
+older checkpointed application prefix after acknowledgement while retaining the journal, then
+checks data recovery and retry deduplication. This tests the replay seam, not physical hardware.
 
-= Validation Plan
+= Security & Operational Considerations
+Use homogeneous peer capabilities. The hello fingerprint includes `frontier=1`, so a marker-only
+peer is rejected before service rather than accepted and disconnected when a frontier arrives.
+Public `next_id` returns an externally usable reservation: inside a turn it closes pending journal
+work and syncs the reservation before returning. This may add a barrier to an embedding caller;
+network frontier reads do not allocate these IDs. Keep maintenance outside an open turn.
 
+= Resource Budgets & Performance Targets
+
+Keep the 64-slot protocol window, 16-request proposal/application groups and 2 MiB output-byte
+cap. SOD 0005 raises each output ring to 256 frames and introduces a shared 128-packet input
+buffer. Journal groups flush before 1,024 records. Capacity pressure may add a sync barrier;
+it must not release effects early. The current limits are specified in `specs/resource-contract.typ`.
+
+The original SOD 0004 throughput and p99 goals remain unchanged improvement objectives under
+the owner's accepted release disposition. This record neither lowers them nor turns the short
+paired run into a capacity guarantee. The 256 MiB dirty-tail threshold triggers maintenance;
+it is not a hard maximum on retained history or database size.
+
+= Validation and Acceptance Gates
 - *Formal:* `OwnedSkip.tla` (TLC) checks agreement between fast-learned (M2 and M5) and chosen values, including three failed-voter cases under fairness. Three negative controls must fail: a revoker that offers any value when it finds no vote, an owner that forgets its round-0 vote, and learning a value without this voter's own vote. `JournalCache.tla` checks J1–J3; its negative controls apply before the journal commit and trim without a durable image. `QuorumRead.tla` checks M6, with the two controls above. `OwnedSkipProof.tla` (TLAPS) proves no-op determinacy inductively for unbounded ballots and values.
 - *Implementation:* all Odin tests in debug, optimized and individual-commit configurations. New tests cover turn grouping (one barrier, nothing released early, empty turns write nothing), M2 and M5 fast learning, rejection of a relayed Accept, the synchronous mode of each database, quorum-frontier cohorts and a read at a voter that missed a write acknowledged by the other two. The existing after-journal-commit crash boundaries exercise replay of an application tail behind the journal. The full `tools/check.py` gate, network-service, transaction-history, CLI and Python checks, and the three-host checks, all run on the changed binary.
 - *Performance:* the same `calibrate_native_mixed.py` matrix on `.18`, with the SQLite reference measured in the same run, with every run's report retained.
 
-= Measured Results
+
+== Recorded measurements and evidence
+
+*Review qualification:* the original three-host worker did not propagate thread exceptions and
+verified a sum computed from its surviving writes. A worker failure could therefore inflate reported
+throughput and still pass verification. These historical figures remain observations from that
+harness; they are not independently verified completed-workload rates. The calibration harness is
+separate. No stored sample is discarded or silently relabelled as a corrected run.
+
 
 All reports are in `benchmarks/results/sod-0005/`. Every sample carries its binary hash. The
 baseline binary is built from the unmodified parent revision, and baseline and candidate always
 alternate. Nothing was discarded; failed attempts are listed below.
 
-== Staged experiment (smallest test first)
+=== Staged experiment (smallest test first)
 
 Before the full implementation, each mechanism was added to a prototype build, one at a time. The
 tiny workload was 40 sequential writes, 40 sequential fresh reads and one 24-client write burst on
@@ -343,7 +394,7 @@ under load. The measured cause is sync latency, 8–14 ms at 512 B–256 KiB, in
 combined with three voters sharing one ZFS intent log on `.18`. On that host, fsync latency also
 alternates between about 1 ms and 9 ms regimes.
 
-== Same-host matrix against same-run SQLite (`.18`)
+=== Same-host matrix against same-run SQLite (`.18`)
 
 `calibrate_native_mixed.py`, 100 operations per client, 256-byte values, SQLite FULL with groups of
 at most 16, measured in the same run:
@@ -359,7 +410,7 @@ at most 16, measured in the same run:
   [32 / 0%], [103.1 (3.7%)], [194.9 (6.8%)], [1.9×],
 )
 
-== Three hosts (`.19`/`.20`/`.21`), client on `.18`
+=== Three hosts (`.19`/`.20`/`.21`), client on `.18`
 
 `tools/compare_three_hosts.py`, 3 alternating repetitions, all replicas verified; medians:
 
@@ -385,9 +436,32 @@ with all replicas verified:
 )
 
 One candidate pure-write sample (300 w/s) is well below the other two. It is retained and not
-explained; host sync latency varies with other tenants.
+explained; the run did not isolate its cause.
 
-== Remaining gaps
+=== Corrected-harness review measurement
+
+#let review = json("../../../benchmarks/results/sod-0005/review/three-host-comparison-32.json")
+#assert(review.complete)
+#let baseline = review.samples.find(s => s.label == "baseline")
+#let revised = review.samples.find(s => s.label == "reviewed")
+#let measured(x) = str(calc.round(x, digits: 1))
+One fresh alternating pair used 32 clients, voters `.19`/`.20`/`.21` and the client on `.18`.
+Each binary completed 800 pure-write and 960 mixed operations. The mixed case contained 286 writes.
+Every replica's account rows, balances and payload lengths matched the independently planned work.
+
+#table(columns: (1.5fr, 1fr, 1fr),
+  table.header([*Measure*], [*Baseline*], [*Reviewed binary*]),
+  [Pure writes/s], [#measured(baseline.writes_32_per_s)], [#measured(revised.writes_32_per_s)],
+  [70/30 transactions/s], [#measured(baseline.mixed70_32_per_s)], [#measured(revised.mixed70_32_per_s)],
+  [Sequential write median, ms], [#measured(baseline.write_ms_median)], [#measured(revised.write_ms_median)],
+  [Sequential read median, ms], [#measured(baseline.read_ms_median)], [#str(calc.round(revised.read_ms_median, digits: 2))],
+)
+
+This short paired run supports the direction of the improvement; it is not a sustained-capacity
+claim or a replacement for repeated distributions. Its JSON retains both binary hashes, the corrected
+harness hash, completed counts and durations. Historical reports above remain unchanged.
+
+=== Remaining gaps
 
 The original targets remain unmet in the pure-write and high-concurrency cases: 32-client pure
 writes reach 6.8% of SQLite on the shared-disk host, against the 25% goal. Separate hosts help
@@ -398,15 +472,56 @@ the "rinse" of quorum reads, so mixed reads cost about one write latency. Candid
 its own proof: overlapping the sync with network I/O on a sync thread; report frontiers based on
 decisions where M5 guarantees knowledge; and a larger window if Little's-law saturation appears.
 
-== Regression evidence
+=== Regression evidence
 
 - `tools/check.py` passes in full on `.18`. It covers style and vet; 169 tests in each of the debug, optimized and individual-commit configurations; the upstream suite; durability crash boundaries; mixed-SQL replicas; process-cluster SIGKILL; contracts; 30 fault simulations of 150,000 steps; examples; benchmark smoke; and the CLI.
 - These service checks pass on the final binary: network service (formats 4 and 5), transaction histories (two seeds, 16 rounds each), ORM transactions, majority and minority, session crashes, snapshot service and catch-up, admission, Python features and the CLI. A first attempt at the history, ORM, Python and CLI checks failed only because `.18`'s system Python lacked SQLAlchemy, or because the shell path was wrong. Both attempts are listed in `check-summary.log`.
 - The three-host qualification (`three-host.json`) passes all 19 checks, including each absent voter, SIGKILL convergence and certified generations surviving restart.
 - The formal runners pass 72 TLC cases (59 existing, 13 new) and 89 TLAPS obligations (12 + 36 existing, 41 new).
 
-= References
+= Alternatives Considered
+#table(
+  columns: (1.3fr, 2.2fr),
+  table.header([*Alternative*], [*Disposition*]),
+  [Owner sends Accept in parallel with its own sync], [Saves one $d$, but violates the upstream durability gate and P2 above. Would need an upstream proof change. Deferred.],
+  [Apply before the owner's decision barrier], [Saves one barrier for the owner's own writes, but lets application state become durable ahead of its decision evidence, which recovery rejects. Rejected.],
+  [Owner self-learning of its own no-ops], [Not needed for the measured chain; the owner learns through replies. Not implemented.],
+  [`synchronous=OFF` for the application database], [Allows corruption after OS crash, which would force a rebuild. Rejected in favor of NORMAL.],
+  [Dedicated sync thread with pipelined turns], [Overlaps the sync with network I/O. Larger change to a single-owner design. Revisit if the turn rate saturates after M1.],
+  [Larger window $W$], [Only if Little's-law saturation is measured.],
+)
 
+= Open Questions & Future Milestones
+Performance work still needs to distinguish device synchronization, owner-turn scheduling and
+window saturation. The unexplained low sample remains unexplained; tenant contention is a
+hypothesis, not a measured attribution. Qualification of this post-release host remains separate
+from the earlier candidate. This review introduces targeted regressions, not new soak or capacity gates.
+
+= Discussion and Revision Notes
+*25 September, implementation review:* retained M1–M6 and corrected two host boundaries: a
+reconnected peer must not count twice in one read quorum, and a returned ID must survive an
+aborted enclosing turn. Added a five-voter reconnect model with a connection-counting negative
+control and a replay test that deliberately loses an acknowledged application suffix. The
+five-voter seam test is not a five-voter deployment qualification.
+
+The comparison worker now propagates every thread failure, records planned and completed counts,
+and checks every account row and payload length on each voter. Fault-injected worker tests reject
+failed reads, failed writes and equal-total but incorrect row data. Existing measurements remain
+untouched. The missing SOD 0005 bundle inclusion and stale storage-mode explanation were corrected.
+The record stays In Discussion; these fixes do not invent a publication or release decision.
+
+Fresh review evidence is in `benchmarks/results/sod-0005/review/review.json`. Three focused
+regressions pass locally and on Linux; the two bug regressions fail against the submitted code.
+Eight targeted TLC cases pass, including required negative controls. Four benchmark-worker tests
+pass. The reviewed Linux binary passes native mTLS checks and bounded serial transaction histories
+with each voter absent and after full restart. The corrected three-host comparison is recorded above.
+The first two history attempts lacked SQLAlchemy; their failed reports remain beside the passing
+run using cached test dependencies. The expensive unoptimized full-suite compilation was stopped
+before execution; this review does not claim a fresh full-gate pass. The earlier 169-test results
+remain attributed to the submitted revision, not silently reused for the review fixes.
+
+
+= References
 - Y. Mao, F. Junqueira, K. Marzullo. Mencius: Building Efficient Replicated State Machines for WANs. OSDI 2008.
 - A. Charapko, A. Ailijiang, M. Demirbas. Linearizable Quorum Reads in Paxos. HotStorage 2019.
 - P. O'Toole. rqlite design notes on SQLite WAL, `synchronous` and Raft-log recovery.

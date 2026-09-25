@@ -21,3 +21,13 @@ binary is sha256 `245b6c36b7a1b67e474b7944af97262838d562504fb6f956d00125798ef893
 
 `.18` shares one ZFS intent log among the three local voters, and its sync latency varies with
 other tenants. Compare ratios only within one report.
+
+Review caveat: the original three-host comparison worker did not propagate thread exceptions.
+Its recorded throughput cannot independently establish that every scheduled operation completed.
+Those reports remain unchanged. The corrected worker fails on exceptions, counts completions,
+and verifies every account row; SOD 0005 records review evidence separately. The calibration
+harness already propagates future exceptions and is unaffected by this specific defect.
+
+`review/three-host-comparison-32.json` is a fresh corrected-harness pair, with 800 completed
+pure-write and 960 completed mixed operations per binary and every replica row verified.
+It is a short regression measurement, not a sustained-capacity qualification.

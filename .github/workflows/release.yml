@@ -1,0 +1,92 @@
+name: Binary release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-22.04
+            target: linux-amd64
+          - runner: macos-14
+            target: macos-arm64
+          - runner: macos-15-intel
+            target: macos-amd64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Check release version
+        env:
+          RELEASE_REF: ${{ github.ref_name }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          version = re.search(r'VERSION :: "([^"]+)"', Path('cli/main.odin').read_text())[1]
+          if os.environ['RELEASE_REF'] != 'v' + version:
+              raise SystemExit('Run this workflow on the tag matching cli/main.odin VERSION')
+          PY
+      - name: Install pinned Odin
+        run: |
+          python3 tools/install_release_odin.py > build-odin.log
+          cat build-odin.log
+          tail -n 1 build-odin.log >> "$GITHUB_PATH"
+      - name: Build self-contained executable
+        run: python3 tools/build_cli.py --output bin/sqlodin --jobs 4
+      - name: Test on Linux
+        if: runner.os == 'Linux'
+        run: |
+          odin test tests -debug -thread-count:4 -define:ODIN_TEST_THREADS=4 -out:build/release-tests -define:ODIN_TEST_JSON_REPORT=build/release-tests.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('build/release-tests.json').read_text())
+          assert report['total'] > 0 and report['success'] == report['total'], report
+          PY
+          python3 tools/test_compare_three_hosts.py
+          python3 -m pip install './languages/python[test]'
+          python3 -m pytest languages/python/tests
+          ./bin/sqlodin local build/release-smoke.db 'CREATE TABLE t (id INTEGER PRIMARY KEY); INSERT INTO t VALUES (1); SELECT * FROM t;'
+      - name: Package
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          mkdir -p dist
+          cp README.md bin/
+          tar -czf "dist/sqlodin-$TARGET.tar.gz" -C bin sqlodin sqlodin.build.json licenses README.md
+          if [ -f build/release-tests.json ]; then cp build/release-tests.json dist/linux-tests.json; fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sqlodin-${{ matrix.target }}
+          path: dist/*
+          if-no-files-found: error
+  publish:
+    needs: build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: sqlodin-*
+          merge-multiple: true
+          path: dist
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          cd dist
+          sha256sum *.tar.gz linux-tests.json > SHA256SUMS
+          gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "SQLodin $RELEASE_TAG" --notes-file ../.github/release-notes.md ./*

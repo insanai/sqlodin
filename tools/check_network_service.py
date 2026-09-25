@@ -317,9 +317,10 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--storage-format', type=int, choices=(4, 5), default=4)
     args = parser.parse_args()
-    report = dict(complete=False, passed=False, scope='three native mTLS SQL service processes on one host; disk WAL FULL',
+    report = dict(complete=False, passed=False, scope='three native mTLS SQL service processes on one host; disk-backed',
                   platform=platform.platform(), started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), checks=[])
     report['storage_format'] = args.storage_format
+    report['durability'] = 'FULL journal; NORMAL replayable application' if args.storage_format == 5 else 'FULL combined store'
     report['binary_sha256'] = hashlib.sha256(args.binary.read_bytes()).hexdigest()
     report['source_sha256'] = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                                for directory in ('src', 'service', 'transport', 'cli', 'languages/python/src')

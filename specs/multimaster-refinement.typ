@@ -55,6 +55,12 @@ service turn stages all of its transitions behind one barrier (SOD 0005 M1). The
 host may step an owner's round-zero Accept as a Commit when it carries the host
 no-op, or, with a write quorum of two, when this voter's own vote for the same
 value is in the same group (SOD 0005 M2/M5; `OwnedSkip.tla`, `OwnedSkipProof.tla`).
+M2 no-ops can be learned before an actual voting quorum exists. Thus the old
+DurableHistoryProof premise that every chosen record has a voting quorum is not
+literally satisfied by these synthetic Commit records. OwnedSkip's no-op determinacy
+argument supplies the extra learner justification; state-changing values still need
+a durable voting quorum. The composed argument remains conditional, not a new
+machine-checked refinement of the entire host.
 Replay folds the durable records before the node resumes accepting requests.
 
 Chosen slots apply contiguously. Application data, request fences, outcomes,

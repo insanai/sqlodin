@@ -73,6 +73,7 @@ Server :: struct {
 	write_cursor: int,
 	read_cohort: durable.Read_Ticket,
 	frontier_token: u64, frontier_high: sql.Slot, frontier_replies: int, frontier_ready: bool,
+	frontier_voters: [durable.MAX_MEMBERS]bool, // cohort membership survives peer reconnects
 	frontier_sent: time.Tick,
 	allowed: [32]string, allowed_count: int,
 	fingerprint: string, last_tick, last_dial, last_repair, last_snapshot_receipt: time.Tick, fatal: bool,

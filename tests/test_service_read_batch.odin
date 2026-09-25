@@ -129,3 +129,30 @@ test_read_cohort_single_voter_needs_no_peer :: proc(t: ^testing.T) {
 	testing.expect(t, service.finish_read_cohort(s))
 	testing.expect(t, s.connections[0].out_count == 1)
 }
+
+// Reconnecting a voter must not turn two replies into two distinct votes.
+@(test)
+test_read_cohort_counts_voter_once_across_reconnect :: proc(t: ^testing.T) {
+	c := durable_test_open(t, 3, true)
+	defer durable_test_close(c)
+	s := new(service.Server)
+	defer read_batch_free(s)
+	s.host = c.hosts[0]
+	ids := [?]sql.Node_Id{1, 2, 3, 4, 5}
+	testing.expect(t, sql.membership_init(&s.host.node.membership, ids[:]) == .None)
+	read_batch_client(&s.connections[0])
+	peer := &s.connections[20]
+	read_batch_peer(peer, 2)
+	testing.expect(t, service.begin_read_cohort(s))
+	token := s.read_cohort.token
+	read_batch_reply(s, peer, token, 0)
+	testing.expect(t, !s.frontier_ready)
+	// A replacement authenticated connection has no per-connection reply token.
+	reconnected := &s.connections[21]
+	read_batch_peer(reconnected, 2)
+	read_batch_reply(s, reconnected, token, 0)
+	testing.expect(t, !s.frontier_ready)
+	read_batch_peer(&s.connections[22], 3)
+	read_batch_reply(s, &s.connections[22], token, 0)
+	testing.expect(t, s.frontier_ready)
+}

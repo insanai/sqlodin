@@ -15,7 +15,8 @@ There is no mandatory soak duration or large-capacity campaign.
 The retained release evidence checks 59 bounded model cases (including required negative
 controls) and 48 inductive obligations. SOD 0005 adds 13 model cases (`OwnedSkip`, `JournalCache`,
 `QuorumRead`, seven of them negative controls) and 41 obligations (`OwnedSkipProof`) for the
-post-release performance mechanisms. The composition argument states the assumptions
+post-release performance mechanisms. The review adds `QuorumReadReconnect` and its
+connection-counting negative control (74 configurations total). The composition argument states the assumptions
 and refinement boundaries; it is not a machine-checked proof of the entire executable.
 
 ```sh

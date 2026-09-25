@@ -90,7 +90,8 @@ server_open :: proc(cfg: Config, create: bool) -> (^Server, bool) {
 	}
 	fmt.eprintf("Recovery node=%d applied=%d journal=%d phases=%v\n",
 		cfg.node, s.host.engine.applied_through, s.host.sequence, s.host.recovery)
-	s.fingerprint = fmt.aprintf("sqlodin-net1;wire=3;format%d;policy%d;paxos=c3d19701;sqlite=%x;members=%v",
+	s.fingerprint = fmt.aprintf("sqlodin-net1;wire=3;frontier=1;format%d;policy%d;" +
+		"paxos=c3d19701;sqlite=%x;members=%v",
 		cfg.storage_format, sql.REPLICATION_POLICY, sql.engine_build_fingerprint(), ids[:len(cfg.members)])
 	if cfg.storage_format == 5 {
 		old := s.fingerprint

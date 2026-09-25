@@ -17,3 +17,6 @@
 
 #pagebreak()
 #include "records/0004-production-sql-and-durable-throughput.typ"
+
+#pagebreak()
+#include "records/0005-durable-turn-and-fast-skip-learning.typ"

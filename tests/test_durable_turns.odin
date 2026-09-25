@@ -1,6 +1,7 @@
 package tests
 
 import "core:testing"
+import "core:os"
 import sql "../src"
 import durable "../src/durable"
 import db "../src/sqlite"
@@ -133,4 +134,50 @@ test_durable_application_cache_mode :: proc(t: ^testing.T) {
 	combined := durable_test_open(t, 1)
 	defer durable_test_close(combined)
 	testing.expect_value(t, turn_test_synchronous(t, combined.hosts[0].engine.db), 2)
+}
+
+// A returned ID is externally usable even if the surrounding service turn aborts.
+@(test)
+test_durable_id_reservation_survives_aborted_turn :: proc(t: ^testing.T) {
+	c := durable_test_open(t, 1, true)
+	defer durable_test_close(c)
+	h := c.hosts[0]
+	testing.expect(t, durable.turn_begin(h) == .None)
+	_, err := durable.propose(h, transaction_test_request(t, 1, "SELECT 1"))
+	testing.expect(t, err == .None)
+	first, first_err := durable.next_id(h, 0)
+	testing.expect(t, first_err == .None)
+	// Closing without turn_commit abandons any open journal transaction.
+	durable_test_reopen(t, c, 0, 1)
+	next, next_err := durable.next_id(c.hosts[0], 0)
+	testing.expect(t, next_err == .None && next > first)
+}
+
+// Model loss of an acknowledged NORMAL application suffix, retaining the FULL
+// journal. Replaying must recover both data and deduplication, not just a watermark.
+@(test)
+test_durable_cache_replays_acknowledged_lost_suffix :: proc(t: ^testing.T) {
+	c := durable_test_open(t, 1, true)
+	defer durable_test_close(c)
+	h := c.hosts[0]
+	transaction_test_schema(t, h, "CREATE TABLE value(v); INSERT INTO value VALUES(0)")
+	testing.expect(t, db.exec(h.engine.db, "PRAGMA wal_checkpoint(TRUNCATE)"))
+	prefix, read_err := os.read_entire_file(c.paths[0], context.allocator)
+	testing.expect(t, read_err == nil)
+	defer delete(prefix)
+	value := transaction_test_request(t, 1, "UPDATE value SET v=v+1")
+	slot, err := durable.propose(h, value)
+	testing.expect(t, err == .None && durable.acknowledged(h, slot, &value))
+	durable.close(h)
+	c.hosts[0] = nil
+	testing.expect(t, os.write_entire_file(c.paths[0], prefix) == nil)
+	durable_test_reopen(t, c, 0, 1)
+	h = c.hosts[0]
+	testing.expect(t, durable.acknowledged(h, slot, &value))
+	_, retry_err := durable.propose(h, value)
+	testing.expect(t, retry_err == .None)
+	result, query_err := sql.engine_query(&h.engine, "SELECT v FROM value")
+	testing.expect(t, query_err == .None)
+	defer sql.query_result_free(&result)
+	testing.expect(t, len(result.rows) == 1 && result.rows[0][0].integer == 1)
 }

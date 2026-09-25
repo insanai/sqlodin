@@ -1,227 +1,144 @@
-# sqlodin
+# SQLodin
 
-Multi-master SQLite application layer in Odin, using the complete
-[paxos-odin](https://github.com/insanai/paxos-odin) consensus library.
+SQLodin puts a small, replicated cluster around SQLite. Each node keeps a local
+SQLite database, and any voter can accept a write. Paxos gives those writes a
+common order; the service acknowledges them after durable replication and local
+application.
 
-The upstream Git submodule is pinned to
-`c3d197016c1f938db23fdf7f1fe87fbdbb86ac1c` (published on the upstream `sqlodin/bounded-ownership-progress` branch).
-SQLodin's adapter enables rotating ownership; it does not implement a separate Paxos algorithm.
+It is written in Odin and uses the complete, pinned
+[paxos-odin](https://github.com/insanai/paxos-odin) library. One executable provides
+the server, an interactive SQL client, and a local SQLite shell. A Python client
+adds parameter binding, transactions, FTS and vector search, and a SQLAlchemy dialect.
 
-Every member can propose into its own slots without forwarding to a standing leader.
-A healthy owner's consensus fast path takes one quorum round trip. Client-visible application
-also waits for earlier slots, durability, and SQLite execution. This is **not a guaranteed
-one-RTT transaction latency**, and no fixed WAN latency saving has been measured.
+## Where it fits
 
-[Documentation](docs/index.typ): usage guides, the book, design decisions, release evidence and historical records.
+SQLodin is intended for applications that benefit from SQLite's simple data model
+but need to keep serving through the loss of one node: internal tools, job and
+inventory records, service metadata, and small transactional backends. FTS5 and
+exact vector search also support applications that combine structured records with
+text or embedding search.
 
-## Command-line SQL
+The supported cluster has three fixed voters. It needs a majority to make progress.
+Every voter can receive writes, but replication still produces one ordered history
+and each SQLite database has one writer. Adding voters does not shard the data or
+multiply write capacity. SQL statements and transaction sizes have explicit bounds;
+check the [SQL contract](specs/sql-policy.typ) before choosing it for an application.
+
+## Try the command line
+
+Download the archive for your machine from [Releases](https://github.com/insanai/sqlodin/releases).
+Packages contain the executable, dependency licenses, and a build manifest.
+For example, on an x86-64 Linux machine:
 
 ```sh
-sqlodin local notes.db
-sqlodin connect client.json
-sqlodin connect client.json --mode json -c 'SELECT id, name FROM customer LIMIT 20;'
+curl -fLO https://github.com/insanai/sqlodin/releases/latest/download/sqlodin-linux-amd64.tar.gz
+tar -xzf sqlodin-linux-amd64.tar.gz
+./sqlodin version
+./sqlodin local notes.db
 ```
 
-The [CLI guide](docs/guides/cli.typ) covers the bundled local SQLite shell and the native
-cluster client: interactive editing, scripts, transactions/savepoints, result
-formats, catalog and cluster commands, and durable recovery of uncertain writes.
-Diagnostics include correction hints and terminal-aware ANSI styling.
+At the prompt:
 
-## Status
+```sql
+CREATE TABLE note (id INTEGER PRIMARY KEY, body TEXT NOT NULL);
+INSERT INTO note VALUES (1, 'Start small. Measure what matters.');
+SELECT * FROM note;
+.quit
+```
 
-SQLodin provides an embedded library, standalone mTLS SQL service and CLI, and a
-[uv-managed Python package](languages/python/README.md) with FTS/vector search and
-SQLAlchemy transactions, rollback and savepoints. **Qualified for the fixed three-voter production scope described below.**
+This creates a local SQLite file. To use replication, start three voters with their
+own data directories, certificates, and a shared membership configuration. The
+[service guide](docs/guides/network-service.typ) explains the configuration and
+certificate requirements. Once a cluster and client configuration are ready:
 
-Implemented storage paths include FULL-durable consensus and application stores,
-fresh quorum-backed reads, durable request retries, certified snapshots, bounded
-history, snapshot catch-up, backup/restore and fenced replacement. The qualified
-cluster scope is three fixed voters accepting requests at every member.
+```sh
+./sqlodin serve node.json --create   # first start of each voter
+./sqlodin connect client.json
+./sqlodin connect client.json --mode json -c 'SELECT * FROM note;'
+```
 
-The [fixed release checklist](docs/releases/2026-09-25.typ) is the authoritative completion
-contract and evidence record. All 23 criteria are closed for the identified candidate,
-with the owner's explicit performance and capacity dispositions. The original throughput
-and p99 targets remain unmet improvement goals. Large-capacity testing is not a release
-requirement; retained large-store startup samples took 114–137 seconds against the
-original 60-second goal, so no general large-database recovery SLA is claimed.
-Historical reviews and soak records are supporting evidence, not additional gates.
-See the [native service contract](docs/guides/network-service.typ) and
-[SQL/durability contract](specs/sql-policy.typ) for supported APIs and deployment limits.
+Use `serve node.json` without `--create` on subsequent starts. The interactive
+client supports scripts, transactions, savepoints, result formats, and commands
+such as `.tables`, `.schema`, `.nodes`, and `.help`. See the
+[CLI guide](docs/guides/cli.typ) for details. Do not open a running voter's database
+with the local shell.
 
-- The full upstream library provides ownership, quorum skips, recovery, retransmission, replay,
-  bounded windows, learners and reconfiguration. SQLodin's convenience initializer selects
-  fixed-membership rotating ownership; advanced upstream APIs remain available via a direct import.
-- Structured inserts, updates, deletes, text and vector bindings apply in log order. Inserts use
-  `INSERT OR REPLACE`; this is an explicit overwrite policy, not conflict detection.
-- `engine_apply_batch` applies a contiguous prefix and its `_sqlodin_state.applied` watermark
-  atomically. Failed begin, SQL, or commit rolls back and leaves the watermark unchanged.
-- Embedded engine databases use WAL with `synchronous=FULL`. The applied watermark survives reopening.
-  The service's separated store keeps its consensus journal FULL and commits its application
-  database with WAL NORMAL as a replayable cache of that journal ([SOD 0005](docs/sod/records/0005-durable-turn-and-fast-skip-learning.typ)).
-- Eight cached prepared DML statements per engine reduce repeated prepare/finalize work.
-  Text/vector bindings borrow mutation storage only until execution and binding cleanup finish.
-- Consensus transitions allocate no heap memory. SQLite and host queues do allocate.
-  Mutation payloads are fixed capacity: 16 columns, 256 text bytes per column, 4,096 SQL bytes,
-  and a **shared 384-float vector budget** by default. Use
-  `-define:SQLODIN_MAX_MUTATION_VEC_VALUES=N` for multiple embeddings totaling more than 384 floats.
-  One vector still has at most 384 dimensions.
-- `engine_next_id_checked` handles sequence overflow and clock rollback with logical milliseconds,
-  and rejects node IDs outside 1..1023. Use `durable.next_id` to reserve IDs durably across restarts. `snowflake_generate` is only an unchecked low-level bit packer.
-- FTS5 and sqlite-vec support bounded network search: atomic document updates,
-  exact vector scans and single-snapshot hybrid retrieval.
+### macOS and Windows
 
-Schemas, collations, engine builds and SQL behavior must be deterministic and identical across
-replicas. The durable host enforces a function allowlist, blocks transaction escape and protects
-internal metadata. This is not a complete arbitrary-SQL determinism validator. Expected constraint,
-policy and prepare-time syntax/schema rejections become durable outcomes; storage errors remain fatal.
-Use `mutation_make_transaction` with a stable session/sequence for retry deduplication. Legacy raw
-SQL and structured mutations have no request identity and can execute again in another slot.
+macOS archives are available for Apple Silicon (`macos-arm64`) and Intel
+(`macos-amd64`). They are unsigned command-line builds. Linux archives target
+x86-64 systems with glibc 2.35 or newer, including Ubuntu 22.04 and later.
 
-Serialize access to each node, effects batch and engine. Persist effects before releasing messages
-or committed entries, and copy borrowed payloads before another transition or window reuse.
-Advance the memory floor only after durable application and arranging historical catch-up service.
-`engine_read_snapshot` returns the **number of result rows**, not a scalar aggregate; a watermark
-read supplies read-your-writes only when the caller carries the confirmed applied write's slot.
-It is not a quorum/linearizable read API.
+On Windows, install an Ubuntu distribution under WSL2, then run the Linux commands
+inside it. Keep voter data in the Linux filesystem, rather than a mounted Windows
+drive. This release does not include a native Windows executable. macOS builds are
+provided for development; release tests run on Linux.
 
-## Build and verify
+## Use it from Python
 
-Requires Odin `dev-2026-09` or newer, Python 3, a C compiler, `ar`, Make and Perl.
-The macOS/Linux build downloads and verifies pinned SQLite 3.51.3 (FTS5 enabled),
-sqlite-vec 0.1.9 and OpenSSL 3.5.8, then links their static archives. The resulting
-CLI has no shared SQLite, sqlite-vec or OpenSSL dependency. Normal OS runtime libraries
-remain. Typst is only needed for docs. See [self-contained builds](docs/guides/building.typ).
+The Python package requires Python 3.11 or newer. Until it is published on PyPI,
+install it from this repository:
+
+```sh
+uv add 'sqlodin @ git+https://github.com/insanai/sqlodin.git@v0.1.0#subdirectory=languages/python'
+```
+
+```python
+import sqlodin
+
+tls = sqlodin.TLS(ca="ca.pem", cert="app.pem", key="app.key")
+with sqlodin.connect(
+    [sqlodin.Endpoint("127.0.0.1:7601", "node1.sqlodin.test")],
+    cluster="notes",
+    tls=tls,
+) as db:
+    db.execute("CREATE TABLE note (id INTEGER PRIMARY KEY, body TEXT NOT NULL)")
+    db.execute("INSERT INTO note VALUES (?, ?)", (1, "Hello from Python"))
+    print(db.query("SELECT body FROM note WHERE id = ?", (1,)).one()["body"])
+```
+
+The [Python guide](languages/python/README.md) covers endpoint failover, durable
+retry identities, transactions, SQLAlchemy, and text/vector search.
+
+## How it works
+
+Each voter owns a rotating set of consensus slots. It can propose directly into
+those slots without forwarding every write to a standing leader. The service
+batches durable journal work and reconstructs its application database from that
+journal after a crash. Fresh reads consult a quorum before reading an applied
+snapshot. Client certificates authenticate both applications and voters.
+
+These choices reduce coordination and storage overhead, but they do not remove
+network, disk, or contention costs. Transactions use optimistic conflict checks;
+even writes to different rows can conflict. Membership is fixed, upgrades require
+a coordinated procedure, and replicas must use matching builds and schemas.
+
+The [book](docs/book.typ) develops the design and its limits. The
+[specifications](specs/README.md) connect the implementation to TLA+ models,
+proof obligations, and targeted fault tests. Those checks cover stated models and
+assumptions; they are not a proof of the entire executable. Measured results and
+workload definitions are in the book's [benchmark chapter](docs/book/11_benchmarks.typ).
+
+## Build from source
+
+Install Odin `dev-2026-09`, Python 3, a C compiler, Make, Perl, and `ar`, then:
 
 ```sh
 git clone --recurse-submodules https://github.com/insanai/sqlodin.git
 cd sqlodin
-# Existing checkout:
-make deps
 ./build.sh
-make test
-make vet
-make check
-make example
-make bench
+./bin/sqlodin local notes.db
 ```
 
-`make deps` installs the committed submodule revision; it never tracks a moving branch.
-Direct `odin` commands work after initialization, without a sibling checkout or collection flags.
-`make check` verifies the clean pin, tests SQLodin and the whole upstream library in debug and
-optimized builds, checks capacity/durability contracts, runs seeded drop/reorder/duplicate/restart
-simulations on 1/3/5 nodes, and validates the example and benchmark. On Linux it also runs actual
-SIGKILL/restart checks against the durable host. Simulator journals remain modeled in memory;
-process-crash tests do not certify physical power-loss behavior.
+The build verifies pinned sources for SQLite 3.51.3 with FTS5, sqlite-vec 0.1.9,
+and OpenSSL 3.5.8, then links them into the executable. No shared SQLite or OpenSSL
+installation is needed at runtime. Normal operating-system libraries remain.
+See [building](docs/guides/building.typ) and [contributing](CONTRIBUTING.md).
 
-## Performance and memory
+Maintainers can publish a binary release by pushing a `v` tag matching the CLI
+version. The release workflow tests on Linux and builds Linux and macOS archives.
+Python publishing is a separate manual workflow, enabled by the `PYPI_API_TOKEN`
+repository secret.
 
-[SOD 0005](docs/sod/records/0005-durable-turn-and-fast-skip-learning.typ) removed most sequential
-sync barriers from the durable service path. Its changes are:
-
-- one journal barrier per service turn;
-- Mencius-style owner no-op learning, and learning a value this voter also voted for, with three voters;
-- a WAL NORMAL application cache of the FULL journal;
-- quorum-frontier fresh reads.
-
-On `.18`, with SQLite measured in the same runs, the calibration matrix moved from 1.7–10.5% to
-6.8–40.6% of SQLite; the absolute gain is 1.9–10.5×. On three separate hosts, 32-client pure writes
-rose from 95 to 784 per second (medians), and a sequential fresh read fell from 44.6 to 0.51 ms. These gains
-post-date the qualified 25 September candidate, which the release record still describes. The 1,000
-pure-write/s and 25%-of-SQLite goals remain unmet at 32 clients. Reports and failed attempts are in
-[`benchmarks/results/sod-0005/`](benchmarks/results/sod-0005/).
-
-
-The historical memory suite compares rotating ownership, single-leader operation and the local SQLite application
-engine. It records seven repetitions per build/workload, verified replica contents, warmup, throughput,
-batch latency percentiles, per-process CPU and peak RSS. Source/binary hashes, compiler flags and
-hardware metadata travel with the raw samples in [the result JSON](benchmarks/results/linux-latest.json).
-The [book evaluation chapter](docs/book/11_benchmarks.typ) separates these historical results
-from later native, durable measurements.
-
-```sh
-make check
-make bench-linux
-make docs
-```
-
-All replication is in-process and single-threaded. The suite excludes sockets, serialization, consensus
-journaling/fsync and WAN/client-forwarding latency. It includes sequential and twelve-proposal pipeline
-cases, with both integer-only and 256-byte text rows. See [method and reproduction](benchmarks/README.md).
-The older `make bench` output and one-row search fixtures are smoke examples.
-
-The optimized DML cache compares bounded table/column metadata without formatting SQL on hits.
-The FIFO starts at 32 packets and grows when necessary. The runner keeps the earlier lookup and
-256-packet reservation as comparison builds so both changes can be measured separately.
-
-The previous published ~762k writes/sec and fixed ~42ms saving are withdrawn: failed proposals
-were counted, commit messages were mishandled, and writes were not applied to SQLite. The new native service has
-not yet had a matched comparative performance run, so **superiority to Zaxonlite is unproven**.
-
-A separate [durable Linux workload report](benchmarks/results/linux-realworld.json) compares the
-supported workloads of SQLodin, Zaxonlite, rqlite and cowsql. SQLodin uses three disk-backed embedded
-hosts; Zaxonlite and rqlite use network servers; the stock cowsql demo uses persisted Raft with an
-in-memory SQLite image. The [book evaluation chapter](docs/book/11_benchmarks.typ) keeps these execution boundaries explicit. See [reproduction](benchmarks/README.md).
-Zaxonlite uses its official v0.7.0 Linux binary, verified against published checksums.
-
-```sh
-# Linux only, after native dependencies and verification:
-python3 tools/setup_comparison.py
-python3 tools/fetch_zaxon_release.py
-make check-durability
-make bench-durable-linux
-make docs
-```
-
-In the historical benchmark snapshot the mutation occupied **7,800 bytes**, down from 30,840 bytes.
-With the same upstream node capacities (`members=3, window=64, chunk=16`), that reduces node storage
-from 3,026,488 to 768,568 bytes. Default window=256/chunk=64 occupies about 3 MB per node, before
-SQLite, transport, journal and application storage. Format 2 enlarges the request for 4 KiB SQL and
-retry identity; these historical sizes are not current layout claims. Compact payload work remains
-open. Fixed capacity is bounded memory, not zero cost.
-The current arm64 layout is 11,416 bytes per mutation and 11,488 bytes per packet. The larger SQL
-limit therefore has a measurable memory/copy cost; it is not itself a performance optimization.
-
-See [the design discussion and measurements](docs/sod/records/0004-production-sql-and-durable-throughput.typ) for findings, limitations and
-benchmark interpretation. [SOD 0002](docs/sod/records/0002-sqlodin-architecture.typ)
-records the accepted integration and application architecture.
-
-## Layout
-
-- `deps/paxos-odin/`: complete, pinned upstream repository and tests.
-- `src/paxos.odin`: protocol aliases and rotating-ownership initialization/recovery adapters.
-- `src/durable/`: checked disk journal, restart replay, historical range service and durable IDs.
-- `src/engine*.odin`, `src/mutation.odin`: SQLite application layer and bounded values.
-- `internal/inmemory/`: shared example/test/benchmark transport with copied payloads.
-- `tests/`, `sim/`, `bench/`, `examples/`: verification and measured workloads.
-- `docs/`: design documents; historical protocol discussions describe assumptions, not deployment evidence.
-
-Authored by Vikrant Rathore, with assistance from Ronak Rathore. MIT license; see [LICENSE](LICENSE).
-The upstream library's license is retained in its submodule.
-
-## Book and design records
-
-The [book source](docs/book.typ) develops usage, ordered replication, durability, formal
-verification and operating procedures, followed by measured performance and a reference chapter. `make docs` builds the book, SOD index, numbered bundle and every standalone record into
-`docs/build/`; build errors fail the command. All PDFs use the same portable Typst typography.
-
-The [SOD 0004: Production SQL and Durable Throughput](docs/sod/records/0004-production-sql-and-durable-throughput.typ) defines
-the accepted mixed-transaction, batching and recovery design. Correctness qualification is
-complete for the declared fixed-voter scope; unmet performance targets remain improvement goals. The [historical Linux cost profile](benchmarks/results/linux-durability-cost.json)
-attributes durable write costs without weakening synchronization. The
-[format-2 batch profile](benchmarks/results/linux-production-p1-batches.json) measures the initial
-transaction implementation separately; these are historical measurements. The current release
-decision and approved scope are in the [release record](docs/releases/2026-09-25.typ).
-
-
-The historical format-3 candidate added bounded application groups, packed durable records and ordered read
-barriers. Its [Linux cost profile](benchmarks/results/linux-candidate-v3-cost.json) and
-[three-process disk campaign](benchmarks/results/linux-candidate-v3-process-2400-v2.json) remain in the historical evidence archive. The latter uses one Linux machine with three independent data directories, fenced
-reads and nine workload/fault checks. Neither report is a production-readiness certification;
-see the [release record](docs/releases/2026-09-25.typ) for the current qualified candidate.
-
-
-Incoming-transition journal grouping is now enabled, with an enforced per-transition reference
-configuration retained. The [journal-group review](docs/sod/records/0004-production-sql-and-durable-throughput.typ) describes owned
-effects and durability ordering. The [matched Linux process comparison](benchmarks/results/linux-journal-matched-process.json)
-measures the two configurations over three repetitions each; all six samples passed their fault
-checks. These historical reports are retained separately from the final source-bound release evidence.
+SQLodin is written by Vikrant Rathore, with assistance from Ronak Rathore.
+It is available under the [MIT license](LICENSE).

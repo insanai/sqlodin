@@ -84,6 +84,8 @@ CASES = (
     ('JournalCache', 'JournalCache', None),
     ('JournalCache', 'JournalApplyStaged', 'Invariant AckedRecoverable is violated'),
     ('JournalCache', 'JournalTrimWithoutImage', 'Invariant AckedRecoverable is violated'),
+    ('QuorumReadReconnect', 'QuorumReadReconnect', None),
+    ('QuorumReadReconnect', 'QuorumReadConnectionCount', 'Invariant RealTimeOrder is violated'),
     ('QuorumRead', 'QuorumRead', None),
     ('QuorumRead', 'QuorumReadApplied', 'Invariant RealTimeOrder is violated'),
     ('QuorumRead', 'QuorumReadNoPeers', 'Invariant RealTimeOrder is violated'),

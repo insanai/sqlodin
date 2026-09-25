@@ -13,12 +13,13 @@ Client frames are at most 64 KiB, authenticated peer frames at most 2 MiB. An
 iterative pre-scan caps JSON nesting at 64 before recursive unmarshalling. Protocol
 objects need much less depth; SQL strings containing braces or escaped quotes do
 not count as nested objects. Each connection holds one incoming frame and at most
-64 outgoing frames, additionally limited to 2 MiB total. One bounded frame per
+256 outgoing frames, additionally limited to 2 MiB total. One bounded frame per
 client connection per event-loop turn prevents one pipelined reader from monopolizing
-dispatch. Authenticated consensus peers can drain at most eight frames per turn
-into the existing sixteen-packet durable transition group; partial frames and
-snapshot controls stop the receive burst. Output likewise has eight bounded TLS
-steps per peer turn. Slow peer traffic is dropped for retransmission rather than accumulated
+dispatch. Under SOD 0005, authenticated peer input fills a shared 128-packet turn buffer,
+stepped in batches of at most sixteen; partial frames and snapshot controls stop a
+receive burst. Peer output has at most 256 flush attempts per turn, stopping when TLS
+would block. These replace the earlier 64-frame queue and eight-frame peer bursts;
+the additional inline packet storage is bounded but must be included in RSS accounting. Slow peer traffic is dropped for retransmission rather than accumulated
 without limit; catch-up traffic has its own bounded transfer buffers and activity
 timeout. Kernel TCP buffers are separate operating-system resources, with the
 number of sockets bounded by the connection pool.

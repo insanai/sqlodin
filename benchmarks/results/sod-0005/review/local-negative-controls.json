@@ -1,0 +1,17 @@
+{
+	"total": 2,
+	"success": 0,
+	"duration": 150270000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_durable_id_reservation_survives_aborted_turn"
+			},
+			{
+				"success": false,
+				"name": "test_read_cohort_counts_voter_once_across_reconnect"
+			}
+		]
+	}
+}

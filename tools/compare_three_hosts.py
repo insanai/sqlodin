@@ -20,7 +20,7 @@ from check_majority import ready
 ROOT = Path(__file__).resolve().parents[1]
 
 WORKER = r'''
-import json, statistics, sys, threading, time
+import concurrent.futures, json, statistics, sys, threading, time
 from pathlib import Path
 root = Path(sys.argv[1]); sys.path.insert(0, sys.argv[2]); clients = int(sys.argv[3])
 import sqlodin
@@ -47,6 +47,7 @@ with connect(1) as db:
             ms.append(1000 * (time.monotonic() - started))
         out[kind + "_ms_median"] = statistics.median(ms)
 expected = 40
+expected_rows = [int(i < 40) for i in range(1024)]
 def burst(clients, per, read_percent):
     global expected
     conns = [connect(i % 3 + 1) for i in range(clients)]
@@ -54,6 +55,9 @@ def burst(clients, per, read_percent):
         db.session_epoch(); db.query("SELECT 1")
     gate = threading.Barrier(clients)
     writes = [0] * clients
+    completed = [0] * clients
+    planned_writes = sum((i * 7 + k * 13) % 100 >= read_percent
+                         for i in range(clients) for k in range(per))
     def work(i):
         db = conns[i]; gate.wait()
         for k in range(per):
@@ -62,20 +66,37 @@ def burst(clients, per, read_percent):
             else:
                 db.execute(f"UPDATE account SET balance=balance+1 WHERE id={(i * per + k) % 1024}")
                 writes[i] += 1
-    threads = [threading.Thread(target=work, args=(i,)) for i in range(clients)]
+            completed[i] += 1
     started = time.monotonic()
-    for t in threads: t.start()
-    for t in threads: t.join()
-    elapsed = time.monotonic() - started
-    for db in conns: db.close()
-    expected += sum(writes)
-    return clients * per / elapsed
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=clients) as pool:
+            futures = [pool.submit(work, i) for i in range(clients)]
+            for future in futures:
+                future.result()  # Propagate every worker failure; never emit a partial pass.
+        elapsed = time.monotonic() - started
+        assert sum(completed) == clients * per
+        assert sum(writes) == planned_writes
+    finally:
+        for db in conns: db.close()
+    expected += planned_writes
+    for i in range(clients):
+        for k in range(per):
+            if (i * 7 + k * 13) % 100 >= read_percent:
+                expected_rows[(i * per + k) % 1024] += 1
+    return dict(per_second=sum(completed) / elapsed, completed=sum(completed),
+                writes=sum(writes), expected_writes=planned_writes, seconds=elapsed)
 out["clients"] = clients
-out[f"writes_{clients}_per_s"] = burst(clients, 25, 0)
-out[f"mixed70_{clients}_per_s"] = burst(clients, 30, 70)
+out["write_workload"] = burst(clients, 25, 0)
+out["mixed_workload"] = burst(clients, 30, 70)
+out[f"writes_{clients}_per_s"] = out["write_workload"]["per_second"]
+out[f"mixed70_{clients}_per_s"] = out["mixed_workload"]["per_second"]
+out["expected_balance"] = expected
 for node in (1, 2, 3):
     with connect(node) as db:
         assert db.query("SELECT sum(balance) FROM account").scalar() == expected
+        rows = db.query("SELECT id,balance,length(payload) FROM account ORDER BY id")
+        assert [tuple(row[i] for i in range(3)) for row in rows] == [
+            (i, balance, 256) for i, balance in enumerate(expected_rows)]
 out["verified"] = True
 print("RESULT " + json.dumps(out))
 '''
@@ -119,6 +140,8 @@ def main():
     args = p.parse_args()
     if args.output.exists():
         p.error('Retain earlier evidence; choose a new output file')
+    if args.repeats < 1:
+        p.error('Use a positive repetition count')
     if not 3 <= args.clients <= 3 * 24:
         p.error('Use 3..72 clients; each voter admits at most 24')
     report = dict(complete=False, hosts=args.hosts, client=args.client, samples=[],

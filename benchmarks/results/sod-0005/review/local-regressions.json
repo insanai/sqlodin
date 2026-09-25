@@ -1,0 +1,21 @@
+{
+	"total": 3,
+	"success": 3,
+	"duration": 253163000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_durable_cache_replays_acknowledged_lost_suffix"
+			},
+			{
+				"success": true,
+				"name": "test_durable_id_reservation_survives_aborted_turn"
+			},
+			{
+				"success": true,
+				"name": "test_read_cohort_counts_voter_once_across_reconnect"
+			}
+		]
+	}
+}

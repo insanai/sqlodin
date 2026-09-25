@@ -92,6 +92,11 @@ remove storage barriers, prefix dependencies and application work at the same ti
 
 == After SOD 0005: fewer sequential barriers
 
+*Review note:* the original three-host worker could swallow thread failures. Its historical
+throughput figures below are provisional; they are not corrected-harness results. The separate
+calibration harness propagates worker failures. SOD 0005 records the correction and its evidence.
+
+
 The measurements above describe the qualified release candidate. SOD 0005 traced up to seven
 sequential sync barriers per write and per fresh read. It then introduced one barrier per service
 turn, one-message learning of owner no-ops (and, with three voters, of values this voter also voted
