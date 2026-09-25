@@ -595,3 +595,7 @@ dialog button {
   font-size:13px;
   color:var(--muted)
 }
+.reading :not(pre) > code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
