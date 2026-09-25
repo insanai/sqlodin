@@ -4,13 +4,15 @@ Multi-master SQLite application layer in Odin, using the complete
 [paxos-odin](https://github.com/insanai/paxos-odin) consensus library.
 
 The upstream Git submodule is pinned to
-[`a3e1fd78ec8f0429e5024710189ef77fc31961af`](https://github.com/insanai/paxos-odin/commit/a3e1fd78ec8f0429e5024710189ef77fc31961af).
+`c3d197016c1f938db23fdf7f1fe87fbdbb86ac1c` (published on the upstream `sqlodin/bounded-ownership-progress` branch).
 SQLodin's adapter enables rotating ownership; it does not implement a separate Paxos algorithm.
 
 Every member can propose into its own slots without forwarding to a standing leader.
 A healthy owner's consensus fast path takes one quorum round trip. Client-visible application
 also waits for earlier slots, durability, and SQLite execution. This is **not a guaranteed
 one-RTT transaction latency**, and no fixed WAN latency saving has been measured.
+
+[Documentation](docs/index.typ): usage guides, the book, design decisions, release evidence and historical records.
 
 ## Command-line SQL
 
@@ -20,30 +22,31 @@ sqlodin connect client.json
 sqlodin connect client.json --mode json -c 'SELECT id, name FROM customer LIMIT 20;'
 ```
 
-The [CLI guide](docs/cli.md) covers the bundled local SQLite shell and the native
+The [CLI guide](docs/guides/cli.typ) covers the bundled local SQLite shell and the native
 cluster client: interactive editing, scripts, transactions/savepoints, result
 formats, catalog and cluster commands, and durable recovery of uncertain writes.
 Diagnostics include correction hints and terminal-aware ANSI styling.
 
 ## Status
 
-SQLodin provides an embedded library and an initial native mTLS SQL service, **not yet production-qualified**.
-`src/durable` now supplies a disk-backed consensus journal, enforced flush-before-send ordering,
-restart replay, historical range service and restart-safe IDs. Production qualification still needs
-certified state-image transfer, bounded retention and broader service/failure testing. The host now includes bounded
-transaction requests, durable outcomes/retries, application groups, packed journals and ordered read
-barriers. The three-process test controller is not a production server.
-See [implementation status and remaining gates](docs/implementation-status.md); the SOD is not complete.
-See the [durable host contract and limits](docs/durability.md). The volatile harness remains for tests.
-The [production-readiness re-review](docs/production-readiness.md) records confirmed blockers and
-the limits of the current continuous-write evidence.
-The [eight-hour three-instance SSH campaign](docs/cluster-qualification.md) stopped after about 85 minutes on a verifier read budget;
-it did not pass the eight-hour qualification. The separately tested
-[native mTLS service](docs/network-service.md) now provides standalone `sqlodin serve`,
-authenticated peer traffic, bounded SQL results and retry-safe requests. The
-[uv-managed Python package](languages/python/README.md) provides `connect`, `execute`,
-`query`, atomic buffered transactions, vector/FTS hybrid search and an optional
-SQLAlchemy ORM/Core transactions with commit, rollback, generated keys and savepoints. This service is not yet production-qualified.
+SQLodin provides an embedded library, standalone mTLS SQL service and CLI, and a
+[uv-managed Python package](languages/python/README.md) with FTS/vector search and
+SQLAlchemy transactions, rollback and savepoints. **Qualified for the fixed three-voter production scope described below.**
+
+Implemented storage paths include FULL-durable consensus and application stores,
+fresh quorum-backed reads, durable request retries, certified snapshots, bounded
+history, snapshot catch-up, backup/restore and fenced replacement. The qualified
+cluster scope is three fixed voters accepting requests at every member.
+
+The [fixed release checklist](docs/releases/2026-09-25.typ) is the authoritative completion
+contract and evidence record. All 23 criteria are closed for the identified candidate,
+with the owner's explicit performance and capacity dispositions. The original throughput
+and p99 targets remain unmet improvement goals. Large-capacity testing is not a release
+requirement; retained large-store startup samples took 114–137 seconds against the
+original 60-second goal, so no general large-database recovery SLA is claimed.
+Historical reviews and soak records are supporting evidence, not additional gates.
+See the [native service contract](docs/guides/network-service.typ) and
+[SQL/durability contract](specs/sql-policy.typ) for supported APIs and deployment limits.
 
 - The full upstream library provides ownership, quorum skips, recovery, retransmission, replay,
   bounded windows, learners and reconfiguration. SQLodin's convenience initializer selects
@@ -85,7 +88,7 @@ Requires Odin `dev-2026-09` or newer, Python 3, a C compiler, `ar`, Make and Per
 The macOS/Linux build downloads and verifies pinned SQLite 3.51.3 (FTS5 enabled),
 sqlite-vec 0.1.9 and OpenSSL 3.5.8, then links their static archives. The resulting
 CLI has no shared SQLite, sqlite-vec or OpenSSL dependency. Normal OS runtime libraries
-remain. Typst is only needed for docs. See [self-contained builds](docs/building.md).
+remain. Typst is only needed for docs. See [self-contained builds](docs/guides/building.typ).
 
 ```sh
 git clone --recurse-submodules https://github.com/insanai/sqlodin.git
@@ -114,7 +117,8 @@ The historical memory suite compares rotating ownership, single-leader operation
 engine. It records seven repetitions per build/workload, verified replica contents, warmup, throughput,
 batch latency percentiles, per-process CPU and peak RSS. Source/binary hashes, compiler flags and
 hardware metadata travel with the raw samples in [the result JSON](benchmarks/results/linux-latest.json).
-The [book benchmark chapter](docs/book/08_benchmarks.typ) imports that file directly.
+The [book evaluation chapter](docs/book/11_benchmarks.typ) separates these historical results
+from later native, durable measurements.
 
 ```sh
 make check
@@ -138,8 +142,7 @@ not yet had a matched comparative performance run, so **superiority to Zaxonlite
 A separate [durable Linux workload report](benchmarks/results/linux-realworld.json) compares the
 supported workloads of SQLodin, Zaxonlite, rqlite and cowsql. SQLodin uses three disk-backed embedded
 hosts; Zaxonlite and rqlite use network servers; the stock cowsql demo uses persisted Raft with an
-in-memory SQLite image. The [book's durable chapter](docs/book/09_durable_benchmarks.typ) imports
-these results directly and keeps those boundaries explicit. See [reproduction](benchmarks/README.md).
+in-memory SQLite image. The [book evaluation chapter](docs/book/11_benchmarks.typ) keeps these execution boundaries explicit. See [reproduction](benchmarks/README.md).
 Zaxonlite uses its official v0.7.0 Linux binary, verified against published checksums.
 
 ```sh
@@ -160,9 +163,9 @@ open. Fixed capacity is bounded memory, not zero cost.
 The current arm64 layout is 11,416 bytes per mutation and 11,488 bytes per packet. The larger SQL
 limit therefore has a measurable memory/copy cost; it is not itself a performance optimization.
 
-See [the dated review and measurements](docs/review-2026-09-22.md) for findings, limitations and
-benchmark reproduction. [SOD draft](docs/sod/records/XXXXX-upstream-paxos-and-application-correctness.typ)
-records the integration and storage changes.
+See [the design discussion and measurements](docs/sod/records/0004-production-sql-and-durable-throughput.typ) for findings, limitations and
+benchmark interpretation. [SOD 0002](docs/sod/records/0002-sqlodin-architecture.typ)
+records the accepted integration and application architecture.
 
 ## Layout
 
@@ -179,28 +182,28 @@ The upstream library's license is retained in its submodule.
 
 ## Book and design records
 
-The [book source](docs/book.typ) covers the implementation, durable Linux evidence and the production
-plan. `make docs` builds the book, SOD index, numbered bundle and every standalone record into
+The [book source](docs/book.typ) develops usage, ordered replication, durability, formal
+verification and operating procedures, followed by measured performance and a reference chapter. `make docs` builds the book, SOD index, numbered bundle and every standalone record into
 `docs/build/`; build errors fail the command. All PDFs use the same portable Typst typography.
 
 The [SOD 0004: Production SQL and Durable Throughput](docs/sod/records/0004-production-sql-and-durable-throughput.typ) defines
-mixed-transaction targets and correctness, batching, recovery and release gates. Its targets are
-provisional. The [historical Linux cost profile](benchmarks/results/linux-durability-cost.json)
+the accepted mixed-transaction, batching and recovery design. Correctness qualification is
+complete for the declared fixed-voter scope; unmet performance targets remain improvement goals. The [historical Linux cost profile](benchmarks/results/linux-durability-cost.json)
 attributes durable write costs without weakening synchronization. The
 [format-2 batch profile](benchmarks/results/linux-production-p1-batches.json) measures the initial
-transaction implementation separately; remaining work is explicit in the implementation ledger.
+transaction implementation separately; these are historical measurements. The current release
+decision and approved scope are in the [release record](docs/releases/2026-09-25.typ).
 
 
-The format-3 candidate adds bounded application groups, packed durable records and ordered read
-barriers. The [current Linux cost profile](benchmarks/results/linux-candidate-v3-cost.json) and
-[three-process disk campaign](benchmarks/results/linux-candidate-v3-process-2400-v2.json) are loaded
-by the book. The latter uses one Linux machine with three independent data directories, fenced
+The historical format-3 candidate added bounded application groups, packed durable records and ordered read
+barriers. Its [Linux cost profile](benchmarks/results/linux-candidate-v3-cost.json) and
+[three-process disk campaign](benchmarks/results/linux-candidate-v3-process-2400-v2.json) remain in the historical evidence archive. The latter uses one Linux machine with three independent data directories, fenced
 reads and nine workload/fault checks. Neither report is a production-readiness certification;
-see the [implementation ledger](docs/implementation-status.md) for completed work and open gates.
+see the [release record](docs/releases/2026-09-25.typ) for the current qualified candidate.
 
 
 Incoming-transition journal grouping is now enabled, with an enforced per-transition reference
-configuration retained. The [journal-group review](docs/journal-group-commit.md) describes owned
+configuration retained. The [journal-group review](docs/sod/records/0004-production-sql-and-durable-throughput.typ) describes owned
 effects and durability ordering. The [matched Linux process comparison](benchmarks/results/linux-journal-matched-process.json)
 measures the two configurations over three repetitions each; all six samples passed their fault
-checks. Production service, SQL-contract, snapshot/retention and endurance gates remain open.
+checks. These historical reports are retained separately from the final source-bound release evidence.

@@ -63,6 +63,9 @@ This generates `docs/sod/records/XXXXX-<slug>.typ` using the official Typst RFC 
 ./bin/sqlodin sod promote <short-slug>
 ```
 This assigns the next sequential SOD number, renames the file, and registers it in `docs/sod/registry.typ`.
+Promotion is not implementation qualification. Follow SOD 0001 and the template: record the problem,
+decision, alternatives, current implementation boundary and dated discussion. Update the registry
+with each accepted revision. Keep development history in its owning SOD, not a separate diary.
 
 ### Compiling SOD Documents
 ```bash
@@ -81,3 +84,10 @@ revision. Run upstream and SQLodin tests in both profiles before adopting a new 
 `Consensus_Error` (the upstream enum); application operations return SQLodin's `Error`.
 `explain_error` accepts either. Host code must consume/copy all borrowed effect payloads before
 stepping that node again. Follow the host obligations in README.md.
+
+## Documentation placement
+
+Use the [documentation index](docs/index.typ) as the reader entry point. Keep task-oriented
+instructions in `docs/guides/`, narrative chapters in `docs/book/`, numbered decisions in
+`docs/sod/`, release qualification in `docs/releases/`, and historical discussion within the relevant SOD. Formal contracts and executable models stay together in `specs/`;
+raw evidence stays in `benchmarks/results/`. Avoid adding loose documents to `docs/`.

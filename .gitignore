@@ -32,3 +32,7 @@ languages/python/dist/
 *.shell.db
 *.shell.db-*
 *.shell.db.lock
+
+# Formal checker caches
+.tlacache/
+specs/states/
