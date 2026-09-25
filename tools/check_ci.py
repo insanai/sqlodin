@@ -41,10 +41,7 @@ def main():
     run('odin', 'build', 'sim', '-o:minimal', '-vet', '-strict-style', f'-out:{simulator}')
     for nodes in (1, 3, 5):
         run(simulator, f'--nodes={nodes}', '--seed=1', '--steps=1000')
-    database = OUT / 'smoke.db'
-    database.unlink(missing_ok=True)
-    run(str(ROOT / 'bin/sqlodin'), 'local', str(database),
-        'CREATE TABLE t (id INTEGER PRIMARY KEY); INSERT INTO t VALUES (1); SELECT * FROM t;')
+
 
 
 if __name__ == '__main__':

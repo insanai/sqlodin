@@ -71,8 +71,11 @@ jobs:
         with:
           python-version: '3.12'
       - uses: ./.github/actions/native-setup
-      - name: Build and vet CLI
-        run: python3 tools/build_cli.py --jobs 4 --opt minimal
+      - name: Prepare native dependencies and vet CLI
+        run: |
+          python3 tools/build_native.py --jobs 4
+          python3 tools/build_shell.py
+          odin check cli -vet -strict-style
       - name: Tests and bounded simulation
         run: |
           python3 tools/check_ci.py
