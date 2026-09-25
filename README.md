@@ -1,9 +1,9 @@
 # SQLodin
 
-SQLodin puts a small, replicated cluster around SQLite. Each node keeps a local
-SQLite database, and any voter can accept a write. Paxos gives those writes a
-common order; the service acknowledges them after durable replication and local
-application.
+SQLodin is a distributed SQL database built with SQLite and Paxos. It supports
+multi-master writes: an application can send a write to any voter in the cluster.
+Each voter stores the database on disk. Paxos gives writes a common order, and
+the service acknowledges them after durable replication and local application.
 
 It is written in Odin and uses the complete, pinned
 [paxos-odin](https://github.com/insanai/paxos-odin) library. One executable provides
@@ -14,11 +14,17 @@ adds parameter binding, transactions, FTS and vector search, and a SQLAlchemy di
 
 SQLodin is intended for applications that benefit from SQLite's simple data model
 but need to keep serving through the loss of one node: internal tools, job and
-inventory records, service metadata, and small transactional backends. FTS5 and
+inventory records, service metadata, and transactional backends. FTS5 and
 exact vector search also support applications that combine structured records with
 text or embedding search.
 
-The supported cluster has three fixed voters. It needs a majority to make progress.
+The 0.6.0 server accepts one to five voters with fixed membership. Three voters
+can tolerate one unavailable voter; five can tolerate two, provided the remaining
+voters can communicate. The cluster needs a majority to make progress. The
+underlying Paxos API supports larger compile-time membership bounds; the shipped
+server and snapshot format currently cap membership at five. End-to-end release
+qualification used three voters, while targeted tests and models also cover five.
+
 Every voter can receive writes, but replication still produces one ordered history
 and each SQLite database has one writer. Adding voters does not shard the data or
 multiply write capacity. SQL statements and transaction sizes have explicit bounds;
@@ -46,7 +52,7 @@ SELECT * FROM note;
 .quit
 ```
 
-This creates a local SQLite file. To use replication, start three voters with their
+This creates a local SQLite file. For a three-voter replicated example, start each voter with its
 own data directories, certificates, and a shared membership configuration. The
 [service guide](docs/guides/network-service.typ) explains the configuration and
 certificate requirements. Once a cluster and client configuration are ready:

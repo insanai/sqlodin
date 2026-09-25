@@ -1,12 +1,8 @@
 # Contributing to SQLodin
 
-Welcome to SQLodin! SQLodin is engineered to be an exceptionally rigorous, mechanically sympathetic,
-and idiomatic implementation of distributed multi-master SQLite consensus in Odin.
-
-Before contributing, please read this document to understand our architectural constraints, coding
-standards, verification pipeline, and the **SQLodin Discussion (SOD)** RFC process.
-
----
+Contributions should make SQLodin easier to use, understand, or operate. Explain the
+problem, the resulting behavior, and the evidence behind the change. For changes to
+the design, follow the [SOD process](docs/sod/records/0001-sod-process.typ).
 
 ## The Zen of Odin for InsanAI Systems
 
@@ -27,25 +23,44 @@ SQLodin adheres to strict mechanical constraints defined in [SOD-0001](docs/sod/
 
 ## Verification Pipeline
 
-Every change must pass our complete verification pipeline before merging:
+Pull requests run Linux checks selected by the files changed:
 
-```bash
-# 1. Run all unit tests
-make test
+- Documentation-only edits run source style and CI selection checks, without a native build.
+- Python changes run the locked Python test environment and benchmark-harness tests.
+- Native changes build and vet the CLI, run optimized unit tests and compiler contracts,
+  and run one bounded fault-simulation seed with one, three, and five nodes.
+- Consensus dependency updates also run the upstream unit tests.
+- TLA+ model or configuration changes run the bounded models and their negative controls.
+  This job does not run TLAPS proofs; supply proof-checking evidence for proof changes.
 
-# 2. Run structural checks and compiler strict style
-make vet
+The stable **PR checks** job reports the combined result. Older runs on the same
+branch are cancelled. Native dependency archives are cached and checked by the
+build scripts before reuse. Tests run only on Linux. Multi-platform builds belong
+to the release workflow, not every pull request.
 
-# 3. Run full verification suite (tests, contracts, chaos simulation, smoke benchmarks)
-make check
+For a local Linux run of the short native checks:
+
+```sh
+./build.sh
+python3 tools/check_ci.py
 ```
 
-You can verify your code formatting and structural constraints locally at any time:
-```bash
-python3 tools/check_style.py --soft
-```
+Use targeted crash, network, SQL, or formal checks for the behavior being changed.
+Record the commands and results in the PR. Run `make check` for broader qualification
+when the change needs it; it includes both build profiles and more fault scenarios.
+Benchmarks and long-running experiments are explicit work, not routine PR gates.
 
----
+## Releases
+
+Keep the versions in `cli/main.odin`, `src/sqlodin.odin`, the Python package metadata,
+`__init__.py`, and `uv.lock` aligned. Push an annotated tag such as `v0.6.1` to start
+the binary release workflow. It tests on Linux and builds Linux and macOS archives.
+All builds must pass before the draft becomes public. Published assets are not
+replaced by a rerun. Windows users use the Linux archive under WSL2.
+
+Run **Publish Python package** manually on the same tag to upload to PyPI. It uses
+the locked test environment, checks the distributions, and requires the repository
+secret `PYPI_API_TOKEN`. No publishing credentials are exposed to PR jobs.
 
 ## SQLodin Discussions (SODs)
 
@@ -83,7 +98,7 @@ revision. Run upstream and SQLodin tests in both profiles before adopting a new 
 `src/paxos.odin` is an adapter, not a second Paxos implementation. Consensus operations return
 `Consensus_Error` (the upstream enum); application operations return SQLodin's `Error`.
 `explain_error` accepts either. Host code must consume/copy all borrowed effect payloads before
-stepping that node again. Follow the host obligations in README.md.
+stepping that node again. Follow the host obligations in the [protocol specifications](specs/README.md).
 
 ## Documentation placement
 

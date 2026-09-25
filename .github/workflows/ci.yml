@@ -1,0 +1,117 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  changes:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    outputs:
+      native: ${{ steps.select.outputs.native }}
+      python: ${{ steps.select.outputs.python }}
+      formal: ${{ steps.select.outputs.formal }}
+      upstream: ${{ steps.select.outputs.upstream }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Select checks
+        id: select
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = workflow_dispatch ]; then
+            python3 tools/ci_changes.py --all --output "$GITHUB_OUTPUT"
+          else
+            python3 tools/ci_changes.py --base "$BASE" --output "$GITHUB_OUTPUT"
+          fi
+      - name: Source style
+        run: |
+          python3 tools/check_style.py
+          python3 tools/test_ci_changes.py
+  python:
+    needs: changes
+    if: needs.changes.outputs.python == 'true'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          python-version: '3.11'
+          enable-cache: true
+      - name: Test Python and benchmark harness
+        run: |
+          uv sync --project languages/python --locked --extra test
+          uv run --project languages/python --no-sync pytest languages/python/tests
+          python3 tools/test_compare_three_hosts.py
+  native:
+    needs: changes
+    if: needs.changes.outputs.native == 'true'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: ./.github/actions/native-setup
+      - name: Build and vet CLI
+        run: python3 tools/build_cli.py --jobs 4
+      - name: Tests and bounded simulation
+        run: |
+          python3 tools/check_ci.py
+      - name: Test changed consensus dependency
+        if: needs.changes.outputs.upstream == 'true'
+        run: python3 tools/check_ci.py --upstream-only
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: linux-ci-reports
+          path: build/ci/*.json
+          if-no-files-found: ignore
+  formal:
+    needs: changes
+    if: needs.changes.outputs.formal == 'true'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Bounded models and negative controls
+        run: |
+          mkdir -p build
+          curl --fail --location --retry 3 https://github.com/tlaplus/tlaplus/releases/download/v1.6.0/tla2tools.jar -o build/tla2tools.jar
+          python3 tools/check_formal.py --jar build/tla2tools.jar --output build/formal-ci.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: formal-ci-report
+          path: build/formal-ci.json
+          if-no-files-found: ignore
+  checks:
+    name: PR checks
+    if: always()
+    needs: [changes, python, native, formal]
+    runs-on: ubuntu-22.04
+    timeout-minutes: 2
+    steps:
+      - name: Require every selected check to pass
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          results = json.loads(os.environ['RESULTS'])
+          assert results['changes']['result'] == 'success', results
+          assert all(job['result'] in ('success', 'skipped') for job in results.values()), results
+          PY
