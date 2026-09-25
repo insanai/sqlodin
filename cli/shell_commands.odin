@@ -37,6 +37,8 @@ Transactions use bounded optimistic serializable previews, then durable Paxos co
 .parameter list|clear         Inspect/reset bindings; no SQL expressions are evaluated
 .print TEXT                   Print text
 .show                         Show settings
+.session                      Current quorum-backed retry-session epoch
+.retire-sessions E --quiesced  Fence epoch E after resolving pending clients
 .limits                       Display service and transaction limits
 Local-file commands (.backup, .restore, .dump, .import, .open, PRAGMA administration)
 are available in 'sqlodin local'. They are not remote cluster management operations.
@@ -151,6 +153,7 @@ shell_command :: proc(s: ^Shell, line: string) -> bool {
 	for end < len(text) && text[end] > ' ' do end += 1
 	cmd := text[:end]
 	arg := strings.trim_space(text[end:])
+	if cmd == ".session" || cmd == ".retire-sessions" do return shell_session(s, cmd, arg)
 	if cmd == ".parameter" do return shell_parameter(s, arg)
 	if cmd == ".reconnect" do return shell_reconnect(s, arg)
 	if cmd == ".tables" || cmd == ".schema" || cmd == ".indexes" do return shell_metadata(s, cmd, arg)

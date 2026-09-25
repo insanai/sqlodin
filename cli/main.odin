@@ -39,6 +39,11 @@ print_usage :: proc() {
 	fmt.println("  connect <client.json> [options]    Interactive mTLS cluster SQL client")
 	fmt.println("  local [database] [SQL] [options]   Full bundled SQLite shell for local files")
 	fmt.println("  serve <config.json> [--create]      Run the native mTLS SQL service")
+	fmt.println("  backup <node.json> <new-directory> Verified offline application backup")
+	fmt.println("  restore <backup> <node.json> --new-cluster  Bootstrap a fresh fixed configuration")
+	fmt.println("  verify-backup <directory>          Verify backup bytes, metadata and SQL integrity")
+	fmt.println("  compact <node.json>                Offline certified generation compaction")
+	fmt.println("  migrate <node.json> <new-directory> Offline format-4 to format-5 migration")
 	fmt.println("  request <client.json> <request.json> Send an authenticated protocol request")
 	fmt.println("  build [all|test|sim|bench|cli]      Build binaries or test runner")
 	fmt.println("  test                                Run test suite with odin test")
@@ -344,6 +349,11 @@ main :: proc() {
 	case "local": os.exit(cmd_local(rest))
 	case "connect": os.exit(cmd_connect(rest))
 	case "serve":   cmd_serve(rest)
+	case "backup": os.exit(cmd_backup(rest))
+	case "restore": os.exit(cmd_restore(rest))
+	case "verify-backup": os.exit(cmd_verify_backup(rest))
+	case "compact": os.exit(cmd_compact(rest))
+	case "migrate": os.exit(cmd_migrate(rest))
 	case "request":
 		if len(rest) != 2 {
 			cli_diagnostic("REQUEST FILES REQUIRED",

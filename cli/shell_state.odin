@@ -21,7 +21,8 @@ foreign local_shell {
 
 Shell_State :: struct {
 	cluster, certificate, certificate_fingerprint, session: string,
-	sequence: u64,
+	sequence, epoch: u64,
+	epoch_known: bool,
 	pending: service.Request,
 }
 
@@ -119,6 +120,7 @@ shell_resolve :: proc(s: ^Shell) -> bool {
 		return shell_error(s, "Write outcome unknown; use .pending and .retry (same durable identity)")
 	}
 	switch r.error {
+	case "Expired", "Session_Limit": return shell_error(s, r.error)
 	case "", "Constraint", "Policy", "Sequence_Gap", "Invalid_SQL", "Conflict":
 		s.state.sequence += 1
 	case "Invalid_Request", "Unsupported":
@@ -141,9 +143,10 @@ shell_resolve :: proc(s: ^Shell) -> bool {
 shell_write :: proc(s: ^Shell, text: string, parameters: []service.Parameter = nil) -> bool {
 	if s.state.pending.op != "" do return shell_error(s, "Resolve the pending write with .retry first")
 	if len(text) > 4096 do return shell_error(s, "Transaction exceeds the 4096-byte service limit")
+	if !shell_prepare_epoch(s) do return false
 	s.state.pending = service.Request{op = "execute", sql = strings.clone(text),
 		parameters = parameters, session = s.state.session, sequence = s.state.sequence,
-		read_version = s.version}
+		read_version = s.version, session_epoch = s.state.epoch}
 	if !shell_state_save(s) { s.quit = true; return false }
 	return shell_resolve(s)
 }
@@ -165,7 +168,8 @@ shell_tls_open :: proc(s: ^Shell, cfg: service.Client_Config) -> bool {
 
 
 shell_state_valid :: proc(state: Shell_State) -> bool {
-	if len(state.session) != 32 || state.sequence == 0 || state.sequence >= 1 << 63 do return false
+	if len(state.session) != 32 || state.sequence == 0 || state.sequence > u64(max(i64)) ||
+	   state.epoch > u64(max(i64)) { return false }
 	nonzero := false
 	for ch in state.session {
 		if !(ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f') do return false
@@ -175,5 +179,6 @@ shell_state_valid :: proc(state: Shell_State) -> bool {
 	if state.pending.op == "" do return true
 	p := state.pending
 	return p.op == "execute" && p.session == state.session && p.sequence == state.sequence &&
+	       p.session_epoch == state.epoch &&
 	       len(p.sql) > 0 && len(p.sql) <= 4096 && !strings.contains(p.sql, "\x00")
 }

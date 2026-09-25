@@ -37,6 +37,12 @@ shell_error_help :: proc(message: string) -> (title, hint: string) {
 	case "Conflict": return "TRANSACTION CONFLICT",
 		"Repeat the entire BEGIN ... COMMIT transaction against the new " +
 			"revision; roll back first if still active."
+	case "Expired": return "SESSION RETIRED",
+		"Keep the saved request for diagnosis. Do not relabel or replay it in a new epoch. " +
+			"Use a new --state file only for new work after checking its business outcome."
+	case "Session_Limit": return "SESSION CAPACITY REACHED",
+		"Quiesce clients, resolve pending writes, inspect .session, then explicitly retire " +
+			"that epoch with .retire-sessions E --quiesced."
 	case "Constraint": return "CONSTRAINT REJECTED",
 		"Inspect .schema for UNIQUE, CHECK and foreign-key rules. Correct the values before retrying."
 	case "Invalid_SQL": return "SQL COULD NOT RUN",
