@@ -153,6 +153,35 @@ node_own_next :: proc(node: ^MultiMaster_Node($V, $M, $W, $C, $G)) -> Slot {
 	return node.own_next
 }
 
+node_owner_of :: proc(node: ^MultiMaster_Node($V, $M, $W, $C, $G), slot: Slot) -> Node_Id {
+	return paxos.owner_of(node, slot)
+}
+
+// SOD 0005 M2/M5: learn an owner's round-zero value without its Commit. Call
+// after stepping `env`, inside the same durable group. Round zero of a slot
+// belongs to its owner alone, whose vote is durable before its Accept leaves.
+// M2 (Mencius simple consensus): every revoker offers a reported vote or this
+// same no-op, so an owner's no-op is the slot's only choosable value. M5: with
+// a write quorum of two, this voter's own round-zero vote for the same value
+// and the owner's vote are a quorum, chosen once this group is durable.
+owner_fast_commit :: proc(
+	node: ^MultiMaster_Node($V, $M, $W, $C, $G), env: Envelope(V),
+) -> (Envelope(V), bool) {
+	accept, is_accept := env.message.(Accept_Message(V))
+	if !is_accept || accept.value == nil || accept.slot == 0 || !node.ownership do return {}, false
+	if ballot_round(accept.ballot) != 0 || ballot_node(accept.ballot) != env.from ||
+	   paxos.owner_of(node, accept.slot) != env.from || env.from == node.id {
+		return {}, false
+	}
+	commit := Envelope(V){from = env.from, to = env.to,
+		message = Commit_Message(V){slot = accept.slot, value = accept.value}}
+	if noop, ok := node.noop.(V); ok && accept.value^ == noop do return commit, true
+	if membership_write_quorum(&node.membership) != 2 do return {}, false
+	ballot, voted, ok := paxos.ledger_vote_at(&node.ledger, accept.slot)
+	if !ok || ballot != accept.ballot || voted^ != accept.value^ do return {}, false
+	return commit, true
+}
+
 node_highest_seen :: proc(node: ^MultiMaster_Node($V, $M, $W, $C, $G)) -> Slot {
 	return node.highest_seen
 }
