@@ -41,7 +41,7 @@ request_value :: proc(s: ^Server, c: ^Connection, r: Request) -> (m: sql.Mutatio
 	sequence := r.sequence if r.op == "execute" else 1
 	if !valid || len(r.parameters) > sql.MAX_MUTATION_COLS do return
 	err: sql.Error
-	m, err = sql.mutation_make_transaction(s.config.node, {session, sequence}, r.sql)
+	m, err = sql.mutation_make_transaction(s.config.node, {session, sequence, r.session_epoch}, r.sql)
 	if err != .None do return
 	m.read_version = r.read_version
 	for p in r.parameters {
@@ -68,20 +68,32 @@ dispatch :: proc(s: ^Server, c: ^Connection, r: Request) -> bool {
 		if !c.hello {
 			if r.op != "hello" || r.node != c.peer || r.fingerprint != s.fingerprint do return false
 			c.hello = true
+			err := durable.catch_up(s.host, c.peer)
+			if err != .None && err != .Backpressure { s.fatal = true; return false }
 			return true
 		}
+		if r.op == "snapshot_receipt" do return receive_snapshot_receipt(s, c, r)
+		if r.op == "snapshot_offer" do return receive_snapshot_offer(s, c, r)
+		if r.op == "snapshot_fetch" do return send_snapshot_chunk(s, c, r)
+		if r.op == "snapshot_chunk" do return receive_snapshot_chunk(s, c, r)
 		if r.op != "packet" || r.packet.from != c.peer || r.packet.to != s.config.node do return false
 		packet: durable.Packet
 		if !wire_decode(r.packet, &packet) do return false
-		err := durable.step(s.host, durable.envelope(&packet))
-		if err != .None && err != .Backpressure { s.fatal = true; return false }
+		if r.packet.kind == 7 && r.packet.fields[0] > s.host.generation_base.key.prefix {
+			c.snapshot_sending = false
+		}
+		if s.incoming_count == len(s.incoming) && !apply_packets(s) do return false
+		s.incoming[s.incoming_count] = packet
+		s.incoming_count += 1
+		s.work_ready = true
 		return true
 	}
+	if c.admission_rejected do return reject_client_admission(s, c, r.sequence)
 	if c.pending != .None do return respond(s, c, "Busy")
-	if r.op == "status" {
-		return enqueue(c, Response{status = "ok", cluster = s.config.cluster, node = s.config.node,
-			protocol = PROTOCOL, applied = s.host.engine.applied_through, members = s.config.members})
-	}
+	c.session_info = false
+	if r.op == "session_epoch" || r.op == "retire_sessions" do return session_request(s, c, r)
+	if r.op == "snapshot" do return respond_snapshot_request(s, c)
+	if r.op == "status" do return respond_status(s, c)
 	if r.op != "execute" && r.op != "query" && r.op != "begin" && r.op != "preview" {
 		return respond(s, c, "Unsupported")
 	}
@@ -110,19 +122,20 @@ dispatch :: proc(s: ^Server, c: ^Connection, r: Request) -> bool {
 	c.pending = .Write if r.op == "execute" else .Read
 	c.local_read = r.op == "query" && r.consistency == "local"
 	if c.pending == .Write {
-		slot, err := durable.propose(s.host, c.value)
-		if err == .Backpressure { c.pending = .None; return respond(s, c, "Busy") }
-		if err != .None { s.fatal = true; return false }
-		c.slot = slot
+		// The owner admits this turn's complete requests together after draining
+		// peer input. No acknowledgement or consensus effect occurs here.
+		c.slot = 0
 	}
 	return true
 }
 
 poll_write :: proc(s: ^Server, c: ^Connection) -> bool {
+	if c.slot == 0 do return true
 	out, done, err := durable.outcome(s.host, c.slot, &c.value)
 	if err != .None { s.fatal = true; return false }
 	if done {
 		c.pending = .None
+		if c.value.kind == .Session_Epoch do return respond_epoch(s, c, outcome_name(out.kind))
 		return respond(s, c, "" if out.kind == .Applied else outcome_name(out.kind), out.changes)
 	}
 	if s.host.engine.applied_through >= c.slot {
@@ -150,21 +163,13 @@ outcome_name :: proc(kind: sql.Transaction_Outcome) -> string {
 }
 
 poll_read :: proc(s: ^Server, c: ^Connection) -> bool {
-	if !c.local_read {
-		if c.ticket.token == 0 {
-			err: durable.Error
-			c.ticket, err = durable.begin_read(s.host, 0)
-			if err == .Backpressure do return true
-			if err != .None { s.fatal = true; return false }
-		}
-		result, err := durable.poll_read(s.host, c.ticket, "SELECT 1")
-		if err != .None { s.fatal = true; return false }
-		if result.status == .Pending do return true
-		c.ticket = {}
-		if result.status == .Displaced do return true
-		if result.sql_error != .None do return false
-	}
+	if !c.local_read do return true // The closed cohort owns the single-use host ticket.
+	return read_result(s, c)
+}
+
+read_result :: proc(s: ^Server, c: ^Connection) -> bool {
 	c.pending = .None
+	if c.session_info { c.session_info = false; return respond_epoch(s, c) }
 	if c.transaction_begin || c.preview do return transaction_result(s, c)
 	result, err := sql.engine_query(&s.host.engine, sql.mutation_sql(&c.value), &c.value,
 		context.temp_allocator)

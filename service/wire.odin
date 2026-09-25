@@ -40,7 +40,10 @@ wire_encode :: proc(p: ^durable.Packet) -> Wire {
 	if _, present := sql.message_value(p.env.message); present {
 		c: durable.Codec
 		durable.mutation_codec(&c, &p.value)
-		w.value = base64.encode(c.bytes[:c.pos], allocator = context.temp_allocator)
+		storage: [durable.PACKED_CAPACITY]u8
+		packed, ok := durable.pack_record(c.bytes[:c.pos], storage[:])
+		if !ok do return {}
+		w.value = base64.encode(packed, allocator = context.temp_allocator)
 	}
 	return w
 }
@@ -76,8 +79,12 @@ wire_decode :: proc(w: Wire, p: ^durable.Packet) -> bool {
 		c: durable.Codec
 		durable.mutation_codec(&c, &p.value)
 		expected := c.pos
-		bytes, err := base64.decode_into_buf(c.bytes[:], w.value)
-		if err != nil || len(bytes) != expected do return false
+		if len(w.value)%4 != 0 do return false
+		storage: [durable.PACKED_CAPACITY]u8
+		bytes, err := base64.decode_into_buf(storage[:], w.value)
+		if err != nil do return false
+		size, unpacked := durable.unpack_record(bytes, c.bytes[:])
+		if !unpacked || size != expected do return false
 		c.pos, c.reading = 0, true
 		durable.mutation_codec(&c, &p.value)
 		if sql.mutation_validate(&p.value) != .None do return false

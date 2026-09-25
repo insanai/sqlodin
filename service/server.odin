@@ -8,6 +8,7 @@ import durable "../src/durable"
 import tls "../transport/mtls"
 
 start_connection :: proc(s: ^Server, fd: posix.FD, member: ^Member = nil) -> bool {
+	if member == nil && !incoming_admission_available(s) do return false
 	for &c in s.connections {
 		if c.state != .Unused do continue
 		stream: tls.Stream
@@ -37,7 +38,7 @@ dial_peers :: proc(s: ^Server) {
 	for &m in s.config.members {
 		if m.id <= s.config.node do continue
 		found := false
-		for c in s.connections do if c.state != .Unused && c.peer == m.id { found = true }
+		for &c in s.connections do if c.state != .Unused && c.peer == m.id { found = true }
 		if found do continue
 		fd := socket_open(m.address, false)
 		if fd < 0 do continue
@@ -67,6 +68,7 @@ authenticate :: proc(s: ^Server, c: ^Connection) -> bool {
 		client := false
 		for identity in s.config.clients do if identity == name { client = true }
 		if !client do return false
+		c.admission_rejected = !client_admission_available(s)
 	} else {
 		for &other in s.connections {
 			if &other != c && other.state == .Ready && other.peer == c.peer do return false
@@ -80,11 +82,14 @@ authenticate :: proc(s: ^Server, c: ^Connection) -> bool {
 
 drive_connection :: proc(s: ^Server, c: ^Connection) -> bool {
 	if c.state != .Ready do return authenticate(s, c)
-	if !flush(c) do return false
+	if !flush_ready(s, c) do return false
+	if c.close_after_flush do return c.out_count > 0
+	if c.admission_rejected && time.tick_since(c.born) > 5 * time.Second do return false
 	if c.pending != .None {
 		if time.tick_since(c.pending_since) >= c.timeout {
-			if c.ticket.token != 0 { _ = durable.cancel_read(s.host, c.ticket); c.ticket = {} }
+			release_read(s, c)
 			error := "Unknown_Outcome" if c.pending == .Write else "Read_Timeout"
+			if c.pending == .Write && c.slot == 0 do error = "Busy"
 			c.pending = .None
 			return respond(s, c, error)
 		}
@@ -92,13 +97,14 @@ drive_connection :: proc(s: ^Server, c: ^Connection) -> bool {
 		return poll_read(s, c)
 	}
 	if time.tick_since(c.activity) > 120 * time.Second do return false
-	return receive(s, c)
+	return receive_ready(s, c)
 }
 
 route_packets :: proc(s: ^Server) {
 	packet: durable.Packet
 	for _ in 0..<256 {
 		if !durable.pop(s.host, &packet) do return
+		s.work_ready = true
 		// Upstream phase-one broadcasts include the local acceptor. Deliver it
 		// through the same durable transition boundary as a remote packet.
 		if packet.env.to == s.config.node {
@@ -108,9 +114,15 @@ route_packets :: proc(s: ^Server) {
 		}
 		for &c in s.connections {
 			if c.state != .Ready || !c.hello || c.peer != packet.env.to do continue
+			// Catch-up owns this slow peer's bounded output queue until it has
+			// installed the image; normal consensus traffic can be retransmitted.
+			if c.snapshot_sending do break
+			// A slow peer is packet loss, not a broken authenticated connection.
+			// Leave room for snapshot control and let Paxos retransmit dropped work.
+			if c.queued > MAX_QUEUED/4 do break
 			request := Request{op = "packet", cluster = s.config.cluster, protocol = PROTOCOL,
 				packet = wire_encode(&packet)}
-			if !enqueue(&c, request) do connection_close(s, &c)
+			_ = enqueue(&c, request)
 			break
 		}
 		// A disconnected peer is packet loss; upstream retransmission/catch-up recovers it.
@@ -118,6 +130,15 @@ route_packets :: proc(s: ^Server) {
 }
 
 run :: proc(config_path: string, create: bool = false, duration_seconds: int = 0) -> bool {
+	when RESOURCE_PROFILE {
+		profile: Resource_Profile
+		// Context changes are local to this procedure, not inherited from helpers.
+		context.allocator, context.temp_allocator = resource_profile_begin(&profile)
+		defer {
+			context.allocator, context.temp_allocator = profile.heap.backing, profile.temporary.backing
+			resource_profile_end(&profile)
+		}
+	}
 	if posix.sigignore(.SIGPIPE) != nil || !install_signals() do return false
 	config_arena: vmem.Arena
 	if vmem.arena_init_growing(&config_arena) != nil do return false
@@ -132,6 +153,7 @@ run :: proc(config_path: string, create: bool = false, duration_seconds: int = 0
 	fmt.printf("SQLodin node %d listening on %s (mTLS, cluster %s)\n",
 		cfg.node, cfg.listen, cfg.cluster)
 	for !s.fatal {
+		s.work_ready = false
 		free_all(context.temp_allocator)
 		if stopping() do return true
 		if duration_seconds > 0 &&
@@ -140,20 +162,29 @@ run :: proc(config_path: string, create: bool = false, duration_seconds: int = 0
 		}
 		accept_connections(s)
 		dial_peers(s)
+		repair_peers(s)
 		for &c in s.connections {
 			if c.state == .Unused do continue
 			if !drive_connection(s, &c) do connection_close(s, &c)
 			if s.fatal do break
 		}
+		if !apply_packets(s) && s.fatal do break
+		if !finish_read_cohort(s) do break
+		if !begin_read_cohort(s) do break
+		if !admit_writes(s) do break
 		if time.tick_since(s.last_tick) >= 100 * time.Millisecond {
 			err := durable.tick(s.host)
 			if err != .None && err != .Backpressure do s.fatal = true
 			s.last_tick = time.tick_now()
 		}
+		err := durable.progress(s.host)
+		if err != .None && err != .Backpressure { s.fatal = true; break }
 		route_packets(s)
+		if !drive_snapshots(s) do break
 		wait_io(s)
 	}
 	fmt.eprintln("SQLodin stopped after a durable storage or consensus failure")
+	if reason := snapshot_error(s); reason != "" do fmt.eprintf("Maintenance failure: %s\n", reason)
 	return false
 }
 
@@ -161,7 +192,7 @@ wait_io :: proc(s: ^Server) {
 	fds: [MAX_CONNECTIONS + 1]posix.pollfd
 	fds[0] = {fd = s.listener, events = {.IN}}
 	count := 1
-	for c in s.connections {
+	for &c in s.connections {
 		if c.state == .Unused do continue
 		events: posix.Poll_Event
 		if c.pending == .None || c.write_wait == .Want_Read do events |= {.IN}
@@ -172,5 +203,30 @@ wait_io :: proc(s: ^Server) {
 		fds[count] = {fd = c.fd, events = events}
 		count += 1
 	}
-	_ = posix.poll(&fds[0], posix.nfds_t(count), 10)
+	_ = posix.poll(&fds[0], posix.nfds_t(count), 0 if s.work_ready else 10)
+}
+
+// Restart clears volatile peer frontiers. Poll retained decisions from every
+// authenticated peer, including when ownership has no live leader hint. This
+// repeats lost requests and advances through more than one bounded chunk.
+repair_peers :: proc(s: ^Server) {
+	if time.tick_since(s.last_repair) < time.Second do return
+	s.last_repair = time.tick_now()
+	for &c in s.connections {
+		if c.state != .Ready || !c.hello || c.peer == 0 do continue
+		err := durable.catch_up(s.host, c.peer)
+		if err != .None && err != .Backpressure { s.fatal = true; return }
+	}
+}
+
+// Frames own their Mutation payload before any receive arena is reset. The
+// durable host withholds every dependent message until the group is committed.
+apply_packets :: proc(s: ^Server) -> bool {
+	if s.incoming_count == 0 do return true
+	err := durable.step_batch(s.host, s.incoming[:s.incoming_count])
+	if err == .Backpressure do return false
+	if err != .None { s.fatal = true; return false }
+	s.incoming_count = 0
+	s.work_ready = true
+	return true
 }
