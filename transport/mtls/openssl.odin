@@ -3,8 +3,9 @@ package mtls
 
 import "core:c"
 
-foreign import ssl_lib "../../build/native/libssl.a"
-foreign import crypto_lib "../../build/native/libcrypto.a"
+// Every reachable SSL symbol requires both archives, even a small embedded
+// caller that only closes a stream and never calls a crypto wrapper itself.
+foreign import ssl_lib {"../../build/native/libssl.a", "../../build/native/libcrypto.a"}
 
 @(private="file")
 foreign ssl_lib {
@@ -14,6 +15,9 @@ foreign ssl_lib {
 	SSL_CTX_free :: proc "c" (ctx: rawptr) ---
 	SSL_CTX_get0_certificate :: proc "c" (ctx: rawptr) -> rawptr ---
 	EVP_sha256 :: proc "c" () -> rawptr ---
+	X509_get0_notBefore :: proc "c" (cert: rawptr) -> rawptr ---
+	X509_get0_notAfter :: proc "c" (cert: rawptr) -> rawptr ---
+	X509_cmp_current_time :: proc "c" (date: rawptr) -> c.int ---
 	X509_digest :: proc "c" (cert, algorithm: rawptr, digest: [^]u8, length: ^c.uint) -> c.int ---
 	SSL_CTX_ctrl :: proc "c" (ctx: rawptr, cmd: c.int, arg: c.long, ptr: rawptr) -> c.long ---
 	SSL_CTX_use_certificate_chain_file :: proc "c" (ctx: rawptr, file: cstring) -> c.int ---
@@ -41,7 +45,7 @@ foreign ssl_lib {
 }
 
 @(private="file")
-foreign crypto_lib {
+foreign ssl_lib {
 	ERR_clear_error :: proc "c" () ---
 	X509_free :: proc "c" (cert: rawptr) ---
 }
@@ -63,7 +67,7 @@ new_context :: proc(cert, key, ca: cstring) -> rawptr {
 	      SSL_CTX_load_verify_locations(ctx, ca, nil) == 1 &&
 	      SSL_CTX_set_num_tickets(ctx, 0) == 1 &&
 	      SSL_CTX_set_max_early_data(ctx, 0) == 1
-	if !ok { SSL_CTX_free(ctx); return nil }
+	if !ok || !context_certificate_current(ctx) { SSL_CTX_free(ctx); return nil }
 	// Require an authenticated certificate in both directions; no permissive callback.
 	SSL_CTX_set_verify(ctx, 1 | 2, nil)
 	return ctx
@@ -141,3 +145,13 @@ context_certificate_hash :: proc(ctx: ^Context) -> (digest: [32]u8, ok: bool) {
 	return
 }
 
+// Fail startup with an unusable local credential instead of listening forever
+// while every correctly validating peer rejects its validity interval.
+@(private)
+context_certificate_current :: proc(ctx: rawptr) -> bool {
+	cert := SSL_CTX_get0_certificate(ctx)
+	if cert == nil do return false
+	before, after := X509_get0_notBefore(cert), X509_get0_notAfter(cert)
+	return before != nil && after != nil &&
+		X509_cmp_current_time(before) < 0 && X509_cmp_current_time(after) > 0
+}
