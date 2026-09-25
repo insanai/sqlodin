@@ -10,6 +10,7 @@ binary is sha256 `245b6c36b7a1b67e474b7944af97262838d562504fb6f956d00125798ef893
   of at most 16, measured in the same run.
 - `three-host-comparison.json`: `tools/compare_three_hosts.py`, voters on `.19`/`.20`/`.21`,
   client on `.18`, baseline and candidate alternating for three repetitions.
+- `three-host-comparison-32.json`: the same comparison with `--clients 32`.
 - `three-host.json`: `tools/check_network_hosts.py --majority` on the candidate.
 - `service/`: network-service, transaction-history (two seeds), ORM, majority, session-crash,
   snapshot, catch-up, admission, Python and CLI checks on the candidate.

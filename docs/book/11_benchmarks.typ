@@ -97,8 +97,9 @@ sequential sync barriers per write and per fresh read. It then introduced one ba
 turn, one-message learning of owner no-ops (and, with three voters, of values this voter also voted
 for), a WAL NORMAL application cache of the FULL journal, and quorum-frontier reads. The same
 calibration matrix, with SQLite measured in the same run on `.18`, moved from 1.7–10.5% to
-6.8–40.6% of SQLite; the absolute gain is 1.9–10.5× per case. On three separate hosts, 24-client
-pure writes rose from 133 to 651 per second, and a sequential fresh read fell from 55.5 to 0.58 ms.
+6.8–40.6% of SQLite; the absolute gain is 1.9–10.5× per case. On three separate hosts, 32-client
+pure writes rose from 95 to 784 per second (medians), and a sequential fresh read fell from 44.6 to
+0.51 ms.
 Thirty-two-client pure writes remain far below the 25% goal on the shared-disk host. The reports,
 including failed attempts, are in `benchmarks/results/sod-0005/`, and SOD 0005 records the method
 and the remaining gaps.

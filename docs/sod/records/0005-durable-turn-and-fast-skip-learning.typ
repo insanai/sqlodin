@@ -372,11 +372,26 @@ at most 16, measured in the same run:
   [24 clients, 70/30 mix], [190 tx/s], [519 tx/s], [2.7×],
 )
 
+With 32 clients (`three-host-comparison-32.json`, `--clients 32`), again 3 alternating repetitions
+with all replicas verified:
+
+#table(
+  columns: (1.4fr, 1.2fr, 1.2fr, 0.7fr),
+  table.header([*Measure (median)*], [*Baseline (samples)*], [*SOD 0005 (samples)*], [*Change*]),
+  [Sequential write latency], [44.3 ms], [19.4 ms], [2.3×],
+  [Sequential fresh-read latency], [44.6 ms], [0.51 ms], [~87×],
+  [32 clients, pure writes], [94.8 w/s (78.5, 94.8, 157.4)], [784 w/s (832, 784, 300)], [8.3×],
+  [32 clients, 70/30 mix], [269 tx/s (197, 327, 269)], [755 tx/s (828, 755, 741)], [2.8×],
+)
+
+One candidate pure-write sample (300 w/s) is well below the other two. It is retained and not
+explained; host sync latency varies with other tenants.
+
 == Remaining gaps
 
 The original targets remain unmet in the pure-write and high-concurrency cases: 32-client pure
 writes reach 6.8% of SQLite on the shared-disk host, against the 25% goal. Separate hosts help
-(4.9× there), which is consistent with shared intent-log contention on `.18`. The irreducible chain
+(4.9× at 24 clients and 8.3× at 32 clients there), which is consistent with shared intent-log contention on `.18`. The irreducible chain
 is the owner's vote barrier, the voter's barrier and the owner's decision barrier, plus waiting for
 turn boundaries. Under mixed load a fresh read also waits for writes in flight below its frontier,
 the "rinse" of quorum reads, so mixed reads cost about one write latency. Candidates, each needing

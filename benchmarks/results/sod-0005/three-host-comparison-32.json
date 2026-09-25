@@ -1,0 +1,84 @@
+{
+  "complete": true,
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "client": "insan@10.175.52.18",
+  "samples": [
+    {
+      "label": "baseline",
+      "repeat": 0,
+      "stamp": "20260925T061220866815Z",
+      "write_ms_median": 60.387841425836086,
+      "read_ms_median": 59.89783303812146,
+      "clients": 32,
+      "writes_32_per_s": 78.53286865563231,
+      "mixed70_32_per_s": 196.8001393263954,
+      "verified": true
+    },
+    {
+      "label": "sod0005",
+      "repeat": 0,
+      "stamp": "20260925T061254052038Z",
+      "write_ms_median": 17.020454164594412,
+      "read_ms_median": 0.5930992774665356,
+      "clients": 32,
+      "writes_32_per_s": 831.5179628845056,
+      "mixed70_32_per_s": 828.4720077840698,
+      "verified": true
+    },
+    {
+      "label": "baseline",
+      "repeat": 1,
+      "stamp": "20260925T061305536490Z",
+      "write_ms_median": 23.336549755185843,
+      "read_ms_median": 23.201044648885727,
+      "clients": 32,
+      "writes_32_per_s": 94.83524480054787,
+      "mixed70_32_per_s": 327.44602915894467,
+      "verified": true
+    },
+    {
+      "label": "sod0005",
+      "repeat": 1,
+      "stamp": "20260925T061329417500Z",
+      "write_ms_median": 19.877083599567413,
+      "read_ms_median": 0.5104318261146545,
+      "clients": 32,
+      "writes_32_per_s": 784.1843037396615,
+      "mixed70_32_per_s": 755.2701401537217,
+      "verified": true
+    },
+    {
+      "label": "baseline",
+      "repeat": 2,
+      "stamp": "20260925T061339752212Z",
+      "write_ms_median": 44.2966939881444,
+      "read_ms_median": 44.58346450701356,
+      "clients": 32,
+      "writes_32_per_s": 157.3715101511375,
+      "mixed70_32_per_s": 268.7968757992517,
+      "verified": true
+    },
+    {
+      "label": "sod0005",
+      "repeat": 2,
+      "stamp": "20260925T061405171651Z",
+      "write_ms_median": 19.386725965887308,
+      "read_ms_median": 0.49100862815976143,
+      "clients": 32,
+      "writes_32_per_s": 300.1503150945744,
+      "mixed70_32_per_s": 741.1280743686876,
+      "verified": true
+    }
+  ],
+  "scope": "three voters on separate hosts; one client host; closed-loop; not a capacity test",
+  "clients": 32,
+  "binaries": {
+    "baseline": "aa36f6bbe368fd42b0e59fcfe98cc3f5a65cf41dd4937a5c6a3a7e2ac19a5769",
+    "sod0005": "245b6c36b7a1b67e474b7944af97262838d562504fb6f956d00125798ef89359"
+  },
+  "harness_sha256": "fd2d2142de55e02eaf0e2dae4efbc46fe2cfe358d14334c8ff39b71fb7c993c8"
+}
