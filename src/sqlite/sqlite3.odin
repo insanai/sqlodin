@@ -10,6 +10,7 @@ Sqlite3      :: distinct rawptr
 Sqlite3_Stmt :: distinct rawptr
 Sqlite3_Context :: distinct rawptr
 Sqlite3_Value :: distinct rawptr
+Sqlite3_Backup :: distinct rawptr
 
 OK         :: 0
 ERROR      :: 1
@@ -52,6 +53,7 @@ OPEN_NOMUTEX       :: 0x00008000
 OPEN_FULLMUTEX     :: 0x00010000
 OPEN_SHAREDCACHE   :: 0x00020000
 OPEN_PRIVATECACHE  :: 0x00040000
+OPEN_NOFOLLOW      :: 0x01000000
 
 INTEGER_TYPE :: 1
 FLOAT_TYPE   :: 2
@@ -61,6 +63,10 @@ NULL_TYPE    :: 5
 
 @(default_calling_convention="c")
 foreign sqlite3 {
+	sqlite3_backup_init :: proc(destination: Sqlite3, destination_name: cstring,
+		source: Sqlite3, source_name: cstring) -> Sqlite3_Backup ---
+	sqlite3_backup_step :: proc(backup: Sqlite3_Backup, pages: c.int) -> c.int ---
+	sqlite3_backup_finish :: proc(backup: Sqlite3_Backup) -> c.int ---
 	sqlite3_db_config :: proc(db: Sqlite3, op: c.int, #c_vararg args: ..any) -> c.int ---
 	sqlite3_limit :: proc(db: Sqlite3, id, value: c.int) -> c.int ---
 	sqlite3_progress_handler :: proc(
@@ -140,6 +146,7 @@ foreign sqlite3 {
 	sqlite3_changes :: proc(db: Sqlite3) -> c.int ---
 	sqlite3_last_insert_rowid :: proc(db: Sqlite3) -> i64 ---
 	sqlite3_extended_errcode :: proc(db: Sqlite3) -> c.int ---
+	sqlite3_status64 :: proc(op: c.int, current, highwater: ^i64, reset: c.int) -> c.int ---
 	sqlite3_bind_parameter_count :: proc(stmt: Sqlite3_Stmt) -> c.int ---
 	sqlite3_total_changes64 :: proc(db: Sqlite3) -> i64 ---
 	sqlite3_errmsg :: proc(db: Sqlite3) -> cstring ---

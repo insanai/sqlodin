@@ -10,11 +10,16 @@ foreign import sqlite_vec "../../build/native/libsqlite_vec.a"
 @(default_calling_convention="c")
 foreign sqlite_vec {
 	sqlite3_vec_init :: proc(db: Sqlite3, pzErrMsg: ^cstring, pApi: rawptr) -> c.int ---
+	sqlodin_vec_identity :: proc() -> cstring ---
 }
+
+// Policy 8 binds this exact source/flag contract. A change requires a reviewed
+// replication-policy upgrade; never derive the expected value from a local build.
+VEC_BUILD_IDENTITY :: "b8cc1fc2e62b96a089a6bb91118d6aeb1ac0b1ea47d7a28fe0ec2339d1badaf1"
 
 // Registers the sqlite-vec extension with a SQLite connection.
 vec_register :: proc(db: Sqlite3) -> bool {
-	if db == nil do return false
+	if db == nil || string(sqlodin_vec_identity()) != VEC_BUILD_IDENTITY do return false
 	err_msg: cstring
 	rc := sqlite3_vec_init(db, &err_msg, nil)
 	if err_msg != nil do sqlite3_free(rawptr(err_msg))
