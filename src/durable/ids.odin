@@ -17,8 +17,11 @@ next_id :: proc(h: ^Host, timestamp_ms: u64) -> (u64, Error) {
 
 reserve_ids :: proc(h: ^Host, timestamp_ms: u64) -> bool {
 	if !history_record_room(h) do return false
-	if !db.begin_tx(journal_db(h)) do return false
-	defer db.rollback_tx(journal_db(h))
+	// Inside a service turn the reservation joins the open group's barrier;
+	// a marker using these IDs is released only after that barrier.
+	nested := db.sqlite3_get_autocommit(journal_db(h)) == 0
+	if !nested && !db.begin_tx(journal_db(h)) do return false
+	defer if !nested do db.rollback_tx(journal_db(h))
 	s, ok := prepare(h, "SELECT ms FROM _sqlodin_ids WHERE id=1")
 	if !ok do return false
 	defer db.sqlite3_finalize(s)
@@ -34,7 +37,7 @@ reserve_ids :: proc(h: ^Host, timestamp_ms: u64) -> bool {
 	if db.sqlite3_step(update) != db.DONE || db.sqlite3_changes(journal_db(h)) != 1 {
 		return false
 	}
-	if !db.commit_tx(journal_db(h)) do return false
+	if !nested && !db.commit_tx(journal_db(h)) do return false
 	h.id_next = ms << 22 | u64(h.node.id) << 12
 	h.id_end = h.id_next + 4096
 	return true

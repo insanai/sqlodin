@@ -11,6 +11,7 @@ catch_up :: proc(h: ^Host, peer: sql.Node_Id) -> Error {
 	if peer == h.node.id || !sql.membership_contains(&h.node.membership, peer) do return .Invalid
 	if queue.len(h.packets) >= 1024 do return .Backpressure
 	if h.engine.applied_through == max(sql.Slot) do return .Invalid
+	if !turn_transition(h) do return poison(h)
 	if sql.node_request_catch_up(&h.node, peer, h.engine.applied_through + 1,
 		&h.effects) != .None { return .Invalid }
 	return finish(h)
@@ -21,6 +22,7 @@ catch_up :: proc(h: ^Host, peer: sql.Node_Id) -> Error {
 progress :: proc(h: ^Host) -> Error {
 	if h.poisoned do return .Poisoned
 	if queue.len(h.packets) >= 1024 do return .Backpressure
+	if !turn_transition(h) do return poison(h)
 	if sql.node_progress(&h.node, &h.effects) != .None do return poison(h)
 	return finish(h)
 }

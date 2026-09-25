@@ -50,6 +50,7 @@ Host :: struct {
 	chosen_stmt, record_stmt: db.Sqlite3_Stmt,
 	durable_sequence: u64,
 	transition_group: ^Transition_Group,
+	turn_open: bool, // SOD 0005 M1: transitions join one journal barrier
 	head: [32]u8,
 	id_next: u64,
 	id_end: u64,
@@ -123,8 +124,8 @@ open :: proc(
 		return nil, .Consensus
 	}
 	if sql.engine_open_reader(&h.engine, path) != .None do return nil, .Storage
-	good = true
 	if !application_cache_mode(h) do return nil, .Storage
+	good = true
 	return h, .None
 }
 
@@ -133,8 +134,8 @@ close :: proc(h: ^Host) {
 	generation_release_worker(h)
 	snapshot_close(h)
 	if h.chosen_stmt != nil do db.sqlite3_finalize(h.chosen_stmt)
-	sql.engine_close(&h.engine)
 	if h.record_stmt != nil do db.sqlite3_finalize(h.record_stmt)
+	sql.engine_close(&h.engine)
 	if h.consensus != nil do db.close(h.consensus)
 	if h.consensus_lock >= 0 do posix.close(h.consensus_lock)
 	if h.transition_group != nil do free(h.transition_group)
@@ -171,6 +172,7 @@ propose_internal :: proc(h: ^Host, value: sql.Mutation) -> (sql.Slot, Error) {
 	if queue.len(h.packets) >= 1024 do return 0, .Backpressure
 	v := value
 	if sql.mutation_validate(&v) != .None do return 0, .Invalid
+	if !turn_transition(h) do return 0, poison(h)
 	slot, err := sql.node_propose(&h.node, value, &h.effects)
 	if err != .None do return 0, proposal_error(err)
 	return slot, finish(h)
@@ -182,6 +184,7 @@ step :: proc(h: ^Host, env: sql.Envelope(sql.Mutation)) -> Error {
 	if value, ok := sql.message_value(env.message); ok {
 		if sql.mutation_validate(value) != .None do return .Invalid
 	}
+	if !turn_transition(h) do return poison(h)
 	if sql.node_step(&h.node, env, &h.effects) != .None do return poison(h)
 	return finish(h)
 }
@@ -189,6 +192,7 @@ step :: proc(h: ^Host, env: sql.Envelope(sql.Mutation)) -> Error {
 tick :: proc(h: ^Host) -> Error {
 	if h.poisoned do return .Poisoned
 	if queue.len(h.packets) >= 1024 do return .Backpressure
+	if !turn_transition(h) do return poison(h)
 	if sql.node_tick(&h.node, &h.effects) != .None do return poison(h)
 	return finish(h)
 }
@@ -221,7 +225,15 @@ serve :: proc(h: ^Host, request: sql.Serve_Range_Request) -> bool {
 	return true
 }
 
+// Inside a service turn the transition joins the open group; turn_commit
+// crosses the barrier and releases its effects. Otherwise persist it now.
 finish :: proc(h: ^Host) -> Error {
+	when JOURNAL_GROUP_COMMIT {
+		if h.turn_open {
+			if !stage_transition(h, h.transition_group) do return poison(h)
+			return .None
+		}
+	}
 	if !persist(h) do return poison(h)
 	if h.sequence != h.durable_sequence do return poison(h)
 	sql.effects_confirm_writes_durable(&h.effects)
@@ -243,6 +255,16 @@ finish :: proc(h: ^Host) -> Error {
 	}
 	sql.effects_reset(&h.effects)
 	return .None
+}
+
+// Prepare the next upstream transition: inside a turn, open the group's journal
+// transaction or commit a full group first. Outside a turn there is nothing to do.
+@(private)
+turn_transition :: proc(h: ^Host) -> bool {
+	when JOURNAL_GROUP_COMMIT {
+		if h.turn_open do return transition_room(h)
+	}
+	return true
 }
 
 // Copy into caller-owned stable storage before rebinding borrowed message pointers.

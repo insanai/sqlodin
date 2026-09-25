@@ -22,6 +22,7 @@ propose_batch :: proc(
 		if sql.mutation_validate(&value) != .None do return nil, .Invalid
 	}
 	if admission := history_admission(h); admission != .None do return nil, admission
+	if !turn_transition(h) do return nil, poison(h)
 	result, consensus_err := sql.node_propose_batch(&h.node, values, slots, &h.effects)
 	if consensus_err != .None do return nil, proposal_error(consensus_err)
 	if finish(h) != .None do return nil, .Storage
