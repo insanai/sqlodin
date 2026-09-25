@@ -19,6 +19,7 @@ Mutation_Kind :: enum u8 {
 	Update  = 3,
 	Raw_SQL = 4,
 	Transaction = 5,
+	Session_Epoch = 6,
 }
 
 Value_Kind :: enum u8 {
@@ -225,10 +226,12 @@ mutation_validate :: proc(m: ^Mutation) -> Error {
 	switch m.kind {
 	case .Skip:
 		return .None
+	case .Session_Epoch:
+		return .None if m.primary_key < u64(max(i64)) else .Invalid_Mutation
 	case .Raw_SQL, .Transaction:
 		if m.kind == .Transaction && (m.request.session == ([16]u8{}) ||
 		   m.request.sequence == 0 || m.request.sequence > u64(max(i64)) ||
-		   m.read_version > u64(max(i64))) {
+		   m.read_version > u64(max(i64)) || m.request.epoch > u64(max(i64))) {
 			return .Invalid_Mutation
 		}
 		if m.sql_len == 0 || int(m.sql_len) > MAX_SQL_LEN do return .Invalid_Mutation

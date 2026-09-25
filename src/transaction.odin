@@ -4,7 +4,7 @@ import "core:mem"
 
 // A session has one outstanding transaction. Advancing its sequence retires the
 // previous result, but never permits an older transaction to execute again.
-Request_Id :: struct { session: [16]u8, sequence: u64 }
+Request_Id :: struct { session: [16]u8, sequence: u64, epoch: u64 }
 Transaction_Outcome :: enum u8 {
 	Applied,
 	Constraint,

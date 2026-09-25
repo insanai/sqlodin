@@ -5,7 +5,9 @@ import "base:runtime"
 import "core:strings"
 import "sqlite"
 
-Engine_Authorization :: struct { restricted, deterministic, denied: bool }
+Engine_Authorization :: struct {
+	restricted, deterministic, denied, schema_changed, catalog_maintenance: bool,
+}
 
 // This is an enforced function/extension boundary, not a complete proof of SQL
 // determinism. Schema, collation and statement-order validation are separate gates.
@@ -30,8 +32,9 @@ engine_policy_action :: proc(action: c.int, arg1, arg2, database: cstring) -> bo
 	}
 	if action == 20 && arg1 != nil {
 		table := string(arg1)
-		if strings.has_prefix(table, "pragma_") do return false
-		if (table == "sqlite_master" || table == "sqlite_schema") && arg2 != nil &&
+		if len(table) >= 7 && strings.equal_fold(table[:7], "pragma_") do return false
+		if (strings.equal_fold(table, "sqlite_master") || strings.equal_fold(table, "sqlite_schema")) &&
+		   arg2 != nil &&
 		   !strings.equal_fold(string(arg2), "ROWID") {
 			return false
 		}
@@ -65,6 +68,7 @@ engine_execute_transaction :: proc(e: ^Engine, m: ^Mutation) -> Error {
 	text := mutation_sql(m)
 	statements := 0
 	for len(text) > 0 {
+		e.authorization.catalog_maintenance = false
 		stmt: sqlite.Sqlite3_Stmt
 		tail: cstring
 		rc := sqlite.sqlite3_prepare_v2(e.db, cstring(raw_data(text)), c.int(len(text)),
@@ -102,6 +106,12 @@ engine_execute_transaction :: proc(e: ^Engine, m: ^Mutation) -> Error {
 engine_transaction_statement :: proc(
 	e: ^Engine, stmt: sqlite.Sqlite3_Stmt, m: ^Mutation,
 ) -> Error {
+	// The write API acknowledges an outcome, not a result stream. Reject RETURNING
+	// before stepping rather than materializing and discarding its rows.
+	if sqlite.sqlite3_stmt_readonly(stmt) == 0 && sqlite.sqlite3_column_count(stmt) > 0 {
+		e.authorization.denied = true
+		return .Invalid_Mutation
+	}
 	count := sqlite.sqlite3_bind_parameter_count(stmt)
 	if (m.kind == .Raw_SQL && count != 0) || count > c.int(m.col_count) {
 		e.authorization.denied = true
@@ -159,6 +169,9 @@ engine_install_function_policy :: proc(e: ^Engine) -> Error {
 		}
 	}
 	sqlite.sqlite3_update_hook(e.db, engine_policy_rowid, e.authorization)
+	supported, schema_err := engine_snapshot_schema_supported(e)
+	if schema_err != .None do return schema_err
+	if !supported do return .Invalid_Mutation
 	return .None
 }
 

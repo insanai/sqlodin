@@ -13,8 +13,8 @@ engine_initialize_outcomes :: proc(e: ^Engine) -> bool {
 		"seq INTEGER NOT NULL CHECK(seq>0),hash BLOB NOT NULL CHECK(length(hash)=32)," +
 		"kind INTEGER NOT NULL CHECK(kind IN (0,1,2,3,7,8)),code INTEGER NOT NULL," +
 		"changes INTEGER NOT NULL CHECK(changes>=0),slot INTEGER NOT NULL CHECK(slot>0)) WITHOUT ROWID;" +
-		"CREATE TABLE _sqlodin_tx_revision(id INTEGER PRIMARY KEY CHECK(id=1),version INTEGER NOT NULL);" +
-		"INSERT INTO _sqlodin_tx_revision VALUES(1,1);")
+		SESSION_REVISION_SCHEMA +
+		"INSERT INTO _sqlodin_tx_revision VALUES(1,1,0);")
 }
 
 // The reference execution commits each request separately. Deferred constraints
@@ -84,6 +84,7 @@ engine_apply_outcome :: proc(e: ^Engine, slot: Slot, m: ^Mutation) -> Error {
 
 @(private)
 engine_run_outcome :: proc(e: ^Engine, m: ^Mutation, out: ^Outcome) -> Error {
+	if m.kind == .Session_Epoch do return engine_retire_sessions(e, m.primary_key, out)
 	if m.kind == .Transaction && m.read_version != 0 {
 		version := engine_read_version(e) or_return
 		if version != m.read_version { out.kind = .Conflict; return .None }
@@ -93,8 +94,15 @@ engine_run_outcome :: proc(e: ^Engine, m: ^Mutation, out: ^Outcome) -> Error {
 	e.last_expression_error = false
 	e.authorization.restricted, e.authorization.deterministic = true, true
 	e.authorization.denied = false
+	e.authorization.schema_changed = false
+	e.authorization.catalog_maintenance = false
 	err := engine_execute_mutation(e, m)
 	e.authorization.restricted, e.authorization.deterministic = false, false
+	if err == .None && !e.authorization.denied && e.authorization.schema_changed {
+		supported, schema_err := engine_snapshot_schema_supported(e)
+		if schema_err != .None do return schema_err
+		if !supported do e.authorization.denied = true
+	}
 	if err == .None && !e.authorization.denied {
 		if sqlite.sqlite3_get_autocommit(e.db) != 0 do return .Sqlite_Exec_Failed
 		out.changes = sqlite.sqlite3_total_changes64(e.db) - before
@@ -155,9 +163,12 @@ engine_record_outcome :: proc(
 
 // A decided rejection is a completed request, but not a successful write.
 engine_outcome :: proc(e: ^Engine, slot: Slot) -> (out: Outcome, found: bool, err: Error) {
-	s := engine_prepare(e,
-		"SELECT kind,code,changes,origin_slot FROM _sqlodin_outcomes WHERE slot=?") or_return
-	defer sqlite.sqlite3_finalize(s)
+	if e.outcome_stmt == nil {
+		e.outcome_stmt = engine_prepare(e,
+			"SELECT kind,code,changes,origin_slot FROM _sqlodin_outcomes WHERE slot=?") or_return
+	}
+	s := e.outcome_stmt
+	defer sqlite.sqlite3_reset(s)
 	if sqlite.sqlite3_bind_int64(s, 1, i64(slot)) != sqlite.OK do return {}, false, .Sqlite_Step_Failed
 	rc := sqlite.sqlite3_step(s)
 	if rc == sqlite.DONE do return {}, false, .None

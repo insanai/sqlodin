@@ -19,6 +19,7 @@ Engine :: struct {
 	in_memory:       bool,
 	vec_enabled:     bool,
 	watermark_stmt:  sqlite.Sqlite3_Stmt,
+	outcome_stmt: sqlite.Sqlite3_Stmt,
 	statements:      [8]Engine_Statement,
 	statement_next:  int,
 	// Test-only crash boundary; production callers leave this nil.
@@ -39,6 +40,10 @@ engine_open :: proc(
 		return {}, .Sqlite_Open_Failed
 	}
 	e.vec_enabled = sqlite.vec_register(db)
+	if !e.vec_enabled {
+		engine_close(&e)
+		return {}, .Sqlite_Open_Failed
+	}
 	if err := engine_load_watermark(&e); err != .None {
 		engine_close(&e)
 		return {}, err
@@ -60,11 +65,12 @@ engine_close :: proc(e: ^Engine) {
 		entry = {}
 	}
 	if e.watermark_stmt != nil do sqlite.sqlite3_finalize(e.watermark_stmt)
+	if e.outcome_stmt != nil do sqlite.sqlite3_finalize(e.outcome_stmt)
 	sqlite.close(e.db)
 	free(e.authorization)
 	e.authorization = nil
 	e.db = nil
-	e.watermark_stmt = nil
+	e.watermark_stmt, e.outcome_stmt = nil, nil
 }
 
 engine_applied_through :: #force_inline proc(e: ^Engine) -> Slot {
@@ -116,6 +122,8 @@ engine_execute_mutation :: proc(e: ^Engine, m: ^Mutation) -> Error {
 		return engine_execute_transaction(e, m)
 	case .Skip:
 		return .None
+	case .Session_Epoch:
+		return .Invalid_Mutation // Only the outcome path may atomically retire request fences.
 	}
 	return .Invalid_Mutation
 }
@@ -205,7 +213,7 @@ engine_prepare :: proc(e: ^Engine, sql: string) -> (sqlite.Sqlite3_Stmt, Error) 
 @(private)
 engine_load_watermark :: proc(e: ^Engine) -> Error {
 	ddl := "CREATE TABLE IF NOT EXISTS _sqlodin_state (id INTEGER PRIMARY KEY CHECK(id=1), " +
-		"applied INTEGER NOT NULL); INSERT OR IGNORE INTO _sqlodin_state VALUES (1, 0);"
+		"applied INTEGER NOT NULL); INSERT OR IGNORE INTO _sqlodin_state(id,applied) VALUES (1, 0);"
 	if !sqlite.exec(e.db, ddl) do return .Sqlite_Exec_Failed
 	stmt := engine_prepare(e, "SELECT applied FROM _sqlodin_state WHERE id=1;") or_return
 	defer sqlite.sqlite3_finalize(stmt)
@@ -225,6 +233,21 @@ engine_sql_authorize :: proc "c" (
 	context = runtime.default_context()
 	policy := cast(^Engine_Authorization)user
 	if policy != nil && !policy.restricted do return sqlite.OK
+	if policy != nil && policy.deterministic && (action == 2 || action == 26 || action == 29) {
+		policy.schema_changed = true // CREATE TABLE, ALTER TABLE, CREATE VIRTUAL TABLE.
+	}
+	if policy != nil && policy.deterministic {
+		// DROP and ALTER have no user SELECT clause. SQLite itself reads catalog
+		// columns while preparing them. Trigger/view expressions remain restricted.
+		if action == 10 || action == 11 || action == 16 || action == 17 || action == 26 {
+			policy.catalog_maintenance = true
+		}
+		if action == 20 && policy.catalog_maintenance && trigger == nil && arg1 != nil &&
+		   (strings.equal_fold(string(arg1), "sqlite_master") ||
+		    strings.equal_fold(string(arg1), "sqlite_schema")) {
+			return sqlite.OK
+		}
+	}
 	if policy != nil && policy.deterministic && !engine_policy_action(action, arg1, arg2, db) {
 		policy.denied = true
 		return 1

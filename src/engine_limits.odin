@@ -7,6 +7,8 @@ import "sqlite"
 // Policy 4 bounds individual SQLite values/rows and parser constructs. These
 // are not aggregate memory or execution-time quotas. Limits apply to the writer,
 // including replay, and must be identical across every replica in a cluster.
+REPLICATION_POLICY :: 9
+
 MAX_SQL_VALUE_BYTES :: 1024 * 1024
 
 engine_install_limits :: proc(e: ^Engine) -> Error {

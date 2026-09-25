@@ -97,7 +97,7 @@ engine_dml_sql :: proc(m: ^Mutation, buf: []u8) -> string {
 		fmt.sbprint(&b, " WHERE id=?;")
 	case .Delete:
 		fmt.sbprintf(&b, "DELETE FROM \"%s\" WHERE id=?;", table)
-	case .Skip, .Raw_SQL, .Transaction:
+	case .Skip, .Raw_SQL, .Transaction, .Session_Epoch:
 	}
 	return strings.to_string(b)
 }

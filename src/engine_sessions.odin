@@ -16,7 +16,8 @@ request_hash_word :: proc(ctx: ^sha2.Context_256, word: u64) {
 transaction_digest :: proc(m: ^Mutation) -> (hash: [32]u8) {
 	ctx: sha2.Context_256
 	sha2.init_256(&ctx)
-	request_hash_word(&ctx, 3)
+	request_hash_word(&ctx, 3 if m.request.epoch == 0 else 4)
+	if m.request.epoch != 0 do request_hash_word(&ctx, m.request.epoch)
 	request_hash_word(&ctx, m.read_version)
 	request_hash_word(&ctx, u64(m.sql_len))
 	sha2.update(&ctx, m.sql_bytes[:m.sql_len])
@@ -51,6 +52,11 @@ engine_request_lookup :: proc(
 	e: ^Engine, m: ^Mutation, slot: Slot,
 ) -> (out: Outcome, execute, record: bool, err: Error) {
 	out.slot = slot
+	epoch := engine_session_epoch(e) or_return
+	if m.request.epoch != epoch {
+		out.kind = .Expired
+		return out, false, false, .None
+	}
 	s := engine_prepare(e,
 		"SELECT seq,hash,kind,code,changes,slot FROM _sqlodin_sessions WHERE session=?") or_return
 	defer sqlite.sqlite3_finalize(s)
