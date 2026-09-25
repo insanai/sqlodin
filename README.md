@@ -80,7 +80,7 @@ The Python package requires Python 3.11 or newer. Until it is published on PyPI,
 install it from this repository:
 
 ```sh
-uv add 'sqlodin @ git+https://github.com/insanai/sqlodin.git@v0.1.0#subdirectory=languages/python'
+uv add 'sqlodin @ git+https://github.com/insanai/sqlodin.git@v0.6.0#subdirectory=languages/python'
 ```
 
 ```python

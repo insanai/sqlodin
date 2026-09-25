@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sqlodin"
-version = "0.3.0"
+version = "0.6.0"
 description = "A small, explicit Python client for SQLodin's durable multi-master SQL service"
 readme = "README.md"
 requires-python = ">=3.11"

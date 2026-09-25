@@ -9,7 +9,7 @@ import "core:time"
 import sqlodin "../src"
 import service "../service"
 
-VERSION :: "0.1.0"
+VERSION :: "0.6.0"
 
 RECORDS_DIR   :: "docs/sod/records"
 REGISTRY_PATH :: "docs/sod/registry.typ"

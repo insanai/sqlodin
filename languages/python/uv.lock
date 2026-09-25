@@ -176,7 +176,7 @@ wheels = [
 
 [[package]]
 name = "sqlodin"
-version = "0.3.0"
+version = "0.6.0"
 source = { editable = "." }
 
 [package.optional-dependencies]
