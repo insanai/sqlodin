@@ -16,13 +16,13 @@ checkpoint :: proc(point: durable.Fault) {
 	}
 }
 
-must :: proc(ok: bool) {
-	if !ok do os.exit(1)
+must :: proc(ok: bool, location := #caller_location) {
+	if !ok { fmt.eprintln(location, "probe invariant failed"); os.exit(1) }
 }
 
 run_single :: proc(path, mode, boundary: string) {
 	ids := [1]sql.Node_Id{1}
-	h, err := durable.open(path, "crash-test", 1, ids[:], create = mode == "init")
+	h, err := probe_open(path, "crash-test", 1, ids[:], create = mode == "init")
 	must(err == .None)
 	defer durable.close(h)
 	if mode == "verify" {
@@ -56,7 +56,17 @@ run_single :: proc(path, mode, boundary: string) {
 
 main :: proc() {
 	if len(os.args) != 4 do os.exit(2)
-	if strings.has_prefix(os.args[2], "journal-") {
+	if strings.has_prefix(os.args[2], "session-") {
+		run_session(os.args[1], os.args[2], os.args[3])
+	} else if strings.has_prefix(os.args[2], "restore-") {
+		run_restore(os.args[1], os.args[2], os.args[3])
+	} else if strings.has_prefix(os.args[2], "backup-") {
+		run_backup(os.args[1], os.args[2], os.args[3])
+	} else if strings.has_prefix(os.args[2], "retire-") {
+		run_retirement(os.args[1], os.args[2], os.args[3])
+	} else if strings.has_prefix(os.args[2], "gen-") {
+		run_generation(os.args[1], os.args[2], os.args[3])
+	} else if strings.has_prefix(os.args[2], "journal-") {
 		run_journal_group(os.args[1], os.args[2], os.args[3])
 	} else if strings.has_prefix(os.args[2], "group-") {
 		run_group(os.args[1], os.args[2], os.args[3])
@@ -94,7 +104,7 @@ run_cluster :: proc(dir: string, create: bool) {
 	defer for h in hosts do durable.close(h)
 	for id, i in ids {
 		path := fmt.aprintf("%s/node-%d.db", dir, i)
-		h, err := durable.open(path, "cluster-crash", id, ids[:], create = create)
+		h, err := probe_open(path, "cluster-crash", id, ids[:], create = create)
 		delete(path)
 		must(err == .None)
 		hosts[i] = h
@@ -131,4 +141,13 @@ run_cluster :: proc(dir: string, create: bool) {
 		must(durable.acknowledged(hosts[i % 3], slot, &m))
 	}
 	must(false) // The final acknowledgement must have stopped the process.
+}
+
+probe_open :: proc(
+	path, cluster: string, id: sql.Node_Id, members: []sql.Node_Id, create: bool = false,
+) -> (^durable.Host, durable.Error) {
+	consensus := ""
+	when #config(SQLODIN_TEST_SEPARATED, false) do consensus = fmt.aprintf("%s.consensus", path)
+	defer delete(consensus)
+	return durable.open(path, cluster, id, members, create, consensus_path = consensus)
 }

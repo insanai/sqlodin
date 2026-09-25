@@ -8,7 +8,7 @@ import durable "../../src/durable"
 
 run_transaction :: proc(path, mode, boundary: string) {
 	ids := [1]sql.Node_Id{1}
-	h, err := durable.open(path, "transaction-crash", 1, ids[:], create = mode == "tx-init")
+	h, err := probe_open(path, "transaction-crash", 1, ids[:], create = mode == "tx-init")
 	must(err == .None)
 	defer durable.close(h)
 	if mode == "tx-init" {

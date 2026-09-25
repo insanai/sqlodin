@@ -20,7 +20,7 @@ group_values :: proc(values: []sql.Mutation) {
 
 run_group :: proc(path, mode, boundary: string) {
 	ids := [1]sql.Node_Id{1}
-	h, err := durable.open(path, "group-crash", 1, ids[:], create = mode == "group-init")
+	h, err := probe_open(path, "group-crash", 1, ids[:], create = mode == "group-init")
 	must(err == .None)
 	defer durable.close(h)
 	if mode == "group-init" {

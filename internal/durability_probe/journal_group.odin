@@ -18,7 +18,7 @@ journal_vote_packets :: proc(packets: []durable.Packet) {
 
 run_journal_group :: proc(path, mode, boundary: string) {
 	ids := [3]sql.Node_Id{1, 2, 3}
-	h, err := durable.open(path, "journal-group", 2, ids[:], create = mode == "journal-init")
+	h, err := probe_open(path, "journal-group", 2, ids[:], create = mode == "journal-init")
 	must(err == .None)
 	defer durable.close(h)
 	if mode == "journal-init" do return
