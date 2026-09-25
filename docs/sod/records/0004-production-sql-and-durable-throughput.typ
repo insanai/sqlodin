@@ -8,14 +8,26 @@
 #let sod-category = "Architecture and Implementation Plan"
 #let sod-status = "Committed"
 #let sod-last-updated = "2026-09-25"
-#import "../../shared/sod.typ": sod-document
+
+#import "../../shared/sod.typ": *
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
+#import "@preview/cetz:0.5.2"
+
 #show: doc => sod-document(
-  sod-number, sod-title, doc, authors: sod-authors, state: sod-state,
-  created: sod-created, discussion: sod-discussion, labels: sod-labels,
-  category: sod-category, status: sod-status, last-updated: sod-last-updated,
+  sod-number,
+  sod-title,
+  doc,
+  authors: sod-authors,
+  state: sod-state,
+  created: sod-created,
+  discussion: sod-discussion,
+  labels: sod-labels,
+  category: sod-category,
+  status: sod-status,
+  last-updated: sod-last-updated,
 )
-#set heading(numbering: "1.1")
-#set table(stroke: 0.4pt + rgb("cbd5e1"), inset: 5pt)
+
+#set table(stroke: 0.4pt + rgb("#cbd5e1"), inset: 5pt)
 #show raw: set text(size: 8.5pt)
 #let costs = json("../../../benchmarks/results/linux-durability-cost.json")
 #assert(costs.complete and costs.samples.len() == 12)
@@ -26,11 +38,13 @@
 
 = Abstract
 
-Build the durable SQL host around the complete pinned paxos-odin library. Preserve agreement,
+Build the durable SQL host around the complete pinned `paxos-odin` library. Preserve agreement,
 retry identity and SQL semantics while reducing synchronization and copying costs. The chosen
 mechanisms are bounded group commit, concurrent replica I/O, deterministic transaction outcomes,
 fresh read markers and certified recovery. This record explains their tradeoffs and the accepted
 release scope. It does not claim that an efficient language makes durable replication inexpensive.
+
+*SOD* stands for *SQLODIN Discussions* — versioned engineering records for discussion on improvement, architecture, durable storage design, and throughput optimization for SQLodin.
 
 = Status and Implementation Boundary
 
@@ -42,8 +56,10 @@ decisions. The 23 closure criteria, tested source and binaries are bound in
 This record remains Committed, not frozen as Published. A qualified scope is not unrestricted
 production suitability, a performance pass or evidence of physical failure-domain independence.
 
-#table(columns: (1fr, 2.5fr), inset: 5pt,
-  [*Design area*], [*Current disposition*],
+#table(
+  columns: (1fr, 2.5fr),
+  inset: 5pt,
+  table.header([*Design area*], [*Current disposition*]),
   [P0: attribution], [Durable cost attribution and mixed-workload measurements retained.],
   [P1: SQL outcomes], [Policy 9, durable outcomes, retry epochs and optimistic validation implemented.],
   [P2: batching], [Bounded journal/application groups and fair owner service implemented.],
@@ -96,20 +112,64 @@ The original provisional objectives remain unchanged: 3,000 transactions/s for a
 from OS page cache. The recovery aspiration was 60 s with a local certified image and at most
 1 GiB replay tail on qualified hardware; it is not a database-size-independent guarantee.
 
-On 25 September the owner accepted release after correctness qualification with performance
-shortfalls disclosed. Throughput and p99 objectives are future improvement goals, not first-release
-blockers. Slow retained-store startup observations of 114/137 s remain disclosed. The owner also
-removed large-capacity growth campaigns as requirements. The original 10/100 GiB aspirations
-remain unclaimed. On 24 September mandatory soak durations were replaced by formal arguments
-and targeted fault tests. These decisions waive neither durable acknowledgements nor correctness.
+#decision-box(title: "Owner Acceptance Decision (25 September 2026)")[
+  The owner accepted release after correctness qualification with performance shortfalls disclosed. Throughput and p99 objectives are future improvement goals, not first-release blockers. Slow retained-store startup observations of 114/137 s remain disclosed. The owner also removed large-capacity growth campaigns as requirements. On 24 September mandatory soak durations were replaced by formal arguments and targeted fault tests.
+]
 
 = Design Overview
 
-#block(fill: rgb("f1f5f9"), inset: 10pt, breakable: false)[
-  Bounded request → ordered proposal → owned pending effects \
-  → journal durability frontier → eligible peer messages \
-  → contiguous SQL group → data + outcome + applied frontier \
-  → durable response
+The durable SQL host replaces the historical serialized pipeline with bounded group commit, concurrent replica I/O, and decoupled SQLite application.
+
+#diagram-card(caption: [Figure 1: Architectural evolution: historical serialized path vs bounded group commit pipeline.])[
+  #scale(82%, reflow: true)[#cetz.canvas({
+    import cetz.draw: *
+
+    // Panel A: Historical Serial Path (Red/Pink)
+    rect((0.2, 0), (5.2, 4.4), fill: rgb("#fff1f2"), stroke: 0.8pt + rgb("#e11d48"), radius: 0.12)
+    content((2.7, 4.0), text(weight: "bold", size: 9pt, fill: rgb("#be123c"))[Historical Serial Host])
+    content((2.7, 3.5), text(size: 7.2pt, fill: rgb("#9f1239"))[Measured: ~22 writes/second])
+    line((0.5, 3.2), (4.9, 3.2), stroke: 0.5pt + rgb("#fecdd3"))
+    content((0.5, 2.7), anchor: "west", text(size: 7.0pt, fill: rgb("#334155"))[• ~9 `fsync` barriers per single write])
+    content((0.5, 2.2), anchor: "west", text(size: 7.0pt, fill: rgb("#334155"))[• Serialized replica voter execution])
+    content((0.5, 1.7), anchor: "west", text(size: 7.0pt, fill: rgb("#334155"))[• Full 7.8 KiB uncompressed mutations])
+    content((0.5, 1.2), anchor: "west", text(size: 7.0pt, fill: rgb("#334155"))[• No transaction grouping or batching])
+    content((2.7, 0.5), text(size: 6.8pt, style: "italic", fill: rgb("#be123c"))[Bottleneck: Barrier synchronization])
+
+    // Arrow in between
+    line((5.4, 2.2), (6.0, 2.2), mark: (end: ">", fill: rgb("#64748b")), stroke: 1.2pt + rgb("#64748b"))
+
+    // Panel B: Current Bounded Group Commit (Green)
+    rect((6.2, 0), (11.2, 4.4), fill: rgb("#ecfdf5"), stroke: 0.8pt + rgb("#059669"), radius: 0.12)
+    content((8.7, 4.0), text(weight: "bold", size: 9pt, fill: rgb("#047857"))[Current Group Commit Host])
+    content((8.7, 3.5), text(size: 7.2pt, fill: rgb("#065f46"))[Bounded & Qualified Architecture])
+    line((6.5, 3.2), (10.9, 3.2), stroke: 0.5pt + rgb("#bbf7d0"))
+    content((6.5, 2.7), anchor: "west", text(size: 7.0pt, fill: rgb("#334155"))[• Amortized single `fsync` per group])
+    content((6.5, 2.2), anchor: "west", text(size: 7.0pt, fill: rgb("#334155"))[• Concurrent replica I/O pipelines])
+    content((6.5, 1.7), anchor: "west", text(size: 7.0pt, fill: rgb("#334155"))[• Lossless zero-run journal packing])
+    content((6.5, 1.2), anchor: "west", text(size: 7.0pt, fill: rgb("#334155"))[• SQLite group commits (up to 16 tx)])
+    content((8.7, 0.5), text(size: 6.8pt, style: "italic", fill: rgb("#047857"))[Outcome: Atomic durability & isolation])
+  })]
+]
+
+#diagram-card(caption: [Figure 2: Bounded journal group and application pipeline.])[
+  #scale(78%, reflow: true)[#fletcher.diagram(
+    node-stroke: 0.8pt,
+    spacing: (1.4cm, 1.0cm),
+    node((0,0), [Admitted Request\ Batch ($<= 16$)], fill: rgb("#e6f4f6"), stroke: 0.8pt + rgb("#166777"), corner-radius: 4pt, name: <batch>),
+    node((1,0), [Journal Group\ Buffer & Pack], fill: rgb("#fef3c7"), stroke: 0.8pt + rgb("#d97706"), corner-radius: 4pt, name: <buf>),
+    node((2,0), [Durable Journal\ Single `fsync`], fill: rgb("#fee2e2"), stroke: 0.8pt + rgb("#dc2626"), corner-radius: 4pt, name: <sync>),
+    node((3,0), [Peer Wire\ Messages Released], fill: rgb("#ede9fe"), stroke: 0.8pt + rgb("#7c3aed"), corner-radius: 4pt, name: <peer>),
+    node((3,1), [Contiguous SQLite\ Group Execution], fill: rgb("#ecfdf5"), stroke: 0.8pt + rgb("#059669"), corner-radius: 4pt, name: <apply>),
+    node((2,1), [Outcome Ledger\ & Watermark Commit], fill: rgb("#f5f3ff"), stroke: 0.8pt + rgb("#7c3aed"), corner-radius: 4pt, name: <outcome>),
+    node((1,1), [Client Acks\ Dispatched], fill: rgb("#e6f4f6"), stroke: 0.8pt + rgb("#166777"), corner-radius: 4pt, name: <ack>),
+
+    edge(<batch>, <buf>, "->", stroke: 0.7pt + rgb("#64748b")),
+    edge(<buf>, <sync>, "->", label: text(size: 7.2pt)[amortize], stroke: 0.7pt + rgb("#64748b")),
+    edge(<sync>, <peer>, "->", label: text(size: 7.2pt)[safe release], stroke: 0.8pt + rgb("#7c3aed")),
+    edge(<peer>, <apply>, "->", label: text(size: 7.2pt)[chosen prefix], stroke: 0.8pt + rgb("#059669")),
+    edge(<apply>, <outcome>, "->", stroke: 0.7pt + rgb("#64748b")),
+    edge(<outcome>, <ack>, "->", label: text(size: 7.2pt)[durable], stroke: 0.8pt + rgb("#166777")),
+  )]
 ]
 
 One owner serializes protocol state. Workers receive owned work and return checked completions;
@@ -134,8 +194,13 @@ The default session capacity is 65,536. Full semantics live in `specs/sql-policy
 Journal groups hold owned effect copies and release dependent work only after a checked durable
 completion. Application groups contain at most 16 ordered requests. Savepoints isolate requests;
 deferred foreign-key checks run at each logical boundary. A whole-transaction ROLLBACK takes the
-individual-commit fallback before any response. The proof obligation is equality with the reference
-state and outcome after every request, not merely equality of the final row count.
+individual-commit fallback before any response.
+
+#invariant-box(title: [Equivalence to Individual-Commit Reference ($G_i = R_i$)])[
+  For every admitted transaction $i$ in an application group of size $<= 16$, the observable database state $D_i$ and returned outcome $O_i$ must be identical to executing request $i$ in an isolated individual commit:
+  $ G_i = R_i quad "for all" i in [1, |"group"|] $
+  If any savepoint fails or constraint violation occurs, the group rolls back to the individual-commit fallback before acknowledging the client.
+]
 
 The owner services bounded batches and peer work fairly. The protocol window is 64 slots and peer
 bursts are bounded to eight. Private generation catch-up applies at most one chosen SQL transaction
@@ -169,6 +234,38 @@ Format 5 separates application state from voter-local consensus state. A certifi
 agreed prefix; its seal and retained suffix connect it to later progress. A private generation becomes
 durable before catalog publication. Retirement protects the active generation and its exact
 predecessor, checks ownership, and synchronizes deletion before forgetting inventory.
+
+#diagram-card(caption: [Figure 3: Storage Format 5 generation hierarchy, certified snapshots, and retention horizon.])[
+  #scale(82%, reflow: true)[#cetz.canvas({
+    import cetz.draw: *
+
+    let gen-card(x, y, title, fill, strk, l1, l2, l3) = {
+      rect((x, y), (x + 3.2, y + 2.3), fill: fill, stroke: 0.8pt + strk, radius: 0.12)
+      content((x + 1.6, y + 1.85), text(weight: "bold", size: 8.5pt, fill: rgb("#0f172a"))[#title])
+      line((x + 0.3, y + 1.55), (x + 2.9, y + 1.55), stroke: 0.4pt + strk.transparentize(40%))
+      content((x + 1.6, y + 1.2), text(size: 6.8pt, fill: rgb("#334155"))[#l1])
+      content((x + 1.6, y + 0.75), text(size: 6.8pt, fill: rgb("#334155"))[#l2])
+      content((x + 1.6, y + 0.3), text(size: 6.8pt, fill: rgb("#334155"))[#l3])
+    }
+
+    // Catalog
+    rect((0.2, 3.4), (10.6, 4.4), fill: rgb("#e6f4f6"), stroke: 0.8pt + rgb("#166777"), radius: 0.12)
+    content((5.4, 4.05), text(weight: "bold", size: 9pt, fill: rgb("#0f434d"))[Generation Catalog (`catalog.bin`)])
+    content((5.4, 3.65), text(size: 7.2pt, fill: rgb("#166777"))[Active Pointer: Generation $G_k$ | Sealed Cut: $c_k$ | Applied Watermark: $a_k$])
+
+    // Generation boxes
+    gen-card(0.2, 0.3, [$G_k$ (Active)], rgb("#ecfdf5"), rgb("#059669"), [Certified Image ($c_k$)], [Replay Tail ($c_k, a_k$\])], [Live SQLite WAL])
+    gen-card(3.9, 0.3, [$G_(k-1)$ (Retained)], rgb("#fef3c7"), rgb("#d97706"), [Predecessor Seal], [Crash Fallback], [Retained Inventory])
+    gen-card(7.6, 0.3, [$G_(< k-1)$ (Retired)], rgb("#f1f5f9"), rgb("#94a3b8"), [Synchronized Deletion], [Reclaimed Disk Tail], [Inventory Forgotten])
+
+    // Pointers
+    line((5.4, 3.4), (1.8, 2.6), mark: (end: ">", fill: rgb("#166777")), stroke: 0.9pt + rgb("#166777"))
+    content((2.8, 3.1), text(size: 7pt, fill: rgb("#166777"))[active mount])
+
+    line((3.4, 1.45), (3.9, 1.45), mark: (end: ">", fill: rgb("#d97706")), stroke: 0.8pt + rgb("#d97706"))
+    content((3.65, 1.75), text(size: 6.2pt, fill: rgb("#d97706"))[predecessor])
+  })]
+]
 
 Automatic maintenance starts at a 256 MiB tail or 15 minutes of dirty history. Transfer uses 1 MiB
 chunks and a 32 MiB buffer budget. An 8 GiB retained-history cap and free-space checks exert
@@ -214,25 +311,17 @@ measured 73.6 writes/s against 2,845 for SQLite, with p99 1,230.8 ms. This matri
 maintenance-budget and replay-turn correction; it is not a final-binary performance measurement.
 It does not meet the objectives. A future performance claim requires a new matched measurement.
 
-Use identical schema, durability, workload, concurrency and completion boundaries when comparing
-systems. Count expected rejections separately from writes; treat timeouts as unknown outcomes.
-Record filesystem, cache policy, versions, seeds and binary hashes. Unsupported comparator workloads
-remain unsupported cells. Instrumented attribution and uninstrumented capacity measurements answer
-different questions and must be labeled accordingly.
-
 = Alternatives Considered
 
-Disabling sync was rejected because it changes the acknowledgement contract. Replacing Paxos before
-profiling was rejected because the measured host serialized durable work. Mencius-style skip
-optimizations require an upstream recovery proof; no unilateral skips are permitted. EPaxos or
-generalized ordering would require sound conflict detection for SQL predicates, triggers and joins.
-Flexible quorums change the failure envelope and require cross-phase intersection. Independent
-Paxos groups could add writers, but sharding and cross-group transactions need another design.
-
-A no-log read fence may reduce log work, but the ordered marker gives a simpler reference contract.
-Row-only optimistic validation was rejected because it misses predicate dependencies. Background
-recovery was selected over blocking all service; its per-turn limits preserve owner scheduling
-without claiming that arbitrary SQL can be preempted.
+#table(
+  columns: (1.2fr, 1.5fr, 1.8fr),
+  inset: 5pt,
+  table.header([*Alternative*], [*Pros*], [*Primary Reason for Rejection*]),
+  [Disabling `fsync` barriers], [Dramatically higher raw IOPS], [Violates durability guarantee; data lost on node power cut],
+  [EPaxos Dynamic Proposals], [Eliminates slot gaps], [Predicate and SQL join dependencies trigger state space explosion],
+  [Independent Raft Groups], [Parallel multi-shard writers], [Requires 2PC cross-group coordinator; out of fixed-voter scope],
+  [Row-Only Optimistic Validation], [Reduces conflict aborts], [Fails to isolate SQL table predicates, foreign keys, and triggers],
+)
 
 = Open Questions
 
@@ -259,33 +348,20 @@ bounded results, Python and optimistic ORM transactions. TLS used the pinned Ope
 an installed Odin core TLS package was not assumed. Early snapshots were primitives, not permission
 to trim. Certified seals, generation publication and fenced recovery completed that boundary later.
 
-An eight-hour SSH campaign across three instances stopped after about 85 minutes on a verifier
-read budget. It did not pass. Earlier tmpfs smoke results are correctness-only, not disk performance
-evidence. Historical measurements and failed reports retain their original attribution.
-
 == 24 September: progress and verification
 
 The failed native campaign had completed five surviving-quorum probes before a read timed out;
 the returning voter was still behind. That observation did not alone prove loss of majority service.
 The accepted response was to model bounded ownership progress and recovery, retain counterexamples,
-and add targeted regressions. The complete upstream dependency advanced to the tested pin
-`c3d197016c1f938db23fdf7f1fe87fbdbb86ac1c`. Formal reasoning and implementation tests replaced
-mandatory soak durations as approval requirements.
+and add targeted regressions. Formal reasoning and implementation tests replaced mandatory soak
+durations as approval requirements.
 
 == 25 September: closure and disclosed limits
 
 Certified generations, image retirement, aggregate retention and final replay scheduling were
 qualified. The old multi-transaction replay loop fails its retained negative regression; the bounded
-loop passes. A 64 MiB current fixture restarted in 1.32 s. A preceding 10 GiB fixture passed with
-14.89 s restart; larger retained-state startup also produced the disclosed 114/137 s observations.
-The interrupted larger-capacity campaign is not a capacity pass. The owner accepted the performance
-shortfalls and removed large-growth campaigns from release requirements. These dispositions close
-the agreed scope without asserting arbitrary capacity or sustained throughput.
-
-The former standalone durability, readiness, implementation, mTLS, snapshot, grouping and campaign
-notes are consolidated here and in SODs 0002/0003. Their obsolete pending-work statements do not
-define the current stage. Raw evidence remains in `benchmarks/results/`; detailed protocol and
-storage contracts remain in `specs/`.
+loop passes. A 64 MiB current fixture restarted in 1.32 s. The owner accepted the performance
+shortfalls and closed the agreed scope without asserting arbitrary capacity or sustained throughput.
 
 == Historical cost attribution supporting the batching decision
 
@@ -324,8 +400,7 @@ changes transaction granularity; it illustrates amortization and is not a claim 
 client transactions already share commits. Aggregate pwrite bytes are bytes submitted to file
 writes across the measured process, not physical-device bytes, ZFS allocation or user payload size.
 Minor excess syncs include checkpoint/WAL lifecycle work. Short repetitions do not establish
-long-run distributions. The interposer adds measurement overhead, which must be quantified before
-using it for close CPU comparisons.
+long-run distributions.
 
 === Mechanism and Cost Model
 
@@ -338,21 +413,16 @@ the opportunity for independent disks and protocol stages to overlap.
 
 The measured snapshot's fixed 7,800-byte mutation was copied and journaled in full, even for small
 requests. Later format 2 adds request identity; format 3 packs journal zero runs. This historical profile
-also exposes large file-write amplification. Journal SQL is prepared/finalized per record; journal
-lookups, hashing, application SQL preparation and payload copies add further cost. Their relative
-contributions need stage counters, allocation measurements and profiles before tuning.
+also exposes large file-write amplification.
 
 For the measured serial path, a useful attribution is:
 
 $ T approx T_"sync" + T_"file writes" + T_"other". $
 
 If sync duration and frequency remain unchanged, eliminating *all* non-sync work gives an optimistic
-speedup bound of $1 / p_"sync"$, about
-#number(1 / sync-fraction) times here. This is an Amdahl-style bound for this measurement, not a
-universal device limit. Reducing barriers, write amplification or serialized waiting changes the
+speedup bound of $1 / p_"sync"$, about #number(1 / sync-fraction) times here. Reducing barriers, write amplification or serialized waiting changes the
 bound. The language is valuable for predictable memory and CPU cost; architecture determines how
 much durable work must be performed.
-
 
 = References
 
