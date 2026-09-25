@@ -46,7 +46,7 @@ def port():
 
 
 class Cluster:
-    def __init__(self, root, binary, openssl):
+    def __init__(self, root, binary, openssl, storage_format=4, maintenance='manual'):
         self.root, self.binary = root, binary
         self.processes, self.logs = {}, []
         generate(root, openssl)
@@ -56,7 +56,8 @@ class Cluster:
             node = m['id']
             data = root / f'data{node}'
             data.mkdir()
-            cfg = dict(cluster='network-qualification', node=node, listen=m['address'], data=str(data),
+            cfg = dict(storage_format=storage_format, maintenance=maintenance,
+                       cluster='network-qualification', node=node, listen=m['address'], data=str(data),
                        certificate=str(root / f'node{node}.pem'), key=str(root / f'node{node}.key'),
                        ca=str(root / 'ca.pem'), members=self.members, clients=['node-2.test.sqlodin'])
             (root / f'node{node}.json').write_text(json.dumps(cfg))
@@ -65,7 +66,8 @@ class Cluster:
         log = open(self.root / f'node{node}.log', 'ab')
         self.logs.append(log)
         self.processes[node] = subprocess.Popen([str(self.binary), 'serve', str(self.root / f'node{node}.json'),
-                                                *(['--create'] if create else [])], stdout=log, stderr=log)
+                                                *(['--create'] if create else [])], stdout=log, stderr=log,
+                                               env=getattr(self, 'environment', None))
         time.sleep(0.15)
         assert self.processes[node].poll() is None, (self.root / f'node{node}.log').read_text()
 
@@ -97,6 +99,16 @@ def checks(c, record):
     with c.connect() as db:
         db.execute('CREATE TABLE account(id INTEGER PRIMARY KEY, amount INTEGER CHECK(amount>=0), name TEXT);')
         record('native_cluster_schema')
+        try:
+            db.execute('CREATE TABLE ambiguous(rowid,_rowid_,oid); INSERT INTO account VALUES(99,1,\'reject\')')
+        except sqlodin.QueryError as exc:
+            assert exc.code == 'Policy', exc
+        else:
+            raise AssertionError('Snapshot-incompatible schema was acknowledged')
+        assert db.query("SELECT count(*) FROM sqlite_schema WHERE name='ambiguous'").scalar() == 0
+        assert db.query('SELECT count(*) FROM account WHERE id=99').scalar() == 0
+        assert db.status()['policy'] == 9
+        record('schema_policy_rejects_complete_request_before_snapshot_failure')
         for node in (1, 2, 3):
             with c.connect((node,)) as writer:
                 writer.execute('INSERT INTO account VALUES(?, ?, ?)', (node, 100, f'node-{node}'))
@@ -137,6 +149,22 @@ def checks(c, record):
         else:
             raise AssertionError('Expected bounded result rejection')
         record('readonly_policy_and_result_limit')
+    with c.connect() as db:
+        for module in ('PrAgMa_data_version', 'PRAGMA_DATA_VERSION'):
+            try:
+                db.execute(f"INSERT INTO account(id,amount,name) SELECT 999,data_version,'local' FROM {module}")
+            except sqlodin.QueryError as exc:
+                assert exc.code == 'Policy', exc
+            else:
+                raise AssertionError('Mixed-case local pragma entered replicated data')
+        try:
+            db.execute("INSERT INTO account VALUES(999,1,'discarded') RETURNING id")
+        except sqlodin.QueryError as exc:
+            assert exc.code == 'Policy', exc
+        else:
+            raise AssertionError('Write API silently discarded RETURNING results')
+        assert db.query('SELECT count(*) FROM account WHERE id=999').scalar() == 0
+    record('mixed_case_local_pragma_cannot_mutate_replicated_state')
     security_checks(c, record)
     concurrent_checks(c, record)
     # Same immutable identity submitted to distinct masters changes the row once.
@@ -147,12 +175,17 @@ def checks(c, record):
     with c.connect() as db:
         assert db.query('SELECT amount FROM account WHERE id=3').scalar() == 107
     record('cross_master_durable_deduplication')
+    # Prepare a stable identity while quorum is available, then submit under isolation.
+    with c.connect((1,)) as db:
+        epoch = db.session_epoch()
+    isolated = sqlodin.PendingWrite('3'*32, 1,
+        'UPDATE account SET amount=amount+?1 WHERE id=?2', (5, 1), epoch=epoch)
     # A single isolated voter cannot acknowledge a write or a fenced read.
     c.stop(2)
     c.stop(3)
-    with c.connect((1,), timeout=0.8) as db:
+    with c.connect((1,), timeout=0.8, pending=isolated) as db:
         try:
-            db.execute('UPDATE account SET amount=amount+? WHERE id=?', (5, 1))
+            db.resolve_pending()
         except sqlodin.UnknownOutcome as exc:
             saved = sqlodin.PendingWrite.from_json(exc.pending.to_json())
             assert saved == db.pending
@@ -245,7 +278,9 @@ def security_checks(c, record):
             transport.close()
     record('untrusted_unlisted_and_peer_as_client_rejected')
     context = sqlodin.TLS(c.root / 'ca.pem', c.root / 'client.pem', c.root / 'client.key').context()
-    for frame in (struct.pack('<I', 0), struct.pack('<I', 65537), struct.pack('<I', 1) + b'{'):
+    nested = b'{"op":"status","junk":'+b'['*4096+b'0'+b']'*4096+b'}'
+    for frame in (struct.pack('<I', 0), struct.pack('<I', 65537), struct.pack('<I', 1) + b'{',
+                  struct.pack('<I', len(nested)) + nested):
         raw = socket.create_connection(endpoint.socket_address(), timeout=2)
         with context.wrap_socket(raw, server_hostname=endpoint.server_name) as peer:
             peer.sendall(frame)
@@ -280,9 +315,11 @@ def main():
     parser.add_argument('--binary', type=Path, default=ROOT / 'bin/sqlodin')
     parser.add_argument('--openssl', default=str(Path(__file__).resolve().parents[1] / 'build/native/openssl'))
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--storage-format', type=int, choices=(4, 5), default=4)
     args = parser.parse_args()
     report = dict(complete=False, passed=False, scope='three native mTLS SQL service processes on one host; disk WAL FULL',
                   platform=platform.platform(), started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), checks=[])
+    report['storage_format'] = args.storage_format
     report['binary_sha256'] = hashlib.sha256(args.binary.read_bytes()).hexdigest()
     report['source_sha256'] = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                                for directory in ('src', 'service', 'transport', 'cli', 'languages/python/src')
@@ -299,7 +336,7 @@ def main():
             if sys.platform == 'linux':
                 report['filesystem'] = json.loads(subprocess.check_output(['findmnt', '-J', '-T', str(root)], text=True))
                 assert report['filesystem']['filesystems'][0]['fstype'] not in ('tmpfs', 'ramfs')
-            c = Cluster(root, args.binary.resolve(), args.openssl)
+            c = Cluster(root, args.binary.resolve(), args.openssl, args.storage_format)
             try:
                 checks(c, record)
                 report.update(complete=True, passed=True)

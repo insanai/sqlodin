@@ -227,7 +227,7 @@ def main():
     parser.add_argument('--binary', type=Path, default=ROOT / 'bin/sqlodin')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    report = dict(complete=False, format=4, policy=6, platform=platform.platform(), checks=[],
+    report = dict(complete=False, format=4, policy=None, platform=platform.platform(), checks=[],
                   binary_sha256=hashlib.sha256(args.binary.read_bytes()).hexdigest(),
                   source_sha256={str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                     for directory in ('src', 'service', 'languages/python/src')
@@ -244,6 +244,8 @@ def main():
             try:
                 checks(c, record)
                 orm_checks(c, record)
+                with c.connect() as db:
+                    report['policy'] = db.status().get('policy')
                 report['complete'] = True
             finally:
                 c.close()

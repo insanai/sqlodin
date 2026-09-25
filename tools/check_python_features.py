@@ -135,7 +135,7 @@ def main():
     parser.add_argument('--openssl', default=str(Path(__file__).resolve().parents[1] / 'build/native/openssl'))
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    report = dict(complete=False, platform=platform.platform(), policy=6, format=4,
+    report = dict(complete=False, platform=platform.platform(), policy=None, format=4,
                   scope='three native processes, durable disk; vector/FTS/hybrid search and SQLAlchemy Core AUTOCOMMIT', checks=[])
     report['binary_sha256'] = hashlib.sha256(args.binary.read_bytes()).hexdigest()
     report['source_sha256'] = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
@@ -156,6 +156,8 @@ def main():
             try:
                 checks(c, record)
                 features(c, record)
+                with c.connect() as db:
+                    report['policy'] = db.status().get('policy')
                 report['complete'] = True
             finally:
                 c.close()

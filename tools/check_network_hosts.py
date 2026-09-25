@@ -11,6 +11,7 @@ import hashlib
 import json
 from pathlib import Path
 import shlex
+import socket
 import subprocess
 import tempfile
 import time
@@ -31,7 +32,7 @@ class RemoteCluster(Cluster):
         for m, host in zip(self.members, hosts):
             node = m['id']
             data = remote_root / 'data'
-            cfg = dict(cluster='network-qualification', node=node, listen=m['address'], data=str(data),
+            cfg = dict(storage_format=5, maintenance='auto', cluster='network-qualification', node=node, listen=m['address'], data=str(data),
                        certificate=str(remote_root / f'node{node}.pem'), key=str(remote_root / f'node{node}.key'),
                        ca=str(remote_root / 'ca.pem'), members=self.members, clients=['node-2.test.sqlodin'])
             path = root / f'node{node}.json'
@@ -60,8 +61,18 @@ class RemoteCluster(Cluster):
         self.logs.append(log)
         self.processes[node] = subprocess.Popen([*SSH, host, 'python3 -c ' + shlex.quote(script)],
                                                stdout=log, stderr=log)
-        time.sleep(0.3)
-        assert self.processes[node].poll() is None, (self.root / f'node{node}.log').read_text()
+        # SSH supervision starting does not mean storage recovery has opened the
+        # listener. Wait for local readiness before timing quorum operations.
+        deadline = time.monotonic()+60
+        address, port = self.members[node-1]['address'].rsplit(':', 1)
+        while time.monotonic() < deadline:
+            assert self.processes[node].poll() is None, (self.root / f'node{node}.log').read_text()
+            try:
+                with socket.create_connection((address, int(port)), timeout=1):
+                    return
+            except OSError:
+                time.sleep(.05)
+        raise TimeoutError(f'Node {node} did not open its listener within 60 seconds')
 
     def stop(self, node):
         if self.processes[node].poll() is not None:
@@ -77,12 +88,95 @@ class RemoteCluster(Cluster):
         self.processes[node].wait(timeout=15)
 
 
+
+def majority_checks(c, record, report):
+    """Every missing voter, both survivors, more than one window, then certified generation."""
+    from check_majority import ready
+    with c.connect() as db:
+        db.execute('CREATE TABLE host_progress(id INTEGER PRIMARY KEY,value INTEGER)')
+        db.execute('INSERT INTO host_progress VALUES(1,0)')
+    writes = 0
+    report['majority_cases'] = []
+    for victim in (1, 2, 3):
+        survivors = [node for node in (1, 2, 3) if node != victim]
+        clients = [c.connect((node,), timeout=5) for node in survivors]
+        case = dict(absent=victim, operations=0, samples=[])
+        report['majority_cases'].append(case)
+        try:
+            for db in clients:
+                db.session_epoch()
+                db.query('SELECT 1')
+            started = time.monotonic()
+            c.stop(victim)
+            for operation in range(90):
+                db = clients[operation%2]
+                op_started = time.monotonic()
+                if operation == 0 or operation%3 == 0:
+                    db.execute('UPDATE host_progress SET value=value+1 WHERE id=1')
+                    writes += 1
+                    if operation == 0:
+                        case['first_write_seconds'] = time.monotonic()-started
+                else:
+                    assert db.query('SELECT value FROM host_progress WHERE id=1').scalar() == writes
+                case['operations'] += 1
+                case['samples'].append(dict(operation=operation, node=survivors[operation%2],
+                                            seconds=time.monotonic()-op_started))
+            case['recovery_goal_met'] = case['first_write_seconds'] <= 5
+        except BaseException:
+            # Preserve the first failure; diagnostics must not turn a timeout into a pass.
+            case['failure_operation'] = case['operations']
+            case['process_returncodes'] = {str(n): p.poll() for n, p in c.processes.items()}
+            case['failure_states'] = []
+            for node in survivors:
+                try:
+                    with c.connect((node,), timeout=2) as probe:
+                        case['failure_states'].append(probe.status())
+                except Exception as exc:
+                    case['failure_states'].append(dict(node=node, error=repr(exc)))
+            case['pending_requests'] = [repr(db.pending) for db in clients]
+            raise
+        finally:
+            for db in clients:
+                db.close()
+        c.start(victim)
+        ready(c, victim)
+        with c.connect((victim,)) as db:
+            assert db.query('SELECT value FROM host_progress WHERE id=1').scalar() == writes
+        record(f'absent_{victim}_both_survivors_continue_and_rejoin')
+    with c.connect() as db:
+        target = db.request_snapshot()
+    deadline = time.monotonic()+120
+    while time.monotonic() < deadline:
+        states = []
+        for node in (1, 2, 3):
+            with c.connect((node,)) as db:
+                states.append(db.status())
+        assert all(not state['snapshot_error'] for state in states), states
+        if all(state['generation_prefix'] >= target for state in states):
+            break
+        time.sleep(.1)
+    else:
+        raise TimeoutError('Three-host snapshot publication timed out')
+    record('three_host_certified_generation_published')
+    for node in (1, 2, 3):
+        c.stop(node)
+    for node in (1, 2, 3):
+        c.start(node)
+    for node in (1, 2, 3):
+        ready(c, node)
+        with c.connect((node,)) as db:
+            assert db.query('SELECT value FROM host_progress WHERE id=1').scalar() == writes
+            assert db.status()['generation_prefix'] >= target
+    record('three_host_generation_and_acknowledged_data_survive_restart')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--hosts', nargs=3, required=True)
     parser.add_argument('--binary', type=Path, required=True, help='Local copy of the Linux binary')
     parser.add_argument('--openssl', default=str(Path(__file__).resolve().parents[1] / 'build/native/openssl'))
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--majority', action='store_true', help='Each absent voter, generation and restart')
     parser.add_argument('--orm', action='store_true', help='Also exercise ORM transactions and commit recovery')
     parser.add_argument('--python-features', action='store_true', help='Also exercise vector/FTS and SQLAlchemy')
     args = parser.parse_args()
@@ -93,7 +187,7 @@ def main():
     report = dict(complete=False, passed=False, hosts=args.hosts, remote_root=str(remote_root),
                   scope='three Linux instances; direct native mTLS consensus and SQL; fixed membership',
                   binary_sha256=hashlib.sha256(args.binary.read_bytes()).hexdigest(), checks=[],
-                  python_features=args.python_features, orm=args.orm,
+                  python_features=args.python_features, orm=args.orm, majority=args.majority,
                   source_sha256={str(p): hashlib.sha256(p.read_bytes()).hexdigest()
                                  for p in [Path(__file__), Path(__file__).with_name('check_network_service.py'),
                                            Path(__file__).with_name('check_python_features.py'),
@@ -113,6 +207,8 @@ def main():
                 if args.orm:
                     from check_orm_transactions import orm_checks
                     orm_checks(c, record)
+                if args.majority:
+                    majority_checks(c, record, report)
                 report.update(complete=True, passed=True)
                 report['filesystem'] = []
                 for host in args.hosts:

@@ -47,6 +47,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--individual-journal', action='store_true')
+    parser.add_argument('--storage-format', type=int, choices=(4, 5), default=4)
     args = parser.parse_args()
     if args.output and args.output.exists():
         parser.error('output exists; retain prior evidence and select a new report path')
@@ -65,6 +66,7 @@ def main():
         run(os.environ.get('ODIN', 'odin'), 'build', ROOT / 'internal/durability_probe',
             '-o:speed', '-vet', '-strict-style',
             f'-define:SQLODIN_JOURNAL_GROUP_COMMIT={str(not args.individual_journal).lower()}',
+            f'-define:SQLODIN_TEST_SEPARATED={str(args.storage_format == 5).lower()}',
             f'-out:{binary}')
         for boundary, expected in [('before', 0), ('journal', 1), ('application', 1), ('ack', 1)]:
             path = work / f'{boundary}.db'
@@ -104,6 +106,7 @@ def main():
     sources = [*ROOT.glob('src/**/*.odin'), *ROOT.glob('internal/durability_probe/*.odin')]
     report = {'schema_version': 1, 'run_at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
               'journal_group_commit': not args.individual_journal,
+              'storage_format': args.storage_format,
               'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in sorted(sources)},
               'native_dependencies': json.loads((ROOT / 'build/native/build.json').read_text()), 'scope': 'process crash; not physical power-loss certification',
