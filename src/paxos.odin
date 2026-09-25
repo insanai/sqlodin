@@ -139,6 +139,16 @@ node_tick :: proc(
 	return paxos.node_tick(node, noop, effects)
 }
 
+// Bounded ownership work; logical failure-detector clocks do not advance.
+node_progress :: proc(
+	node: ^MultiMaster_Node($V, $M, $W, $C, $G),
+	effects: ^Effects(V, M, W, C, G),
+) -> Consensus_Error {
+	noop, ok := node.noop.(V)
+	if !ok do return .Missing_Noop
+	return paxos.node_progress(node, noop, effects)
+}
+
 node_own_next :: proc(node: ^MultiMaster_Node($V, $M, $W, $C, $G)) -> Slot {
 	return node.own_next
 }
