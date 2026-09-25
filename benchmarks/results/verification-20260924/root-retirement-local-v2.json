@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 334445000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_root_retirement_protects_first_predecessor_and_is_one_time"
+			}
+		]
+	}
+}

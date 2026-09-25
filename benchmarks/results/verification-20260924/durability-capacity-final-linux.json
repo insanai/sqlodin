@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "run_at_utc": "2026-09-24T21:02:20.507685+00:00",
+  "journal_group_commit": true,
+  "storage_format": 4,
+  "source_sha256": {
+    "internal/durability_probe/backup.odin": "2504b7e2e7543591a63af2906035ae8b3fd8d9d88ebbf2e08fc83318f3ab0fd9",
+    "internal/durability_probe/generation.odin": "b359c3d8411d514e1af224039bbae230eb6985c6674689d561efb3fb8d0d2cb0",
+    "internal/durability_probe/group.odin": "7aed23b43fcc703730af913d3146eca3a2b6d9b2236f2ce5c6c83792ad766c95",
+    "internal/durability_probe/journal_group.odin": "66f3ba392a703f4eee886467c10d64f466577a9746e8a49e2d21ab4d95c1b1e2",
+    "internal/durability_probe/main.odin": "e708414066f55aee660ebffc55f79d7f89675cba6defe55ff2de0e275aaa4795",
+    "internal/durability_probe/restore.odin": "dbc5e960e7aa5c9627b9bf8b6a2e98c7cb3ce3e3a3d9e6d5ff13ae26adbc7eda",
+    "internal/durability_probe/retirement.odin": "63892f698df51b9b2058484ef669d9a41a916df231ad69f17a7f2c0fc0ad07b1",
+    "internal/durability_probe/session.odin": "3d2e861a6abe652960dd4de7f0c326bafd34d5a13597442c8ef5f15930811642",
+    "internal/durability_probe/transaction.odin": "d0fd64afb5a991b0cac3c9132448c2cade5bffb429e51b8a42c591d3f3061936",
+    "src/durable/backup.odin": "24a25b816609f1c0c1b9864895554a9b171daa22996a5c10ff2790cfd034b077",
+    "src/durable/backup_io.odin": "a5f44c55b59c28f7f497f5a8a9c499f506a8d21b5372b7dc6e94145c68a2586a",
+    "src/durable/backup_manifest.odin": "6f33b05af98e6a68d1749a08c88de4c3be17eee0c9682bda1d934997e526ee35",
+    "src/durable/backup_verify.odin": "96d635d1df6fcc8a036d204015a5120b93d46fa667af72bc8f579f802b275e4b",
+    "src/durable/batch.odin": "b466585d42f582a338367792d4873f1c08efe24bec41ba5a195d121ed69787cd",
+    "src/durable/codec.odin": "a884f73dbbbfb02cecdd7ea843f6d55e471f71de661408d66439bf34553e2fbb",
+    "src/durable/generation_base.odin": "2c891ac96e2ede2f0b67ea7e065c79c84de14f2685c5a3ffcee179d8f1a5f372",
+    "src/durable/generation_build.odin": "f821182acb5d298ae1e8f1bc421924e5e378b473c6758934d3f26cb8cada8b2d",
+    "src/durable/generation_delta.odin": "778cb165ec91d6b83fe2006ff7b83a82238b26a4584e993fd963fa5629d8d235",
+    "src/durable/generation_install.odin": "4f5cc64bbc515becd87f31bb6233e7c1a74628a0b1037948e8a4d860bb14e75f",
+    "src/durable/generation_inventory.odin": "f0864cd5903c0f41fc1b960accae4dd0601512e0af8631f2ff9a754600f6a611",
+    "src/durable/generation_outcomes.odin": "9f24b1ddf81b61d76f6b4c32cdd90eb71382c0ea5dd5dc2d9437e69f7715a04d",
+    "src/durable/generation_publish.odin": "cb01366a63629baff65c46be0a4e7d15b8548185a00f29dd50aa8441eb22e755",
+    "src/durable/generation_retire.odin": "9a59a7f96362181b0d72d9ad127f7093e6c9744cab7122dfdc5cb1c884f9bd91",
+    "src/durable/generation_seal.odin": "bda2b60f6ff494b2d401653f01bb97c834771b73fd69611c5d5283c1c0a1fc6f",
+    "src/durable/generation_store.odin": "57ab1a7840c4555d6733d14d5de504513d3a87e602d01e47c358861c7d70914a",
+    "src/durable/generation_worker.odin": "d3d677c5aab98358deb1250d85649eaf57412710216372048f8201bfbcf4d72b",
+    "src/durable/genesis.odin": "1a901c3db08337b85c84d8ae72acf96317eefbf5e6b73df44626eeddf5bbca9c",
+    "src/durable/history_space.odin": "6c7f4f2a7309d40aa4bf226c878943b85456c7e9f4a1136547fa0bc20336a286",
+    "src/durable/host.odin": "af6b79832cd7276006bb700f62891828425c9f0dfacc9105489bb943562ff063",
+    "src/durable/ids.odin": "c8b82187d31d71dfe2ea2aba12b34543fd97ba64e0297653d40adf12e346b72e",
+    "src/durable/image_inventory.odin": "3012822b7677cdaf54b438ff017d37a66480b3c9a517d207f03b79148c860278",
+    "src/durable/image_retire.odin": "d4d12d8c404787537b3c0f8a324d3a64c05e3971657443fcead254a213f360fc",
+    "src/durable/image_retire_query.odin": "a3c8f3f9cf2363d55a5ccdafa72daaf7170a88016d3ab7f9a5738c28b209b329",
+    "src/durable/journal.odin": "48fea3bf4a899b039961ce471f271e438183747bfc85bac68d13ac0467a0e910",
+    "src/durable/maintenance_cancel.odin": "844de597e2554b409efb1fdc5994806dd7312debea19fed6f28972414216100b",
+    "src/durable/migration.odin": "a3fb966986001d59ac79ba50daa11d99bda5057636a7a0681647ac920475b1a5",
+    "src/durable/migration_copy.odin": "1440df37266df5e10a467f9ebb5cf57c0bf052c56a8cb16db92a6e12e3d90f02",
+    "src/durable/packing.odin": "13cb17865f88841fb1718ef8ce4800b28b1be1fb6d75f4e5e1e3de5ec39ef8e9",
+    "src/durable/progress.odin": "b473bfcd778313b0a1340dc63be0ce84d5f0c3bd0a1a02871d1a3ba870f4fbd1",
+    "src/durable/reads.odin": "17928c21a613ed31ac55e26cfc4a99f3f81c021bb1149a5b04b26412d76b2426",
+    "src/durable/restore.odin": "a47e14d95c83231352e8d33db5ddd5b344e74ac280d34a6c504ca71ec7d8bccc",
+    "src/durable/restore_copy.odin": "da2221a3bbd945e9daca4d962bec3674f5e5b60cafc157fe5033e2ad9633e534",
+    "src/durable/restore_publish.odin": "2ad1cf7fa02c85a049b0bb50a08af60ce984f572513013f15dd48910aff5baf1",
+    "src/durable/root_retire.odin": "942ec3b3eada35a1cefd5e1aa7f13fea0974d2af16e3d30b378c862e7441ccf1",
+    "src/durable/separated.odin": "af5c85001c5d422658c5c32370105165e497f9ef9ea343886b2dc75c737e6022",
+    "src/durable/snapshot_control.odin": "70fcd31b7912a403208d4ab4e5cdc7a7314c949e37d50c8bebb0e409e209468f",
+    "src/durable/snapshot_quorum.odin": "1e75418c585997851bde2a6b74a00e19bb827f6a04d8e8d34cf4cf5f2163760d",
+    "src/durable/snapshot_worker.odin": "1a2a554698c900622be9ebfc92827271ac6cdc486981d548cb4677e8d974e0f6",
+    "src/durable/space.odin": "0f538cab8576d12d165eb30eae24c3592e6eb0f4b6e0ee1f99077b1a7815149f",
+    "src/durable/storage.odin": "3ecb6b9aa4dcc7c695f6469f8b8b588658336aadecbf631f55397118397002d9",
+    "src/durable/transition_group.odin": "b1ef1285fbec8fecf3c2be0d77a1e18b20c40e446ec32c0bec5fcd50f4feb38f",
+    "src/engine.odin": "4a86a43587d06d604c69274e412059ef74d6bc15a3233ced3d205f5790be619a",
+    "src/engine_dml.odin": "93e4364a8bbadfa4328f2972750dbc643aba815d59f10c85f5adf4468bf22f44",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "3da5e089b29dd2c3f84f2e68651fb34499af39e7a3bc02bea7bf8d5b1fdcc6af",
+    "src/engine_optimistic.odin": "51d96626ea32c3c0d8c681dd331e0d863bb9c8794b95c2ca45d6b5b2978802e6",
+    "src/engine_outcomes.odin": "a3261555c9e859cc9c4e2fa9e403c8810b134faea864f80a19aad70986a98f4d",
+    "src/engine_policy.odin": "20046819c257f0b2f929bdba37bd69d16aaa682934d7c9c6f79af3ac722c9195",
+    "src/engine_query.odin": "4b7bd3904d2eb7094ebc1740021e8c2b62a2d404add9eecfee927c96e90e8dc3",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_schema.odin": "1fec0cd086d915e1f2e89df39fdf2010e4be10d730e91ea0c89c0c5463386300",
+    "src/engine_session_epoch.odin": "3ba4803aae927e83c9d4f60da89691abf532d98e70ad9ca01aea67dcc3388481",
+    "src/engine_sessions.odin": "87ab0cb6b83f1e81cd5aa59a999de0717505a332e4d11dbbecd81211e4684de9",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "cb701e82c4e49181589c94a207af5da73f21140335876d8035d6fda93fe6bbc1",
+    "src/paxos.odin": "b1447c58efb78f9c79f291681b02c5c76cd39fb14ce9f4c312210662a6c527a4",
+    "src/snapshot/cancellation.odin": "9a98ff0ab197f4893690e70cf273b6c95fb81ff2444a06ddbf1f6fb4839921a0",
+    "src/snapshot/certificate.odin": "71abd0ec5ccd70ed5c5389f0a5e334584f787dea2ed7815c1822cfbc9eeac062",
+    "src/snapshot/check.odin": "4e1dd6ef16626b825520d3aeb5b04f4450c47d2c4dd1165657e52531132db9e5",
+    "src/snapshot/codec.odin": "740cc314e32802593c530a626de2b1fd281918ddfb9c58927c81cc0500157450",
+    "src/snapshot/errors.odin": "f35ec85b672304b6a0af622f0364546207be60abaeb8108db990bd8d00e8793c",
+    "src/snapshot/image.odin": "f1dae1a46aaaf8db29c1b7ada50637086fdda4d26658b14c19923e4766e2e73d",
+    "src/snapshot/image_storage.odin": "845ed0b6fbbe4884180685142a8416c44441e80b211de76b42d677fb5f8b81cd",
+    "src/snapshot/logical.odin": "a2b2bbdc5c367b4f1c910bb78fa6eae9ef59176748f8e3dc049d314948fccd04",
+    "src/snapshot/logical_rows.odin": "44ea1112f16a765e2bc7712ec514684794e01e4fa54cdb6b5cbeefcd389d9f72",
+    "src/snapshot/manifest.odin": "570c6c37eeb22c19caea60c50b0a882893ec87099a4626b418dda75d5c73832f",
+    "src/snapshot/manifest_storage.odin": "25ff4d7c76f5ed3982f75e0a401fc1c7895959c56f53b6312965dab576dcc405",
+    "src/snapshot/retain.odin": "489e9ca42b280c8809cfdc03fef08b09d2795a8447c9717b56555f3ad4a32852",
+    "src/snapshot/verify.odin": "2a380310abc222c9f4e926074ccf1a4e46a36f99c2728b36022fd2801ec1c5d5",
+    "src/sqlite/sqlite3.odin": "de89f34e07594776e1c0307ad250e1b8c095db9f956f98c610b268792ab0041f",
+    "src/sqlite/sqlite_vec.odin": "4f9b1e9d845241b706c62af49c5715e7b816f080a1c590d6ff8d546c42333597",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "be93b924d89a793bccf6264f0e397c7c0963decc251cc201c6bf401c0bdedf27"
+  },
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "openssl": "3.5.8",
+    "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "compiler": "/usr/bin/cc",
+      "archiver": "/usr/bin/ar",
+      "compiler_version": "cc (Debian 14.2.0-19) 14.2.0",
+      "builder_sha256": "571672682cd8f02b98d1d18840a81b13fa7a8b12020fa74328e383010f24ed23"
+    },
+    "sources": {
+      "sqlite": {
+        "version": "3.51.3",
+        "url": "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        "files": {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      },
+      "vec": {
+        "version": "0.1.9",
+        "url": "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        "files": {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      },
+      "openssl": {
+        "version": "3.5.8",
+        "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+        "sha256": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2"
+      },
+      "sqlite_shell": {
+        "version": "3.51.3",
+        "url": "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        "files": {
+          "shell.c": "4a5bde1b3e00f873caa7e0e7a4def2ea656b7dfae6cad5fb1e9c0d8f44f4397a"
+        }
+      }
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "openssl_flags": [
+      "no-shared",
+      "no-dso",
+      "no-module",
+      "no-engine",
+      "no-zlib",
+      "--libdir=lib",
+      "--openssldir=/sqlodin/no-system-openssl"
+    ],
+    "archives_sha256": {
+      "libsqlite3.a": "aac3b0f9cafb856e49bc0fc8f00289e1dd36a596032383028ee9a663559630ae",
+      "libsqlite_vec.a": "61173967db94dff4ec8bb7affcd7043fd375eb895a97cf676c709ee5c079826e",
+      "libssl.a": "d287b4bf68bebb8ea76818c859763eb8ac90f65d5ecf13fc0f253a50405df140",
+      "libcrypto.a": "3fe6a4137e35c507ff6452ec5882915256042b731610085dbcc105d58aa09069"
+    }
+  },
+  "scope": "process crash; not physical power-loss certification",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "fstype": "zfs",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "case": "before",
+      "passed": true,
+      "verification": "verified rows=0 applied=1"
+    },
+    {
+      "case": "journal",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "application",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "ack",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "three_voters_killed_at_ack",
+      "passed": true,
+      "verification": "verified three voters: all 80 acknowledged writes survived"
+    },
+    {
+      "case": "transaction-before",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-journal",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-application",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-ack",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-before",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-journal",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-application",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-ack",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "application-group-before",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-journal",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-sql",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-application",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-ack",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "journal-group-before",
+      "passed": true,
+      "verification": "verified promise and 0 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-journal",
+      "passed": true,
+      "verification": "verified promise and 15 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-application",
+      "passed": true,
+      "verification": "verified promise and 15 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-ack",
+      "passed": true,
+      "verification": "verified promise and 15 votes; no unchosen SQL applied"
+    }
+  ]
+}

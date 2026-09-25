@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 0,
+	"duration": 131707000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_restore_preserves_retry_fences_and_restarts_after_compaction"
+			}
+		]
+	}
+}

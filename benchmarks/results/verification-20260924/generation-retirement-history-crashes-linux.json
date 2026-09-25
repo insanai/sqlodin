@@ -1,0 +1,224 @@
+{
+  "complete": true,
+  "passed": true,
+  "checks": [
+    {
+      "phase": "Image_Checked",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Before_Application_Step",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "After_Application_Step",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Application_Copied",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Before_Suffix_Commit",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Suffix_Copied",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Base_Written",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Recovered",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Before_Outcome_Trim_Commit",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "After_Outcome_Trim_Commit",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Before_Identity_Commit",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Before_Directory_Sync",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Ready",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "After_Directory_Sync",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Before_Publication",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "Before_Catalog_Commit",
+      "passed": true,
+      "verification": "verified generation=0 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "After_Publication",
+      "passed": true,
+      "verification": "verified generation=2 rows=1 promise=553648129 accepted=10 retry=once"
+    },
+    {
+      "phase": "After_Retirement_Files",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    },
+    {
+      "phase": "After_Retirement_Sync",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    },
+    {
+      "phase": "Before_Retirement_Commit",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    },
+    {
+      "phase": "After_Image_Retirement_Files",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    },
+    {
+      "phase": "After_Image_Retirement_Sync",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    },
+    {
+      "phase": "Before_Image_Retirement_Commit",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    },
+    {
+      "phase": "After_Root_Retirement_Files",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    },
+    {
+      "phase": "After_Root_Retirement_Sync",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    },
+    {
+      "phase": "Before_Root_Retirement_Commit",
+      "passed": true,
+      "verification": "verified retirement current=generation-9-8392706 previous=generation-6-4198402 rows=3 accepted=50 IDs=preserved"
+    }
+  ],
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "debug": true,
+  "run_at_utc": "2026-09-24T15:41:45.970736+00:00",
+  "scope": "local generation publication with retained predecessor; SIGKILL, not power loss",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "binary_sha256": "6e9e393163168aed6e005572728ba8ea240cc15eeea4b4be6c86d3ea5aac4e7a",
+  "source_sha256": {
+    "internal/durability_probe/generation.odin": "aeb7bbb581a45a53bb139cf7f036fcfda94a18635fbc94af3bc1d9e622c66aa5",
+    "internal/durability_probe/group.odin": "7aed23b43fcc703730af913d3146eca3a2b6d9b2236f2ce5c6c83792ad766c95",
+    "internal/durability_probe/journal_group.odin": "66f3ba392a703f4eee886467c10d64f466577a9746e8a49e2d21ab4d95c1b1e2",
+    "internal/durability_probe/main.odin": "adb67186184593d003d4d8548f06fbb199213c1a29c7e36ab47e5a2a93aaec1d",
+    "internal/durability_probe/retirement.odin": "63892f698df51b9b2058484ef669d9a41a916df231ad69f17a7f2c0fc0ad07b1",
+    "internal/durability_probe/transaction.odin": "d0fd64afb5a991b0cac3c9132448c2cade5bffb429e51b8a42c591d3f3061936",
+    "src/durable/batch.odin": "b466585d42f582a338367792d4873f1c08efe24bec41ba5a195d121ed69787cd",
+    "src/durable/codec.odin": "190d3370ca3b6ce275f6f11d69d887641a7b8fdac6d0f0cc27a763e87610e7d8",
+    "src/durable/generation_base.odin": "7832a9dd2d30d21c3becc27aac69b551ec9d5eab0d91d662fd6ea099dc1504cd",
+    "src/durable/generation_build.odin": "d071199d53141bf00da840da33a7abd8baf2eda81a9e06189fa1ce7d7cd86f87",
+    "src/durable/generation_delta.odin": "778cb165ec91d6b83fe2006ff7b83a82238b26a4584e993fd963fa5629d8d235",
+    "src/durable/generation_install.odin": "4f5cc64bbc515becd87f31bb6233e7c1a74628a0b1037948e8a4d860bb14e75f",
+    "src/durable/generation_inventory.odin": "f0864cd5903c0f41fc1b960accae4dd0601512e0af8631f2ff9a754600f6a611",
+    "src/durable/generation_outcomes.odin": "9f24b1ddf81b61d76f6b4c32cdd90eb71382c0ea5dd5dc2d9437e69f7715a04d",
+    "src/durable/generation_publish.odin": "cb01366a63629baff65c46be0a4e7d15b8548185a00f29dd50aa8441eb22e755",
+    "src/durable/generation_retire.odin": "9a59a7f96362181b0d72d9ad127f7093e6c9744cab7122dfdc5cb1c884f9bd91",
+    "src/durable/generation_seal.odin": "bda2b60f6ff494b2d401653f01bb97c834771b73fd69611c5d5283c1c0a1fc6f",
+    "src/durable/generation_store.odin": "0d567160301e08670b3422f0ceac0c9e2fc08f292f8a0a31013231a85a0d0683",
+    "src/durable/generation_worker.odin": "3411edc63a4a8235b3813b04279bd8933735d47d2019d01dbfd5b8552950e3a5",
+    "src/durable/history_space.odin": "3e06788862e64a070756705287e973680de094a32cb346e7156f871567ae2645",
+    "src/durable/host.odin": "f8974e4c9cc3e059430d4373d0c258fde712c35ff489aa19943bd0545eb8bb55",
+    "src/durable/ids.odin": "c8b82187d31d71dfe2ea2aba12b34543fd97ba64e0297653d40adf12e346b72e",
+    "src/durable/image_inventory.odin": "3012822b7677cdaf54b438ff017d37a66480b3c9a517d207f03b79148c860278",
+    "src/durable/image_retire.odin": "0e95ed4184741042e4f3df92e03d326e3b256645d52d5a5f5d15021ce29411eb",
+    "src/durable/image_retire_query.odin": "a3c8f3f9cf2363d55a5ccdafa72daaf7170a88016d3ab7f9a5738c28b209b329",
+    "src/durable/journal.odin": "be6d9dc8ed7ae6065127facb4a4338e5abf543c3b39524747bf36fedc790e01b",
+    "src/durable/migration.odin": "ab1634d282d043208ab4a58f3cf7afa30eb94a86d5ee34225f9753c52882029e",
+    "src/durable/migration_copy.odin": "056484f03afd9e2ba8ed76ee7a49b721792e60fe389a6eae9bef8f46185dce2a",
+    "src/durable/packing.odin": "13cb17865f88841fb1718ef8ce4800b28b1be1fb6d75f4e5e1e3de5ec39ef8e9",
+    "src/durable/progress.odin": "f4f20c4ad400433a9327ac707be1c5f3e609081f80892e1853df6fcb1454259e",
+    "src/durable/reads.odin": "17928c21a613ed31ac55e26cfc4a99f3f81c021bb1149a5b04b26412d76b2426",
+    "src/durable/root_retire.odin": "942ec3b3eada35a1cefd5e1aa7f13fea0974d2af16e3d30b378c862e7441ccf1",
+    "src/durable/separated.odin": "8fd296032c35dac950ce55b89dd8d359ce8ef0766c83dce22b42e5c3efaa2687",
+    "src/durable/snapshot_control.odin": "70fcd31b7912a403208d4ab4e5cdc7a7314c949e37d50c8bebb0e409e209468f",
+    "src/durable/snapshot_quorum.odin": "1e75418c585997851bde2a6b74a00e19bb827f6a04d8e8d34cf4cf5f2163760d",
+    "src/durable/snapshot_worker.odin": "2647418254d076ffad9a096cf96f47512fe07e33b1cb23e5cbdc61eeddf788e6",
+    "src/durable/space.odin": "0f538cab8576d12d165eb30eae24c3592e6eb0f4b6e0ee1f99077b1a7815149f",
+    "src/durable/storage.odin": "374f648e38e7a7a2ca1b32d316290503a617a00ace9732798ef9ae1d769b8b41",
+    "src/durable/transition_group.odin": "b1ef1285fbec8fecf3c2be0d77a1e18b20c40e446ec32c0bec5fcd50f4feb38f",
+    "src/engine.odin": "fab6c4f676d4bf0d5422acf5b696c3e451df9034ecce1d6f5e0d0cb492091ef8",
+    "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+    "src/engine_optimistic.odin": "51d96626ea32c3c0d8c681dd331e0d863bb9c8794b95c2ca45d6b5b2978802e6",
+    "src/engine_outcomes.odin": "2fb435d6f80eed09ad37ee8804a90d603918b6261738c86d9b79f5012d210af2",
+    "src/engine_policy.odin": "a486216061037920cff8c883d61d37884305e310b29b725da24dfcc4b00d7db6",
+    "src/engine_query.odin": "4b7bd3904d2eb7094ebc1740021e8c2b62a2d404add9eecfee927c96e90e8dc3",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_sessions.odin": "ddaaaa6e7a8cf866656bfd866b82c0342a98d9cb0a2d3c11dc191569f2912c33",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "06afab34611f6b83d4b1e01971188ca4522a840839f3f704ec9724dad58d3743",
+    "src/paxos.odin": "b1447c58efb78f9c79f291681b02c5c76cd39fb14ce9f4c312210662a6c527a4",
+    "src/snapshot/certificate.odin": "71abd0ec5ccd70ed5c5389f0a5e334584f787dea2ed7815c1822cfbc9eeac062",
+    "src/snapshot/check.odin": "6b6618a02c7d596a4691be983a32504bfd5011a070ab7d467b338889e79dc21d",
+    "src/snapshot/codec.odin": "740cc314e32802593c530a626de2b1fd281918ddfb9c58927c81cc0500157450",
+    "src/snapshot/errors.odin": "870e65adbbc31d8126da8a57b19d36b6dc4525fb27b4ca58fb12e3afa6397692",
+    "src/snapshot/image.odin": "e5dfbaadc286e45940a16415b15859e85d615233b2057625c9ff84d874d7d0fb",
+    "src/snapshot/image_storage.odin": "845ed0b6fbbe4884180685142a8416c44441e80b211de76b42d677fb5f8b81cd",
+    "src/snapshot/logical.odin": "37b22833fa8965b155cca69edbfcc832fbc529307cee32a8654b1bf50da63390",
+    "src/snapshot/logical_rows.odin": "c77d1da0cda77724574a34ab9f87748bde34a02389c8ac68bdd1710c3ed92077",
+    "src/snapshot/manifest.odin": "570c6c37eeb22c19caea60c50b0a882893ec87099a4626b418dda75d5c73832f",
+    "src/snapshot/manifest_storage.odin": "25ff4d7c76f5ed3982f75e0a401fc1c7895959c56f53b6312965dab576dcc405",
+    "src/snapshot/retain.odin": "489e9ca42b280c8809cfdc03fef08b09d2795a8447c9717b56555f3ad4a32852",
+    "src/snapshot/verify.odin": "2b9813e8cfaec88c76980ba457450c187d973fd5c83c7680305a6f3a3d3a7ed1",
+    "src/sqlite/sqlite3.odin": "ed74ac5f14dfd4139572d095d9e66849fd915614fe148afb97ad06f43ae7450a",
+    "src/sqlite/sqlite_vec.odin": "fcf7db3ae460173b06eb0836fbf504569efb223915eb208d4d7a9cf806deae22",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "00570fbbb4a9636dd5b8a98cc58af33f0384f906da5e7adc047650257486cc39"
+  }
+}

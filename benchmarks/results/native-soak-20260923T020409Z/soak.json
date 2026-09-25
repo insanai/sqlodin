@@ -1,6 +1,6 @@
 {
   "complete": false,
-  "status": "running",
+  "status": "failed",
   "started_utc": "2026-09-23T02:04:15.800440+00:00",
   "hosts": [
     "insan@10.175.52.19",
@@ -30,6 +30,16 @@
       "node": 3,
       "epoch": 1790139858.3813648,
       "kind": "SIGKILL, surviving-quorum read/write, reopen"
+    },
+    {
+      "node": 1,
+      "epoch": 1790143458.2134366,
+      "kind": "SIGKILL, surviving-quorum read/write, reopen"
+    },
+    {
+      "node": 2,
+      "epoch": 1790147058.4211326,
+      "kind": "SIGKILL, surviving-quorum read/write, reopen"
     }
   ],
   "source_sha256": {
@@ -39,31 +49,31 @@
   "workload_started_utc": "2026-09-23T02:04:16.957727+00:00",
   "planned_end_utc": "2026-09-23T10:04:16.957752+00:00",
   "progress": {
-    "elapsed_seconds": 11686.530697176233,
-    "reads": 152740,
-    "writes": 65170,
-    "verified_transfers": 65170,
-    "acknowledged_retries": 253,
+    "elapsed_seconds": 17982.254544475116,
+    "reads": 193236,
+    "writes": 82527,
+    "verified_transfers": 82527,
+    "acknowledged_retries": 321,
     "resources": [
       {
-        "pid": 209692,
+        "pid": 210416,
         "resources": {
-          "pid": 209692,
-          "started": 1790132658.1000805,
+          "pid": 210416,
+          "started": 1790143458.1863472,
           "samples": [],
           "error": null,
           "latest": {
-            "free_bytes": 344777555968,
-            "data_bytes": 245419752,
-            "cpu_seconds": 626.78,
-            "VmHWM": 14626816,
-            "VmRSS": 14626816,
-            "epoch": 1790140742.8819437
+            "free_bytes": 344746754048,
+            "data_bytes": 345890560,
+            "cpu_seconds": 288.27,
+            "VmHWM": 13221888,
+            "VmRSS": 13221888,
+            "epoch": 1790147038.3364367
           }
         },
         "usage": {
-          "free_bytes": 344777555968,
-          "data_bytes": 245419752
+          "free_bytes": 344746754048,
+          "data_bytes": 345890560
         },
         "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
       },
@@ -75,17 +85,17 @@
           "samples": [],
           "error": null,
           "latest": {
-            "free_bytes": 377091784704,
-            "data_bytes": 245235456,
-            "cpu_seconds": 351.47,
-            "VmHWM": 13381632,
-            "VmRSS": 13381632,
-            "epoch": 1790140741.4011934
+            "free_bytes": 377059803136,
+            "data_bytes": 345669376,
+            "cpu_seconds": 875.48,
+            "VmHWM": 15245312,
+            "VmRSS": 15245312,
+            "epoch": 1790147037.4222274
           }
         },
         "usage": {
-          "free_bytes": 377091784704,
-          "data_bytes": 245235456
+          "free_bytes": 377059803136,
+          "data_bytes": 345669376
         },
         "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
       },
@@ -97,33 +107,36 @@
           "samples": [],
           "error": null,
           "latest": {
-            "free_bytes": 1288246788096,
-            "data_bytes": 245186280,
-            "cpu_seconds": 47.39,
-            "VmHWM": 12345344,
-            "VmRSS": 12345344,
-            "epoch": 1790140742.5928051
+            "free_bytes": 1288281915392,
+            "data_bytes": 345612008,
+            "cpu_seconds": 282.58,
+            "VmHWM": 13070336,
+            "VmRSS": 13070336,
+            "epoch": 1790147038.4212039
           }
         },
         "usage": {
-          "free_bytes": 1288246919168,
-          "data_bytes": 245186280
+          "free_bytes": 1288281915392,
+          "data_bytes": 345673448
         },
         "binary_sha256": "de7fa66bef035c65ce68041a9bad595517b0ade5b71cbbe5a7ef40483bfb3a5e"
       }
     ],
     "latency_ms": {
       "read": {
-        "p50": 106.49575013667345,
-        "p95": 121.09034042805433,
-        "p99": 132.29560758918524
+        "p50": 107.46619384735823,
+        "p95": 142.2888683155179,
+        "p99": 173.92436414957047
       },
       "write": {
-        "p50": 111.96993384510279,
-        "p95": 127.6885736733675,
-        "p99": 138.80667369812727
+        "p50": 113.90851531177759,
+        "p95": 161.03344224393368,
+        "p99": 176.92421469837427
       }
     }
   },
-  "updated_utc": "2026-09-23T05:19:03.488544+00:00"
+  "updated_utc": "2026-09-23T07:03:59.212401+00:00",
+  "error": "ConnectionError('Operation deadline exceeded: The read operation timed out')",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/insan/projects/sqlodin/native-soak/20260923T020409Z-eight-hour/run_native_soak.py\", line 130, in main\n    verify(cfg,verified+1,writes,balances); verified=writes; progress(start); next_check=time.monotonic()+60\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/insan/projects/sqlodin/native-soak/20260923T020409Z-eight-hour/run_native_soak.py\", line 56, in verify\n    assert [r['balance'] for r in db.query('SELECT balance FROM accounts ORDER BY id')]==balances\n                                  ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/insan/projects/sqlodin/native-soak/20260923T020409Z-eight-hour/python/sqlodin/client.py\", line 149, in query\n    response = self._call(dict(op='query', sql=text, consistency=consistency,\n                               parameters=[encode(v) for v in values]))\n  File \"/home/insan/projects/sqlodin/native-soak/20260923T020409Z-eight-hour/python/sqlodin/client.py\", line 199, in _call\n    raise ConnectionError(f\"Operation deadline exceeded: {last_error}\")\nsqlodin.errors.ConnectionError: Operation deadline exceeded: The read operation timed out\n",
+  "finished_utc": "2026-09-23T07:05:44.860236+00:00"
 }

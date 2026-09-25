@@ -1,0 +1,33 @@
+{
+	"total": 6,
+	"success": 6,
+	"duration": 582067000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_migration_preserves_source_retries_and_reserved_ids"
+			},
+			{
+				"success": true,
+				"name": "test_migration_preserves_unchosen_acceptor_vote"
+			},
+			{
+				"success": true,
+				"name": "test_migration_replays_chosen_unapplied_and_refuses_incomplete"
+			},
+			{
+				"success": true,
+				"name": "test_separated_store_group_recovery_and_exportable_application"
+			},
+			{
+				"success": true,
+				"name": "test_separated_store_identity_and_reserved_ids"
+			},
+			{
+				"success": true,
+				"name": "test_separated_store_journal_application_crash_boundary"
+			}
+		]
+	}
+}

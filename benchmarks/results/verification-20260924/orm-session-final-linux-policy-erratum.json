@@ -1,0 +1,6 @@
+{
+  "report": "orm-session-final-linux.json",
+  "report_sha256": "f757d6fb481165f3e7a09ecddd8491dd629ef2061ff968f97cafa19bcdfac902",
+  "correction": "The harness hard-coded policy=6. This identified candidate implements policy 7 and wire 3; format=4 is correct for this ORM run.",
+  "evidence": "The report source_sha256 includes service/config.odin and src/durable/storage.odin; source-manifest-session-final-linux.json records the same candidate."
+}

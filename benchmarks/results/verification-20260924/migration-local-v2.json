@@ -1,0 +1,22 @@
+{
+  "complete": false,
+  "passed": false,
+  "checks": [
+    {
+      "name": "live_source_refused",
+      "passed": true
+    },
+    {
+      "name": "all_voters_migrated_source_database_and_wal_unchanged",
+      "passed": true
+    }
+  ],
+  "operations": 6,
+  "binary_sha256": "d5c4f0e5500f1086713c80f5e5ff50724eb73f6399ef5267f1f32b543676ee77",
+  "logs": {
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 86.625\u00b5s, ledger = 28.75\u00b5s, application = 38.375\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:63910 (mTLS, cluster network-qualification)\nRecovery node=1 applied=12 journal=26 phases=Recovery_Stats{integrity = 162.209\u00b5s, ledger = 4.604875ms, application = 2.978208ms}\nSQLodin node 1 listening on 127.0.0.1:63910 (mTLS, cluster network-qualification)\n",
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 62.792\u00b5s, ledger = 26.792\u00b5s, application = 35.709\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:63911 (mTLS, cluster network-qualification)\nRecovery node=2 applied=12 journal=26 phases=Recovery_Stats{integrity = 176.417\u00b5s, ledger = 5.015625ms, application = 3.019291ms}\nSQLodin node 2 listening on 127.0.0.1:63911 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 61.084\u00b5s, ledger = 31.167\u00b5s, application = 39.334\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:63912 (mTLS, cluster network-qualification)\nRecovery node=3 applied=12 journal=26 phases=Recovery_Stats{integrity = 243.208\u00b5s, ledger = 6.4325ms, application = 3.909333ms}\nSQLodin node 3 listening on 127.0.0.1:63912 (mTLS, cluster network-qualification)\n"
+  },
+  "error": "AssertionError()"
+}

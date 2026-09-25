@@ -1,0 +1,49 @@
+{
+  "scope": "Diagnostic observations after failed three-host qualification; shared physical resources inferred, not proven",
+  "observations": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "host": "18",
+        "chunk_id": "ea94c1",
+        "wall_time_seconds": 0.087574834,
+        "exit_code": 0,
+        "original_token_count": 92,
+        "output": "paxos-zig\n2026-09-24T20:52:31Z\nsome avg10=1.01 avg60=23.78 avg300=35.64 total=163610947559\nfull avg10=0.87 avg60=23.12 avg300=35.11 total=138066195606\nsome avg10=0.00 avg60=0.00 avg300=0.00 total=4046823\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=3973782\nlow 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\nlocal/containers/paxos-zig[/rootfs] zfs\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "host": "19",
+        "chunk_id": "915cc6",
+        "wall_time_seconds": 0.08493525,
+        "exit_code": 0,
+        "original_token_count": 87,
+        "output": "agy01\n2026-09-24T20:52:32Z\nsome avg10=0.00 avg60=0.00 avg300=0.00 total=8732306208\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=8569039157\nsome avg10=0.00 avg60=0.00 avg300=0.00 total=11826\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=10856\nlow 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\nlocal/containers/agy01[/rootfs] zfs\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "host": "20",
+        "chunk_id": "67b418",
+        "wall_time_seconds": 0.161341667,
+        "exit_code": 0,
+        "original_token_count": 85,
+        "output": "agy02\n2026-09-24T20:52:32Z\nsome avg10=0.00 avg60=0.00 avg300=0.00 total=1985568663\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1949025894\nsome avg10=0.00 avg60=0.00 avg300=0.00 total=6\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=6\nlow 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\nlocal/containers/agy02[/rootfs] zfs\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "host": "21",
+        "chunk_id": "1d6005",
+        "wall_time_seconds": 0.148847916,
+        "exit_code": 0,
+        "original_token_count": 87,
+        "output": "agy03\n2026-09-24T20:52:32Z\nsome avg10=0.83 avg60=23.00 avg300=35.39 total=163610952841\nfull avg10=0.71 avg60=22.37 avg300=34.87 total=138066200845\nsome avg10=0.00 avg60=0.00 avg300=0.00 total=1\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1\nlow 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\nlocal/containers/agy03[/rootfs] zfs\n"
+      }
+    }
+  ]
+}

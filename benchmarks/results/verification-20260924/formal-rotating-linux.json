@@ -1,0 +1,19 @@
+{
+  "complete": false,
+  "passed": false,
+  "scope": "bounded owned-decree and host-seam models; not a full multi-slot refinement proof",
+  "tlc_sha256": "71ce43150b6ee0a76cc33849ec45b2c6ae4323dc933b0acaef0928668ed0de72",
+  "cases": [
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingConcurrent",
+      "expected_violation": null,
+      "passed": false,
+      "sources": {
+        "RotatingWindow.tla": "cdc690ed5438b0ed4e1daae33fe151a6b8a92ab1a9b3f0158807617a2630d1a8",
+        "RotatingConcurrent.cfg": "e208ea84a2b6cb250efb2705812d9e3cba22c0e5230ba80dd2cfe9f324ea7e38"
+      }
+    }
+  ],
+  "error": "TimeoutExpired(['java', '-XX:+UseParallelGC', '-Xmx1g', '-cp', '/home/insan/projects/sqlodin/verification-20260924/build/tla2tools.jar', 'tlc2.TLC', '-deadlock', '-workers', '1', '-metadir', '/tmp/sqlodin-tlc-qfal4quy/RotatingConcurrent', '-config', 'RotatingConcurrent.cfg', 'RotatingWindow.tla'], 120)"
+}

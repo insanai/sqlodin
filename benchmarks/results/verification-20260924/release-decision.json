@@ -1,0 +1,82 @@
+{
+  "complete": true,
+  "decision": "qualified for the stated fixed three-voter production scope",
+  "scope": {
+    "membership": "three fixed authenticated non-Byzantine voters; writes admitted at every voter",
+    "platforms": "Linux x86_64 native service; macOS arm64 light validation",
+    "storage": "local durable storage honoring SQLite FULL and file/directory synchronization",
+    "proofs": "59 bounded model cases including required negative controls; 48 discharged inductive obligations; explicit composition/refinement argument, not a machine proof of the entire implementation",
+    "excluded": "dynamic membership, rolling upgrades, Byzantine faults, physical power-loss certification, unmeasured large-capacity or latency guarantees"
+  },
+  "paxos_pin": "c3d197016c1f938db23fdf7f1fe87fbdbb86ac1c",
+  "artifacts": {
+    "build/sqlodin-replay-turn-local": "f6351acbaeaf24f9e538e0cd2ed821f4f9361652a317224f3a59b068bb179e4d",
+    "build/sqlodin-replay-turn-linux": "010338a4e2a8a8f9e4761d15b3d40b637a57b7a45f9d45ae7f73e3cbee5a1478",
+    "build/qualification-package/sqlodin-0.3.0-py3-none-any.whl": "85aed59b02910f77163f36d695ecb281f7d2006c37dcfbcf83974434c7f0b9ba",
+    "build/qualification-package/sqlodin-0.3.0.tar.gz": "b10abc9cb67c460a50b615af5e90ee7ccb514c3d8ade03b0ac84465ba058a64f"
+  },
+  "source_manifest_sha256": "f36a52b1d2ec2c133a7c5d9cc4fce24642d79887b7fabaca98bce9afe69e410f",
+  "evidence": {
+    "generation-crashes-replay-turn-linux-v2.json": "9ba9c5043436cb0db83dde7faabf95ca84bdeb0a4c6ce0d6c18ab7a5790c22ff",
+    "live-compaction-replay-turn-linux.json": "33b3e819565e1365bf355e68deb48ef61d89f772f937c91094531a4c2be37111",
+    "network-replay-turn-three-host.json": "a92501ab52cf2135f31699d7a3d935f8fa81d9fbae4670cfa04d87aeda610bc8",
+    "native-replay-turn-local.json": "531d3c20dfdfd4d653d4c6801d9f6a8006911df924152401dafb50a5124cf9b2",
+    "native-replay-turn-linux.json": "798598977c467e1b282a9a718814b4baffb2813a377f956a0c26aab035a50fc4",
+    "capacity-range-fixture-linux.json": "c764cdb12087f2987c393db55d2011e820a870edf6b24045dc30642aa3f48bd9",
+    "formal-final-binding.json": "329ad3b9e4ce190e53fe0ef55ccbbfca6ad5b4f2f600d9c721d219629d39e2ae",
+    "all-tests-replay-turn-linux.json": "a2e90c7d5814e40e207e136e82810a1bd80ccc9855ecd3cb5bff2e656cea02c7",
+    "all-tests-replay-turn-optimized-linux.json": "a0d30784569026c8dbc7f063770bad3d34840877d7d7fcd7dc8f97f44f6ec8cd",
+    "all-tests-replay-turn-reference-linux.json": "053210bad4549830cef2fd2a42e3cd262335e54a8ee023280cef2655dcf99e53",
+    "cli-replay-turn-local.json": "f0ed1531dcae58f1ae8a883be81e9478e386470d30278c5b2b0932ac233b1570",
+    "generation-replay-turn-local-v2.json": "717fb335ed1f46bdd106d20c22891392cf4017a6e2501f7417c50a048274a771",
+    "generation-replay-turn-negative-local.json": "45d75ab22a0ef2b0cd3c31a91bcb0cd083f7b6e1dc39852a0833a10d8dbe06c6",
+    "generation-replay-turn-regression-binding.json": "cce6b63d68c752d3a48fc68099d3388b5ace250e81fc313b80024d67a48b9fff",
+    "generation-replay-turn-style-binding.json": "8422e17dd6597ab34ca07be56f1278dbb1c8dd606ab46101723f58bf7b345fb5",
+    "python-wheel-local.json": "f76a3de43c3e47f8ce92eb129ffd70847907cec39602d34625f0c00686eeb6cc",
+    "core-capacity-final-linux-v4.json": "ccbc9973a20b4689a42cb831481701f2459d5a8534967703d3831b3daea59d81",
+    "storage-faults-capacity-final-linux.json": "4cdaf5b7da7d0040a967edbcd1bf2ea815dc72422c431a16780d71a7b444663b",
+    "history-capacity-final-linux.json": "eef2671179929b86558ba3eedfa5ff7a2defa72afc5630df7f08df42e2cea8c6",
+    "durability-capacity-final-linux.json": "f85ce967abc7839f9a322a413ce818aec35cdd153e5e8143c7a05ae02ccd9a32",
+    "maintenance-budget-local.json": "547771dc426159983e3fb4d58da7862eeb208c9626be6bc0822027e413b882d5",
+    "source-manifest-replay-turn.json": "f36a52b1d2ec2c133a7c5d9cc4fce24642d79887b7fabaca98bce9afe69e410f",
+    "bundle-replay-turn.json": "b8c74b01ea0961a208fa68ef5e9638384cb3e6bc5249d52897a01e289bafea8d",
+    "workload-matrix-linux.json": "b9ff828f2efdd3b7bf8f5420947da01692a127d3897df978dcddd0aa82538453",
+    "workload-matrix-analysis-linux.json": "b8412271b266c680d9fb49934d2069dd19eb12b9dc85b2d69446164d60f2a5e8",
+    "resource-load-slow-readers-linux-v3.json": "3a9f16fea9ac5c8c012e78ed6ff98ba5a6b1e772e87c80f6b33a6cf47496a677",
+    "resource-profile-slow-readers-linux-v3.json": "7f30051eee5b04d719b8a8dcfcdcd50e0fbc8e422f87924ff134f4a352603a05"
+  },
+  "reuse": {
+    "rule": "Unchanged formal/dependency and unaffected fault evidence retained; affected current-source tests and crash/lifecycle checks rerun",
+    "changed_since_complete_core_checks": [
+      "src/durable/maintenance_cancel.odin",
+      "src/durable/generation_delta.odin",
+      "src/durable/backup_verify.odin",
+      "src/durable/snapshot_worker.odin",
+      "src/durable/backup.odin",
+      "src/durable/restore_copy.odin",
+      "src/durable/migration.odin",
+      "src/durable/generation_build.odin",
+      "src/durable/backup_io.odin",
+      "service/server.odin",
+      "tests/test_generation_worker.odin"
+    ],
+    "current_regressions": "163 debug, 163 optimized, 163 individual-commit; 43 crash boundaries; three live generation cycles; 38 three-machine checks; 28 local CLI checks",
+    "negative_control": "generation-replay-turn-negative-local.json is expected to fail with old replay batching restored"
+  },
+  "user_dispositions": {
+    "performance": "Original throughput, p99 and SQLite-relative goals remain future goals; misses disclosed; release after correctness qualification authorized",
+    "capacity": "Large-capacity campaigns explicitly removed as release requirements in favor of formal arguments and targeted tests",
+    "duration": "No mandatory elapsed soak gate"
+  },
+  "limitations": {
+    "large_store_startup_seconds": [
+      114.34142023324966,
+      137.09
+    ],
+    "startup_goal_seconds": 60,
+    "large_growth": "Stopped at saved 32 GiB checkpoint at user request; not a capacity pass",
+    "physical_failure_domains": "Three authorized Linux instances; physical independence unverified",
+    "arbitrary_sql": "Large scans or a blocked SQLite/kernel operation can delay a serialized voter; query instruction counts are not hard wall-clock deadlines"
+  },
+  "failed_and_interrupted_samples_preserved": true
+}

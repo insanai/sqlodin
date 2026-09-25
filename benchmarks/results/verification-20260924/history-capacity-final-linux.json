@@ -1,0 +1,2747 @@
+{
+  "complete": true,
+  "format": 5,
+  "policy": 9,
+  "seed": 481516,
+  "rounds": 4,
+  "batches": [
+    {
+      "absent": null,
+      "batch": 0,
+      "initial": [],
+      "history": [
+        {
+          "id": 1,
+          "node": 2,
+          "start": 5057158518993576,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [],
+          "end": 5057158615491136
+        },
+        {
+          "id": 5,
+          "node": 3,
+          "start": 5057158520147990,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [],
+          "end": 5057158653237057
+        },
+        {
+          "id": 2,
+          "node": 3,
+          "start": 5057158519192690,
+          "kind": "transaction",
+          "key": 1,
+          "status": "ok",
+          "observed": [],
+          "after": [
+            1
+          ],
+          "end": 5057159323026035
+        },
+        {
+          "id": 0,
+          "node": 1,
+          "start": 5057158518734875,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057159355032760
+        },
+        {
+          "id": 4,
+          "node": 2,
+          "start": 5057158519689834,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057159357829471
+        },
+        {
+          "id": 7,
+          "node": 2,
+          "start": 5057158520852377,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057159508460666
+        },
+        {
+          "id": 3,
+          "node": 1,
+          "start": 5057158519506590,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057159508605972
+        },
+        {
+          "id": 6,
+          "node": 1,
+          "start": 5057158520627084,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057159508725428
+        },
+        {
+          "id": 8,
+          "node": 1,
+          "start": 5057159509070367,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057159632283801
+        }
+      ],
+      "witness": {
+        "state": [
+          1
+        ],
+        "order": [
+          1,
+          5,
+          2,
+          8
+        ]
+      }
+    },
+    {
+      "absent": null,
+      "batch": 1,
+      "initial": [
+        1
+      ],
+      "history": [
+        {
+          "id": 10,
+          "node": 2,
+          "start": 5057159632729796,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057159818725480
+        },
+        {
+          "id": 14,
+          "node": 3,
+          "start": 5057159634009926,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057159893884353
+        },
+        {
+          "id": 16,
+          "node": 2,
+          "start": 5057159634465171,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "after": [
+            1
+          ],
+          "end": 5057160220400716
+        },
+        {
+          "id": 15,
+          "node": 1,
+          "start": 5057159634184370,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "error": "Conflict",
+          "end": 5057160328763656
+        },
+        {
+          "id": 12,
+          "node": 1,
+          "start": 5057159633168592,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "error": "Conflict",
+          "end": 5057160328877352
+        },
+        {
+          "id": 11,
+          "node": 3,
+          "start": 5057159632883531,
+          "kind": "transaction",
+          "key": 2,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "after": [
+            1,
+            2
+          ],
+          "end": 5057160331408681
+        },
+        {
+          "id": 13,
+          "node": 2,
+          "start": 5057159633393145,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "error": "Conflict",
+          "end": 5057160331858936
+        },
+        {
+          "id": 9,
+          "node": 1,
+          "start": 5057159632486434,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "error": "Conflict",
+          "end": 5057160485080240
+        },
+        {
+          "id": 17,
+          "node": 2,
+          "start": 5057160485454678,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2
+          ],
+          "end": 5057160561974627
+        }
+      ],
+      "witness": {
+        "state": [
+          1,
+          2
+        ],
+        "order": [
+          10,
+          14,
+          16,
+          11,
+          17
+        ]
+      }
+    },
+    {
+      "absent": null,
+      "batch": 2,
+      "initial": [
+        1,
+        2
+      ],
+      "history": [
+        {
+          "id": 23,
+          "node": 3,
+          "start": 5057160563343653,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2
+          ],
+          "end": 5057160835967323
+        },
+        {
+          "id": 19,
+          "node": 2,
+          "start": 5057160562426103,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2
+          ],
+          "end": 5057160928908636
+        },
+        {
+          "id": 21,
+          "node": 1,
+          "start": 5057160562824010,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            2
+          ],
+          "after": [
+            1,
+            2
+          ],
+          "end": 5057161145145761
+        },
+        {
+          "id": 20,
+          "node": 3,
+          "start": 5057160562568288,
+          "kind": "transaction",
+          "key": 3,
+          "status": "ok",
+          "observed": [
+            1,
+            2
+          ],
+          "after": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057161280890524
+        },
+        {
+          "id": 24,
+          "node": 1,
+          "start": 5057160563597375,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2
+          ],
+          "error": "Conflict",
+          "end": 5057161339309344
+        },
+        {
+          "id": 18,
+          "node": 1,
+          "start": 5057160562197780,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2
+          ],
+          "error": "Conflict",
+          "end": 5057161339617614
+        },
+        {
+          "id": 25,
+          "node": 2,
+          "start": 5057160563832957,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2
+          ],
+          "error": "Conflict",
+          "end": 5057161401989516
+        },
+        {
+          "id": 22,
+          "node": 2,
+          "start": 5057160563109971,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2
+          ],
+          "error": "Conflict",
+          "end": 5057161490380666
+        },
+        {
+          "id": 26,
+          "node": 3,
+          "start": 5057161490702056,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057161555486811
+        }
+      ],
+      "witness": {
+        "state": [
+          1,
+          2,
+          3
+        ],
+        "order": [
+          23,
+          19,
+          21,
+          20,
+          26
+        ]
+      }
+    },
+    {
+      "absent": null,
+      "batch": 3,
+      "initial": [
+        1,
+        2,
+        3
+      ],
+      "history": [
+        {
+          "id": 28,
+          "node": 2,
+          "start": 5057161555890338,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057161822309746
+        },
+        {
+          "id": 32,
+          "node": 3,
+          "start": 5057161556869767,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057161852576057
+        },
+        {
+          "id": 30,
+          "node": 1,
+          "start": 5057161556370693,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "after": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057161886739253
+        },
+        {
+          "id": 34,
+          "node": 2,
+          "start": 5057161557353681,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "after": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057162083612529
+        },
+        {
+          "id": 33,
+          "node": 1,
+          "start": 5057161557045111,
+          "kind": "transaction",
+          "key": 4,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "after": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "end": 5057162175941362
+        },
+        {
+          "id": 27,
+          "node": 1,
+          "start": 5057161555655595,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "after": [
+            1,
+            2
+          ],
+          "error": "Conflict",
+          "end": 5057162207431904
+        },
+        {
+          "id": 31,
+          "node": 2,
+          "start": 5057161556591795,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057162207788753
+        },
+        {
+          "id": 29,
+          "node": 3,
+          "start": 5057161556076762,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057162242046106
+        },
+        {
+          "id": 35,
+          "node": 1,
+          "start": 5057162242356496,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "end": 5057162327918586
+        }
+      ],
+      "witness": {
+        "state": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "order": [
+          28,
+          32,
+          30,
+          34,
+          33,
+          35
+        ]
+      }
+    },
+    {
+      "absent": 1,
+      "batch": 0,
+      "initial": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "history": [
+        {
+          "id": 40,
+          "node": 3,
+          "start": 5057162647395006,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "end": 5057164905172323
+        },
+        {
+          "id": 44,
+          "node": 3,
+          "start": 5057162648277517,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "end": 5057164905455064
+        },
+        {
+          "id": 42,
+          "node": 3,
+          "start": 5057162647751014,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "after": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "end": 5057167948226121
+        },
+        {
+          "id": 46,
+          "node": 3,
+          "start": 5057162648783891,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "after": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "end": 5057168974108331
+        },
+        {
+          "id": 43,
+          "node": 2,
+          "start": 5057162648092023,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057171117732936
+        },
+        {
+          "id": 45,
+          "node": 2,
+          "start": 5057162648575018,
+          "kind": "transaction",
+          "key": 2,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057171117900721
+        },
+        {
+          "id": 39,
+          "node": 2,
+          "start": 5057162647168703,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "after": [
+            1,
+            2,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057171117998658
+        },
+        {
+          "id": 41,
+          "node": 2,
+          "start": 5057162647538931,
+          "kind": "transaction",
+          "key": 4,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "after": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057171118093385
+        },
+        {
+          "id": 47,
+          "node": 2,
+          "start": 5057171118412305,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057171301217754
+        }
+      ],
+      "witness": {
+        "state": [
+          1,
+          2,
+          3
+        ],
+        "order": [
+          40,
+          44,
+          42,
+          46,
+          41,
+          47
+        ]
+      }
+    },
+    {
+      "absent": 1,
+      "batch": 1,
+      "initial": [
+        1,
+        2,
+        3
+      ],
+      "history": [
+        {
+          "id": 49,
+          "node": 3,
+          "start": 5057171301785495,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057172453741006
+        },
+        {
+          "id": 53,
+          "node": 3,
+          "start": 5057171305404180,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057172453922700
+        },
+        {
+          "id": 51,
+          "node": 3,
+          "start": 5057171304799249,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "after": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057173501426606
+        },
+        {
+          "id": 55,
+          "node": 3,
+          "start": 5057171305871905,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "after": [
+            1,
+            2,
+            3
+          ],
+          "end": 5057174316807112
+        },
+        {
+          "id": 54,
+          "node": 2,
+          "start": 5057171305564414,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057175861487222
+        },
+        {
+          "id": 50,
+          "node": 2,
+          "start": 5057171301929881,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057175861645147
+        },
+        {
+          "id": 52,
+          "node": 2,
+          "start": 5057171305089210,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057175861758493
+        },
+        {
+          "id": 48,
+          "node": 2,
+          "start": 5057171301457296,
+          "kind": "transaction",
+          "key": 2,
+          "status": "ok",
+          "observed": [
+            1,
+            2,
+            3
+          ],
+          "after": [
+            1,
+            3
+          ],
+          "end": 5057175861814932
+        },
+        {
+          "id": 56,
+          "node": 3,
+          "start": 5057175862180410,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            3
+          ],
+          "end": 5057175956332497
+        }
+      ],
+      "witness": {
+        "state": [
+          1,
+          3
+        ],
+        "order": [
+          49,
+          53,
+          51,
+          55,
+          48,
+          56
+        ]
+      }
+    },
+    {
+      "absent": 1,
+      "batch": 2,
+      "initial": [
+        1,
+        3
+      ],
+      "history": [
+        {
+          "id": 58,
+          "node": 3,
+          "start": 5057175956792723,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            3
+          ],
+          "end": 5057177097617158
+        },
+        {
+          "id": 62,
+          "node": 3,
+          "start": 5057175957730342,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1,
+            3
+          ],
+          "end": 5057177097803742
+        },
+        {
+          "id": 60,
+          "node": 3,
+          "start": 5057175957181730,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            3
+          ],
+          "after": [
+            1,
+            3
+          ],
+          "end": 5057178597283245
+        },
+        {
+          "id": 64,
+          "node": 3,
+          "start": 5057175958087941,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1,
+            3
+          ],
+          "after": [
+            1,
+            3
+          ],
+          "end": 5057179175189796
+        },
+        {
+          "id": 57,
+          "node": 2,
+          "start": 5057175956511481,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057179696652113
+        },
+        {
+          "id": 59,
+          "node": 2,
+          "start": 5057175956956107,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057179696800768
+        },
+        {
+          "id": 61,
+          "node": 2,
+          "start": 5057175957402393,
+          "kind": "transaction",
+          "key": 3,
+          "status": "ok",
+          "observed": [
+            1,
+            3
+          ],
+          "after": [
+            1
+          ],
+          "end": 5057179696892995
+        },
+        {
+          "id": 63,
+          "node": 2,
+          "start": 5057175957860608,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            1,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057179697227224
+        },
+        {
+          "id": 65,
+          "node": 2,
+          "start": 5057179697564983,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057180399436959
+        }
+      ],
+      "witness": {
+        "state": [
+          1
+        ],
+        "order": [
+          58,
+          62,
+          60,
+          64,
+          61,
+          65
+        ]
+      }
+    },
+    {
+      "absent": 1,
+      "batch": 3,
+      "initial": [
+        1
+      ],
+      "history": [
+        {
+          "id": 67,
+          "node": 3,
+          "start": 5057180399923854,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057181585117009
+        },
+        {
+          "id": 71,
+          "node": 3,
+          "start": 5057180400989540,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057181585539625
+        },
+        {
+          "id": 69,
+          "node": 3,
+          "start": 5057180400399818,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "after": [
+            1
+          ],
+          "end": 5057182644374584
+        },
+        {
+          "id": 73,
+          "node": 3,
+          "start": 5057180401526292,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "after": [
+            1
+          ],
+          "end": 5057182929030709
+        },
+        {
+          "id": 70,
+          "node": 2,
+          "start": 5057180400674970,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "error": "Conflict",
+          "end": 5057184653601477
+        },
+        {
+          "id": 72,
+          "node": 2,
+          "start": 5057180401232232,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "error": "Conflict",
+          "end": 5057184653773371
+        },
+        {
+          "id": 66,
+          "node": 2,
+          "start": 5057180399634853,
+          "kind": "transaction",
+          "key": 1,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "after": [],
+          "end": 5057184653852578
+        },
+        {
+          "id": 68,
+          "node": 2,
+          "start": 5057180400089538,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "error": "Conflict",
+          "end": 5057184653961865
+        },
+        {
+          "id": 74,
+          "node": 3,
+          "start": 5057184654275265,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [],
+          "end": 5057184676159995
+        }
+      ],
+      "witness": {
+        "state": [],
+        "order": [
+          67,
+          71,
+          69,
+          73,
+          66,
+          74
+        ]
+      }
+    },
+    {
+      "absent": 2,
+      "batch": 0,
+      "initial": [],
+      "history": [
+        {
+          "id": 79,
+          "node": 3,
+          "start": 5057189815760378,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [],
+          "end": 5057191845944724
+        },
+        {
+          "id": 83,
+          "node": 3,
+          "start": 5057189816781715,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [],
+          "end": 5057191846013681
+        },
+        {
+          "id": 81,
+          "node": 3,
+          "start": 5057189816200854,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [],
+          "after": [],
+          "end": 5057192930671943
+        },
+        {
+          "id": 84,
+          "node": 1,
+          "start": 5057189816995199,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057193878913197
+        },
+        {
+          "id": 82,
+          "node": 1,
+          "start": 5057189816478985,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057193879088951
+        },
+        {
+          "id": 78,
+          "node": 1,
+          "start": 5057189815493037,
+          "kind": "transaction",
+          "key": 1,
+          "status": "ok",
+          "observed": [],
+          "after": [
+            1
+          ],
+          "end": 5057193879214817
+        },
+        {
+          "id": 80,
+          "node": 1,
+          "start": 5057189815892484,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057193879312754
+        },
+        {
+          "id": 85,
+          "node": 3,
+          "start": 5057189817144414,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057193888562698
+        },
+        {
+          "id": 86,
+          "node": 1,
+          "start": 5057193888898918,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057193950767460
+        }
+      ],
+      "witness": {
+        "state": [
+          1
+        ],
+        "order": [
+          79,
+          83,
+          81,
+          78,
+          86
+        ]
+      }
+    },
+    {
+      "absent": 2,
+      "batch": 1,
+      "initial": [
+        1
+      ],
+      "history": [
+        {
+          "id": 92,
+          "node": 3,
+          "start": 5057193952454376,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057195070666208
+        },
+        {
+          "id": 88,
+          "node": 3,
+          "start": 5057193951214525,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "end": 5057195070809573
+        },
+        {
+          "id": 90,
+          "node": 3,
+          "start": 5057193951695410,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "after": [
+            1
+          ],
+          "end": 5057197004028566
+        },
+        {
+          "id": 94,
+          "node": 3,
+          "start": 5057193953373746,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "after": [
+            1
+          ],
+          "end": 5057197081622855
+        },
+        {
+          "id": 87,
+          "node": 1,
+          "start": 5057193950974263,
+          "kind": "transaction",
+          "key": 1,
+          "status": "ok",
+          "observed": [
+            1
+          ],
+          "after": [],
+          "end": 5057199091495784
+        },
+        {
+          "id": 91,
+          "node": 1,
+          "start": 5057193952190804,
+          "kind": "transaction",
+          "key": 2,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "after": [
+            1,
+            2
+          ],
+          "error": "Conflict",
+          "end": 5057199091658888
+        },
+        {
+          "id": 93,
+          "node": 1,
+          "start": 5057193953070366,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "after": [],
+          "error": "Conflict",
+          "end": 5057199091761705
+        },
+        {
+          "id": 89,
+          "node": 1,
+          "start": 5057193951386010,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            1
+          ],
+          "after": [
+            1,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057199091853302
+        },
+        {
+          "id": 95,
+          "node": 3,
+          "start": 5057199092172572,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [],
+          "end": 5057200066905439
+        }
+      ],
+      "witness": {
+        "state": [],
+        "order": [
+          92,
+          88,
+          90,
+          94,
+          87,
+          95
+        ]
+      }
+    },
+    {
+      "absent": 2,
+      "batch": 2,
+      "initial": [],
+      "history": [
+        {
+          "id": 97,
+          "node": 3,
+          "start": 5057200067453201,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [],
+          "end": 5057201091334559
+        },
+        {
+          "id": 101,
+          "node": 3,
+          "start": 5057200068331533,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [],
+          "end": 5057201091518903
+        },
+        {
+          "id": 99,
+          "node": 3,
+          "start": 5057200067845439,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [],
+          "after": [],
+          "end": 5057202209994359
+        },
+        {
+          "id": 103,
+          "node": 3,
+          "start": 5057200068834367,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057203156666988
+        },
+        {
+          "id": 98,
+          "node": 1,
+          "start": 5057200067604207,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057203166652509
+        },
+        {
+          "id": 100,
+          "node": 1,
+          "start": 5057200068065012,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057203166755205
+        },
+        {
+          "id": 102,
+          "node": 1,
+          "start": 5057200068489878,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [],
+          "error": "Conflict",
+          "end": 5057203166865242
+        },
+        {
+          "id": 96,
+          "node": 1,
+          "start": 5057200067141291,
+          "kind": "transaction",
+          "key": 2,
+          "status": "ok",
+          "observed": [],
+          "after": [
+            2
+          ],
+          "end": 5057203166935230
+        },
+        {
+          "id": 104,
+          "node": 1,
+          "start": 5057203167251860,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2
+          ],
+          "end": 5057204194985599
+        }
+      ],
+      "witness": {
+        "state": [
+          2
+        ],
+        "order": [
+          97,
+          101,
+          99,
+          96,
+          104
+        ]
+      }
+    },
+    {
+      "absent": 2,
+      "batch": 3,
+      "initial": [
+        2
+      ],
+      "history": [
+        {
+          "id": 106,
+          "node": 3,
+          "start": 5057204195502533,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2
+          ],
+          "end": 5057205271944747
+        },
+        {
+          "id": 110,
+          "node": 3,
+          "start": 5057204196439033,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2
+          ],
+          "end": 5057205272160141
+        },
+        {
+          "id": 108,
+          "node": 3,
+          "start": 5057204195849942,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            2
+          ],
+          "after": [
+            2
+          ],
+          "end": 5057207253894184
+        },
+        {
+          "id": 112,
+          "node": 3,
+          "start": 5057204197011174,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            2
+          ],
+          "after": [
+            2
+          ],
+          "end": 5057207331829994
+        },
+        {
+          "id": 111,
+          "node": 1,
+          "start": 5057204196608987,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            2
+          ],
+          "after": [
+            2,
+            3
+          ],
+          "error": "Conflict",
+          "end": 5057209330278009
+        },
+        {
+          "id": 107,
+          "node": 1,
+          "start": 5057204195644488,
+          "kind": "transaction",
+          "key": 2,
+          "status": "serialization_abort",
+          "observed": [
+            2
+          ],
+          "after": [],
+          "error": "Conflict",
+          "end": 5057209330419465
+        },
+        {
+          "id": 105,
+          "node": 1,
+          "start": 5057204195224371,
+          "kind": "transaction",
+          "key": 4,
+          "status": "ok",
+          "observed": [
+            2
+          ],
+          "after": [
+            2,
+            4
+          ],
+          "end": 5057209330507992
+        },
+        {
+          "id": 109,
+          "node": 1,
+          "start": 5057204196111763,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            2
+          ],
+          "after": [
+            1,
+            2
+          ],
+          "error": "Conflict",
+          "end": 5057209330619519
+        },
+        {
+          "id": 113,
+          "node": 3,
+          "start": 5057209330973047,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "end": 5057210313469362
+        }
+      ],
+      "witness": {
+        "state": [
+          2,
+          4
+        ],
+        "order": [
+          106,
+          110,
+          108,
+          112,
+          105,
+          113
+        ]
+      }
+    },
+    {
+      "absent": 3,
+      "batch": 0,
+      "initial": [
+        2,
+        4
+      ],
+      "history": [
+        {
+          "id": 118,
+          "node": 2,
+          "start": 5057213286675973,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "end": 5057213466600356
+        },
+        {
+          "id": 122,
+          "node": 2,
+          "start": 5057213287630242,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "end": 5057213466935355
+        },
+        {
+          "id": 120,
+          "node": 2,
+          "start": 5057213287060930,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            2,
+            4
+          ],
+          "end": 5057215536134980
+        },
+        {
+          "id": 124,
+          "node": 2,
+          "start": 5057213288178185,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            2,
+            4
+          ],
+          "end": 5057215759751839
+        },
+        {
+          "id": 117,
+          "node": 1,
+          "start": 5057213286404611,
+          "kind": "transaction",
+          "key": 2,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            4
+          ],
+          "end": 5057217942904132
+        },
+        {
+          "id": 119,
+          "node": 1,
+          "start": 5057213286817548,
+          "kind": "transaction",
+          "key": 2,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057217943127155
+        },
+        {
+          "id": 123,
+          "node": 1,
+          "start": 5057213287796627,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            2
+          ],
+          "error": "Conflict",
+          "end": 5057217943226872
+        },
+        {
+          "id": 121,
+          "node": 1,
+          "start": 5057213287359421,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            2,
+            3,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057217943353838
+        },
+        {
+          "id": 125,
+          "node": 1,
+          "start": 5057217943665558,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            4
+          ],
+          "end": 5057218917534421
+        }
+      ],
+      "witness": {
+        "state": [
+          4
+        ],
+        "order": [
+          118,
+          122,
+          120,
+          124,
+          117,
+          125
+        ]
+      }
+    },
+    {
+      "absent": 3,
+      "batch": 1,
+      "initial": [
+        4
+      ],
+      "history": [
+        {
+          "id": 127,
+          "node": 2,
+          "start": 5057218918050255,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            4
+          ],
+          "end": 5057219209161289
+        },
+        {
+          "id": 131,
+          "node": 2,
+          "start": 5057218918986725,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            4
+          ],
+          "end": 5057219209420981
+        },
+        {
+          "id": 133,
+          "node": 2,
+          "start": 5057218919500428,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            4
+          ],
+          "after": [
+            4
+          ],
+          "end": 5057221190649673
+        },
+        {
+          "id": 129,
+          "node": 2,
+          "start": 5057218918510520,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            4
+          ],
+          "after": [
+            4
+          ],
+          "end": 5057221355342655
+        },
+        {
+          "id": 132,
+          "node": 1,
+          "start": 5057218919267516,
+          "kind": "transaction",
+          "key": 2,
+          "status": "serialization_abort",
+          "observed": [
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057223315086579
+        },
+        {
+          "id": 128,
+          "node": 1,
+          "start": 5057218918238039,
+          "kind": "transaction",
+          "key": 2,
+          "status": "serialization_abort",
+          "observed": [
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057223315199005
+        },
+        {
+          "id": 130,
+          "node": 1,
+          "start": 5057218918781231,
+          "kind": "transaction",
+          "key": 2,
+          "status": "serialization_abort",
+          "observed": [
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057223315321761
+        },
+        {
+          "id": 126,
+          "node": 1,
+          "start": 5057218917776773,
+          "kind": "transaction",
+          "key": 2,
+          "status": "ok",
+          "observed": [
+            4
+          ],
+          "after": [
+            2,
+            4
+          ],
+          "end": 5057223315396279
+        },
+        {
+          "id": 134,
+          "node": 2,
+          "start": 5057223315726878,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "end": 5057223394536202
+        }
+      ],
+      "witness": {
+        "state": [
+          2,
+          4
+        ],
+        "order": [
+          127,
+          131,
+          133,
+          129,
+          126,
+          134
+        ]
+      }
+    },
+    {
+      "absent": 3,
+      "batch": 2,
+      "initial": [
+        2,
+        4
+      ],
+      "history": [
+        {
+          "id": 136,
+          "node": 2,
+          "start": 5057223394943909,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "end": 5057225635603202
+        },
+        {
+          "id": 140,
+          "node": 2,
+          "start": 5057223395786522,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "end": 5057225635833565
+        },
+        {
+          "id": 138,
+          "node": 2,
+          "start": 5057223395301178,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            2,
+            4
+          ],
+          "end": 5057228833426344
+        },
+        {
+          "id": 142,
+          "node": 2,
+          "start": 5057223396270637,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            2,
+            4
+          ],
+          "end": 5057229843639973
+        },
+        {
+          "id": 137,
+          "node": 1,
+          "start": 5057223395098784,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057230955680624
+        },
+        {
+          "id": 135,
+          "node": 1,
+          "start": 5057223394709057,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057230955836029
+        },
+        {
+          "id": 141,
+          "node": 1,
+          "start": 5057223396050064,
+          "kind": "transaction",
+          "key": 3,
+          "status": "ok",
+          "observed": [
+            2,
+            4
+          ],
+          "after": [
+            2,
+            3,
+            4
+          ],
+          "end": 5057230955932386
+        },
+        {
+          "id": 139,
+          "node": 1,
+          "start": 5057223395549610,
+          "kind": "transaction",
+          "key": 4,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057230956047852
+        },
+        {
+          "id": 143,
+          "node": 1,
+          "start": 5057230956363242,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "end": 5057232090099122
+        }
+      ],
+      "witness": {
+        "state": [
+          2,
+          3,
+          4
+        ],
+        "order": [
+          136,
+          140,
+          138,
+          142,
+          141,
+          143
+        ]
+      }
+    },
+    {
+      "absent": 3,
+      "batch": 3,
+      "initial": [
+        2,
+        3,
+        4
+      ],
+      "history": [
+        {
+          "id": 145,
+          "node": 2,
+          "start": 5057232090592827,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "end": 5057233270572183
+        },
+        {
+          "id": 149,
+          "node": 2,
+          "start": 5057232091510057,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "end": 5057233270628982
+        },
+        {
+          "id": 151,
+          "node": 2,
+          "start": 5057232092062470,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "after": [
+            2,
+            3,
+            4
+          ],
+          "end": 5057235353034647
+        },
+        {
+          "id": 147,
+          "node": 2,
+          "start": 5057232091070991,
+          "kind": "readonly_transaction",
+          "key": 0,
+          "status": "ok",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "after": [
+            2,
+            3,
+            4
+          ],
+          "end": 5057236407190894
+        },
+        {
+          "id": 148,
+          "node": 1,
+          "start": 5057232091304554,
+          "kind": "transaction",
+          "key": 1,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057239089951746
+        },
+        {
+          "id": 150,
+          "node": 1,
+          "start": 5057232091740030,
+          "kind": "transaction",
+          "key": 2,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057239090125151
+        },
+        {
+          "id": 146,
+          "node": 1,
+          "start": 5057232090763891,
+          "kind": "transaction",
+          "key": 3,
+          "status": "serialization_abort",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "error": "Conflict",
+          "end": 5057239090239177
+        },
+        {
+          "id": 144,
+          "node": 1,
+          "start": 5057232090323485,
+          "kind": "transaction",
+          "key": 2,
+          "status": "ok",
+          "observed": [
+            2,
+            3,
+            4
+          ],
+          "after": [
+            3,
+            4
+          ],
+          "end": 5057239090323945
+        },
+        {
+          "id": 152,
+          "node": 2,
+          "start": 5057239090645724,
+          "kind": "read",
+          "key": null,
+          "status": "ok",
+          "observed": [
+            3,
+            4
+          ],
+          "end": 5057239153563457
+        }
+      ],
+      "witness": {
+        "state": [
+          3,
+          4
+        ],
+        "order": [
+          145,
+          149,
+          151,
+          147,
+          144,
+          152
+        ]
+      }
+    }
+  ],
+  "rejoin_reads": [
+    {
+      "id": 36,
+      "node": 1,
+      "start": 5057162327958885,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "end": 5057162458151176
+    },
+    {
+      "id": 37,
+      "node": 2,
+      "start": 5057162458168285,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "end": 5057162550942654
+    },
+    {
+      "id": 38,
+      "node": 3,
+      "start": 5057162550959214,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "end": 5057162645930053
+    },
+    {
+      "id": 75,
+      "node": 1,
+      "start": 5057184826551105,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [],
+      "end": 5057189751436045
+    },
+    {
+      "id": 76,
+      "node": 2,
+      "start": 5057189751471444,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [],
+      "end": 5057189774591365
+    },
+    {
+      "id": 77,
+      "node": 3,
+      "start": 5057189774612974,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [],
+      "end": 5057189814202288
+    },
+    {
+      "id": 114,
+      "node": 1,
+      "start": 5057210463960424,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        2,
+        4
+      ],
+      "end": 5057210493006377
+    },
+    {
+      "id": 115,
+      "node": 2,
+      "start": 5057210493037916,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        2,
+        4
+      ],
+      "end": 5057213198635795
+    },
+    {
+      "id": 116,
+      "node": 3,
+      "start": 5057213198675143,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        2,
+        4
+      ],
+      "end": 5057213285085763
+    },
+    {
+      "id": 153,
+      "node": 1,
+      "start": 5057239304034447,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        3,
+        4
+      ],
+      "end": 5057240369095612
+    },
+    {
+      "id": 154,
+      "node": 2,
+      "start": 5057240369132191,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        3,
+        4
+      ],
+      "end": 5057240511200999
+    },
+    {
+      "id": 155,
+      "node": 3,
+      "start": 5057240511232448,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        3,
+        4
+      ],
+      "end": 5057240856508474
+    }
+  ],
+  "restart_reads": [
+    {
+      "id": 156,
+      "node": 1,
+      "start": 5057241310960038,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        3,
+        4
+      ],
+      "end": 5057242075436134
+    },
+    {
+      "id": 157,
+      "node": 2,
+      "start": 5057242075475043,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        3,
+        4
+      ],
+      "end": 5057242206081387
+    },
+    {
+      "id": 158,
+      "node": 3,
+      "start": 5057242206104576,
+      "kind": "read",
+      "key": null,
+      "status": "ok",
+      "observed": [
+        3,
+        4
+      ],
+      "end": 5057242392266429
+    }
+  ],
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "negative_controls": [
+    "completed_write_then_stale_predicate_rejected",
+    "committed_write_skew_rejected",
+    "ordered_write_and_fresh_predicate_accepted"
+  ],
+  "binary_sha256": "1299f4531c8e9daa4d60c71a3d513d0aad253e984854dc4012ecca9664f70a3e",
+  "harness_sha256": "a8910c5a214b930a18d7e759358b75781d726d2319f58ed4baa284778e7605cd",
+  "sources": {
+    "src/engine_limits.odin": "3da5e089b29dd2c3f84f2e68651fb34499af39e7a3bc02bea7bf8d5b1fdcc6af",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "be93b924d89a793bccf6264f0e397c7c0963decc251cc201c6bf401c0bdedf27",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_dml.odin": "93e4364a8bbadfa4328f2972750dbc643aba815d59f10c85f5adf4468bf22f44",
+    "src/engine.odin": "4a86a43587d06d604c69274e412059ef74d6bc15a3233ced3d205f5790be619a",
+    "src/engine_optimistic.odin": "51d96626ea32c3c0d8c681dd331e0d863bb9c8794b95c2ca45d6b5b2978802e6",
+    "src/engine_sessions.odin": "87ab0cb6b83f1e81cd5aa59a999de0717505a332e4d11dbbecd81211e4684de9",
+    "src/engine_schema.odin": "1fec0cd086d915e1f2e89df39fdf2010e4be10d730e91ea0c89c0c5463386300",
+    "src/mutation.odin": "cb701e82c4e49181589c94a207af5da73f21140335876d8035d6fda93fe6bbc1",
+    "src/engine_policy.odin": "20046819c257f0b2f929bdba37bd69d16aaa682934d7c9c6f79af3ac722c9195",
+    "src/engine_session_epoch.odin": "3ba4803aae927e83c9d4f60da89691abf532d98e70ad9ca01aea67dcc3388481",
+    "src/engine_outcomes.odin": "a3261555c9e859cc9c4e2fa9e403c8810b134faea864f80a19aad70986a98f4d",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_query.odin": "4b7bd3904d2eb7094ebc1740021e8c2b62a2d404add9eecfee927c96e90e8dc3",
+    "src/paxos.odin": "b1447c58efb78f9c79f291681b02c5c76cd39fb14ce9f4c312210662a6c527a4",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/snapshot/check.odin": "4e1dd6ef16626b825520d3aeb5b04f4450c47d2c4dd1165657e52531132db9e5",
+    "src/snapshot/logical_rows.odin": "44ea1112f16a765e2bc7712ec514684794e01e4fa54cdb6b5cbeefcd389d9f72",
+    "src/snapshot/retain.odin": "489e9ca42b280c8809cfdc03fef08b09d2795a8447c9717b56555f3ad4a32852",
+    "src/snapshot/manifest.odin": "570c6c37eeb22c19caea60c50b0a882893ec87099a4626b418dda75d5c73832f",
+    "src/snapshot/cancellation.odin": "9a98ff0ab197f4893690e70cf273b6c95fb81ff2444a06ddbf1f6fb4839921a0",
+    "src/snapshot/codec.odin": "740cc314e32802593c530a626de2b1fd281918ddfb9c58927c81cc0500157450",
+    "src/snapshot/manifest_storage.odin": "25ff4d7c76f5ed3982f75e0a401fc1c7895959c56f53b6312965dab576dcc405",
+    "src/snapshot/errors.odin": "f35ec85b672304b6a0af622f0364546207be60abaeb8108db990bd8d00e8793c",
+    "src/snapshot/certificate.odin": "71abd0ec5ccd70ed5c5389f0a5e334584f787dea2ed7815c1822cfbc9eeac062",
+    "src/snapshot/verify.odin": "2a380310abc222c9f4e926074ccf1a4e46a36f99c2728b36022fd2801ec1c5d5",
+    "src/snapshot/image_storage.odin": "845ed0b6fbbe4884180685142a8416c44441e80b211de76b42d677fb5f8b81cd",
+    "src/snapshot/image.odin": "f1dae1a46aaaf8db29c1b7ada50637086fdda4d26658b14c19923e4766e2e73d",
+    "src/snapshot/logical.odin": "a2b2bbdc5c367b4f1c910bb78fa6eae9ef59176748f8e3dc049d314948fccd04",
+    "src/sqlite/sqlite_vec.odin": "4f9b1e9d845241b706c62af49c5715e7b816f080a1c590d6ff8d546c42333597",
+    "src/sqlite/sqlite3.odin": "de89f34e07594776e1c0307ad250e1b8c095db9f956f98c610b268792ab0041f",
+    "src/durable/backup_manifest.odin": "6f33b05af98e6a68d1749a08c88de4c3be17eee0c9682bda1d934997e526ee35",
+    "src/durable/generation_store.odin": "57ab1a7840c4555d6733d14d5de504513d3a87e602d01e47c358861c7d70914a",
+    "src/durable/generation_outcomes.odin": "9f24b1ddf81b61d76f6b4c32cdd90eb71382c0ea5dd5dc2d9437e69f7715a04d",
+    "src/durable/genesis.odin": "1a901c3db08337b85c84d8ae72acf96317eefbf5e6b73df44626eeddf5bbca9c",
+    "src/durable/separated.odin": "af5c85001c5d422658c5c32370105165e497f9ef9ea343886b2dc75c737e6022",
+    "src/durable/maintenance_cancel.odin": "844de597e2554b409efb1fdc5994806dd7312debea19fed6f28972414216100b",
+    "src/durable/generation_retire.odin": "9a59a7f96362181b0d72d9ad127f7093e6c9744cab7122dfdc5cb1c884f9bd91",
+    "src/durable/packing.odin": "13cb17865f88841fb1718ef8ce4800b28b1be1fb6d75f4e5e1e3de5ec39ef8e9",
+    "src/durable/generation_delta.odin": "778cb165ec91d6b83fe2006ff7b83a82238b26a4584e993fd963fa5629d8d235",
+    "src/durable/backup_verify.odin": "96d635d1df6fcc8a036d204015a5120b93d46fa667af72bc8f579f802b275e4b",
+    "src/durable/generation_seal.odin": "bda2b60f6ff494b2d401653f01bb97c834771b73fd69611c5d5283c1c0a1fc6f",
+    "src/durable/transition_group.odin": "b1ef1285fbec8fecf3c2be0d77a1e18b20c40e446ec32c0bec5fcd50f4feb38f",
+    "src/durable/image_inventory.odin": "3012822b7677cdaf54b438ff017d37a66480b3c9a517d207f03b79148c860278",
+    "src/durable/generation_inventory.odin": "f0864cd5903c0f41fc1b960accae4dd0601512e0af8631f2ff9a754600f6a611",
+    "src/durable/journal.odin": "48fea3bf4a899b039961ce471f271e438183747bfc85bac68d13ac0467a0e910",
+    "src/durable/snapshot_quorum.odin": "1e75418c585997851bde2a6b74a00e19bb827f6a04d8e8d34cf4cf5f2163760d",
+    "src/durable/storage.odin": "3ecb6b9aa4dcc7c695f6469f8b8b588658336aadecbf631f55397118397002d9",
+    "src/durable/snapshot_worker.odin": "1a2a554698c900622be9ebfc92827271ac6cdc486981d548cb4677e8d974e0f6",
+    "src/durable/image_retire.odin": "d4d12d8c404787537b3c0f8a324d3a64c05e3971657443fcead254a213f360fc",
+    "src/durable/backup.odin": "24a25b816609f1c0c1b9864895554a9b171daa22996a5c10ff2790cfd034b077",
+    "src/durable/restore_copy.odin": "da2221a3bbd945e9daca4d962bec3674f5e5b60cafc157fe5033e2ad9633e534",
+    "src/durable/host.odin": "af6b79832cd7276006bb700f62891828425c9f0dfacc9105489bb943562ff063",
+    "src/durable/migration.odin": "a3fb966986001d59ac79ba50daa11d99bda5057636a7a0681647ac920475b1a5",
+    "src/durable/restore_publish.odin": "2ad1cf7fa02c85a049b0bb50a08af60ce984f572513013f15dd48910aff5baf1",
+    "src/durable/generation_install.odin": "4f5cc64bbc515becd87f31bb6233e7c1a74628a0b1037948e8a4d860bb14e75f",
+    "src/durable/generation_publish.odin": "cb01366a63629baff65c46be0a4e7d15b8548185a00f29dd50aa8441eb22e755",
+    "src/durable/restore.odin": "a47e14d95c83231352e8d33db5ddd5b344e74ac280d34a6c504ca71ec7d8bccc",
+    "src/durable/ids.odin": "c8b82187d31d71dfe2ea2aba12b34543fd97ba64e0297653d40adf12e346b72e",
+    "src/durable/space.odin": "0f538cab8576d12d165eb30eae24c3592e6eb0f4b6e0ee1f99077b1a7815149f",
+    "src/durable/migration_copy.odin": "1440df37266df5e10a467f9ebb5cf57c0bf052c56a8cb16db92a6e12e3d90f02",
+    "src/durable/history_space.odin": "6c7f4f2a7309d40aa4bf226c878943b85456c7e9f4a1136547fa0bc20336a286",
+    "src/durable/batch.odin": "b466585d42f582a338367792d4873f1c08efe24bec41ba5a195d121ed69787cd",
+    "src/durable/generation_build.odin": "f821182acb5d298ae1e8f1bc421924e5e378b473c6758934d3f26cb8cada8b2d",
+    "src/durable/progress.odin": "b473bfcd778313b0a1340dc63be0ce84d5f0c3bd0a1a02871d1a3ba870f4fbd1",
+    "src/durable/generation_worker.odin": "d3d677c5aab98358deb1250d85649eaf57412710216372048f8201bfbcf4d72b",
+    "src/durable/codec.odin": "a884f73dbbbfb02cecdd7ea843f6d55e471f71de661408d66439bf34553e2fbb",
+    "src/durable/snapshot_control.odin": "70fcd31b7912a403208d4ab4e5cdc7a7314c949e37d50c8bebb0e409e209468f",
+    "src/durable/image_retire_query.odin": "a3c8f3f9cf2363d55a5ccdafa72daaf7170a88016d3ab7f9a5738c28b209b329",
+    "src/durable/root_retire.odin": "942ec3b3eada35a1cefd5e1aa7f13fea0974d2af16e3d30b378c862e7441ccf1",
+    "src/durable/reads.odin": "17928c21a613ed31ac55e26cfc4a99f3f81c021bb1149a5b04b26412d76b2426",
+    "src/durable/generation_base.odin": "2c891ac96e2ede2f0b67ea7e065c79c84de14f2685c5a3ffcee179d8f1a5f372",
+    "src/durable/backup_io.odin": "a5f44c55b59c28f7f497f5a8a9c499f506a8d21b5372b7dc6e94145c68a2586a",
+    "service/peer_io.odin": "63d73abab8102cd6f74f8bf8be45c9f5547927b1bbab956a7b1213923d65c3fe",
+    "service/maintenance.odin": "98f24586aebd99210bf701708e824cefa2b1a0a9effb19d1529e143799a7b5e9",
+    "service/signals.odin": "18286d1f33fa7094abb0bd1cd15f5b1b200f071163dbce5d93f18bccca84475e",
+    "service/transactions.odin": "1ec95ecb8330eb62cff1c5ddf9407e0db425f60ccbb0bd05e43cbc0450363585",
+    "service/framing.odin": "353b3a4c02e32f31198055fa03472161aef3ae2bc5d5a802d21d50352aea7795",
+    "service/config.odin": "2357146797ce6d234bc5d198f0a57be7c90e3da0e164cb3530b75bfecfcac6f3",
+    "service/socket.odin": "03f52e602867ceb4b93739aa457d123382c646a7c616b7c4236f910df1f2f99c",
+    "service/write_batch.odin": "5efde9bb5212f21aefa4c09de0a9f76d144464beddae07a1f70222c5427b0852",
+    "service/wire.odin": "b0974aaa21d7b4ee2cdbe37800cd2fbe3053eae7348999a7cbee432d7a9bc5f9",
+    "service/snapshot_receive.odin": "9fccbdd738b1bd33838565a23f57b8b314ce6924e6a802efe2f08f839b9832dc",
+    "service/requests.odin": "2bdeaf8fc88ec57fbe3c315d68ae89458a53a570a370c96d9e9fa51c0cd5c1c1",
+    "service/snapshot_send.odin": "9d55f76c7b2e71634780982a07906b9946cbefe456363b49330c3f102dc01baa",
+    "service/client.odin": "9c5a647f215785dffd3072b0ec48f6a8e13ba10fa9b4546939b4d79e8e938f73",
+    "service/admission.odin": "8132703c8c5f886d9b4287ec3c147b0b453cf41f824b2fca703d778461b272f6",
+    "service/snapshots.odin": "bf20065a5a3be523d88be86298c30f54695c6f26877014468894ccd5039efefa",
+    "service/server.odin": "3eff7617fa00bd92b37bd5f4b080f59fa91efabc87501eafe8b303e976d014a9",
+    "service/snapshot_transfer.odin": "cfb6e03d5dc80ebc6a3f4ae25b7ad9a5e7e4d4f6655724ca69fadfc26c71754d",
+    "service/types.odin": "afe7520e20dd79cb14314cfdc5d3e379d3bacb9d47e07df562182a75561f30b5",
+    "service/resource_profile.odin": "76501d538bbca33b3ba67cac2e566e9d138d2805cfa1eca78a33a7772eced3d8",
+    "service/json_depth.odin": "2601641f5749d3dcd88076392df50f034a54a8fe636358bc56625c41c21fb4e1",
+    "service/status.odin": "5884bb93f52487f59e145774bc1db6272290bcf11dfc0064a7194282cf812ff2",
+    "service/read_batch.odin": "0254d8bdfb3be4f7583001356a652ade881cced451c23e854935a9c7fae5832d",
+    "service/sessions.odin": "8dfdef69777866356c1277e38b4cc22541b683935787f54560a392e0ed1cdfc1",
+    "languages/python/src/sqlodin/client.py": "11ac6e582999eb699c7ab9dd02d55442c87099889479123cf035e2efcc1ddb2b",
+    "languages/python/src/sqlodin/search.py": "678a506c39a2d2de4425e3ba4712cc5085a5aae1dafcaa89a4bd3aeb04d910dc",
+    "languages/python/src/sqlodin/dbapi.py": "1b1290264f23a946a937b17014f564f7b0934922d3f36c692baa7789655c2f9b",
+    "languages/python/src/sqlodin/errors.py": "2207c01fe7b1e115f32d1d1237b37242fe7ecfef74fb9d02496b92cd89bdccb5",
+    "languages/python/src/sqlodin/transport.py": "5051f293062b21977b18216397c689c921d6570762df320cb1000f99a6c44282",
+    "languages/python/src/sqlodin/parameters.py": "7705bba70912e01397c137610c5790869fbbaf4ba8e015dd62e8689c837a6464",
+    "languages/python/src/sqlodin/vector.py": "07c14a567fbd5cb5c98e40a0bc1c7097463805278d3611daa136d19c30fe5212",
+    "languages/python/src/sqlodin/sqlalchemy.py": "4a59ae581a5afdbbd1cf39f6d8bae8f32b124fa35f1df1a643d6955877e955d6",
+    "languages/python/src/sqlodin/results.py": "ab73e7b554a817e7dc7d13b4062c50751935bb57c947af088d64aa05096da310",
+    "languages/python/src/sqlodin/__init__.py": "98fec146ab428962e09d4362aa3271111752b627c7b9942a32be434232c08b54",
+    "languages/python/src/sqlodin/transaction.py": "66cfc8b8c12fe52e9ed7151c1945242c01526b5fd8adcd2ffdab355de5ef5542"
+  },
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "logs": {
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 456.413\u00b5s, ledger = 34.518\u00b5s, application = 22.399\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:35985 (mTLS, cluster network-qualification)\nRecovery node=1 applied=101 journal=217 phases=Recovery_Stats{integrity = 268.905\u00b5s, ledger = 5.074212ms, application = 3.189803ms}\nSQLodin node 1 listening on 127.0.0.1:35985 (mTLS, cluster network-qualification)\nRecovery node=1 applied=519 journal=1288 phases=Recovery_Stats{integrity = 810.453\u00b5s, ledger = 22.661751ms, application = 16.274386ms}\nSQLodin node 1 listening on 127.0.0.1:35985 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 526.429\u00b5s, ledger = 25.439\u00b5s, application = 22.008\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:36813 (mTLS, cluster network-qualification)\nRecovery node=3 applied=399 journal=1108 phases=Recovery_Stats{integrity = 807.063\u00b5s, ledger = 22.024229ms, application = 14.171619ms}\nSQLodin node 3 listening on 127.0.0.1:36813 (mTLS, cluster network-qualification)\nRecovery node=3 applied=519 journal=1273 phases=Recovery_Stats{integrity = 891.958\u00b5s, ledger = 25.742171ms, application = 18.179314ms}\nSQLodin node 3 listening on 127.0.0.1:36813 (mTLS, cluster network-qualification)\n",
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 442.894\u00b5s, ledger = 27.988\u00b5s, application = 20.939\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:59063 (mTLS, cluster network-qualification)\nRecovery node=2 applied=218 journal=571 phases=Recovery_Stats{integrity = 447.114\u00b5s, ledger = 10.539963ms, application = 7.384778ms}\nSQLodin node 2 listening on 127.0.0.1:59063 (mTLS, cluster network-qualification)\nRecovery node=2 applied=519 journal=1294 phases=Recovery_Stats{integrity = 893.948\u00b5s, ledger = 24.617436ms, application = 18.222052ms}\nSQLodin node 2 listening on 127.0.0.1:59063 (mTLS, cluster network-qualification)\n"
+  }
+}

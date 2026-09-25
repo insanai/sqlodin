@@ -1,0 +1,21 @@
+{
+	"total": 3,
+	"success": 3,
+	"duration": 170017000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_catalog_rowids_must_not_become_replicated_application_values"
+			},
+			{
+				"success": true,
+				"name": "test_fts_group_and_reference_have_identical_logical_snapshot_state"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_function_policy_rejects_local_state"
+			}
+		]
+	}
+}

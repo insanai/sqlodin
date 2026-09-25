@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 369000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_client_admission_keeps_peer_and_handshake_reserves"
+			}
+		]
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"total": 3,
+	"success": 3,
+	"duration": 148507000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_snapshot_image_cancellation_limits_and_short_file"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_image_pins_prefix_during_wal_writes"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_image_refuses_acceptor_state"
+			}
+		]
+	}
+}

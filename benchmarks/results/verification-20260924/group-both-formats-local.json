@@ -1,0 +1,17 @@
+{
+	"total": 2,
+	"success": 2,
+	"duration": 6437755000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_application_group_matches_individual_history"
+			},
+			{
+				"success": true,
+				"name": "test_fts_group_and_reference_have_identical_logical_snapshot_state"
+			}
+		]
+	}
+}

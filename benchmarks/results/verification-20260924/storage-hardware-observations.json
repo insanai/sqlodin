@@ -1,0 +1,49 @@
+{
+  "scope": "Container-visible physical disk models; not a verified mapping from each ZFS dataset to a drive, and not proof of power-loss protection or independent failure domains",
+  "results": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "host": "18",
+        "chunk_id": "ff814e",
+        "wall_time_seconds": 0.045293292,
+        "exit_code": 0,
+        "original_token_count": 96,
+        "output": "{\n   \"blockdevices\": [\n      {\n         \"name\": \"nvme0n1\",\n         \"type\": \"disk\",\n         \"size\": \"1.8T\",\n         \"rota\": false,\n         \"model\": \"Force MP600                             \"\n      },{\n         \"name\": \"nvme1n1\",\n         \"type\": \"disk\",\n         \"size\": \"1.8T\",\n         \"rota\": false,\n         \"model\": \"CT2000P2SSD8                            \"\n      }\n   ]\n}\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "host": "19",
+        "chunk_id": "ff5c6c",
+        "wall_time_seconds": 0.08769575,
+        "exit_code": 0,
+        "original_token_count": 53,
+        "output": "{\n   \"blockdevices\": [\n      {\n         \"name\": \"nvme0n1\",\n         \"type\": \"disk\",\n         \"size\": \"465.8G\",\n         \"rota\": false,\n         \"model\": \"CT500P3PSSD8                            \"\n      }\n   ]\n}\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "host": "20",
+        "chunk_id": "a50dc9",
+        "wall_time_seconds": 0.1286665,
+        "exit_code": 0,
+        "original_token_count": 53,
+        "output": "{\n   \"blockdevices\": [\n      {\n         \"name\": \"nvme0n1\",\n         \"type\": \"disk\",\n         \"size\": \"476.9G\",\n         \"rota\": false,\n         \"model\": \"KINGSTON OM8SEP4512N-A0                 \"\n      }\n   ]\n}\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "host": "21",
+        "chunk_id": "10905a",
+        "wall_time_seconds": 0.15774775,
+        "exit_code": 0,
+        "original_token_count": 96,
+        "output": "{\n   \"blockdevices\": [\n      {\n         \"name\": \"nvme0n1\",\n         \"type\": \"disk\",\n         \"size\": \"1.8T\",\n         \"rota\": false,\n         \"model\": \"Force MP600                             \"\n      },{\n         \"name\": \"nvme1n1\",\n         \"type\": \"disk\",\n         \"size\": \"1.8T\",\n         \"rota\": false,\n         \"model\": \"CT2000P2SSD8                            \"\n      }\n   ]\n}\n"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "complete": false,
+  "failure": "Offline source missing: build/downloads/sqlite-amalgamation-3510300.zip",
+  "tests_started": false,
+  "correction": "Use --sqlite-source build/native --vec-source build/native; verify pinned source hashes before compilation."
+}

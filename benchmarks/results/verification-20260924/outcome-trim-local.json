@@ -1,0 +1,21 @@
+{
+	"total": 3,
+	"success": 3,
+	"duration": 394725000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_generation_retires_slot_evidence_without_reviving_requests_or_reads"
+			},
+			{
+				"success": true,
+				"name": "test_generation_trims_outcome_cache_and_preserves_rejected_request_after_restart"
+			},
+			{
+				"success": true,
+				"name": "test_logical_snapshot_normalizes_retired_outcomes_but_binds_retry_results"
+			}
+		]
+	}
+}

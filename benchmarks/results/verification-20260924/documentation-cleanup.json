@@ -1,0 +1,102 @@
+{
+  "scope": "Applied after runtime qualification; primary project documents are Typst, historical records labelled; book excluded",
+  "files": [
+    {
+      "source": "docs/building.md",
+      "source_sha256": "d2738aa4b6a846225b48b0794ef2e6c55c4ea7f270a61abc328798bced9f01e3",
+      "target": "docs/building.typ",
+      "staged": "build/documentation-cleanup/docs/building.typ",
+      "target_sha256": "e606301d75becca96d1fbb03c68835aded7a609639ba53d7854f58631d6f8f2a"
+    },
+    {
+      "source": "docs/cli.md",
+      "source_sha256": "612b9c505fce4a9556e7414c5556f8fceeba49242053b470bca20251e7e73db1",
+      "target": "docs/cli.typ",
+      "staged": "build/documentation-cleanup/docs/cli.typ",
+      "target_sha256": "21ffa2423f28b221e63626ebbad4eda7f11c15b9b484114f6eae45e9242a0865"
+    },
+    {
+      "source": "docs/cluster-qualification.md",
+      "source_sha256": "ee1acfc10739e59de5fb681ffa9e6c3c6f2b91fd052e7ff706c0dd5640c7127e",
+      "target": "docs/cluster-qualification.typ",
+      "staged": "build/documentation-cleanup/docs/cluster-qualification.typ",
+      "target_sha256": "8e8171a9a26d921e2b874e33efe35b845e0b9e129984a06f32c568f0d57715ce"
+    },
+    {
+      "source": "docs/durability.md",
+      "source_sha256": "e34ac4dc6812eab30d020ca9abf53770c333a95303edd3632217cef2dda06084",
+      "target": "docs/durability.typ",
+      "staged": "build/documentation-cleanup/docs/durability.typ",
+      "target_sha256": "33fed916d08875284c77133485e53a08e1e58fd7889f5ff4f9797a3fa99b531a"
+    },
+    {
+      "source": "docs/implementation-status.md",
+      "source_sha256": "1e96498bc759724bbc56547dbe9e3c36997b95c15eb355f906a60ffb8e75bfda",
+      "target": "docs/implementation-status.typ",
+      "staged": "build/documentation-cleanup/docs/implementation-status.typ",
+      "target_sha256": "802eb0593c02cc544e33f18925ab46e0a4e87ac5ea3d3996971a26ae933b51db"
+    },
+    {
+      "source": "docs/journal-group-commit.md",
+      "source_sha256": "9063ab1bdb7c671178eaad8223823c0061d17720a96152973bd1a7cadcde12e8",
+      "target": "docs/journal-group-commit.typ",
+      "staged": "build/documentation-cleanup/docs/journal-group-commit.typ",
+      "target_sha256": "e18de0cadd50bf3967cc1c936007c8ffea42f8bf83c9b4785bbd801e02951104"
+    },
+    {
+      "source": "docs/mtls.md",
+      "source_sha256": "086f8fd9c4241d8657d1467cb23d7c6ad6f6ba165f92db3863be620da528e944",
+      "target": "docs/mtls.typ",
+      "staged": "build/documentation-cleanup/docs/mtls.typ",
+      "target_sha256": "f89e580b021212c3f3fd2c58d65d5b64f87b7de3d51cd7644ce66a1f6e4c3813"
+    },
+    {
+      "source": "docs/network-service.md",
+      "source_sha256": "d6c3776a636009bbc79bf8f794ee33210acd1320d44f5203f8dca0d740f5ab87",
+      "target": "docs/network-service.typ",
+      "staged": "build/documentation-cleanup/docs/network-service.typ",
+      "target_sha256": "752849855039893e6ba5b4743a35ff30b90012cce8340f718f3864913872fdf8"
+    },
+    {
+      "source": "docs/orm-transactions.md",
+      "source_sha256": "9282168b5265a813ab61e27fe5dc50225cfc54b8e38bdc6f80f223da0b571614",
+      "target": "docs/orm-transactions.typ",
+      "staged": "build/documentation-cleanup/docs/orm-transactions.typ",
+      "target_sha256": "35252480c5b92fa95f99c778579965945c68747600a9e693493c74c2eccf955a"
+    },
+    {
+      "source": "docs/production-readiness.md",
+      "source_sha256": "dc843ab6a00cba4c3823160610a4adb0994dfa0e70e10c67adf19eaa854163d8",
+      "target": "docs/production-readiness.typ",
+      "staged": "build/documentation-cleanup/docs/production-readiness.typ",
+      "target_sha256": "fb883cfe4d2e1c0e447a29b6e5c143a9fa436a0f1fcc3b1200a4329a2cb77dfd"
+    },
+    {
+      "source": "docs/review-2026-09-22.md",
+      "source_sha256": "b17131735a830628bfc511140568ee20f879d00ab3c1222bb206e031ded38750",
+      "target": "docs/review-2026-09-22.typ",
+      "staged": "build/documentation-cleanup/docs/review-2026-09-22.typ",
+      "target_sha256": "5ca2ef36019498dac7ba30e58c801583c491123a2d0da97c699f217e375f0ca5"
+    },
+    {
+      "source": "docs/snapshots.md",
+      "source_sha256": "4c9921a9d2c1daa3f48bb0b166643d8dd3953d6610ba8d315474abbfceafb440",
+      "target": "docs/snapshots.typ",
+      "staged": "build/documentation-cleanup/docs/snapshots.typ",
+      "target_sha256": "e02ff76da05bcea7c734162f43b40f66d5d8843b7d31d13e3935ceab6c77c5e5"
+    },
+    {
+      "source": "RELEASE_CHECKLIST.md",
+      "source_sha256": "3fc73e5649d79a0efdc90628af139d8f5af433511d26f409404e9ac75c6e7e7b",
+      "target": "RELEASE_CHECKLIST.typ",
+      "target_sha256": "545d1bedde9b53425b9786cd0c7307526792edc7f781d63a207c889b7e47d765"
+    },
+    {
+      "source": "specs/README.md",
+      "source_sha256": "e008376df68c2f18595470743c16c5aa043b0f94b07be25ac9088cb554733807",
+      "target": "specs/verification-history.typ",
+      "note": "README retained as concise entry point",
+      "target_sha256": "a7e6d7d8fe9bee89a5b88a5b187a16dd3b7c685990dacdb3b8db023ef04d9338"
+    }
+  ]
+}

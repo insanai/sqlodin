@@ -1,0 +1,18 @@
+{
+  "imported_from": "/Users/vikrantrathore/projects/insan.ai/sqlodin/build/qualification-package/venv/lib/python3.13/site-packages/sqlodin/__init__.py",
+  "version": "0.3.0",
+  "python": "3.13.6 (main, Aug 14 2025, 16:07:26) [Clang 20.1.4 ]",
+  "dependencies": {
+    "pytest": "9.1.1",
+    "SQLAlchemy": "2.0.54",
+    "sqlodin": "0.3.0"
+  },
+  "artifacts": {
+    "sqlodin-0.3.0-py3-none-any.whl": "85aed59b02910f77163f36d695ecb281f7d2006c37dcfbcf83974434c7f0b9ba",
+    "test-requirements.txt": "aa2a587c5aebfcb145dd3d7b95f71deab7433004b11c5ac4c85791f0fb70d041",
+    "sqlodin-0.3.0.tar.gz": "b10abc9cb67c460a50b615af5e90ee7ccb514c3d8ade03b0ac84465ba058a64f"
+  },
+  "wheel_metadata": "Wheel-Version: 1.0\nGenerator: hatchling 1.32.4\nRoot-Is-Purelib: true\nTag: py3-none-any\n",
+  "test_exit": 0,
+  "passed": true
+}

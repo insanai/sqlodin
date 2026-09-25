@@ -1,0 +1,96 @@
+{
+  "complete": true,
+  "passed": true,
+  "source_root": "/home/insan/projects/sqlodin/native-soak/20260923T020409Z-eight-hour",
+  "remote_root": "/home/insan/projects/sqlodin/recovery-replay/20260924T102628Z",
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "binary_sha256": "1559fc9c2c3cd6b6f93e83c564d92b0d21f2b59a097a3f7d083c0f4601418fcd",
+  "nodes": {
+    "1": {
+      "status": {
+        "cluster": "native-soak",
+        "node": 1,
+        "protocol": 1,
+        "applied": 532489
+      },
+      "transfers": 82588,
+      "accounts": [
+        [
+          1,
+          999994
+        ],
+        [
+          2,
+          999992
+        ],
+        [
+          3,
+          1000014
+        ]
+      ],
+      "ready_seconds": 44.617770707998716
+    },
+    "2": {
+      "status": {
+        "cluster": "native-soak",
+        "node": 2,
+        "protocol": 1,
+        "applied": 532458
+      },
+      "transfers": 82588,
+      "accounts": [
+        [
+          1,
+          999994
+        ],
+        [
+          2,
+          999992
+        ],
+        [
+          3,
+          1000014
+        ]
+      ],
+      "ready_seconds": 45.30553937499644
+    },
+    "3": {
+      "status": {
+        "cluster": "native-soak",
+        "node": 3,
+        "protocol": 1,
+        "applied": 532502
+      },
+      "transfers": 82588,
+      "accounts": [
+        [
+          1,
+          999994
+        ],
+        [
+          2,
+          999992
+        ],
+        [
+          3,
+          1000014
+        ]
+      ],
+      "ready_seconds": 45.423304500000086
+    }
+  },
+  "last_error": {
+    "1": "Operation deadline exceeded: timed out",
+    "2": "Operation deadline exceeded: timed out",
+    "3": "Operation deadline exceeded: The read operation timed out"
+  },
+  "logs": {
+    "node1.log": "SQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster native-soak)\nRecovery node=1 applied=532489 journal=1094439 phases=Recovery_Stats{integrity = 1.529425317s, ledger = 25.258426976s, application = 16.194879096s}\n",
+    "node2.log": "SQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster native-soak)\nRecovery node=2 applied=532394 journal=1092232 phases=Recovery_Stats{integrity = 1.531077203s, ledger = 25.405187947s, application = 16.428233056s}\n",
+    "node3.log": "SQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster native-soak)\nRecovery node=3 applied=532489 journal=1092083 phases=Recovery_Stats{integrity = 958.640734ms, ledger = 22.652919456s, application = 14.268396446s}\n"
+  }
+}

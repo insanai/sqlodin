@@ -1,0 +1,26 @@
+{
+  "complete": false,
+  "scope": "CLI qualification invocation error; --server was omitted and resolved to older bin/sqlodin",
+  "checks_passed": [
+    "local_sql_rows_fts_vector",
+    "local_backup_dump_csv_import",
+    "local_sql_failure_hint_exit",
+    "redirected_diagnostics_plain",
+    "terminal_color_and_no_color"
+  ],
+  "error": "Cannot discover session epoch; restore quorum and retry",
+  "command": [
+    "python3",
+    "tools/check_cli.py",
+    "--binary",
+    "build/sqlodin-copy-budget-local",
+    "--output",
+    "benchmarks/results/verification-20260924/cli-copy-budget-local.json"
+  ],
+  "sources": {
+    "build/sqlodin-copy-budget-local": "8f9937c206f8f77fa2ac0dfe5734dd913305c1bfa2b714ef2c4a0d0aa6e1e608",
+    "bin/sqlodin": "1842ee4018129c48b49e56bc826015e348820b58b3f980d0adc8c59235a0d35f",
+    "tools/check_cli.py": "90786f942f85bf0b79b30331edd63424883af489994a90587e99f34ea636678a"
+  },
+  "evidence_limit": "Harness emitted no failure JSON and cleaned temporary logs; this record preserves the observed command/output and artifact hashes."
+}

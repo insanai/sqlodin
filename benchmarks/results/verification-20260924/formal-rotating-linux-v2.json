@@ -1,0 +1,24 @@
+{
+  "complete": false,
+  "passed": false,
+  "scope": "bounded owned-decree and host-seam models; not a full multi-slot refinement proof",
+  "tlc_sha256": "71ce43150b6ee0a76cc33849ec45b2c6ae4323dc933b0acaef0928668ed0de72",
+  "heap_mib": 4096,
+  "workers": 4,
+  "cases": [
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingConcurrent",
+      "expected_violation": null,
+      "passed": false,
+      "sources": {
+        "RotatingWindow.tla": "cdc690ed5438b0ed4e1daae33fe151a6b8a92ab1a9b3f0158807617a2630d1a8",
+        "RotatingConcurrent.cfg": "e208ea84a2b6cb250efb2705812d9e3cba22c0e5230ba80dd2cfe9f324ea7e38"
+      },
+      "seconds": 300.26727369986475,
+      "timed_out": true,
+      "output": "TLC2 Version 2.14 of 10 July 2019 (rev: 0cae24f)\nRunning breadth-first search Model-Checking with fp 118 and seed -4815330373510995846 with 4 workers on 32 cores with 3641MB heap and 64MB offheap memory [pid: 1379497] (Linux 7.0.0-28-generic amd64, Debian 21.0.12.1 x86_64, MSBDiskFPSet, DiskStateQueue).\nParsing file /home/insan/projects/sqlodin/verification-20260924/specs/RotatingWindow.tla\nParsing file /tmp/Naturals.tla\nParsing file /tmp/FiniteSets.tla\nParsing file /tmp/Sequences.tla\nSemantic processing of module Naturals\nSemantic processing of module Sequences\nSemantic processing of module FiniteSets\nSemantic processing of module RotatingWindow\nStarting... (2026-09-24 18:07:14)\nImplied-temporal checking--satisfiability problem has 1 branches.\nComputing initial states...\nFinished computing initial states: 1 distinct state generated at 2026-09-24 18:07:14.\nChecking temporal properties for the current state space with 42296 total distinct states at (2026-09-24 18:07:17)\nFinished checking temporal properties in 00s at 2026-09-24 18:07:17\nProgress(14) at 2026-09-24 18:07:17: 226,016 states generated (226,016 s/min), 42,296 distinct states found (42,296 ds/min), 16,366 states left on queue.\nChecking temporal properties for the current state space with 875290 total distinct states at (2026-09-24 18:08:17)\nFinished checking temporal properties in 07s at 2026-09-24 18:08:25\nProgress(23) at 2026-09-24 18:08:25: 5,745,667 states generated (5,519,651 s/min), 875,296 distinct states found (833,000 ds/min), 196,304 states left on queue.\nChecking temporal properties for the current state space with 1657461 total distinct states at (2026-09-24 18:09:25)\nFinished checking temporal properties in 15s at 2026-09-24 18:09:41\nProgress(25) at 2026-09-24 18:09:41: 11,314,670 states generated (5,569,003 s/min), 1,657,465 distinct states found (782,169 ds/min), 282,356 states left on queue.\nChecking temporal properties for the current state space with 2427630 total distinct states at (2026-09-24 18:10:41)\nFinished checking temporal properties in 24s at 2026-09-24 18:11:05\nProgress(28) at 2026-09-24 18:11:05: 16,959,037 states generated (5,644,367 s/min), 2,427,634 distinct states found (770,169 ds/min), 317,392 states left on queue.\nProgress(30) at 2026-09-24 18:12:05: 22,919,086 states generated (5,960,049 s/min), 3,250,504 distinct states found (822,870 ds/min), 338,305 states left on queue.\n"
+    }
+  ],
+  "error": "TimeoutExpired(['java', '-XX:+UseParallelGC', '-Xmx4096m', '-cp', '/home/insan/projects/sqlodin/verification-20260924/build/tla2tools.jar', 'tlc2.TLC', '-deadlock', '-workers', '4', '-metadir', '/tmp/sqlodin-tlc-5uf243zd/RotatingConcurrent', '-config', 'RotatingConcurrent.cfg', 'RotatingWindow.tla'], 300)"
+}

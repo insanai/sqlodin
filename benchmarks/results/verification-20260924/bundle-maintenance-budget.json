@@ -1,0 +1,14 @@
+{
+  "scope": "Candidate bundle only; capacity and performance qualification remain open; not production approved",
+  "archive": "build/release-candidate/sqlodin-maintenance-budget-linux-x86_64-candidate.tar.gz",
+  "sha256": "e5827907f1c9c198017cfb40ba8988b36bab7338b128666be5c862fd9c44f426",
+  "files": {
+    "candidate.json": "479b3faa60108daab484152d93673f1737484d2937dabde67ce2c671a37c3ae8",
+    "native-build.json": "3a66e00effeda39d97132250ce4941c2cf1690e1ee566949b22972bbc29b3780",
+    "bin/sqlodin": "9f2d2fae81e239b8ac13d77f319dd7925fe849aeab0f60df29e55d993aa73510",
+    "licenses/sqlite-vec-MIT.txt": "6ce72bbe12d975bd5286e5ab0a064c069693300c47bccbc57bec18485f1621ea",
+    "licenses/paxos-odin-LICENSE": "fda88836526617781960d9d4d22aae619f0e4e17c5388c894905f87eb679eeda",
+    "licenses/OpenSSL-LICENSE.txt": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+    "licenses/SQLodin-LICENSE": "fda88836526617781960d9d4d22aae619f0e4e17c5388c894905f87eb679eeda"
+  }
+}

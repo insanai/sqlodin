@@ -1,0 +1,21 @@
+{
+  "complete": true,
+  "passed": true,
+  "scope": "bounded owned-decree and host-seam models; not a full multi-slot refinement proof",
+  "tlc_sha256": "71ce43150b6ee0a76cc33849ec45b2c6ae4323dc933b0acaef0928668ed0de72",
+  "cases": [
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingDown3",
+      "expected_violation": null,
+      "passed": true,
+      "sources": {
+        "RotatingWindow.tla": "0143314f4687d9fbca3d0a18bb7366b86d89e916c42689f22b1a023285a51213",
+        "RotatingDown3.cfg": "db45293a5d51b9e03baa65c968fb895272bc568c55d3eac10111b1581dc87519"
+      },
+      "seconds": 0.915725917002419,
+      "exit_code": 0,
+      "output": "TLC2 Version 2.14 of 10 July 2019 (rev: 0cae24f)\nRunning breadth-first search Model-Checking with fp 108 and seed -35249848002832196 with 1 worker on 8 cores with 910MB heap and 64MB offheap memory [pid: 24319] (Mac OS X 27.0 aarch64, Homebrew 27 x86_64, MSBDiskFPSet, DiskStateQueue).\nParsing file /Users/vikrantrathore/projects/insan.ai/sqlodin/specs/RotatingWindow.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Naturals.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/FiniteSets.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Sequences.tla\nSemantic processing of module Naturals\nSemantic processing of module Sequences\nSemantic processing of module FiniteSets\nSemantic processing of module RotatingWindow\nStarting... (2026-09-25 02:00:58)\nImplied-temporal checking--satisfiability problem has 1 branches.\nComputing initial states...\nFinished computing initial states: 1 distinct state generated at 2026-09-25 02:00:58.\nProgress(30) at 2026-09-25 02:00:58: 2,028 states generated, 652 distinct states found, 0 states left on queue.\nChecking temporal properties for the complete state space with 652 total distinct states at (2026-09-25 02:00:58)\nFinished checking temporal properties in 00s at 2026-09-25 02:00:58\nModel checking completed. No error has been found.\n  Estimates of the probability that TLC did not check all reachable states\n  because two distinct states had the same fingerprint:\n  calculated (optimistic):  val = 4.9E-14\n2028 states generated, 652 distinct states found, 0 states left on queue.\nThe depth of the complete state graph search is 30.\nThe average outdegree of the complete state graph is 1 (minimum is 0, the maximum 5 and the 95th percentile is 3).\nFinished in 00s at (2026-09-25 02:00:58)\n"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "base": "source-manifest-retirement.json",
+  "overrides": {
+    "src/durable/generation_retire.odin": "9a59a7f96362181b0d72d9ad127f7093e6c9744cab7122dfdc5cb1c884f9bd91",
+    "tests/test_generation_retire.odin": "43d9e3b72df766205d9435e96e4d925a1753a6f131319cdcffbf1d5be07a71d3"
+  }
+}

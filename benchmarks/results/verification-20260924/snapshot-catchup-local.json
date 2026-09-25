@@ -1,0 +1,16 @@
+{
+  "complete": false,
+  "passed": false,
+  "checks": [],
+  "rows": 6,
+  "operations_per_cycle": 3,
+  "binary_sha256": "b73b8116868b1dd78af48654d14c9c1a28377fb1b235b209ff09aeef1312f20e",
+  "scope": "authenticated snapshot catch-up after two retained-prefix changes; explicit compaction",
+  "offline_prefix": 6,
+  "logs": {
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 601.333\u00b5s, ledger = 37.375\u00b5s, application = 28.459\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:64942 (mTLS, cluster network-qualification)\n",
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 618.458\u00b5s, ledger = 36.667\u00b5s, application = 28.375\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:64943 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 634\u00b5s, ledger = 58.042\u00b5s, application = 32.542\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:64944 (mTLS, cluster network-qualification)\n"
+  },
+  "error": "QueryError('Policy')"
+}

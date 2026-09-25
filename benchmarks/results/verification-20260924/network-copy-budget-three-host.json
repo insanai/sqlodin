@@ -1,0 +1,1589 @@
+{
+  "complete": true,
+  "passed": true,
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "remote_root": "/home/insan/projects/sqlodin/network-service/20260924T210755Z",
+  "scope": "three Linux instances; direct native mTLS consensus and SQL; fixed membership",
+  "binary_sha256": "3bf2374eb7d4d7833fa6f5df26e7c27f36b856b201783d3b01af5ed494f67d9a",
+  "checks": [
+    {
+      "name": "native_cluster_schema",
+      "passed": true
+    },
+    {
+      "name": "schema_policy_rejects_complete_request_before_snapshot_failure",
+      "passed": true
+    },
+    {
+      "name": "write_any_node_fenced_rows",
+      "passed": true
+    },
+    {
+      "name": "typed_parameters_and_results",
+      "passed": true
+    },
+    {
+      "name": "atomic_batch_rollback_and_next_sequence",
+      "passed": true
+    },
+    {
+      "name": "readonly_policy_and_result_limit",
+      "passed": true
+    },
+    {
+      "name": "mixed_case_local_pragma_cannot_mutate_replicated_state",
+      "passed": true
+    },
+    {
+      "name": "untrusted_unlisted_and_peer_as_client_rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed_frames_close_only_offending_connection",
+      "passed": true
+    },
+    {
+      "name": "six_concurrent_sessions_mixed_writes_and_fenced_reads",
+      "passed": true
+    },
+    {
+      "name": "cross_master_durable_deduplication",
+      "passed": true
+    },
+    {
+      "name": "minority_no_ack_and_explicit_stale_read",
+      "passed": true
+    },
+    {
+      "name": "recover_uncertain_write_after_quorum_restored",
+      "passed": true
+    },
+    {
+      "name": "all_process_sigkill_reopen_fenced_convergence",
+      "passed": true
+    },
+    {
+      "name": "pinned_sqlite_fts_and_vector_versions",
+      "passed": true
+    },
+    {
+      "name": "atomic_search_index_fts_vector_and_single_snapshot_hybrid",
+      "passed": true
+    },
+    {
+      "name": "search_update_delete_and_cross_master_vector_retry",
+      "passed": true
+    },
+    {
+      "name": "fts_and_content_rollback_and_policy_boundary",
+      "passed": true
+    },
+    {
+      "name": "384_dimension_typed_binding_blob_roundtrip",
+      "passed": true
+    },
+    {
+      "name": "sqlalchemy_core_typed_vectors_fts_and_atomic_executemany",
+      "passed": true
+    },
+    {
+      "name": "search_and_sqlalchemy_all_voter_crash_recovery",
+      "passed": true
+    },
+    {
+      "name": "orm_begin_flush_generated_keys_relationships_and_visibility",
+      "passed": true
+    },
+    {
+      "name": "orm_rollback_exception_and_close_discard_all_staged_writes",
+      "passed": true
+    },
+    {
+      "name": "orm_nested_savepoint_rollback_constraint_and_release",
+      "passed": true
+    },
+    {
+      "name": "orm_foreign_key_flush_error_and_session_reuse",
+      "passed": true
+    },
+    {
+      "name": "orm_predicate_reads_and_disjoint_writes_prevent_write_skew",
+      "passed": true
+    },
+    {
+      "name": "orm_cross_master_conflict_and_complete_transaction_retry",
+      "passed": true
+    },
+    {
+      "name": "orm_repeatable_read_detects_intervening_commit",
+      "passed": true
+    },
+    {
+      "name": "core_transaction_and_pool_reset_rollback",
+      "passed": true
+    },
+    {
+      "name": "orm_staged_transaction_survives_contacted_voter_loss",
+      "passed": true
+    },
+    {
+      "name": "orm_uncertain_commit_identity_recovery_on_another_master",
+      "passed": true
+    },
+    {
+      "name": "orm_minority_commit_unknown_then_quorum_recovery",
+      "passed": true
+    },
+    {
+      "name": "orm_commits_survive_all_voter_crash_recovery",
+      "passed": true
+    },
+    {
+      "name": "absent_1_both_survivors_continue_and_rejoin",
+      "passed": true
+    },
+    {
+      "name": "absent_2_both_survivors_continue_and_rejoin",
+      "passed": true
+    },
+    {
+      "name": "absent_3_both_survivors_continue_and_rejoin",
+      "passed": true
+    },
+    {
+      "name": "three_host_certified_generation_published",
+      "passed": true
+    },
+    {
+      "name": "three_host_generation_and_acknowledged_data_survive_restart",
+      "passed": true
+    }
+  ],
+  "python_features": true,
+  "orm": true,
+  "majority": true,
+  "source_sha256": {
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_network_hosts.py": "8276663405cd8bb95e5d55773842d12ab16fb5963fffb1260450cf610f28c8bf",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_network_service.py": "588e8736c350283c19c0f72602c9d1e5ecb8419939e5032afa02c908839410e5",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_python_features.py": "ec32292bd142f5bdfb2a722a967a04744b72cb8ebf18b58a90e47680070a03eb",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_orm_transactions.py": "767776d63f6c17d431d52da50313b8188a6581c008c5ab5db5085840eb011121"
+  },
+  "majority_cases": [
+    {
+      "absent": 1,
+      "operations": 90,
+      "samples": [
+        {
+          "operation": 0,
+          "node": 2,
+          "seconds": 2.2068765000003623
+        },
+        {
+          "operation": 1,
+          "node": 3,
+          "seconds": 0.031035541993333027
+        },
+        {
+          "operation": 2,
+          "node": 2,
+          "seconds": 0.9929649999976391
+        },
+        {
+          "operation": 3,
+          "node": 3,
+          "seconds": 1.1271755839989055
+        },
+        {
+          "operation": 4,
+          "node": 2,
+          "seconds": 1.0229959169955691
+        },
+        {
+          "operation": 5,
+          "node": 3,
+          "seconds": 0.03174829200725071
+        },
+        {
+          "operation": 6,
+          "node": 2,
+          "seconds": 0.9910830000007991
+        },
+        {
+          "operation": 7,
+          "node": 3,
+          "seconds": 0.0633652910037199
+        },
+        {
+          "operation": 8,
+          "node": 2,
+          "seconds": 1.1679799160046969
+        },
+        {
+          "operation": 9,
+          "node": 3,
+          "seconds": 0.03442458400968462
+        },
+        {
+          "operation": 10,
+          "node": 2,
+          "seconds": 1.0196683340036543
+        },
+        {
+          "operation": 11,
+          "node": 3,
+          "seconds": 0.03259674999571871
+        },
+        {
+          "operation": 12,
+          "node": 2,
+          "seconds": 1.0617563749983674
+        },
+        {
+          "operation": 13,
+          "node": 3,
+          "seconds": 0.031004832999315113
+        },
+        {
+          "operation": 14,
+          "node": 2,
+          "seconds": 0.9770107079966692
+        },
+        {
+          "operation": 15,
+          "node": 3,
+          "seconds": 0.03272291699249763
+        },
+        {
+          "operation": 16,
+          "node": 2,
+          "seconds": 1.109799458005
+        },
+        {
+          "operation": 17,
+          "node": 3,
+          "seconds": 0.04332987499947194
+        },
+        {
+          "operation": 18,
+          "node": 2,
+          "seconds": 1.0846689580066595
+        },
+        {
+          "operation": 19,
+          "node": 3,
+          "seconds": 0.03131120899342932
+        },
+        {
+          "operation": 20,
+          "node": 2,
+          "seconds": 1.0955670830007875
+        },
+        {
+          "operation": 21,
+          "node": 3,
+          "seconds": 0.03935995898791589
+        },
+        {
+          "operation": 22,
+          "node": 2,
+          "seconds": 0.9783600420050789
+        },
+        {
+          "operation": 23,
+          "node": 3,
+          "seconds": 0.04026458399312105
+        },
+        {
+          "operation": 24,
+          "node": 2,
+          "seconds": 1.091546792013105
+        },
+        {
+          "operation": 25,
+          "node": 3,
+          "seconds": 0.05278804199770093
+        },
+        {
+          "operation": 26,
+          "node": 2,
+          "seconds": 1.075794832999236
+        },
+        {
+          "operation": 27,
+          "node": 3,
+          "seconds": 0.04291699999885168
+        },
+        {
+          "operation": 28,
+          "node": 2,
+          "seconds": 1.0811301250068936
+        },
+        {
+          "operation": 29,
+          "node": 3,
+          "seconds": 0.02959854200889822
+        },
+        {
+          "operation": 30,
+          "node": 2,
+          "seconds": 1.0974289589939872
+        },
+        {
+          "operation": 31,
+          "node": 3,
+          "seconds": 0.06653125000593718
+        },
+        {
+          "operation": 32,
+          "node": 2,
+          "seconds": 1.058853291993728
+        },
+        {
+          "operation": 33,
+          "node": 3,
+          "seconds": 0.04344929200306069
+        },
+        {
+          "operation": 34,
+          "node": 2,
+          "seconds": 0.998864416993456
+        },
+        {
+          "operation": 35,
+          "node": 3,
+          "seconds": 0.041335041998536326
+        },
+        {
+          "operation": 36,
+          "node": 2,
+          "seconds": 1.068266375004896
+        },
+        {
+          "operation": 37,
+          "node": 3,
+          "seconds": 0.053045750013552606
+        },
+        {
+          "operation": 38,
+          "node": 2,
+          "seconds": 1.072935125004733
+        },
+        {
+          "operation": 39,
+          "node": 3,
+          "seconds": 0.0412030839943327
+        },
+        {
+          "operation": 40,
+          "node": 2,
+          "seconds": 1.0655351669993252
+        },
+        {
+          "operation": 41,
+          "node": 3,
+          "seconds": 0.030641708988696337
+        },
+        {
+          "operation": 42,
+          "node": 2,
+          "seconds": 1.0953550419944804
+        },
+        {
+          "operation": 43,
+          "node": 3,
+          "seconds": 0.04590266699960921
+        },
+        {
+          "operation": 44,
+          "node": 2,
+          "seconds": 1.0886320830031764
+        },
+        {
+          "operation": 45,
+          "node": 3,
+          "seconds": 0.053828250005608425
+        },
+        {
+          "operation": 46,
+          "node": 2,
+          "seconds": 1.1873010830022395
+        },
+        {
+          "operation": 47,
+          "node": 3,
+          "seconds": 0.029551333995186724
+        },
+        {
+          "operation": 48,
+          "node": 2,
+          "seconds": 1.0971868750057183
+        },
+        {
+          "operation": 49,
+          "node": 3,
+          "seconds": 0.04684033300145529
+        },
+        {
+          "operation": 50,
+          "node": 2,
+          "seconds": 1.0014797920011915
+        },
+        {
+          "operation": 51,
+          "node": 3,
+          "seconds": 0.04721479199361056
+        },
+        {
+          "operation": 52,
+          "node": 2,
+          "seconds": 1.0324377500073751
+        },
+        {
+          "operation": 53,
+          "node": 3,
+          "seconds": 0.07545254200522322
+        },
+        {
+          "operation": 54,
+          "node": 2,
+          "seconds": 0.9388830410025548
+        },
+        {
+          "operation": 55,
+          "node": 3,
+          "seconds": 0.04463095798564609
+        },
+        {
+          "operation": 56,
+          "node": 2,
+          "seconds": 1.0112103749997914
+        },
+        {
+          "operation": 57,
+          "node": 3,
+          "seconds": 0.041717500003869645
+        },
+        {
+          "operation": 58,
+          "node": 2,
+          "seconds": 1.0846797919948585
+        },
+        {
+          "operation": 59,
+          "node": 3,
+          "seconds": 0.08650983299594373
+        },
+        {
+          "operation": 60,
+          "node": 2,
+          "seconds": 0.93821341599687
+        },
+        {
+          "operation": 61,
+          "node": 3,
+          "seconds": 0.056344541008002125
+        },
+        {
+          "operation": 62,
+          "node": 2,
+          "seconds": 1.024958207999589
+        },
+        {
+          "operation": 63,
+          "node": 3,
+          "seconds": 0.09483154199551791
+        },
+        {
+          "operation": 64,
+          "node": 2,
+          "seconds": 1.0150004580063978
+        },
+        {
+          "operation": 65,
+          "node": 3,
+          "seconds": 0.08067720899998676
+        },
+        {
+          "operation": 66,
+          "node": 2,
+          "seconds": 1.0047576659999322
+        },
+        {
+          "operation": 67,
+          "node": 3,
+          "seconds": 0.040609874995425344
+        },
+        {
+          "operation": 68,
+          "node": 2,
+          "seconds": 0.9760828340076841
+        },
+        {
+          "operation": 69,
+          "node": 3,
+          "seconds": 0.046345667011337355
+        },
+        {
+          "operation": 70,
+          "node": 2,
+          "seconds": 0.9770604580116924
+        },
+        {
+          "operation": 71,
+          "node": 3,
+          "seconds": 0.03892637499666307
+        },
+        {
+          "operation": 72,
+          "node": 2,
+          "seconds": 1.0888389169995207
+        },
+        {
+          "operation": 73,
+          "node": 3,
+          "seconds": 0.03687508399889339
+        },
+        {
+          "operation": 74,
+          "node": 2,
+          "seconds": 1.4077055000088876
+        },
+        {
+          "operation": 75,
+          "node": 3,
+          "seconds": 0.6128119159984635
+        },
+        {
+          "operation": 76,
+          "node": 2,
+          "seconds": 1.0313084160006838
+        },
+        {
+          "operation": 77,
+          "node": 3,
+          "seconds": 0.07245895800588187
+        },
+        {
+          "operation": 78,
+          "node": 2,
+          "seconds": 0.6918818749982165
+        },
+        {
+          "operation": 79,
+          "node": 3,
+          "seconds": 0.04034512500220444
+        },
+        {
+          "operation": 80,
+          "node": 2,
+          "seconds": 0.9586267920094542
+        },
+        {
+          "operation": 81,
+          "node": 3,
+          "seconds": 0.6171255840017693
+        },
+        {
+          "operation": 82,
+          "node": 2,
+          "seconds": 1.2093175420013722
+        },
+        {
+          "operation": 83,
+          "node": 3,
+          "seconds": 0.7178498330031289
+        },
+        {
+          "operation": 84,
+          "node": 2,
+          "seconds": 1.7236135000130162
+        },
+        {
+          "operation": 85,
+          "node": 3,
+          "seconds": 0.06232008399092592
+        },
+        {
+          "operation": 86,
+          "node": 2,
+          "seconds": 0.4085602500126697
+        },
+        {
+          "operation": 87,
+          "node": 3,
+          "seconds": 0.36692129098810256
+        },
+        {
+          "operation": 88,
+          "node": 2,
+          "seconds": 0.8491956670040963
+        },
+        {
+          "operation": 89,
+          "node": 3,
+          "seconds": 0.046642333996715024
+        }
+      ],
+      "first_write_seconds": 2.488093708001543,
+      "recovery_goal_met": true
+    },
+    {
+      "absent": 2,
+      "operations": 90,
+      "samples": [
+        {
+          "operation": 0,
+          "node": 1,
+          "seconds": 1.284922374994494
+        },
+        {
+          "operation": 1,
+          "node": 3,
+          "seconds": 1.0118362920038635
+        },
+        {
+          "operation": 2,
+          "node": 1,
+          "seconds": 0.03482991700002458
+        },
+        {
+          "operation": 3,
+          "node": 3,
+          "seconds": 2.2275727499945788
+        },
+        {
+          "operation": 4,
+          "node": 1,
+          "seconds": 0.029109541996149346
+        },
+        {
+          "operation": 5,
+          "node": 3,
+          "seconds": 0.9970024170033867
+        },
+        {
+          "operation": 6,
+          "node": 1,
+          "seconds": 0.04185304100974463
+        },
+        {
+          "operation": 7,
+          "node": 3,
+          "seconds": 0.981442624994088
+        },
+        {
+          "operation": 8,
+          "node": 1,
+          "seconds": 0.05908616700617131
+        },
+        {
+          "operation": 9,
+          "node": 3,
+          "seconds": 1.168599249998806
+        },
+        {
+          "operation": 10,
+          "node": 1,
+          "seconds": 0.0274338750023162
+        },
+        {
+          "operation": 11,
+          "node": 3,
+          "seconds": 1.2029997079953318
+        },
+        {
+          "operation": 12,
+          "node": 1,
+          "seconds": 0.03226245800033212
+        },
+        {
+          "operation": 13,
+          "node": 3,
+          "seconds": 1.196471292001661
+        },
+        {
+          "operation": 14,
+          "node": 1,
+          "seconds": 0.05900929099880159
+        },
+        {
+          "operation": 15,
+          "node": 3,
+          "seconds": 1.0216788749967236
+        },
+        {
+          "operation": 16,
+          "node": 1,
+          "seconds": 0.047317875010776334
+        },
+        {
+          "operation": 17,
+          "node": 3,
+          "seconds": 0.06305841699941084
+        },
+        {
+          "operation": 18,
+          "node": 1,
+          "seconds": 0.028018375000101514
+        },
+        {
+          "operation": 19,
+          "node": 3,
+          "seconds": 0.9415242910035886
+        },
+        {
+          "operation": 20,
+          "node": 1,
+          "seconds": 0.025551750004524365
+        },
+        {
+          "operation": 21,
+          "node": 3,
+          "seconds": 0.19230337500630412
+        },
+        {
+          "operation": 22,
+          "node": 1,
+          "seconds": 0.026898999989498407
+        },
+        {
+          "operation": 23,
+          "node": 3,
+          "seconds": 0.9523113329923945
+        },
+        {
+          "operation": 24,
+          "node": 1,
+          "seconds": 0.07623925000370946
+        },
+        {
+          "operation": 25,
+          "node": 3,
+          "seconds": 0.9803759579954203
+        },
+        {
+          "operation": 26,
+          "node": 1,
+          "seconds": 0.05362879099266138
+        },
+        {
+          "operation": 27,
+          "node": 3,
+          "seconds": 0.09847108399844728
+        },
+        {
+          "operation": 28,
+          "node": 1,
+          "seconds": 0.04528345800645184
+        },
+        {
+          "operation": 29,
+          "node": 3,
+          "seconds": 0.8378352080035256
+        },
+        {
+          "operation": 30,
+          "node": 1,
+          "seconds": 0.02759912500914652
+        },
+        {
+          "operation": 31,
+          "node": 3,
+          "seconds": 1.281768375003594
+        },
+        {
+          "operation": 32,
+          "node": 1,
+          "seconds": 0.544504000004963
+        },
+        {
+          "operation": 33,
+          "node": 3,
+          "seconds": 1.0936980840051547
+        },
+        {
+          "operation": 34,
+          "node": 1,
+          "seconds": 0.6149660840019351
+        },
+        {
+          "operation": 35,
+          "node": 3,
+          "seconds": 1.094000541997957
+        },
+        {
+          "operation": 36,
+          "node": 1,
+          "seconds": 0.024737749990890734
+        },
+        {
+          "operation": 37,
+          "node": 3,
+          "seconds": 1.8505840840080054
+        },
+        {
+          "operation": 38,
+          "node": 1,
+          "seconds": 0.5128011250053532
+        },
+        {
+          "operation": 39,
+          "node": 3,
+          "seconds": 1.7524193749995902
+        },
+        {
+          "operation": 40,
+          "node": 1,
+          "seconds": 0.0948104169947328
+        },
+        {
+          "operation": 41,
+          "node": 3,
+          "seconds": 1.3104834580008173
+        },
+        {
+          "operation": 42,
+          "node": 1,
+          "seconds": 0.5390464590018382
+        },
+        {
+          "operation": 43,
+          "node": 3,
+          "seconds": 1.27587612500065
+        },
+        {
+          "operation": 44,
+          "node": 1,
+          "seconds": 0.18074524999246933
+        },
+        {
+          "operation": 45,
+          "node": 3,
+          "seconds": 1.840171707997797
+        },
+        {
+          "operation": 46,
+          "node": 1,
+          "seconds": 0.4725208339950768
+        },
+        {
+          "operation": 47,
+          "node": 3,
+          "seconds": 1.1191650420078076
+        },
+        {
+          "operation": 48,
+          "node": 1,
+          "seconds": 0.026362666001659818
+        },
+        {
+          "operation": 49,
+          "node": 3,
+          "seconds": 1.7051108329906128
+        },
+        {
+          "operation": 50,
+          "node": 1,
+          "seconds": 0.03166487500129733
+        },
+        {
+          "operation": 51,
+          "node": 3,
+          "seconds": 1.9144542919966625
+        },
+        {
+          "operation": 52,
+          "node": 1,
+          "seconds": 0.4753520829981426
+        },
+        {
+          "operation": 53,
+          "node": 3,
+          "seconds": 1.4752168340055505
+        },
+        {
+          "operation": 54,
+          "node": 1,
+          "seconds": 0.02868029198725708
+        },
+        {
+          "operation": 55,
+          "node": 3,
+          "seconds": 1.9426210000092397
+        },
+        {
+          "operation": 56,
+          "node": 1,
+          "seconds": 0.07494908300577663
+        },
+        {
+          "operation": 57,
+          "node": 3,
+          "seconds": 1.251347249999526
+        },
+        {
+          "operation": 58,
+          "node": 1,
+          "seconds": 0.5131537080014823
+        },
+        {
+          "operation": 59,
+          "node": 3,
+          "seconds": 1.1276164580049226
+        },
+        {
+          "operation": 60,
+          "node": 1,
+          "seconds": 0.030898666009306908
+        },
+        {
+          "operation": 61,
+          "node": 3,
+          "seconds": 1.694560874995659
+        },
+        {
+          "operation": 62,
+          "node": 1,
+          "seconds": 0.028088209000998177
+        },
+        {
+          "operation": 63,
+          "node": 3,
+          "seconds": 1.892155375011498
+        },
+        {
+          "operation": 64,
+          "node": 1,
+          "seconds": 0.5608344590000343
+        },
+        {
+          "operation": 65,
+          "node": 3,
+          "seconds": 1.423092249999172
+        },
+        {
+          "operation": 66,
+          "node": 1,
+          "seconds": 0.027220208998187445
+        },
+        {
+          "operation": 67,
+          "node": 3,
+          "seconds": 1.7134318750031525
+        },
+        {
+          "operation": 68,
+          "node": 1,
+          "seconds": 0.6146739579999121
+        },
+        {
+          "operation": 69,
+          "node": 3,
+          "seconds": 1.843172416993184
+        },
+        {
+          "operation": 70,
+          "node": 1,
+          "seconds": 0.027196374998311512
+        },
+        {
+          "operation": 71,
+          "node": 3,
+          "seconds": 1.202030125001329
+        },
+        {
+          "operation": 72,
+          "node": 1,
+          "seconds": 0.5120524169906275
+        },
+        {
+          "operation": 73,
+          "node": 3,
+          "seconds": 1.3306848750071367
+        },
+        {
+          "operation": 74,
+          "node": 1,
+          "seconds": 0.6143197909987066
+        },
+        {
+          "operation": 75,
+          "node": 3,
+          "seconds": 1.705168083004537
+        },
+        {
+          "operation": 76,
+          "node": 1,
+          "seconds": 0.027585792005993426
+        },
+        {
+          "operation": 77,
+          "node": 3,
+          "seconds": 1.304281875010929
+        },
+        {
+          "operation": 78,
+          "node": 1,
+          "seconds": 0.5553779170004418
+        },
+        {
+          "operation": 79,
+          "node": 3,
+          "seconds": 1.4466320000065025
+        },
+        {
+          "operation": 80,
+          "node": 1,
+          "seconds": 0.44125224999152124
+        },
+        {
+          "operation": 81,
+          "node": 3,
+          "seconds": 1.2392444580036681
+        },
+        {
+          "operation": 82,
+          "node": 1,
+          "seconds": 0.02602150000166148
+        },
+        {
+          "operation": 83,
+          "node": 3,
+          "seconds": 1.7573410420009168
+        },
+        {
+          "operation": 84,
+          "node": 1,
+          "seconds": 0.5731683339981828
+        },
+        {
+          "operation": 85,
+          "node": 3,
+          "seconds": 1.74133033301041
+        },
+        {
+          "operation": 86,
+          "node": 1,
+          "seconds": 0.026556750002782792
+        },
+        {
+          "operation": 87,
+          "node": 3,
+          "seconds": 1.2385572920029517
+        },
+        {
+          "operation": 88,
+          "node": 1,
+          "seconds": 0.030196125007933006
+        },
+        {
+          "operation": 89,
+          "node": 3,
+          "seconds": 1.7222008750104578
+        }
+      ],
+      "first_write_seconds": 1.5602184580056928,
+      "recovery_goal_met": true
+    },
+    {
+      "absent": 3,
+      "operations": 90,
+      "samples": [
+        {
+          "operation": 0,
+          "node": 1,
+          "seconds": 2.099347666997346
+        },
+        {
+          "operation": 1,
+          "node": 2,
+          "seconds": 0.02273137499287259
+        },
+        {
+          "operation": 2,
+          "node": 1,
+          "seconds": 1.0752313749981113
+        },
+        {
+          "operation": 3,
+          "node": 2,
+          "seconds": 1.1183328750048531
+        },
+        {
+          "operation": 4,
+          "node": 1,
+          "seconds": 1.0437665000063134
+        },
+        {
+          "operation": 5,
+          "node": 2,
+          "seconds": 0.034028500012937
+        },
+        {
+          "operation": 6,
+          "node": 1,
+          "seconds": 1.0117944589874242
+        },
+        {
+          "operation": 7,
+          "node": 2,
+          "seconds": 0.09454179200110957
+        },
+        {
+          "operation": 8,
+          "node": 1,
+          "seconds": 1.0920642080018297
+        },
+        {
+          "operation": 9,
+          "node": 2,
+          "seconds": 0.034589707996929064
+        },
+        {
+          "operation": 10,
+          "node": 1,
+          "seconds": 1.0633552499930374
+        },
+        {
+          "operation": 11,
+          "node": 2,
+          "seconds": 0.020550166998873465
+        },
+        {
+          "operation": 12,
+          "node": 1,
+          "seconds": 1.0234172500058776
+        },
+        {
+          "operation": 13,
+          "node": 2,
+          "seconds": 0.02788791700731963
+        },
+        {
+          "operation": 14,
+          "node": 1,
+          "seconds": 1.0180459999974119
+        },
+        {
+          "operation": 15,
+          "node": 2,
+          "seconds": 0.0210627500055125
+        },
+        {
+          "operation": 16,
+          "node": 1,
+          "seconds": 1.0677244160033297
+        },
+        {
+          "operation": 17,
+          "node": 2,
+          "seconds": 0.02029870900150854
+        },
+        {
+          "operation": 18,
+          "node": 1,
+          "seconds": 0.9959712080017198
+        },
+        {
+          "operation": 19,
+          "node": 2,
+          "seconds": 0.020806583008379675
+        },
+        {
+          "operation": 20,
+          "node": 1,
+          "seconds": 0.04560291700181551
+        },
+        {
+          "operation": 21,
+          "node": 2,
+          "seconds": 0.016327541990904137
+        },
+        {
+          "operation": 22,
+          "node": 1,
+          "seconds": 1.0367731250007637
+        },
+        {
+          "operation": 23,
+          "node": 2,
+          "seconds": 0.018565000005764887
+        },
+        {
+          "operation": 24,
+          "node": 1,
+          "seconds": 1.032369500011555
+        },
+        {
+          "operation": 25,
+          "node": 2,
+          "seconds": 0.019905082997865975
+        },
+        {
+          "operation": 26,
+          "node": 1,
+          "seconds": 1.021142666999367
+        },
+        {
+          "operation": 27,
+          "node": 2,
+          "seconds": 0.035811249996186234
+        },
+        {
+          "operation": 28,
+          "node": 1,
+          "seconds": 1.020782457999303
+        },
+        {
+          "operation": 29,
+          "node": 2,
+          "seconds": 0.017176082998048514
+        },
+        {
+          "operation": 30,
+          "node": 1,
+          "seconds": 1.0386507910006912
+        },
+        {
+          "operation": 31,
+          "node": 2,
+          "seconds": 0.01967383398732636
+        },
+        {
+          "operation": 32,
+          "node": 1,
+          "seconds": 1.0444380420085508
+        },
+        {
+          "operation": 33,
+          "node": 2,
+          "seconds": 0.018022582997218706
+        },
+        {
+          "operation": 34,
+          "node": 1,
+          "seconds": 1.0237600419932278
+        },
+        {
+          "operation": 35,
+          "node": 2,
+          "seconds": 0.01977029099361971
+        },
+        {
+          "operation": 36,
+          "node": 1,
+          "seconds": 1.023779208000633
+        },
+        {
+          "operation": 37,
+          "node": 2,
+          "seconds": 0.019591333999414928
+        },
+        {
+          "operation": 38,
+          "node": 1,
+          "seconds": 1.0298633329948643
+        },
+        {
+          "operation": 39,
+          "node": 2,
+          "seconds": 0.02239374999771826
+        },
+        {
+          "operation": 40,
+          "node": 1,
+          "seconds": 1.0104383750003763
+        },
+        {
+          "operation": 41,
+          "node": 2,
+          "seconds": 0.018132040990167297
+        },
+        {
+          "operation": 42,
+          "node": 1,
+          "seconds": 1.041924792007194
+        },
+        {
+          "operation": 43,
+          "node": 2,
+          "seconds": 0.018229624998639338
+        },
+        {
+          "operation": 44,
+          "node": 1,
+          "seconds": 1.072457750007743
+        },
+        {
+          "operation": 45,
+          "node": 2,
+          "seconds": 0.01922183300484903
+        },
+        {
+          "operation": 46,
+          "node": 1,
+          "seconds": 1.0040827079938026
+        },
+        {
+          "operation": 47,
+          "node": 2,
+          "seconds": 0.019708749998244457
+        },
+        {
+          "operation": 48,
+          "node": 1,
+          "seconds": 0.9618834579887334
+        },
+        {
+          "operation": 49,
+          "node": 2,
+          "seconds": 0.01796920799824875
+        },
+        {
+          "operation": 50,
+          "node": 1,
+          "seconds": 1.0391705410002032
+        },
+        {
+          "operation": 51,
+          "node": 2,
+          "seconds": 0.02611350000370294
+        },
+        {
+          "operation": 52,
+          "node": 1,
+          "seconds": 1.036791832986637
+        },
+        {
+          "operation": 53,
+          "node": 2,
+          "seconds": 0.02041141600057017
+        },
+        {
+          "operation": 54,
+          "node": 1,
+          "seconds": 1.0205374590004794
+        },
+        {
+          "operation": 55,
+          "node": 2,
+          "seconds": 0.023006083007203415
+        },
+        {
+          "operation": 56,
+          "node": 1,
+          "seconds": 1.03691374999471
+        },
+        {
+          "operation": 57,
+          "node": 2,
+          "seconds": 0.023163332996773534
+        },
+        {
+          "operation": 58,
+          "node": 1,
+          "seconds": 1.0203940000064904
+        },
+        {
+          "operation": 59,
+          "node": 2,
+          "seconds": 0.019303499997477047
+        },
+        {
+          "operation": 60,
+          "node": 1,
+          "seconds": 1.027119333986775
+        },
+        {
+          "operation": 61,
+          "node": 2,
+          "seconds": 0.018694333004532382
+        },
+        {
+          "operation": 62,
+          "node": 1,
+          "seconds": 1.0218699170072796
+        },
+        {
+          "operation": 63,
+          "node": 2,
+          "seconds": 0.019007082999451086
+        },
+        {
+          "operation": 64,
+          "node": 1,
+          "seconds": 1.069814167000004
+        },
+        {
+          "operation": 65,
+          "node": 2,
+          "seconds": 0.022206542009371333
+        },
+        {
+          "operation": 66,
+          "node": 1,
+          "seconds": 0.9960580829938408
+        },
+        {
+          "operation": 67,
+          "node": 2,
+          "seconds": 0.025766334001673386
+        },
+        {
+          "operation": 68,
+          "node": 1,
+          "seconds": 1.012919625005452
+        },
+        {
+          "operation": 69,
+          "node": 2,
+          "seconds": 0.02074758301023394
+        },
+        {
+          "operation": 70,
+          "node": 1,
+          "seconds": 1.0349715000047581
+        },
+        {
+          "operation": 71,
+          "node": 2,
+          "seconds": 0.01848879198951181
+        },
+        {
+          "operation": 72,
+          "node": 1,
+          "seconds": 1.0669557499932125
+        },
+        {
+          "operation": 73,
+          "node": 2,
+          "seconds": 0.018521791993407533
+        },
+        {
+          "operation": 74,
+          "node": 1,
+          "seconds": 0.9930477079906268
+        },
+        {
+          "operation": 75,
+          "node": 2,
+          "seconds": 0.033433625008910894
+        },
+        {
+          "operation": 76,
+          "node": 1,
+          "seconds": 1.0067068750067847
+        },
+        {
+          "operation": 77,
+          "node": 2,
+          "seconds": 0.01844975000130944
+        },
+        {
+          "operation": 78,
+          "node": 1,
+          "seconds": 1.0234555839997483
+        },
+        {
+          "operation": 79,
+          "node": 2,
+          "seconds": 0.021529916994040832
+        },
+        {
+          "operation": 80,
+          "node": 1,
+          "seconds": 1.0182679999998072
+        },
+        {
+          "operation": 81,
+          "node": 2,
+          "seconds": 0.01734795799711719
+        },
+        {
+          "operation": 82,
+          "node": 1,
+          "seconds": 0.045841333994758315
+        },
+        {
+          "operation": 83,
+          "node": 2,
+          "seconds": 0.016797834003227763
+        },
+        {
+          "operation": 84,
+          "node": 1,
+          "seconds": 0.9322176250134362
+        },
+        {
+          "operation": 85,
+          "node": 2,
+          "seconds": 0.01720395899610594
+        },
+        {
+          "operation": 86,
+          "node": 1,
+          "seconds": 0.05542941699968651
+        },
+        {
+          "operation": 87,
+          "node": 2,
+          "seconds": 0.018250249995617196
+        },
+        {
+          "operation": 88,
+          "node": 1,
+          "seconds": 0.9636098749906523
+        },
+        {
+          "operation": 89,
+          "node": 2,
+          "seconds": 0.02052579198789317
+        }
+      ],
+      "first_write_seconds": 2.3571660829911707,
+      "recovery_goal_met": true
+    }
+  ],
+  "filesystem": [
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy01[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    },
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy02[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    },
+    {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "local/containers/agy03[/rootfs]",
+          "fstype": "zfs",
+          "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+        }
+      ]
+    }
+  ],
+  "logs": {
+    "node1.log": "SQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 1.176267ms, ledger = 57.48\u00b5s, application = 62.717\u00b5s}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=445 journal=956 phases=Recovery_Stats{integrity = 804.571\u00b5s, ledger = 21.005044ms, application = 13.741691ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=592 journal=1250 phases=Recovery_Stats{integrity = 1.184299ms, ledger = 27.691928ms, application = 18.449273ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=844 journal=1768 phases=Recovery_Stats{integrity = 1.546286ms, ledger = 39.638417ms, application = 25.960003ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=882 journal=1868 phases=Recovery_Stats{integrity = 1.654609ms, ledger = 41.07645ms, application = 27.15841ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=918 journal=1940 phases=Recovery_Stats{integrity = 1.65908ms, ledger = 42.48892ms, application = 28.498524ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=1509 journal=5 phases=Recovery_Stats{integrity = 430.432\u00b5s, ledger = 212.527\u00b5s, application = 84.438\u00b5s}\n",
+    "node2.log": "SQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 585.899\u00b5s, ledger = 40.927\u00b5s, application = 59.086\u00b5s}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=433 journal=905 phases=Recovery_Stats{integrity = 749.258\u00b5s, ledger = 20.741463ms, application = 13.425449ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=445 journal=938 phases=Recovery_Stats{integrity = 885.797\u00b5s, ledger = 21.379533ms, application = 13.817398ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=592 journal=1231 phases=Recovery_Stats{integrity = 1.24946ms, ledger = 28.348505ms, application = 18.504377ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=865 journal=1797 phases=Recovery_Stats{integrity = 1.506407ms, ledger = 39.881815ms, application = 26.988625ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=882 journal=1841 phases=Recovery_Stats{integrity = 1.608584ms, ledger = 41.480132ms, application = 29.303375ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=1128 journal=2481 phases=Recovery_Stats{integrity = 1.977206ms, ledger = 54.49261ms, application = 35.000887ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=1509 journal=5 phases=Recovery_Stats{integrity = 419.816\u00b5s, ledger = 200.514\u00b5s, application = 72.774\u00b5s}\n",
+    "node3.log": "SQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 432.575\u00b5s, ledger = 27.058\u00b5s, application = 42.348\u00b5s}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=433 journal=906 phases=Recovery_Stats{integrity = 682.41\u00b5s, ledger = 20.824139ms, application = 14.449103ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=445 journal=939 phases=Recovery_Stats{integrity = 725.167\u00b5s, ledger = 23.348041ms, application = 15.631234ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=592 journal=1231 phases=Recovery_Stats{integrity = 1.105975ms, ledger = 28.326039ms, application = 18.842946ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=865 journal=1786 phases=Recovery_Stats{integrity = 1.441646ms, ledger = 41.10205ms, application = 29.411015ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=882 journal=1831 phases=Recovery_Stats{integrity = 1.559909ms, ledger = 42.12658ms, application = 30.397508ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=1340 journal=3029 phases=Recovery_Stats{integrity = 2.05665ms, ledger = 69.811716ms, application = 47.016844ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=1509 journal=5 phases=Recovery_Stats{integrity = 382.108\u00b5s, ledger = 206.018\u00b5s, application = 85.475\u00b5s}\n"
+  },
+  "ended_utc": "2026-09-24T21:11:52.240160+00:00"
+}

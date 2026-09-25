@@ -1,0 +1,41 @@
+{
+  "complete": false,
+  "stages": [],
+  "seed": 20260925,
+  "binary_sha256": "9f2d2fae81e239b8ac13d77f319dd7925fe849aeab0f60df29e55d993aa73510",
+  "harness_sha256": "2fbe727d327b4439a27fa585640063853e120bb90134fb3bdd1f39993f3cf3ce",
+  "scope": "4 KiB printable random payloads cast to BLOB; public SQL; allocated bytes recorded separately",
+  "fixture_only": false,
+  "samples": [],
+  "resume": {
+    "report": "/home/insan/projects/sqlodin/verification-20260925-copy-budget/benchmarks/results/verification-20260924/capacity-64gib-copy-budget-linux.json",
+    "report_sha256": "95f502115e9f2fc391068d364b82513eea6d9b0668c795f83b751f27e913af20",
+    "previous_binary_sha256": "3bf2374eb7d4d7833fa6f5df26e7c27f36b856b201783d3b01af5ed494f67d9a",
+    "note": "Explicit recovery continuation; previous failure remains, retained files are reopened in place"
+  },
+  "work_directory": "/home/insan/projects/sqlodin/verification-20260925-copy-budget/build/capacity-work/tmp_b_7t9px",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "initial_free_bytes": 1179188330496,
+  "initial_allocated_bytes": 106045652992,
+  "peak_rss": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+  },
+  "logs": {
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 483.561\u00b5s, ledger = 26.629\u00b5s, application = 28.488\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:51261 (mTLS, cluster network-qualification)\nSQLodin stopped after a durable storage or consensus failure\nMaintenance failure: Compaction_Failed\n\n-- SERVICE STOPPED ------------------------------------------------\n\nThe SQL service could not continue; see the diagnostic above.\n\nHint: Check config, TLS identities, bind address and data permissions. Preserve existing data before repair.\n\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 477.252\u00b5s, ledger = 28.078\u00b5s, application = 21.069\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:50591 (mTLS, cluster network-qualification)\nSQLodin stopped after a durable storage or consensus failure\nMaintenance failure: Compaction_Failed\n\n-- SERVICE STOPPED ------------------------------------------------\n\nThe SQL service could not continue; see the diagnostic above.\n\nHint: Check config, TLS identities, bind address and data permissions. Preserve existing data before repair.\n\n",
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 466.773\u00b5s, ledger = 24.979\u00b5s, application = 22.488\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:32777 (mTLS, cluster network-qualification)\nSQLodin stopped after a durable storage or consensus failure\nMaintenance failure: Compaction_Failed\n\n-- SERVICE STOPPED ------------------------------------------------\n\nThe SQL service could not continue; see the diagnostic above.\n\nHint: Check config, TLS identities, bind address and data permissions. Preserve existing data before repair.\n\n"
+  },
+  "failed_data_retained": true,
+  "error": "TimeoutError('Node 1 not quorum-ready: Operation deadline exceeded: [Errno 111] Connection refused')"
+}

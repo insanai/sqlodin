@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 0,
+	"duration": 157189000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_transaction_function_policy_rejects_local_state"
+			}
+		]
+	}
+}

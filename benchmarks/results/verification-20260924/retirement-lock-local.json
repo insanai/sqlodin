@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 602271000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_retirement_preserves_exact_predecessor_and_unowned_directories"
+			}
+		]
+	}
+}

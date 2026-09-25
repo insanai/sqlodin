@@ -1,0 +1,917 @@
+{
+  "complete": true,
+  "cases": [
+    {
+      "model": "ReadCohort",
+      "config": "ReadCohort",
+      "sources": {
+        "ReadCohort.tla": "c937ff1dd6e8fb2b841a27389e1e9d2dd5e7965a4ca2fac8c45e307ed7843c95",
+        "ReadCohort.cfg": "c18a0982bd6347865f4557dd77d1f3c805fe6626da9fdc038b7df4e200947dd2"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-read-cohort-local.json",
+          "report_sha256": "940ea5231979337d86ef1bb9f6397194adb04c2d989db4d143ec8679aab371f4"
+        }
+      ]
+    },
+    {
+      "model": "ReadCohort",
+      "config": "ReadCohortLateJoin",
+      "sources": {
+        "ReadCohort.tla": "c937ff1dd6e8fb2b841a27389e1e9d2dd5e7965a4ca2fac8c45e307ed7843c95",
+        "ReadCohortLateJoin.cfg": "b561efb828854498ed36e03a04edbdbd0b6cf57c24c8082b3b73009613e48aed"
+      },
+      "expected_violation": "Invariant RealTimeOrder is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-read-cohort-local.json",
+          "report_sha256": "940ea5231979337d86ef1bb9f6397194adb04c2d989db4d143ec8679aab371f4"
+        }
+      ]
+    },
+    {
+      "model": "ReadCohort",
+      "config": "ReadCohortEarly",
+      "sources": {
+        "ReadCohort.tla": "c937ff1dd6e8fb2b841a27389e1e9d2dd5e7965a4ca2fac8c45e307ed7843c95",
+        "ReadCohortEarly.cfg": "b4596033bbd98567e0de644d7bd589b6c2e78453cbe5246d68a9905a3a6dc397"
+      },
+      "expected_violation": "Invariant AppliedBeforeSnapshot is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-read-cohort-local.json",
+          "report_sha256": "940ea5231979337d86ef1bb9f6397194adb04c2d989db4d143ec8679aab371f4"
+        }
+      ]
+    },
+    {
+      "model": "ReadCohort",
+      "config": "ReadCohortCancel",
+      "sources": {
+        "ReadCohort.tla": "c937ff1dd6e8fb2b841a27389e1e9d2dd5e7965a4ca2fac8c45e307ed7843c95",
+        "ReadCohortCancel.cfg": "fe89589a1481d62996edcc265ec4598c4416fef2aefb95419d1768573b621747"
+      },
+      "expected_violation": "Invariant MembersHaveBarrier is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-read-cohort-local.json",
+          "report_sha256": "940ea5231979337d86ef1bb9f6397194adb04c2d989db4d143ec8679aab371f4"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingConcurrent",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingConcurrent.cfg": "e208ea84a2b6cb250efb2705812d9e3cba22c0e5230ba80dd2cfe9f324ea7e38"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingThreeWindows",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingThreeWindows.cfg": "12ca638dac45e7b7a899f8db5fc2d0711d56db82174d889b092795f6a8b4f3a7"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingDown1",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingDown1.cfg": "e3c35c8b923c3de4525b7bcdab0addadebbc04a3674908549320f65739757f38"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingDown2",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingDown2.cfg": "3f9e896b76b06dfef144fb29612cb8fbce9d71265549861b847c67e9a954daa0"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingDown3",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingDown3.cfg": "db45293a5d51b9e03baa65c968fb895272bc568c55d3eac10111b1581dc87519"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingNoSkip",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingNoSkip.cfg": "8c433ea5682e07c387b27b5c5d44981f5c9fc141f7b7662028d767db26afccab"
+      },
+      "expected_violation": "Temporal properties were violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingNoRevoke",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingNoRevoke.cfg": "2a9a108c71ad1c71c062b3ac2e9018e80d9753a19850fa876b8b95b2d80ebcad"
+      },
+      "expected_violation": "Temporal properties were violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingNoRelease",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingNoRelease.cfg": "9f00f938b8b4348133ef29989af1694c1fb2827b63b260e6a85b9d2fc4c4fc83"
+      },
+      "expected_violation": "Temporal properties were violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "RotatingWindow",
+      "config": "RotatingReuse",
+      "sources": {
+        "RotatingWindow.tla": "fe2ba22f3f9ab194e4c5273213bd09e153b777e0153aaab01d9d5ef429dfe5b9",
+        "RotatingReuse.cfg": "2d7bcd5191f605b68cf31ac941522ab083c6a402fc2e305e95a038d4bc00517f"
+      },
+      "expected_violation": "Invariant HeldSlot is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-rotating-linux-v3.json",
+          "report_sha256": "3d6710664544d40d6eda655ce6753fc98270b336a94350598dbd5a3e6c84f148"
+        }
+      ]
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionRetirement",
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionRetirement.cfg": "c24bba2a11578f90f7f65ba8d67a5b0f7a06b6a1f0ce3c5e70d7a5b0358b9943"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-session-retirement-local-v3.json",
+          "report_sha256": "c23cd83f4530ad39652a3fe8a85d329ac2c664731bd506edd3771238ad1dbcc4"
+        }
+      ]
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionNoEpochGuard",
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionNoEpochGuard.cfg": "9cf6a4552d7c5bf1392fd7e0d76ca799b218f75e64d733e48248378fbca8a031"
+      },
+      "expected_violation": "Invariant AtMostOnce is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-session-retirement-local-v3.json",
+          "report_sha256": "c23cd83f4530ad39652a3fe8a85d329ac2c664731bd506edd3771238ad1dbcc4"
+        }
+      ]
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionLostEpoch",
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionLostEpoch.cfg": "ed94f56e6f151301c4dd20f037b980737cf4e280914f4045a05160de0c061896"
+      },
+      "expected_violation": "Invariant AtMostOnce is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-session-retirement-local-v3.json",
+          "report_sha256": "c23cd83f4530ad39652a3fe8a85d329ac2c664731bd506edd3771238ad1dbcc4"
+        }
+      ]
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionRepeatRetirement",
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionRepeatRetirement.cfg": "02c37c4d0c2ca158b62550061e97c9c39a8f6d4b58ee4b62e74970204c4314c3"
+      },
+      "expected_violation": "Invariant CommandIdempotent is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-session-retirement-local-v3.json",
+          "report_sha256": "c23cd83f4530ad39652a3fe8a85d329ac2c664731bd506edd3771238ad1dbcc4"
+        }
+      ]
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionKeepRows",
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionKeepRows.cfg": "d628b565869db12c941bc8d5ae0035183af29dd776ac016a8886d8fb15c17a75"
+      },
+      "expected_violation": "Invariant OnlyCurrentRows is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-session-retirement-local-v3.json",
+          "report_sha256": "c23cd83f4530ad39652a3fe8a85d329ac2c664731bd506edd3771238ad1dbcc4"
+        }
+      ]
+    },
+    {
+      "model": "RestoredGenesis",
+      "config": "RestoredGenesis",
+      "sources": {
+        "RestoredGenesis.tla": "5c22db25b103e26680083db6a434417542842c6de79a54a44e21c2f49446e544",
+        "RestoredGenesis.cfg": "f552639066404d756602e3a97fe3c7ef591cdf43863ec463562843ba902166eb"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-restored-genesis-local.json",
+          "report_sha256": "55aab26df70c1b61054ad1e4c023d6b0a5a7f98c04ff7f821c01c3a833b64ded"
+        }
+      ]
+    },
+    {
+      "model": "RestoredGenesis",
+      "config": "GenesisOldNamespace",
+      "sources": {
+        "RestoredGenesis.tla": "5c22db25b103e26680083db6a434417542842c6de79a54a44e21c2f49446e544",
+        "GenesisOldNamespace.cfg": "c7b5141ba45f84d33c07e23db8addee9f6bdb732e80845a353db0c37331eb6f0"
+      },
+      "expected_violation": "Invariant FreshNamespace is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-restored-genesis-local.json",
+          "report_sha256": "55aab26df70c1b61054ad1e4c023d6b0a5a7f98c04ff7f821c01c3a833b64ded"
+        }
+      ]
+    },
+    {
+      "model": "RestoredGenesis",
+      "config": "GenesisMixedImages",
+      "sources": {
+        "RestoredGenesis.tla": "5c22db25b103e26680083db6a434417542842c6de79a54a44e21c2f49446e544",
+        "GenesisMixedImages.cfg": "2c6b7f52c6ec61014a30457fbb55801a1b00f8db33f874c3e6ae7a28a91cda8a"
+      },
+      "expected_violation": "Invariant CompatibleInitialState is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-restored-genesis-local.json",
+          "report_sha256": "55aab26df70c1b61054ad1e4c023d6b0a5a7f98c04ff7f821c01c3a833b64ded"
+        }
+      ]
+    },
+    {
+      "model": "RestoredGenesis",
+      "config": "GenesisEarlyReady",
+      "sources": {
+        "RestoredGenesis.tla": "5c22db25b103e26680083db6a434417542842c6de79a54a44e21c2f49446e544",
+        "GenesisEarlyReady.cfg": "6bc95e035a70062d677aba10f7af82b0028d09f3ad786ad3ca1261d0a28760fa"
+      },
+      "expected_violation": "Invariant ReadyDurable is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-restored-genesis-local.json",
+          "report_sha256": "55aab26df70c1b61054ad1e4c023d6b0a5a7f98c04ff7f821c01c3a833b64ded"
+        }
+      ]
+    },
+    {
+      "model": "RestoredGenesis",
+      "config": "GenesisResetPrefix",
+      "sources": {
+        "RestoredGenesis.tla": "5c22db25b103e26680083db6a434417542842c6de79a54a44e21c2f49446e544",
+        "GenesisResetPrefix.cfg": "f1b8780da70faac04b75fa885403266f64dc6d1ccacfd4c41968278cc1dd180d"
+      },
+      "expected_violation": "Invariant RetryOriginsValid is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-restored-genesis-local.json",
+          "report_sha256": "55aab26df70c1b61054ad1e4c023d6b0a5a7f98c04ff7f821c01c3a833b64ded"
+        }
+      ]
+    },
+    {
+      "model": "ImageRetirement",
+      "config": "ImageRetirement",
+      "sources": {
+        "ImageRetirement.tla": "888783bc96c8c787e4e3a77be499e5baef0ff478247cfb6b73c3fc6dc0f6ec37",
+        "ImageRetirement.cfg": "6cc9a7210194e7a9a3bfee6ad9ec431141a5128ab4520c3787e584e55bd015de"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-image-retirement-local.json",
+          "report_sha256": "5db3010502dfdfd0edeb21ea389afcd22f07f87b8214a5c966f5f06885aa8f7d"
+        }
+      ]
+    },
+    {
+      "model": "ImageRetirement",
+      "config": "ImageNoSuccessor",
+      "sources": {
+        "ImageRetirement.tla": "888783bc96c8c787e4e3a77be499e5baef0ff478247cfb6b73c3fc6dc0f6ec37",
+        "ImageNoSuccessor.cfg": "d5eed2639c38d4fb605c0625e7e05b8df0904c1c7175335cfa7942182e79584e"
+      },
+      "expected_violation": "Invariant LatestQuorumRetained is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-image-retirement-local.json",
+          "report_sha256": "5db3010502dfdfd0edeb21ea389afcd22f07f87b8214a5c966f5f06885aa8f7d"
+        }
+      ]
+    },
+    {
+      "model": "ImageRetirement",
+      "config": "ImageNoCurrent",
+      "sources": {
+        "ImageRetirement.tla": "888783bc96c8c787e4e3a77be499e5baef0ff478247cfb6b73c3fc6dc0f6ec37",
+        "ImageNoCurrent.cfg": "a83f9b7bc2a07f6ef4505e7e77e9894d2809d3d6d09c6840659b0fa4eb63f646"
+      },
+      "expected_violation": "Invariant ActiveImageRetained is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-image-retirement-local.json",
+          "report_sha256": "5db3010502dfdfd0edeb21ea389afcd22f07f87b8214a5c966f5f06885aa8f7d"
+        }
+      ]
+    },
+    {
+      "model": "ImageRetirement",
+      "config": "ImageNoPrevious",
+      "sources": {
+        "ImageRetirement.tla": "888783bc96c8c787e4e3a77be499e5baef0ff478247cfb6b73c3fc6dc0f6ec37",
+        "ImageNoPrevious.cfg": "38664537d6f34110729aaf66e23f4881ffffc8a5b309d4733fb913874eff3469"
+      },
+      "expected_violation": "Invariant PreviousImageRetained is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-image-retirement-local.json",
+          "report_sha256": "5db3010502dfdfd0edeb21ea389afcd22f07f87b8214a5c966f5f06885aa8f7d"
+        }
+      ]
+    },
+    {
+      "model": "GenerationRetirement",
+      "config": "GenerationRetirement",
+      "sources": {
+        "GenerationRetirement.tla": "0f22fb7c588626b26fac6953089bcf46a7db36fdf9320e318263665e4751c4db",
+        "GenerationRetirement.cfg": "bab1e8bb3a4abcea041d9b7dc317e2e25b66de73c77928962dec53b0b9490690"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-retirement-local.json",
+          "report_sha256": "2eea37ba5f82a937cb76b2d78392df3d622a5d31409e23f4f926b50c18ca2c6a"
+        }
+      ]
+    },
+    {
+      "model": "GenerationRetirement",
+      "config": "RetirementCurrent",
+      "sources": {
+        "GenerationRetirement.tla": "0f22fb7c588626b26fac6953089bcf46a7db36fdf9320e318263665e4751c4db",
+        "RetirementCurrent.cfg": "670f16ce635610cdcd6b415e8a4e275725aa0d29852911e65f6d0f3014baa9f5"
+      },
+      "expected_violation": "Invariant CurrentRetained is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-retirement-local.json",
+          "report_sha256": "2eea37ba5f82a937cb76b2d78392df3d622a5d31409e23f4f926b50c18ca2c6a"
+        }
+      ]
+    },
+    {
+      "model": "GenerationRetirement",
+      "config": "RetirementPrevious",
+      "sources": {
+        "GenerationRetirement.tla": "0f22fb7c588626b26fac6953089bcf46a7db36fdf9320e318263665e4751c4db",
+        "RetirementPrevious.cfg": "dd92127bdff6f0cfdc15aae14977c489d3f6d75bc61c45e5c5be96c649aa941f"
+      },
+      "expected_violation": "Invariant PreviousRetained is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-retirement-local.json",
+          "report_sha256": "2eea37ba5f82a937cb76b2d78392df3d622a5d31409e23f4f926b50c18ca2c6a"
+        }
+      ]
+    },
+    {
+      "model": "GenerationRetirement",
+      "config": "RetirementUnowned",
+      "sources": {
+        "GenerationRetirement.tla": "0f22fb7c588626b26fac6953089bcf46a7db36fdf9320e318263665e4751c4db",
+        "RetirementUnowned.cfg": "3659dcc006f1ad3537e89b5836ab7e65a7dadb8908dbd7d8cb981434c0b55c20"
+      },
+      "expected_violation": "Invariant UnownedUntouched is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-retirement-local.json",
+          "report_sha256": "2eea37ba5f82a937cb76b2d78392df3d622a5d31409e23f4f926b50c18ca2c6a"
+        }
+      ]
+    },
+    {
+      "model": "GenerationRetirement",
+      "config": "RetirementUnsynced",
+      "sources": {
+        "GenerationRetirement.tla": "0f22fb7c588626b26fac6953089bcf46a7db36fdf9320e318263665e4751c4db",
+        "RetirementUnsynced.cfg": "6da96924accefdb61262ac3fc406baba509d4d6c5240e831eb83145e1119b80c"
+      },
+      "expected_violation": "Invariant InventoryComplete is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-retirement-local.json",
+          "report_sha256": "2eea37ba5f82a937cb76b2d78392df3d622a5d31409e23f4f926b50c18ca2c6a"
+        }
+      ]
+    },
+    {
+      "model": "GenerationCatalog",
+      "config": "GenerationCatalog",
+      "sources": {
+        "GenerationCatalog.tla": "44fc51b77793be7553b08e3576295e0b1fcda22c02ad00fda8830c3a60071cd4",
+        "GenerationCatalog.cfg": "c1c8a85d533b97f420674ca976e5824ffc510dd9451d774b54f01a46a3504cd5"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-generation-local.json",
+          "report_sha256": "cebdcc6f73ddcbb8c0a8a0988c2c3a77557deef952196eeb1ee7b480bd9a742e"
+        }
+      ]
+    },
+    {
+      "model": "GenerationCatalog",
+      "config": "GenerationEarlyPublish",
+      "sources": {
+        "GenerationCatalog.tla": "44fc51b77793be7553b08e3576295e0b1fcda22c02ad00fda8830c3a60071cd4",
+        "GenerationEarlyPublish.cfg": "1a9a0ffc6b09f35d27949c83305e6d1eca8b00629160945d0e6841af4caae59e"
+      },
+      "expected_violation": "Invariant PublishedDurable is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-generation-local.json",
+          "report_sha256": "cebdcc6f73ddcbb8c0a8a0988c2c3a77557deef952196eeb1ee7b480bd9a742e"
+        }
+      ]
+    },
+    {
+      "model": "GenerationCatalog",
+      "config": "GenerationLostVote",
+      "sources": {
+        "GenerationCatalog.tla": "44fc51b77793be7553b08e3576295e0b1fcda22c02ad00fda8830c3a60071cd4",
+        "GenerationLostVote.cfg": "0151a87f57cdf90763d81cf53e82e58fc857d83bc70d21c34a51601182863b79"
+      },
+      "expected_violation": "Invariant AcceptedSuffix is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-generation-local.json",
+          "report_sha256": "cebdcc6f73ddcbb8c0a8a0988c2c3a77557deef952196eeb1ee7b480bd9a742e"
+        }
+      ]
+    },
+    {
+      "model": "GenerationCatalog",
+      "config": "GenerationLostPromise",
+      "sources": {
+        "GenerationCatalog.tla": "44fc51b77793be7553b08e3576295e0b1fcda22c02ad00fda8830c3a60071cd4",
+        "GenerationLostPromise.cfg": "981102ba5a2f15375bf0745f58c9af3d19722902ec0b39db349fbd9f6262cb26"
+      },
+      "expected_violation": "Invariant PromiseFence is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-generation-local.json",
+          "report_sha256": "cebdcc6f73ddcbb8c0a8a0988c2c3a77557deef952196eeb1ee7b480bd9a742e"
+        }
+      ]
+    },
+    {
+      "model": "GenerationCatalog",
+      "config": "GenerationReusedIDs",
+      "sources": {
+        "GenerationCatalog.tla": "44fc51b77793be7553b08e3576295e0b1fcda22c02ad00fda8830c3a60071cd4",
+        "GenerationReusedIDs.cfg": "1d135e5466c82dd1de88d1cf4beec31ec213923706b6673de0a0fa58897107b7"
+      },
+      "expected_violation": "Invariant RequestIDs is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-generation-local.json",
+          "report_sha256": "cebdcc6f73ddcbb8c0a8a0988c2c3a77557deef952196eeb1ee7b480bd9a742e"
+        }
+      ]
+    },
+    {
+      "model": "OwnedSlot",
+      "config": "OwnedSlot",
+      "sources": {
+        "OwnedSlot.tla": "dcacfb80d4a8a8a6be9616cd084c20ed8d22f9be1da285f3626eab4d069b9f25",
+        "OwnedSlot.cfg": "9ecdac0753eac1899249aa32420c507965c21907d40bb05ece8b8bb156c95ad2"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "OwnedSlot",
+      "config": "OwnedSlotDown1",
+      "sources": {
+        "OwnedSlot.tla": "dcacfb80d4a8a8a6be9616cd084c20ed8d22f9be1da285f3626eab4d069b9f25",
+        "OwnedSlotDown1.cfg": "a0d999de9a5ee75f19685356bbac13004289a2e6bce124edc3d94982426ffb38"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "OwnedSlot",
+      "config": "OwnedSlotDown2",
+      "sources": {
+        "OwnedSlot.tla": "dcacfb80d4a8a8a6be9616cd084c20ed8d22f9be1da285f3626eab4d069b9f25",
+        "OwnedSlotDown2.cfg": "a5759fbde4641e163664edddd3ae517bf22c3596f20d52eba1207cf7a6b81914"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "OwnedSlot",
+      "config": "OwnedSlotDown3",
+      "sources": {
+        "OwnedSlot.tla": "dcacfb80d4a8a8a6be9616cd084c20ed8d22f9be1da285f3626eab4d069b9f25",
+        "OwnedSlotDown3.cfg": "9cd64b1006c63fe4f0711684ee522c9bdd38dda98b9d94258b768147b7586f18"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "OwnedSlot",
+      "config": "OwnedSlotNoDurability",
+      "sources": {
+        "OwnedSlot.tla": "dcacfb80d4a8a8a6be9616cd084c20ed8d22f9be1da285f3626eab4d069b9f25",
+        "OwnedSlotNoDurability.cfg": "601e7b647401e072b9aa313696cd14df727158d21c8362bafc1d0ec6941012eb"
+      },
+      "expected_violation": "Invariant Agreement is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "RecoveryProgress",
+      "config": "RecoveryProgress",
+      "sources": {
+        "RecoveryProgress.tla": "d5562c14460a7892d53b82bf5163220a814b036c6341ed29f97506000b86515e",
+        "RecoveryProgress.cfg": "69e8f3dd7c3af2ec1448007a160a8f8838f12c1d2b1aec4135d7be3487f56bb1"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "RecoveryProgress",
+      "config": "RecoveryNoProbe",
+      "sources": {
+        "RecoveryProgress.tla": "d5562c14460a7892d53b82bf5163220a814b036c6341ed29f97506000b86515e",
+        "RecoveryNoProbe.cfg": "5a9782dc79d34c4f252c4f51de27562d35c1821d2e72a36a3c8f9e71c077b532"
+      },
+      "expected_violation": "Temporal properties were violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "RecoveryProgress",
+      "config": "RecoveryOneChunk",
+      "sources": {
+        "RecoveryProgress.tla": "d5562c14460a7892d53b82bf5163220a814b036c6341ed29f97506000b86515e",
+        "RecoveryOneChunk.cfg": "f2cbe5bce0c694b8c12da74f2fba4de15de8ae15273d23258b4a29439c18f67e"
+      },
+      "expected_violation": "Temporal properties were violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "DurableEffects",
+      "config": "DurableEffects",
+      "sources": {
+        "DurableEffects.tla": "c266d67fa769a5aa020fef5d89e2e41c6f719a9d9ad448f4368836ca22049e5a",
+        "DurableEffects.cfg": "55bc167c2a1ef96503a3ab0899f6d6f1b8a99d25c7313541c7d59ebf30b9fe56"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "DurableEffects",
+      "config": "DurableNoGate",
+      "sources": {
+        "DurableEffects.tla": "c266d67fa769a5aa020fef5d89e2e41c6f719a9d9ad448f4368836ca22049e5a",
+        "DurableNoGate.cfg": "da4560ead20284cec35d731eec12aba60bfcbff3acdf6809b801e9baac569cbb"
+      },
+      "expected_violation": "Invariant DurableBeforeSend is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "SnapshotPublication",
+      "config": "SnapshotPublication",
+      "sources": {
+        "SnapshotPublication.tla": "a14957b6741f437deacea3d2ef22bd3c712931225db89e7322d6407012c40a9b",
+        "SnapshotPublication.cfg": "d3eae0d511a2c6266f4cf37983bbf2aee023d4c434c868e29334393de2f32190"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "SnapshotPublication",
+      "config": "SnapshotNoGuard",
+      "sources": {
+        "SnapshotPublication.tla": "a14957b6741f437deacea3d2ef22bd3c712931225db89e7322d6407012c40a9b",
+        "SnapshotNoGuard.cfg": "bec33380055c303c50f7a750974cb34ab6a7dff6d074193ee13a53170ff8a39a"
+      },
+      "expected_violation": "Invariant Recoverable is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "ReadFence",
+      "config": "ReadFence",
+      "sources": {
+        "ReadFence.tla": "f6f31cbea972cafd85134ef887e286b6b2ada3d69d87bff4f04666788e52663f",
+        "ReadFence.cfg": "18d7a549abe7c86bf7e5b80b96546c5ea33cec2897ca003c6187cca005406d0c"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "ReadFence",
+      "config": "ReadFenceReuse",
+      "sources": {
+        "ReadFence.tla": "f6f31cbea972cafd85134ef887e286b6b2ada3d69d87bff4f04666788e52663f",
+        "ReadFenceReuse.cfg": "d4fee0876859d4e98c8d02943a65f74040fb5f1e377635031f84eb3cd5e54f09"
+      },
+      "expected_violation": "Invariant RealTimeOrder is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "ReadFence",
+      "config": "ReadFenceNoApply",
+      "sources": {
+        "ReadFence.tla": "f6f31cbea972cafd85134ef887e286b6b2ada3d69d87bff4f04666788e52663f",
+        "ReadFenceNoApply.cfg": "7f17403a5b71f2203a64d93347a153c7541a03255331f0bd08dc26cc38d8d1f5"
+      },
+      "expected_violation": "Invariant AppliedBeforeSnapshot is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "SnapshotIdentity",
+      "config": "SnapshotIdentity",
+      "sources": {
+        "SnapshotIdentity.tla": "cab0d8cf0f6d173c2a1005972ac279caa3ade9f7aa7a176d04770084d43961f7",
+        "SnapshotIdentity.cfg": "e54777270f628d45133b9cb693abcd235b697d0ad62cbf18ffbf7006ef8ed86b"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "SnapshotIdentity",
+      "config": "SnapshotMixedKeys",
+      "sources": {
+        "SnapshotIdentity.tla": "cab0d8cf0f6d173c2a1005972ac279caa3ade9f7aa7a176d04770084d43961f7",
+        "SnapshotMixedKeys.cfg": "1af677f9a401b366e69006225fda9f242cffbad50d35d46ff98332508a9a232d"
+      },
+      "expected_violation": "Invariant MatchingDurableQuorum is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "SnapshotIdentity",
+      "config": "SnapshotDuplicateVotes",
+      "sources": {
+        "SnapshotIdentity.tla": "cab0d8cf0f6d173c2a1005972ac279caa3ade9f7aa7a176d04770084d43961f7",
+        "SnapshotDuplicateVotes.cfg": "0b25cfccb1b85ac95a85b33e90b1268b4a770390553b0042fd580178f671fa2c"
+      },
+      "expected_violation": "Invariant MatchingDurableQuorum is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "SnapshotIdentity",
+      "config": "SnapshotVolatileReceipt",
+      "sources": {
+        "SnapshotIdentity.tla": "cab0d8cf0f6d173c2a1005972ac279caa3ade9f7aa7a176d04770084d43961f7",
+        "SnapshotVolatileReceipt.cfg": "bfe47ceebcaff75d70003d5458c357b9f22ac6a81983ef61b068da1358ae0c4e"
+      },
+      "expected_violation": "Invariant MatchingDurableQuorum is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "ManifestDurability",
+      "config": "ManifestDurability",
+      "sources": {
+        "ManifestDurability.tla": "daa45034d49b7dc18c7bb47116015e3ae30a076b838dde11cffda63dfd3ec0dd",
+        "ManifestDurability.cfg": "0f209684dfbce02f81c77cbfb9b22a9eb0f0c742199b6e1718590fa88ebed751"
+      },
+      "expected_violation": null,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "ManifestDurability",
+      "config": "ManifestNoFileSync",
+      "sources": {
+        "ManifestDurability.tla": "daa45034d49b7dc18c7bb47116015e3ae30a076b838dde11cffda63dfd3ec0dd",
+        "ManifestNoFileSync.cfg": "197190ddac89410a68f2dcb72b4a927e7559307b20da7832de2bdf149ab90c75"
+      },
+      "expected_violation": "Invariant SuccessSurvives is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    },
+    {
+      "model": "ManifestDurability",
+      "config": "ManifestNoDirectorySync",
+      "sources": {
+        "ManifestDurability.tla": "daa45034d49b7dc18c7bb47116015e3ae30a076b838dde11cffda63dfd3ec0dd",
+        "ManifestNoDirectorySync.cfg": "ce2a4ee91b3cecfbe3988210638e31256eb75b2886fff6bc86b9d5771b5b8739"
+      },
+      "expected_violation": "Invariant SuccessSurvives is violated",
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-models-manifest.json",
+          "report_sha256": "8f9c4bc594580b953a1b21d0e5e63718b4c174b808ca9ed7c68ffd30a88d1e3c"
+        }
+      ]
+    }
+  ],
+  "proofs": [
+    {
+      "model": "DurableHistoryProof",
+      "source_sha256": "8f317555384ecfb8c2dec9cca6c68e7c6474e8afd5dfbe58509c110764e28765",
+      "obligations": 12,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-proofs.json",
+          "report_sha256": "f7813d44c06c76a725cc8aadfcc42a28b83a09072edfd55865a535a9644720c7"
+        }
+      ]
+    },
+    {
+      "model": "PrefixRecoveryProof",
+      "source_sha256": "beda3b1a713d32c9c687189ad33b07af94e6982f2847fa26f7cd4ae70a7c0676",
+      "obligations": 36,
+      "evidence": [
+        {
+          "report": "benchmarks/results/verification-20260924/formal-prefix-proof-linux-v3.json",
+          "report_sha256": "fef054abb4238b7f70b41eab53c83d9c938c14b3c5b36c6dc3f520e87e13370f"
+        }
+      ]
+    }
+  ],
+  "missing": [],
+  "scope": "reuse only source-identical successful checks; not a new TLC/TLAPS execution",
+  "collector_sha256": "f91ca10b47f638d2ea5e68987f2f04f04402d606ab020e84974a8822c5c7e5cc"
+}

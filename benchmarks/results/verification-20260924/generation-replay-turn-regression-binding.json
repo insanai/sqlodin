@@ -1,0 +1,18 @@
+{
+  "complete": true,
+  "scope": "Per-turn generation replay regression and expected failing restoration of the old 32-transaction loop; not a capacity latency pass",
+  "reports": {
+    "generation-replay-turn-local-v2.json": "717fb335ed1f46bdd106d20c22891392cf4017a6e2501f7417c50a048274a771",
+    "generation-replay-turn-negative-local.json": "45d75ab22a0ef2b0cd3c31a91bcb0cd083f7b6e1dc39852a0833a10d8dbe06c6"
+  },
+  "sources": {
+    "src/durable/generation_delta.odin": "fcbee955da9517fe42f6118f157eb8331df92aa14dbac768623afdecebd36d38",
+    "tests/test_generation_worker.odin": "c68c2f4d293d7b514e7b15018b6e910da9b42a08292498900beb2b87a2b63556"
+  },
+  "negative_control": {
+    "change": "Restore the old 32-transaction application replay loop in a temporary source copy",
+    "source_sha256": "871b600b5bcbeef98b378546ef1fdd1863440b53012037fe4e51196041e46d56",
+    "expected_failure": "after >= before && after-before <= 1",
+    "observed_failed_tests": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 0,
+	"duration": 1319000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_service_defaults_to_managed_storage_and_preserves_explicit_legacy_format"
+			}
+		]
+	}
+}

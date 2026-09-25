@@ -1,0 +1,89 @@
+{
+  "scope": "10 ICMP echo samples per authorized host pair; not SQL or consensus RTT, not proof of independent physical failure domains",
+  "results": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "from": "19",
+        "to": "20",
+        "chunk_id": "e109c1",
+        "wall_time_seconds": 0.064145541,
+        "exit_code": 2,
+        "original_token_count": 29,
+        "output": "ping: socktype: SOCK_RAW\nping: socket: Operation not permitted\nping: => missing cap_net_raw+p capability or setuid?\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "from": "19",
+        "to": "21",
+        "chunk_id": "8b115f",
+        "wall_time_seconds": 0.053897458,
+        "exit_code": 2,
+        "original_token_count": 29,
+        "output": "ping: socktype: SOCK_RAW\nping: socket: Operation not permitted\nping: => missing cap_net_raw+p capability or setuid?\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "from": "20",
+        "to": "19",
+        "chunk_id": "140a87",
+        "wall_time_seconds": 0.081170083,
+        "exit_code": 2,
+        "original_token_count": 29,
+        "output": "ping: socktype: SOCK_RAW\nping: socket: Operation not permitted\nping: => missing cap_net_raw+p capability or setuid?\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "from": "20",
+        "to": "21",
+        "chunk_id": "18f0dc",
+        "wall_time_seconds": 0.059016292,
+        "exit_code": 2,
+        "original_token_count": 29,
+        "output": "ping: socktype: SOCK_RAW\nping: socket: Operation not permitted\nping: => missing cap_net_raw+p capability or setuid?\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "from": "21",
+        "to": "19",
+        "chunk_id": "94226e",
+        "wall_time_seconds": 0.074105292,
+        "exit_code": 2,
+        "original_token_count": 29,
+        "output": "ping: socktype: SOCK_RAW\nping: socket: Operation not permitted\nping: => missing cap_net_raw+p capability or setuid?\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "from": "21",
+        "to": "20",
+        "chunk_id": "ef3e38",
+        "wall_time_seconds": 0.091714666,
+        "exit_code": 2,
+        "original_token_count": 29,
+        "output": "ping: socktype: SOCK_RAW\nping: socket: Operation not permitted\nping: => missing cap_net_raw+p capability or setuid?\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "from": "18",
+        "to": "18",
+        "chunk_id": "896917",
+        "wall_time_seconds": 0.045396167,
+        "exit_code": 2,
+        "original_token_count": 29,
+        "output": "ping: socktype: SOCK_RAW\nping: socket: Operation not permitted\nping: => missing cap_net_raw+p capability or setuid?\n"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 181289000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_empty_restore_binds_genesis_and_rejects_descriptor_corruption"
+			}
+		]
+	}
+}

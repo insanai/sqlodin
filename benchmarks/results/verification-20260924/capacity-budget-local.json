@@ -1,0 +1,29 @@
+{
+	"total": 5,
+	"success": 5,
+	"duration": 705935000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_generation_cancellation_preserves_source_and_releases_private_locks"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_cancellation_releases_copy_and_prevents_verification_receipt"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_covers_extensions_and_request_state"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_enforces_work_and_scratch_budgets"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_ignores_page_layout_and_preserves_types"
+			}
+		]
+	}
+}

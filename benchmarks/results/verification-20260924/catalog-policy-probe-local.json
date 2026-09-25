@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 0,
+	"duration": 71393000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_transaction_constraint_outcome_and_restart"
+			}
+		]
+	}
+}

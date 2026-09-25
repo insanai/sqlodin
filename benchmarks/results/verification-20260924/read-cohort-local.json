@@ -1,0 +1,17 @@
+{
+	"total": 2,
+	"success": 2,
+	"duration": 221148000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_later_read_cannot_borrow_cohort_before_a_completed_write"
+			},
+			{
+				"success": true,
+				"name": "test_read_cohort_requires_quorum_and_preserves_other_waiters_on_cancel"
+			}
+		]
+	}
+}

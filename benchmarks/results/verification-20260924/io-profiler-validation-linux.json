@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "counters": {
+    "sync_calls": 3,
+    "sync_ns": 9963521,
+    "write_calls": 3,
+    "write_bytes": 56,
+    "write_ns": 19890,
+    "errors": 2
+  },
+  "verified": "exact counters, unchanged bytes and forwarded EBADF from write and sync",
+  "sha256": {
+    "internal/io_profile/profile.c": "4c9ab75f5e3d93f1ef6c0ed9f7de514fff4c1eca43db26543b8d06499bc5b037",
+    "internal/io_profile/probe.c": "7fadc4a0df1c9e8e9f626904b2ca4340b7eb599f3fff26fe63d5ab60234625b8",
+    "build/io-profile/profile.so": "b8e477383bbd73a0d6ffbed45d2816810f2a054d643f208cc44bcb6a9ffc703d",
+    "build/io-profile/probe": "7e9c19edbe2e03042b0cd2fd8e368a1e7cc6c32ec503910b9897947f65c2e66c",
+    "tools/check_io_profile.py": "e5bb53b66b3ae809c885df9bc43ed636efb941cfc731da4f613d9894cdf000f7"
+  }
+}

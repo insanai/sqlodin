@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 263410482,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_generation_preserves_unchosen_vote_and_global_promise"
+			}
+		]
+	}
+}

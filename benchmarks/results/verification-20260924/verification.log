@@ -1,0 +1,47 @@
+/home/insan/projects/sqlodin/toolchains/odin/odin version dev-2026-09-nightly:a2fb372
+PASS style: files <= 1408 lines, lines <= 108 columns, procedures <= 70 logic lines
+PASS style: Zen constraints, vet, strict style
+[INFO ] --- [2026-09-24 08:27:46] Starting test runner with 32 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-24 08:27:46] The random seed sent to every test is: 17041786673041186. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-24 08:27:46] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-24 08:27:46] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 81 tests in 16.798061ms. All tests were successful.
+
+[INFO ] --- [2026-09-24 08:27:56] Starting test runner with 32 threads. Set with -define:ODIN_TEST_THREADS=n.
+[INFO ] --- [2026-09-24 08:27:56] The random seed sent to every test is: 17041818174251578. Set with -define:ODIN_TEST_RANDOM_SEED=n.
+[INFO ] --- [2026-09-24 08:27:56] Memory tracking is enabled. Tests will log their memory usage if there's an issue.
+[INFO ] --- [2026-09-24 08:27:56] < Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]
+
+Finished 81 tests in 16.05375ms. All tests were successful.
+
+PASS compile-fail zero_window
+PASS compile-fail zero_chunk
+PASS compile-fail window_not_power_of_two
+PASS compile-fail chunk_exceeds_window
+PASS compile-fail zero_members
+PASS compile-fail too_many_members
+PASS compile-fail zero_learner_window
+PASS compile-fail non_comparable_value
+PASS compile-fail effects_must_match_node
+PASS durability messages_before_confirm -debug
+PASS durability reset_before_confirm -debug
+PASS durability correct_order -debug
+PASS durability zero_value_is_ready -debug
+PASS durability messages_before_confirm -o:speed
+PASS durability reset_before_confirm -o:speed
+PASS durability correct_order -o:speed
+PASS durability zero_value_is_ready -o:speed
+PASS 90 simulations (single leader and rotating ownership), 900000 fault steps, 11436 crashes inside the host commit sequence
+PASS chunk=3/window=8 simulations, majority and both flexible-quorum extremes
+node 1 is the leader
+proposed request 101 in slot 1
+slot 1: +10 -> counter = 10
+proposed request 102 in slot 2
+slot 2: +25 -> counter = 35
+proposed request 201 in slot 3
+slot 3: -5 -> counter = 30
+counter = 30 on all 3 nodes
+PASS benchmark smoke test and JSON schema
+PASS CLI propagates subprocess failure with recovery hint
+All checks passed.

@@ -1,0 +1,13 @@
+{
+  "complete": false,
+  "passed": false,
+  "checks": [],
+  "binary_sha256": "83bc68b13250ff0ae850ca41b36df2a2d71e2f47384d0d20532806090ba39811",
+  "scope": "format-5 online capture, authenticated quorum receipts and chosen certificate; no trim",
+  "logs": {
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 292.625\u00b5s, ledger = 10.792\u00b5s, application = 18.667\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:64071 (mTLS, cluster network-qualification)\n",
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 314.292\u00b5s, ledger = 31.042\u00b5s, application = 47.166\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:64072 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 312.667\u00b5s, ledger = 10.958\u00b5s, application = 17.542\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:64073 (mTLS, cluster network-qualification)\n"
+  },
+  "error": "TimeoutError('Node 1 not quorum-ready: Operation deadline exceeded: The read operation timed out')"
+}

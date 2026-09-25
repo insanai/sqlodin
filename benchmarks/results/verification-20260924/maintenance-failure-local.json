@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 241220000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_maintenance_copy_failure_stops_acknowledgements_and_repeated_jobs"
+			}
+		]
+	}
+}

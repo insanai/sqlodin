@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 23989000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_fts_group_and_reference_have_identical_logical_snapshot_state"
+			}
+		]
+	}
+}

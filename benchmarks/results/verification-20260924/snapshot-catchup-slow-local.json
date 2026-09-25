@@ -1,0 +1,28 @@
+{
+  "complete": false,
+  "passed": false,
+  "checks": [
+    {
+      "name": "cycle_0_survivors_publish_while_third_voter_remains_offline",
+      "passed": true
+    },
+    {
+      "name": "cycle_1_survivors_publish_while_third_voter_remains_offline",
+      "passed": true
+    }
+  ],
+  "rows": 256,
+  "operations_per_cycle": 3,
+  "slow_kib": 128,
+  "drop_once": false,
+  "binary_sha256": "4e15e8b630cf939aa735de0d60316e651b6ad6da651a09df73804169ff41b8d9",
+  "scope": "authenticated snapshot catch-up after two retained-prefix changes; explicit compaction",
+  "offline_prefix": 6,
+  "largest_image_bytes": 98304,
+  "logs": {
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 566.916\u00b5s, ledger = 28.167\u00b5s, application = 27.416\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:49216 (mTLS, cluster network-qualification)\nRecovery node=1 applied=20 journal=5 phases=Recovery_Stats{integrity = 222.375\u00b5s, ledger = 1.5305ms, application = 262.833\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:49216 (mTLS, cluster network-qualification)\nRecovery node=1 applied=98 journal=3 phases=Recovery_Stats{integrity = 147.208\u00b5s, ledger = 735.625\u00b5s, application = 212.417\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:49216 (mTLS, cluster network-qualification)\nRecovery node=1 applied=101 journal=11 phases=Recovery_Stats{integrity = 237.5\u00b5s, ledger = 2.300625ms, application = 969.209\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:49216 (mTLS, cluster network-qualification)\n",
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 642.958\u00b5s, ledger = 25.916\u00b5s, application = 25.167\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:49217 (mTLS, cluster network-qualification)\nRecovery node=2 applied=83 journal=205 phases=Recovery_Stats{integrity = 240.875\u00b5s, ledger = 19.514583ms, application = 10.253625ms}\nSQLodin node 2 listening on 127.0.0.1:49217 (mTLS, cluster network-qualification)\nRecovery node=2 applied=100 journal=9 phases=Recovery_Stats{integrity = 171.75\u00b5s, ledger = 1.44875ms, application = 591.334\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:49217 (mTLS, cluster network-qualification)\nRecovery node=2 applied=101 journal=16 phases=Recovery_Stats{integrity = 246.708\u00b5s, ledger = 3.233792ms, application = 1.0835ms}\nSQLodin node 2 listening on 127.0.0.1:49217 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 563.041\u00b5s, ledger = 29.917\u00b5s, application = 27.709\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:49218 (mTLS, cluster network-qualification)\nRecovery node=3 applied=6 journal=14 phases=Recovery_Stats{integrity = 160.459\u00b5s, ledger = 2.967958ms, application = 1.810416ms}\nSQLodin node 3 listening on 127.0.0.1:49218 (mTLS, cluster network-qualification)\n"
+  },
+  "error": "TimeoutError('Node 3 not quorum-ready: Operation deadline exceeded: The read operation timed out')"
+}

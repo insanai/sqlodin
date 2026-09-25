@@ -1,0 +1,14 @@
+{
+  "archive": "build/release-candidate/sqlodin-linux-x86_64-candidate.tar.gz",
+  "sha256": "bca9ad8b1f30dd262e1f58bba76b9731febe876e36aff990b6b88935d57a5bae",
+  "files": {
+    "bin/sqlodin": "010338a4e2a8a8f9e4761d15b3d40b637a57b7a45f9d45ae7f73e3cbee5a1478",
+    "candidate.json": "9a779f766636ee96c6f8f5ea705d5472fb9a0a6839d5ab2d375046c5d33760f6",
+    "licenses/OpenSSL-LICENSE.txt": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+    "licenses/SQLodin-LICENSE": "fda88836526617781960d9d4d22aae619f0e4e17c5388c894905f87eb679eeda",
+    "licenses/paxos-odin-LICENSE": "fda88836526617781960d9d4d22aae619f0e4e17c5388c894905f87eb679eeda",
+    "licenses/sqlite-vec-MIT.txt": "6ce72bbe12d975bd5286e5ab0a064c069693300c47bccbc57bec18485f1621ea",
+    "native-build.json": "798598977c467e1b282a9a718814b4baffb2813a377f956a0c26aab035a50fc4"
+  },
+  "scope": "Native candidate with pinned dependency license notices; OS runtime libraries required"
+}

@@ -1,0 +1,25 @@
+{
+	"total": 4,
+	"success": 4,
+	"duration": 343386000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_snapshot_image_pins_prefix_during_wal_writes"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_manifest_detects_every_truncation_and_bit_change"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_manifest_exclusive_storage_and_failure_boundaries"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_verifier_rejects_foreign_keys_and_nonempty_wal"
+			}
+		]
+	}
+}

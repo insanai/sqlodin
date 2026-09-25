@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "run_at_utc": "2026-09-24T12:11:56.015685+00:00",
+  "journal_group_commit": true,
+  "storage_format": 5,
+  "source_sha256": {
+    "internal/durability_probe/group.odin": "7aed23b43fcc703730af913d3146eca3a2b6d9b2236f2ce5c6c83792ad766c95",
+    "internal/durability_probe/journal_group.odin": "66f3ba392a703f4eee886467c10d64f466577a9746e8a49e2d21ab4d95c1b1e2",
+    "internal/durability_probe/main.odin": "e90c235e59431495ac48cc35dc29667288e868f7c3e9c5783aeaaba9c9a1c9ad",
+    "internal/durability_probe/transaction.odin": "d0fd64afb5a991b0cac3c9132448c2cade5bffb429e51b8a42c591d3f3061936",
+    "src/durable/batch.odin": "79ad08b40fde740a8fb67ea6938d0bcc6ca4936506765c8e460143789eb1b04c",
+    "src/durable/codec.odin": "190d3370ca3b6ce275f6f11d69d887641a7b8fdac6d0f0cc27a763e87610e7d8",
+    "src/durable/host.odin": "4f446500483546b7c17032d66b8c6c450c065770dc9957023cd6f32e699e1581",
+    "src/durable/ids.odin": "eb2de72d050f4b31f48891247c62f8cdabf7adb2206bbfdee8b8e5f05f776b18",
+    "src/durable/journal.odin": "5a78a69e435f7f412e98e9eb0c734e633e2b149133a5ca184fbba0545b6e8ad7",
+    "src/durable/migration.odin": "ab1634d282d043208ab4a58f3cf7afa30eb94a86d5ee34225f9753c52882029e",
+    "src/durable/migration_copy.odin": "76ac2791fe3d1068e1a4f63ce98517910612cbceddd2000acf3812eb6ff05a12",
+    "src/durable/packing.odin": "13cb17865f88841fb1718ef8ce4800b28b1be1fb6d75f4e5e1e3de5ec39ef8e9",
+    "src/durable/progress.odin": "710787485fb09de5df8606cbeb21913a245d78fc9e5f24b45ae5ab3d6b87fb11",
+    "src/durable/reads.odin": "ba9fe24170ccd4c45829091e003f4d7c138d3c681ecceae5b1d2e6f4ebd6f7e6",
+    "src/durable/separated.odin": "a54fcf316752abb31c7974b7ec5f80701aae96716c105417171534acd384bd69",
+    "src/durable/storage.odin": "374f648e38e7a7a2ca1b32d316290503a617a00ace9732798ef9ae1d769b8b41",
+    "src/durable/transition_group.odin": "e1f78359b312598c66488970668c8fbcd9c7299a46f94ed2a9515aea25aca984",
+    "src/engine.odin": "fab6c4f676d4bf0d5422acf5b696c3e451df9034ecce1d6f5e0d0cb492091ef8",
+    "src/engine_dml.odin": "3d065cd0d5c2073eee46aa77022248889aca7bd7a383aab0f8c0c3954cab8119",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+    "src/engine_optimistic.odin": "51d96626ea32c3c0d8c681dd331e0d863bb9c8794b95c2ca45d6b5b2978802e6",
+    "src/engine_outcomes.odin": "2fb435d6f80eed09ad37ee8804a90d603918b6261738c86d9b79f5012d210af2",
+    "src/engine_policy.odin": "a486216061037920cff8c883d61d37884305e310b29b725da24dfcc4b00d7db6",
+    "src/engine_query.odin": "4b7bd3904d2eb7094ebc1740021e8c2b62a2d404add9eecfee927c96e90e8dc3",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_sessions.odin": "ddaaaa6e7a8cf866656bfd866b82c0342a98d9cb0a2d3c11dc191569f2912c33",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "06afab34611f6b83d4b1e01971188ca4522a840839f3f704ec9724dad58d3743",
+    "src/paxos.odin": "b1447c58efb78f9c79f291681b02c5c76cd39fb14ce9f4c312210662a6c527a4",
+    "src/snapshot/certificate.odin": "71abd0ec5ccd70ed5c5389f0a5e334584f787dea2ed7815c1822cfbc9eeac062",
+    "src/snapshot/check.odin": "6b6618a02c7d596a4691be983a32504bfd5011a070ab7d467b338889e79dc21d",
+    "src/snapshot/codec.odin": "ddcc640e955afdb34f26bdb9988817e034d6b3d4f5618217071b5dbb4ba58305",
+    "src/snapshot/errors.odin": "870e65adbbc31d8126da8a57b19d36b6dc4525fb27b4ca58fb12e3afa6397692",
+    "src/snapshot/image.odin": "e5dfbaadc286e45940a16415b15859e85d615233b2057625c9ff84d874d7d0fb",
+    "src/snapshot/image_storage.odin": "845ed0b6fbbe4884180685142a8416c44441e80b211de76b42d677fb5f8b81cd",
+    "src/snapshot/logical.odin": "ae33baf04d92b63406a28fac68e4a96c9d4d1da33f4b308039637c631d4219e0",
+    "src/snapshot/logical_rows.odin": "1bb0cc7894b04e66584d807c01b1b5805e21bae5374ac7fc3fbead1e9a777d93",
+    "src/snapshot/manifest.odin": "8fad0b8c1f12b86c12722fce945a9898658ee38800f8ae68738708c43a385f05",
+    "src/snapshot/manifest_storage.odin": "25ff4d7c76f5ed3982f75e0a401fc1c7895959c56f53b6312965dab576dcc405",
+    "src/snapshot/retain.odin": "489e9ca42b280c8809cfdc03fef08b09d2795a8447c9717b56555f3ad4a32852",
+    "src/snapshot/verify.odin": "2b9813e8cfaec88c76980ba457450c187d973fd5c83c7680305a6f3a3d3a7ed1",
+    "src/sqlite/sqlite3.odin": "ed74ac5f14dfd4139572d095d9e66849fd915614fe148afb97ad06f43ae7450a",
+    "src/sqlite/sqlite_vec.odin": "fcf7db3ae460173b06eb0836fbf504569efb223915eb208d4d7a9cf806deae22",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "00570fbbb4a9636dd5b8a98cc58af33f0384f906da5e7adc047650257486cc39"
+  },
+  "native_dependencies": {
+    "sqlite": "3.51.3",
+    "sqlite_vec": "0.1.9",
+    "openssl": "3.5.8",
+    "platform": {
+      "system": "Linux",
+      "machine": "x86_64",
+      "compiler": "/usr/bin/cc",
+      "archiver": "/usr/bin/ar",
+      "compiler_version": "cc (Debian 14.2.0-19) 14.2.0",
+      "builder_sha256": "ed2760e611b57d4e09769caa528f882bbd87d6842c6589c66d7b285035777d3f"
+    },
+    "sources": {
+      "sqlite": {
+        "version": "3.51.3",
+        "url": "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+        "files": {
+          "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+          "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+          "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+        }
+      },
+      "vec": {
+        "version": "0.1.9",
+        "url": "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+        "files": {
+          "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+          "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+        }
+      },
+      "openssl": {
+        "version": "3.5.8",
+        "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+        "sha256": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2"
+      }
+    },
+    "sqlite_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DSQLITE_THREADSAFE=1",
+      "-DSQLITE_OMIT_LOAD_EXTENSION",
+      "-DSQLITE_OMIT_DEPRECATED",
+      "-DSQLITE_DQS=0",
+      "-DSQLITE_ENABLE_FTS5",
+      "-DHAVE_USLEEP=1"
+    ],
+    "vec_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DSQLITE_CORE",
+      "-DSQLITE_VEC_STATIC",
+      "-DSQLITE_VEC_OMIT_FS"
+    ],
+    "openssl_flags": [
+      "no-shared",
+      "no-dso",
+      "no-module",
+      "no-engine",
+      "no-zlib",
+      "--libdir=lib",
+      "--openssldir=/sqlodin/no-system-openssl"
+    ],
+    "archives_sha256": {
+      "libsqlite3.a": "aac3b0f9cafb856e49bc0fc8f00289e1dd36a596032383028ee9a663559630ae",
+      "libsqlite_vec.a": "64f35312f89c2251bc249b2b2301d7b0c9aba7987e1a7e547008a24c68a576d0",
+      "libssl.a": "d287b4bf68bebb8ea76818c859763eb8ac90f65d5ecf13fc0f253a50405df140",
+      "libcrypto.a": "077bddd675958dc9243a04182c15567afcd2d6b68a565eafa9f940c5543ff665"
+    }
+  },
+  "scope": "process crash; not physical power-loss certification",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "fstype": "zfs",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "case": "before",
+      "passed": true,
+      "verification": "verified rows=0 applied=1"
+    },
+    {
+      "case": "journal",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "application",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "ack",
+      "passed": true,
+      "verification": "verified rows=1 applied=2"
+    },
+    {
+      "case": "three_voters_killed_at_ack",
+      "passed": true,
+      "verification": "verified three voters: all 80 acknowledged writes survived"
+    },
+    {
+      "case": "transaction-before",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-journal",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-application",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-ack",
+      "passed": true,
+      "verification": "verified request outcome=Applied original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-before",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-journal",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-application",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "transaction-reject-ack",
+      "passed": true,
+      "verification": "verified request outcome=Constraint original-slot=2; retry has no extra effect"
+    },
+    {
+      "case": "application-group-before",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-journal",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-sql",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-application",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "application-group-ack",
+      "passed": true,
+      "verification": "verified application group: two effects, independent rejection, stable retry outcomes"
+    },
+    {
+      "case": "journal-group-before",
+      "passed": true,
+      "verification": "verified promise and 0 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-journal",
+      "passed": true,
+      "verification": "verified promise and 15 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-application",
+      "passed": true,
+      "verification": "verified promise and 15 votes; no unchosen SQL applied"
+    },
+    {
+      "case": "journal-group-ack",
+      "passed": true,
+      "verification": "verified promise and 15 votes; no unchosen SQL applied"
+    }
+  ]
+}

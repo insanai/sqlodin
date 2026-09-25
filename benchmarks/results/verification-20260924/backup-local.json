@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 0,
+	"duration": 146158000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_backup_empty_and_populated_application_preserve_source_and_reject_corruption"
+			}
+		]
+	}
+}

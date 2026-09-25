@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 1975205000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_background_generation_preserves_live_tail_votes_ids_and_restart"
+			}
+		]
+	}
+}

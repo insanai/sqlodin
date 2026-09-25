@@ -1,0 +1,21 @@
+{
+	"total": 3,
+	"success": 3,
+	"duration": 628038000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_history_accounting_rejects_a_missing_active_inventory_entry"
+			},
+			{
+				"success": true,
+				"name": "test_history_measurement_failure_poisoned_before_proposal"
+			},
+			{
+				"success": true,
+				"name": "test_history_quota_counts_owned_staging_and_recovers_after_retirement"
+			}
+		]
+	}
+}

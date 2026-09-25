@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 0,
+	"duration": 5861000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_catalog_rowids_must_not_become_replicated_application_values"
+			}
+		]
+	}
+}

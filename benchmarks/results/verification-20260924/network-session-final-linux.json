@@ -1,0 +1,204 @@
+{
+  "complete": true,
+  "passed": true,
+  "scope": "three native mTLS SQL service processes on one host; disk WAL FULL",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "started_utc": "2026-09-24T17:13:50.370225+00:00",
+  "checks": [
+    {
+      "name": "native_cli_status_write_and_query",
+      "passed": true
+    },
+    {
+      "name": "native_cluster_schema",
+      "passed": true
+    },
+    {
+      "name": "write_any_node_fenced_rows",
+      "passed": true
+    },
+    {
+      "name": "typed_parameters_and_results",
+      "passed": true
+    },
+    {
+      "name": "atomic_batch_rollback_and_next_sequence",
+      "passed": true
+    },
+    {
+      "name": "readonly_policy_and_result_limit",
+      "passed": true
+    },
+    {
+      "name": "untrusted_unlisted_and_peer_as_client_rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed_frames_close_only_offending_connection",
+      "passed": true
+    },
+    {
+      "name": "six_concurrent_sessions_mixed_writes_and_fenced_reads",
+      "passed": true
+    },
+    {
+      "name": "cross_master_durable_deduplication",
+      "passed": true
+    },
+    {
+      "name": "minority_no_ack_and_explicit_stale_read",
+      "passed": true
+    },
+    {
+      "name": "recover_uncertain_write_after_quorum_restored",
+      "passed": true
+    },
+    {
+      "name": "all_process_sigkill_reopen_fenced_convergence",
+      "passed": true
+    },
+    {
+      "name": "graceful_shutdown_and_exclusive_creation",
+      "passed": true
+    }
+  ],
+  "storage_format": 5,
+  "binary_sha256": "0b3ee81589993d857d236017908c05242dd95103564b7dacf2abc9a356d0afe3",
+  "source_sha256": {
+    "src/durable/backup.odin": "24a25b816609f1c0c1b9864895554a9b171daa22996a5c10ff2790cfd034b077",
+    "src/durable/backup_io.odin": "a5f44c55b59c28f7f497f5a8a9c499f506a8d21b5372b7dc6e94145c68a2586a",
+    "src/durable/backup_manifest.odin": "6f33b05af98e6a68d1749a08c88de4c3be17eee0c9682bda1d934997e526ee35",
+    "src/durable/backup_verify.odin": "96d635d1df6fcc8a036d204015a5120b93d46fa667af72bc8f579f802b275e4b",
+    "src/durable/batch.odin": "b466585d42f582a338367792d4873f1c08efe24bec41ba5a195d121ed69787cd",
+    "src/durable/codec.odin": "a884f73dbbbfb02cecdd7ea843f6d55e471f71de661408d66439bf34553e2fbb",
+    "src/durable/generation_base.odin": "2c891ac96e2ede2f0b67ea7e065c79c84de14f2685c5a3ffcee179d8f1a5f372",
+    "src/durable/generation_build.odin": "1b2133706f4ee5bbe5164ee320cce254eb197f08d68517fa1117bc0716c888c9",
+    "src/durable/generation_delta.odin": "778cb165ec91d6b83fe2006ff7b83a82238b26a4584e993fd963fa5629d8d235",
+    "src/durable/generation_install.odin": "4f5cc64bbc515becd87f31bb6233e7c1a74628a0b1037948e8a4d860bb14e75f",
+    "src/durable/generation_inventory.odin": "f0864cd5903c0f41fc1b960accae4dd0601512e0af8631f2ff9a754600f6a611",
+    "src/durable/generation_outcomes.odin": "9f24b1ddf81b61d76f6b4c32cdd90eb71382c0ea5dd5dc2d9437e69f7715a04d",
+    "src/durable/generation_publish.odin": "cb01366a63629baff65c46be0a4e7d15b8548185a00f29dd50aa8441eb22e755",
+    "src/durable/generation_retire.odin": "9a59a7f96362181b0d72d9ad127f7093e6c9744cab7122dfdc5cb1c884f9bd91",
+    "src/durable/generation_seal.odin": "bda2b60f6ff494b2d401653f01bb97c834771b73fd69611c5d5283c1c0a1fc6f",
+    "src/durable/generation_store.odin": "57ab1a7840c4555d6733d14d5de504513d3a87e602d01e47c358861c7d70914a",
+    "src/durable/generation_worker.odin": "504ac5c91172cf9dc6ba4a06fd5995f2985ba87837a9a422a5dc26249a5ed19b",
+    "src/durable/genesis.odin": "1a901c3db08337b85c84d8ae72acf96317eefbf5e6b73df44626eeddf5bbca9c",
+    "src/durable/history_space.odin": "6c7f4f2a7309d40aa4bf226c878943b85456c7e9f4a1136547fa0bc20336a286",
+    "src/durable/host.odin": "86105521a030bcb3613ec570ade33c893886be13528874d0d4eb618926870cb1",
+    "src/durable/ids.odin": "c8b82187d31d71dfe2ea2aba12b34543fd97ba64e0297653d40adf12e346b72e",
+    "src/durable/image_inventory.odin": "3012822b7677cdaf54b438ff017d37a66480b3c9a517d207f03b79148c860278",
+    "src/durable/image_retire.odin": "d4d12d8c404787537b3c0f8a324d3a64c05e3971657443fcead254a213f360fc",
+    "src/durable/image_retire_query.odin": "a3c8f3f9cf2363d55a5ccdafa72daaf7170a88016d3ab7f9a5738c28b209b329",
+    "src/durable/journal.odin": "d4edcb5608970f8f37e49af5f3efaf0f4c5a45f2ee947cc0b7f31f72075fb369",
+    "src/durable/migration.odin": "ae9fe5655f6fe7609d7ba8007971effb2ae39fcbd8e9de5b8eefe7679e4e40a7",
+    "src/durable/migration_copy.odin": "88cfd3caf621341266bde16128a755eed2e6a37047e9657759e460b4d2f3c8f4",
+    "src/durable/packing.odin": "13cb17865f88841fb1718ef8ce4800b28b1be1fb6d75f4e5e1e3de5ec39ef8e9",
+    "src/durable/progress.odin": "e96bdaaa328461961f47ded3de09c1401f9ff93cff3e14d8c0eb50f91f907335",
+    "src/durable/reads.odin": "17928c21a613ed31ac55e26cfc4a99f3f81c021bb1149a5b04b26412d76b2426",
+    "src/durable/restore.odin": "a47e14d95c83231352e8d33db5ddd5b344e74ac280d34a6c504ca71ec7d8bccc",
+    "src/durable/restore_copy.odin": "da2221a3bbd945e9daca4d962bec3674f5e5b60cafc157fe5033e2ad9633e534",
+    "src/durable/restore_publish.odin": "2ad1cf7fa02c85a049b0bb50a08af60ce984f572513013f15dd48910aff5baf1",
+    "src/durable/root_retire.odin": "942ec3b3eada35a1cefd5e1aa7f13fea0974d2af16e3d30b378c862e7441ccf1",
+    "src/durable/separated.odin": "af5c85001c5d422658c5c32370105165e497f9ef9ea343886b2dc75c737e6022",
+    "src/durable/snapshot_control.odin": "70fcd31b7912a403208d4ab4e5cdc7a7314c949e37d50c8bebb0e409e209468f",
+    "src/durable/snapshot_quorum.odin": "1e75418c585997851bde2a6b74a00e19bb827f6a04d8e8d34cf4cf5f2163760d",
+    "src/durable/snapshot_worker.odin": "1a2a554698c900622be9ebfc92827271ac6cdc486981d548cb4677e8d974e0f6",
+    "src/durable/space.odin": "0f538cab8576d12d165eb30eae24c3592e6eb0f4b6e0ee1f99077b1a7815149f",
+    "src/durable/storage.odin": "7b6892c53be6b777cab40b0470125c5ddeee279eac52fcf48149c48040e39bf3",
+    "src/durable/transition_group.odin": "b1ef1285fbec8fecf3c2be0d77a1e18b20c40e446ec32c0bec5fcd50f4feb38f",
+    "src/engine.odin": "001febfbff8dc5d25fd0806eb65478e6481e9faafd2b7d2c3041bd7736d35ee2",
+    "src/engine_dml.odin": "93e4364a8bbadfa4328f2972750dbc643aba815d59f10c85f5adf4468bf22f44",
+    "src/engine_errors.odin": "07f390bb9801dd0f367d7bab688b729a1adb1b6f50d15cb236ca734eb6de81e7",
+    "src/engine_group.odin": "b2dccab82d9bf928457969eedd77be8f9e3c45379e4b21d015b9a0aaba332ad0",
+    "src/engine_limits.odin": "0779938bdd894c9e88459ae730bd06fda01a14c2699e05c6601c05cd9d4a2fd5",
+    "src/engine_optimistic.odin": "51d96626ea32c3c0d8c681dd331e0d863bb9c8794b95c2ca45d6b5b2978802e6",
+    "src/engine_outcomes.odin": "e0efdbed50b7f83f9675deb44adb041f25c1fbff141efb217de7e3fa5888eba5",
+    "src/engine_policy.odin": "a486216061037920cff8c883d61d37884305e310b29b725da24dfcc4b00d7db6",
+    "src/engine_query.odin": "4b7bd3904d2eb7094ebc1740021e8c2b62a2d404add9eecfee927c96e90e8dc3",
+    "src/engine_read_limits.odin": "28ad50f3b70813d8ed5d6387d8b1bab2aaa86aa4f95abcb9031aa881fb8efb1e",
+    "src/engine_reader.odin": "c9d281fc0260ff3d9c098a2e03e316120c9e00e70dcbfcadfd813e1f3eeb21a4",
+    "src/engine_session_epoch.odin": "3ba4803aae927e83c9d4f60da89691abf532d98e70ad9ca01aea67dcc3388481",
+    "src/engine_sessions.odin": "87ab0cb6b83f1e81cd5aa59a999de0717505a332e4d11dbbecd81211e4684de9",
+    "src/engine_skips.odin": "a84551a67719381e596867d6530adf95c2b49e3ae82254ff3fa78785a7725db8",
+    "src/errors.odin": "7025d1de0e193e974190f061f24dec3b6bc744c2b3a2c46af0a5b82a053295c8",
+    "src/mutation.odin": "cb701e82c4e49181589c94a207af5da73f21140335876d8035d6fda93fe6bbc1",
+    "src/paxos.odin": "b1447c58efb78f9c79f291681b02c5c76cd39fb14ce9f4c312210662a6c527a4",
+    "src/snapshot/cancellation.odin": "9a98ff0ab197f4893690e70cf273b6c95fb81ff2444a06ddbf1f6fb4839921a0",
+    "src/snapshot/certificate.odin": "71abd0ec5ccd70ed5c5389f0a5e334584f787dea2ed7815c1822cfbc9eeac062",
+    "src/snapshot/check.odin": "4e1dd6ef16626b825520d3aeb5b04f4450c47d2c4dd1165657e52531132db9e5",
+    "src/snapshot/codec.odin": "740cc314e32802593c530a626de2b1fd281918ddfb9c58927c81cc0500157450",
+    "src/snapshot/errors.odin": "f35ec85b672304b6a0af622f0364546207be60abaeb8108db990bd8d00e8793c",
+    "src/snapshot/image.odin": "f1dae1a46aaaf8db29c1b7ada50637086fdda4d26658b14c19923e4766e2e73d",
+    "src/snapshot/image_storage.odin": "845ed0b6fbbe4884180685142a8416c44441e80b211de76b42d677fb5f8b81cd",
+    "src/snapshot/logical.odin": "be0fb98fe82a7e165269b98cabb01ca8c5c39c831a1fd15b8bab485e40341eca",
+    "src/snapshot/logical_rows.odin": "44ea1112f16a765e2bc7712ec514684794e01e4fa54cdb6b5cbeefcd389d9f72",
+    "src/snapshot/manifest.odin": "570c6c37eeb22c19caea60c50b0a882893ec87099a4626b418dda75d5c73832f",
+    "src/snapshot/manifest_storage.odin": "25ff4d7c76f5ed3982f75e0a401fc1c7895959c56f53b6312965dab576dcc405",
+    "src/snapshot/retain.odin": "489e9ca42b280c8809cfdc03fef08b09d2795a8447c9717b56555f3ad4a32852",
+    "src/snapshot/verify.odin": "2a380310abc222c9f4e926074ccf1a4e46a36f99c2728b36022fd2801ec1c5d5",
+    "src/sqlite/sqlite3.odin": "ed74ac5f14dfd4139572d095d9e66849fd915614fe148afb97ad06f43ae7450a",
+    "src/sqlite/sqlite_vec.odin": "fcf7db3ae460173b06eb0836fbf504569efb223915eb208d4d7a9cf806deae22",
+    "src/sqlodin.odin": "39f089cc3d66d894e2b9c371d14da7f73bb22ccb85ba76e8ceaa55b5e458ed9f",
+    "src/transaction.odin": "be93b924d89a793bccf6264f0e397c7c0963decc251cc201c6bf401c0bdedf27",
+    "service/admission.odin": "8132703c8c5f886d9b4287ec3c147b0b453cf41f824b2fca703d778461b272f6",
+    "service/client.odin": "9c5a647f215785dffd3072b0ec48f6a8e13ba10fa9b4546939b4d79e8e938f73",
+    "service/config.odin": "6095a10d5fde21d185cc05adb1db36058058a8d4da66ec5e0f5f1b643b273ff7",
+    "service/framing.odin": "8d748f49dfaa56e33c6f1a9475e6744214f1b3d2a48bd02db6df04299381d27e",
+    "service/maintenance.odin": "98f24586aebd99210bf701708e824cefa2b1a0a9effb19d1529e143799a7b5e9",
+    "service/requests.odin": "8013e55b0b7d7c9579398bb080a9154610b0bbc47ffc312eb072ae9023028208",
+    "service/server.odin": "55eae5d7b211ec137ef7f97f9da8ce8792b9f193c889a70f1e6573fd904f5add",
+    "service/sessions.odin": "8dfdef69777866356c1277e38b4cc22541b683935787f54560a392e0ed1cdfc1",
+    "service/signals.odin": "18286d1f33fa7094abb0bd1cd15f5b1b200f071163dbce5d93f18bccca84475e",
+    "service/snapshot_receive.odin": "9fccbdd738b1bd33838565a23f57b8b314ce6924e6a802efe2f08f839b9832dc",
+    "service/snapshot_send.odin": "9d55f76c7b2e71634780982a07906b9946cbefe456363b49330c3f102dc01baa",
+    "service/snapshot_transfer.odin": "cfb6e03d5dc80ebc6a3f4ae25b7ad9a5e7e4d4f6655724ca69fadfc26c71754d",
+    "service/snapshots.odin": "bf20065a5a3be523d88be86298c30f54695c6f26877014468894ccd5039efefa",
+    "service/socket.odin": "03f52e602867ceb4b93739aa457d123382c646a7c616b7c4236f910df1f2f99c",
+    "service/status.odin": "dd6675544393b9250ef4ea23265fa28e131719a428bc67a2eba00ded2940d78a",
+    "service/transactions.odin": "1ec95ecb8330eb62cff1c5ddf9407e0db425f60ccbb0bd05e43cbc0450363585",
+    "service/types.odin": "345e9a0541a97f5ece4191df61f0121de341b09bc943ad9d60e3af33f4c3233f",
+    "service/wire.odin": "b0974aaa21d7b4ee2cdbe37800cd2fbe3053eae7348999a7cbee432d7a9bc5f9",
+    "transport/mtls/mtls.odin": "92210183e6c50cc8516f4978403502bcbab7e06f8ca91a5307392a99c975b47d",
+    "transport/mtls/openssl.odin": "e2f9adb2f1ef676325eb0f70f04775d13a1cb3aa02875d0f2d51eec01a1a1851",
+    "cli/backup.odin": "a45b857830990fb606a8b7f7ee88fccbea75a7c83baa424caa21fbd8a92373f4",
+    "cli/compact.odin": "8b4358e1bc5cc0a8d1a78b9d2b7cbc782c4fb04e9fe444095d25b08a38b59405",
+    "cli/diagnostics.odin": "d7e353c0e45ce4f899d75baf2eb9ce37da8cc562871ca84a6f1d6e5f05d5fb65",
+    "cli/local.odin": "d844cc2a20254345f15b90dcfb4c12c538ff7b2d9ccbb99e3e924bdbc0b2fc09",
+    "cli/main.odin": "7014e0d1dff7653bb4ec92392503c4f176828324d6b0da25f2fd8cb2b10784df",
+    "cli/migrate.odin": "da6855e394741a9ae142cad832e22a90017de744d54b7c0d6e95adcdcc323299",
+    "cli/restore.odin": "a5dc35f36082bd14951a47c87f1468b8d37bbc940a35a4e52d0bf40ae442e2b7",
+    "cli/shell_commands.odin": "ed3e9267d9aaa342d3a730206f57c517ec4d3150ec1f81acf0b8fec5ef20724d",
+    "cli/shell_editor.odin": "f6a3ed6bbf49cc497a2d3b1517044924751d4932ac8f6ce32f5cc5b9e73b350d",
+    "cli/shell_input.odin": "03ba3ca697aac52839ec86d1af4057e4dcc6c7371d3c9241b76ccdfba56707ee",
+    "cli/shell_output.odin": "ec3d8d8a613eba1cfed4b3e36b372fe36a0ec5c390e9c18df29ab8a0e40da8cc",
+    "cli/shell_sessions.odin": "16ce3dcf08cbf566656cfe7f248f70586f83b81bdb9d6cc3c30914c0061dec62",
+    "cli/shell_sql.odin": "f4eae48c3b0e66e05c52bd71d9600b07a0976553bdae7dcf2a54343b86e6fb24",
+    "cli/shell_state.odin": "80c102a3747779991e8ae7d90e30d2241e593af3abce8b20a0c1cf1f8614baf1",
+    "languages/python/src/sqlodin/__init__.py": "98fec146ab428962e09d4362aa3271111752b627c7b9942a32be434232c08b54",
+    "languages/python/src/sqlodin/client.py": "4a3a40e34947329cbb6eb70d2010ad5707260e63aef00165e577a92deaf12482",
+    "languages/python/src/sqlodin/dbapi.py": "1b1290264f23a946a937b17014f564f7b0934922d3f36c692baa7789655c2f9b",
+    "languages/python/src/sqlodin/errors.py": "2207c01fe7b1e115f32d1d1237b37242fe7ecfef74fb9d02496b92cd89bdccb5",
+    "languages/python/src/sqlodin/parameters.py": "7705bba70912e01397c137610c5790869fbbaf4ba8e015dd62e8689c837a6464",
+    "languages/python/src/sqlodin/results.py": "ab73e7b554a817e7dc7d13b4062c50751935bb57c947af088d64aa05096da310",
+    "languages/python/src/sqlodin/search.py": "678a506c39a2d2de4425e3ba4712cc5085a5aae1dafcaa89a4bd3aeb04d910dc",
+    "languages/python/src/sqlodin/sqlalchemy.py": "4a59ae581a5afdbbd1cf39f6d8bae8f32b124fa35f1df1a643d6955877e955d6",
+    "languages/python/src/sqlodin/transaction.py": "66cfc8b8c12fe52e9ed7151c1945242c01526b5fd8adcd2ffdab355de5ef5542",
+    "languages/python/src/sqlodin/transport.py": "5051f293062b21977b18216397c689c921d6570762df320cb1000f99a6c44282",
+    "languages/python/src/sqlodin/vector.py": "07c14a567fbd5cb5c98e40a0bc1c7097463805278d3611daa136d19c30fe5212"
+  },
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "logs": {
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 385.388\u00b5s, ledger = 20.749\u00b5s, application = 27.618\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:48953 (mTLS, cluster network-qualification)\nRecovery node=2 applied=379 journal=871 phases=Recovery_Stats{integrity = 651.052\u00b5s, ledger = 135.690605ms, application = 71.255812ms}\nSQLodin node 2 listening on 127.0.0.1:48953 (mTLS, cluster network-qualification)\nRecovery node=2 applied=396 journal=920 phases=Recovery_Stats{integrity = 700.379\u00b5s, ledger = 141.285637ms, application = 74.645393ms}\nSQLodin node 2 listening on 127.0.0.1:48953 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 385.117\u00b5s, ledger = 20.978\u00b5s, application = 31.189\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:56455 (mTLS, cluster network-qualification)\nRecovery node=3 applied=379 journal=857 phases=Recovery_Stats{integrity = 661.202\u00b5s, ledger = 135.885503ms, application = 71.471759ms}\nSQLodin node 3 listening on 127.0.0.1:56455 (mTLS, cluster network-qualification)\nRecovery node=3 applied=394 journal=906 phases=Recovery_Stats{integrity = 679.29\u00b5s, ledger = 140.529611ms, application = 73.764295ms}\nSQLodin node 3 listening on 127.0.0.1:56455 (mTLS, cluster network-qualification)\n",
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 411.535\u00b5s, ledger = 25.658\u00b5s, application = 23.839\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:44573 (mTLS, cluster network-qualification)\nRecovery node=1 applied=397 journal=930 phases=Recovery_Stats{integrity = 680.111\u00b5s, ledger = 140.598797ms, application = 74.405318ms}\nSQLodin node 1 listening on 127.0.0.1:44573 (mTLS, cluster network-qualification)\nRecovery node=1 applied=402 journal=940 phases=Recovery_Stats{integrity = 683.15\u00b5s, ledger = 143.278109ms, application = 76.639587ms}\nSQLodin node 1 listening on 127.0.0.1:44573 (mTLS, cluster network-qualification)\n"
+  }
+}

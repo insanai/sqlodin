@@ -1,0 +1,3130 @@
+{
+  "complete": true,
+  "scope": "selected bounded transaction shape; scheduled-arrival latency when rate is nonzero",
+  "sqlite_sourceid": "2026-03-13 10:38:09 737ae4a34738ffa0c3ff7f9bb18df914dd1cad163f28fd6b6e114a344fe6d618",
+  "sqlite_archive_sha256": "aac3b0f9cafb856e49bc0fc8f00289e1dd36a596032383028ee9a663559630ae",
+  "binary_sha256": "1299f4531c8e9daa4d60c71a3d513d0aad253e984854dc4012ecca9664f70a3e",
+  "harness_sha256": "ef7295cb0e9bbcd881fac383ddf87929c0ccf075262f522639125ba93a31580a",
+  "group_reference_sha256": "b43aaf40b669616e02f543e3e8e2a86476aa5e756e1530b90a99791e6e631e5e",
+  "cases": [
+    {
+      "clients": 1,
+      "read_percent": 70,
+      "payload": 256,
+      "statements": 1,
+      "rows": 1,
+      "skew": false,
+      "seed": 20260925,
+      "rate": 0,
+      "filesystem": {
+        "filesystems": [
+          {
+            "target": "/",
+            "source": "local/containers/paxos-zig[/rootfs]",
+            "fstype": "zfs",
+            "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+          }
+        ]
+      },
+      "sqlite": {
+        "elapsed": 0.09103211667388678,
+        "scheduled_rate": null,
+        "latency_basis": "closed-loop invocation",
+        "offered": 80,
+        "invoked": 80,
+        "completed": 80,
+        "errors": 0,
+        "resolved_unknown": 0,
+        "per_second": 878.810720029633,
+        "latency_ms": {
+          "read": {
+            "count": 60,
+            "p50": 0.03524869680404663,
+            "p99": 0.1540854573249817
+          },
+          "write": {
+            "count": 20,
+            "p50": 0.6886385381221771,
+            "p99": 8.720697835087776
+          }
+        },
+        "raw": [
+          {
+            "start": 5055380.945526127,
+            "due": 5055380.945526127,
+            "write": false,
+            "client": 0,
+            "operation": 0,
+            "status": "ok",
+            "end": 5055380.945680212
+          },
+          {
+            "start": 5055380.945682352,
+            "due": 5055380.945682352,
+            "write": false,
+            "client": 0,
+            "operation": 1,
+            "status": "ok",
+            "end": 5055380.94573595
+          },
+          {
+            "start": 5055380.94573718,
+            "due": 5055380.94573718,
+            "write": true,
+            "client": 0,
+            "operation": 2,
+            "status": "ok",
+            "end": 5055380.953895865
+          },
+          {
+            "start": 5055380.953896785,
+            "due": 5055380.953896785,
+            "write": false,
+            "client": 0,
+            "operation": 3,
+            "status": "ok",
+            "end": 5055380.953953663
+          },
+          {
+            "start": 5055380.953954343,
+            "due": 5055380.953954343,
+            "write": false,
+            "client": 0,
+            "operation": 4,
+            "status": "ok",
+            "end": 5055380.953996452
+          },
+          {
+            "start": 5055380.953997162,
+            "due": 5055380.953997162,
+            "write": false,
+            "client": 0,
+            "operation": 5,
+            "status": "ok",
+            "end": 5055380.954047861
+          },
+          {
+            "start": 5055380.95404852,
+            "due": 5055380.95404852,
+            "write": false,
+            "client": 0,
+            "operation": 6,
+            "status": "ok",
+            "end": 5055380.954083769
+          },
+          {
+            "start": 5055380.954084379,
+            "due": 5055380.954084379,
+            "write": false,
+            "client": 0,
+            "operation": 7,
+            "status": "ok",
+            "end": 5055380.954120708
+          },
+          {
+            "start": 5055380.954121208,
+            "due": 5055380.954121208,
+            "write": false,
+            "client": 0,
+            "operation": 8,
+            "status": "ok",
+            "end": 5055380.954152037
+          },
+          {
+            "start": 5055380.954152697,
+            "due": 5055380.954152697,
+            "write": false,
+            "client": 0,
+            "operation": 9,
+            "status": "ok",
+            "end": 5055380.954183346
+          },
+          {
+            "start": 5055380.954183816,
+            "due": 5055380.954183816,
+            "write": false,
+            "client": 0,
+            "operation": 10,
+            "status": "ok",
+            "end": 5055380.954213855
+          },
+          {
+            "start": 5055380.954214345,
+            "due": 5055380.954214345,
+            "write": true,
+            "client": 0,
+            "operation": 11,
+            "status": "ok",
+            "end": 5055380.954794668
+          },
+          {
+            "start": 5055380.954796548,
+            "due": 5055380.954796548,
+            "write": false,
+            "client": 0,
+            "operation": 12,
+            "status": "ok",
+            "end": 5055380.954843306
+          },
+          {
+            "start": 5055380.954843826,
+            "due": 5055380.954843826,
+            "write": false,
+            "client": 0,
+            "operation": 13,
+            "status": "ok",
+            "end": 5055380.954876495
+          },
+          {
+            "start": 5055380.954876925,
+            "due": 5055380.954876925,
+            "write": true,
+            "client": 0,
+            "operation": 14,
+            "status": "ok",
+            "end": 5055380.963401288
+          },
+          {
+            "start": 5055380.963402138,
+            "due": 5055380.963402138,
+            "write": true,
+            "client": 0,
+            "operation": 15,
+            "status": "ok",
+            "end": 5055380.964005659
+          },
+          {
+            "start": 5055380.964006719,
+            "due": 5055380.964006719,
+            "write": false,
+            "client": 0,
+            "operation": 16,
+            "status": "ok",
+            "end": 5055380.964058838
+          },
+          {
+            "start": 5055380.964059628,
+            "due": 5055380.964059628,
+            "write": false,
+            "client": 0,
+            "operation": 17,
+            "status": "ok",
+            "end": 5055380.964102036
+          },
+          {
+            "start": 5055380.964102606,
+            "due": 5055380.964102606,
+            "write": false,
+            "client": 0,
+            "operation": 18,
+            "status": "ok",
+            "end": 5055380.964135715
+          },
+          {
+            "start": 5055380.964136145,
+            "due": 5055380.964136145,
+            "write": false,
+            "client": 0,
+            "operation": 19,
+            "status": "ok",
+            "end": 5055380.964167245
+          },
+          {
+            "start": 5055380.964167635,
+            "due": 5055380.964167635,
+            "write": false,
+            "client": 0,
+            "operation": 20,
+            "status": "ok",
+            "end": 5055380.964197744
+          },
+          {
+            "start": 5055380.964198114,
+            "due": 5055380.964198114,
+            "write": false,
+            "client": 0,
+            "operation": 21,
+            "status": "ok",
+            "end": 5055380.964226123
+          },
+          {
+            "start": 5055380.964226583,
+            "due": 5055380.964226583,
+            "write": false,
+            "client": 0,
+            "operation": 22,
+            "status": "ok",
+            "end": 5055380.964253032
+          },
+          {
+            "start": 5055380.964253402,
+            "due": 5055380.964253402,
+            "write": true,
+            "client": 0,
+            "operation": 23,
+            "status": "ok",
+            "end": 5055380.972659899
+          },
+          {
+            "start": 5055380.972660499,
+            "due": 5055380.972660499,
+            "write": true,
+            "client": 0,
+            "operation": 24,
+            "status": "ok",
+            "end": 5055380.973261581
+          },
+          {
+            "start": 5055380.973262301,
+            "due": 5055380.973262301,
+            "write": false,
+            "client": 0,
+            "operation": 25,
+            "status": "ok",
+            "end": 5055380.973317819
+          },
+          {
+            "start": 5055380.973318309,
+            "due": 5055380.973318309,
+            "write": false,
+            "client": 0,
+            "operation": 26,
+            "status": "ok",
+            "end": 5055380.973356578
+          },
+          {
+            "start": 5055380.973356968,
+            "due": 5055380.973356968,
+            "write": true,
+            "client": 0,
+            "operation": 27,
+            "status": "ok",
+            "end": 5055380.981757445
+          },
+          {
+            "start": 5055380.981758455,
+            "due": 5055380.981758455,
+            "write": false,
+            "client": 0,
+            "operation": 28,
+            "status": "ok",
+            "end": 5055380.981808853
+          },
+          {
+            "start": 5055380.981809483,
+            "due": 5055380.981809483,
+            "write": true,
+            "client": 0,
+            "operation": 29,
+            "status": "ok",
+            "end": 5055380.982372966
+          },
+          {
+            "start": 5055380.982373476,
+            "due": 5055380.982373476,
+            "write": false,
+            "client": 0,
+            "operation": 30,
+            "status": "ok",
+            "end": 5055380.982421105
+          },
+          {
+            "start": 5055380.982421605,
+            "due": 5055380.982421605,
+            "write": true,
+            "client": 0,
+            "operation": 31,
+            "status": "ok",
+            "end": 5055380.990833051
+          },
+          {
+            "start": 5055380.990833591,
+            "due": 5055380.990833591,
+            "write": true,
+            "client": 0,
+            "operation": 32,
+            "status": "ok",
+            "end": 5055380.991429143
+          },
+          {
+            "start": 5055380.991429933,
+            "due": 5055380.991429933,
+            "write": false,
+            "client": 0,
+            "operation": 33,
+            "status": "ok",
+            "end": 5055380.991476862
+          },
+          {
+            "start": 5055380.991477382,
+            "due": 5055380.991477382,
+            "write": false,
+            "client": 0,
+            "operation": 34,
+            "status": "ok",
+            "end": 5055380.991513051
+          },
+          {
+            "start": 5055380.991513421,
+            "due": 5055380.991513421,
+            "write": false,
+            "client": 0,
+            "operation": 35,
+            "status": "ok",
+            "end": 5055380.99154789
+          },
+          {
+            "start": 5055380.99154826,
+            "due": 5055380.99154826,
+            "write": false,
+            "client": 0,
+            "operation": 36,
+            "status": "ok",
+            "end": 5055380.991581389
+          },
+          {
+            "start": 5055380.991581779,
+            "due": 5055380.991581779,
+            "write": true,
+            "client": 0,
+            "operation": 37,
+            "status": "ok",
+            "end": 5055380.999614026
+          },
+          {
+            "start": 5055380.999615416,
+            "due": 5055380.999615416,
+            "write": false,
+            "client": 0,
+            "operation": 38,
+            "status": "ok",
+            "end": 5055380.999667725
+          },
+          {
+            "start": 5055380.999668385,
+            "due": 5055380.999668385,
+            "write": false,
+            "client": 0,
+            "operation": 39,
+            "status": "ok",
+            "end": 5055380.999706064
+          },
+          {
+            "start": 5055380.999706544,
+            "due": 5055380.999706544,
+            "write": true,
+            "client": 0,
+            "operation": 40,
+            "status": "ok",
+            "end": 5055381.000261747
+          },
+          {
+            "start": 5055381.000262787,
+            "due": 5055381.000262787,
+            "write": false,
+            "client": 0,
+            "operation": 41,
+            "status": "ok",
+            "end": 5055381.000311875
+          },
+          {
+            "start": 5055381.000312385,
+            "due": 5055381.000312385,
+            "write": false,
+            "client": 0,
+            "operation": 42,
+            "status": "ok",
+            "end": 5055381.000347964
+          },
+          {
+            "start": 5055381.000348514,
+            "due": 5055381.000348514,
+            "write": false,
+            "client": 0,
+            "operation": 43,
+            "status": "ok",
+            "end": 5055381.000383033
+          },
+          {
+            "start": 5055381.000383423,
+            "due": 5055381.000383423,
+            "write": false,
+            "client": 0,
+            "operation": 44,
+            "status": "ok",
+            "end": 5055381.000413822
+          },
+          {
+            "start": 5055381.000414212,
+            "due": 5055381.000414212,
+            "write": false,
+            "client": 0,
+            "operation": 45,
+            "status": "ok",
+            "end": 5055381.000449341
+          },
+          {
+            "start": 5055381.000449681,
+            "due": 5055381.000449681,
+            "write": true,
+            "client": 0,
+            "operation": 46,
+            "status": "ok",
+            "end": 5055381.008474039
+          },
+          {
+            "start": 5055381.008474639,
+            "due": 5055381.008474639,
+            "write": false,
+            "client": 0,
+            "operation": 47,
+            "status": "ok",
+            "end": 5055381.008522458
+          },
+          {
+            "start": 5055381.008522848,
+            "due": 5055381.008522848,
+            "write": false,
+            "client": 0,
+            "operation": 48,
+            "status": "ok",
+            "end": 5055381.008561007
+          },
+          {
+            "start": 5055381.008561437,
+            "due": 5055381.008561437,
+            "write": false,
+            "client": 0,
+            "operation": 49,
+            "status": "ok",
+            "end": 5055381.008594496
+          },
+          {
+            "start": 5055381.008594876,
+            "due": 5055381.008594876,
+            "write": false,
+            "client": 0,
+            "operation": 50,
+            "status": "ok",
+            "end": 5055381.008626945
+          },
+          {
+            "start": 5055381.008627305,
+            "due": 5055381.008627305,
+            "write": true,
+            "client": 0,
+            "operation": 51,
+            "status": "ok",
+            "end": 5055381.009179988
+          },
+          {
+            "start": 5055381.009180448,
+            "due": 5055381.009180448,
+            "write": false,
+            "client": 0,
+            "operation": 52,
+            "status": "ok",
+            "end": 5055381.009224067
+          },
+          {
+            "start": 5055381.009224817,
+            "due": 5055381.009224817,
+            "write": false,
+            "client": 0,
+            "operation": 53,
+            "status": "ok",
+            "end": 5055381.009254096
+          },
+          {
+            "start": 5055381.009254576,
+            "due": 5055381.009254576,
+            "write": true,
+            "client": 0,
+            "operation": 54,
+            "status": "ok",
+            "end": 5055381.017277224
+          },
+          {
+            "start": 5055381.017279004,
+            "due": 5055381.017279004,
+            "write": false,
+            "client": 0,
+            "operation": 55,
+            "status": "ok",
+            "end": 5055381.017334022
+          },
+          {
+            "start": 5055381.017334912,
+            "due": 5055381.017334912,
+            "write": false,
+            "client": 0,
+            "operation": 56,
+            "status": "ok",
+            "end": 5055381.017372411
+          },
+          {
+            "start": 5055381.017373031,
+            "due": 5055381.017373031,
+            "write": true,
+            "client": 0,
+            "operation": 57,
+            "status": "ok",
+            "end": 5055381.01806167
+          },
+          {
+            "start": 5055381.01806234,
+            "due": 5055381.01806234,
+            "write": false,
+            "client": 0,
+            "operation": 58,
+            "status": "ok",
+            "end": 5055381.018110449
+          },
+          {
+            "start": 5055381.018110989,
+            "due": 5055381.018110989,
+            "write": false,
+            "client": 0,
+            "operation": 59,
+            "status": "ok",
+            "end": 5055381.018142488
+          },
+          {
+            "start": 5055381.018142968,
+            "due": 5055381.018142968,
+            "write": false,
+            "client": 0,
+            "operation": 60,
+            "status": "ok",
+            "end": 5055381.018170767
+          },
+          {
+            "start": 5055381.018171257,
+            "due": 5055381.018171257,
+            "write": false,
+            "client": 0,
+            "operation": 61,
+            "status": "ok",
+            "end": 5055381.018198216
+          },
+          {
+            "start": 5055381.018198636,
+            "due": 5055381.018198636,
+            "write": false,
+            "client": 0,
+            "operation": 62,
+            "status": "ok",
+            "end": 5055381.018224336
+          },
+          {
+            "start": 5055381.018224726,
+            "due": 5055381.018224726,
+            "write": false,
+            "client": 0,
+            "operation": 63,
+            "status": "ok",
+            "end": 5055381.018249835
+          },
+          {
+            "start": 5055381.018250185,
+            "due": 5055381.018250185,
+            "write": false,
+            "client": 0,
+            "operation": 64,
+            "status": "ok",
+            "end": 5055381.018284184
+          },
+          {
+            "start": 5055381.018284874,
+            "due": 5055381.018284874,
+            "write": false,
+            "client": 0,
+            "operation": 65,
+            "status": "ok",
+            "end": 5055381.018311083
+          },
+          {
+            "start": 5055381.018311473,
+            "due": 5055381.018311473,
+            "write": false,
+            "client": 0,
+            "operation": 66,
+            "status": "ok",
+            "end": 5055381.018337292
+          },
+          {
+            "start": 5055381.018337682,
+            "due": 5055381.018337682,
+            "write": false,
+            "client": 0,
+            "operation": 67,
+            "status": "ok",
+            "end": 5055381.018364291
+          },
+          {
+            "start": 5055381.018364791,
+            "due": 5055381.018364791,
+            "write": false,
+            "client": 0,
+            "operation": 68,
+            "status": "ok",
+            "end": 5055381.0183906
+          },
+          {
+            "start": 5055381.01839096,
+            "due": 5055381.01839096,
+            "write": false,
+            "client": 0,
+            "operation": 69,
+            "status": "ok",
+            "end": 5055381.01841621
+          },
+          {
+            "start": 5055381.01841656,
+            "due": 5055381.01841656,
+            "write": true,
+            "client": 0,
+            "operation": 70,
+            "status": "ok",
+            "end": 5055381.026435928
+          },
+          {
+            "start": 5055381.026436668,
+            "due": 5055381.026436668,
+            "write": false,
+            "client": 0,
+            "operation": 71,
+            "status": "ok",
+            "end": 5055381.026484586
+          },
+          {
+            "start": 5055381.026485026,
+            "due": 5055381.026485026,
+            "write": true,
+            "client": 0,
+            "operation": 72,
+            "status": "ok",
+            "end": 5055381.027059829
+          },
+          {
+            "start": 5055381.027060339,
+            "due": 5055381.027060339,
+            "write": false,
+            "client": 0,
+            "operation": 73,
+            "status": "ok",
+            "end": 5055381.027103208
+          },
+          {
+            "start": 5055381.027103578,
+            "due": 5055381.027103578,
+            "write": true,
+            "client": 0,
+            "operation": 74,
+            "status": "ok",
+            "end": 5055381.035824276
+          },
+          {
+            "start": 5055381.035825185,
+            "due": 5055381.035825185,
+            "write": false,
+            "client": 0,
+            "operation": 75,
+            "status": "ok",
+            "end": 5055381.035873964
+          },
+          {
+            "start": 5055381.035874404,
+            "due": 5055381.035874404,
+            "write": false,
+            "client": 0,
+            "operation": 76,
+            "status": "ok",
+            "end": 5055381.035910513
+          },
+          {
+            "start": 5055381.035911183,
+            "due": 5055381.035911183,
+            "write": false,
+            "client": 0,
+            "operation": 77,
+            "status": "ok",
+            "end": 5055381.035942062
+          },
+          {
+            "start": 5055381.035942492,
+            "due": 5055381.035942492,
+            "write": true,
+            "client": 0,
+            "operation": 78,
+            "status": "ok",
+            "end": 5055381.036513755
+          },
+          {
+            "start": 5055381.036514295,
+            "due": 5055381.036514295,
+            "write": false,
+            "client": 0,
+            "operation": 79,
+            "status": "ok",
+            "end": 5055381.036558243
+          }
+        ]
+      },
+      "sqlite_groups": [
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        },
+        {
+          "requests": 1,
+          "writes": 1
+        },
+        {
+          "requests": 1,
+          "writes": 0
+        }
+      ],
+      "sqlite_resources": {
+        "before": {
+          "cpu_seconds": 0.05172499999999999,
+          "peak_rss_bytes": 34439168,
+          "io": {
+            "rchar": 2476174,
+            "wchar": 317780,
+            "syscr": 229,
+            "syscw": 164,
+            "read_bytes": 0,
+            "write_bytes": 350548,
+            "cancelled_write_bytes": 0
+          }
+        },
+        "after": {
+          "cpu_seconds": 0.057631,
+          "peak_rss_bytes": 34439168,
+          "io": {
+            "rchar": 2486818,
+            "wchar": 400180,
+            "syscr": 233,
+            "syscw": 204,
+            "read_bytes": 0,
+            "write_bytes": 432948,
+            "cancelled_write_bytes": 0
+          }
+        }
+      },
+      "sqlite_verified": true,
+      "sqlite_group_limit": 16,
+      "sqlite_worker_exit": 0,
+      "sqlite_worker_stderr": "SQLODIN_IO_PROFILE {\"sync_calls\":32,\"sync_ns\":146532012,\"write_calls\":276,\"write_bytes\":695092,\"write_ns\":2271416,\"errors\":0}\n",
+      "sqlite_io_profile": {
+        "sync_calls": 32,
+        "sync_ns": 146532012,
+        "write_calls": 276,
+        "write_bytes": 695092,
+        "write_ns": 2271416,
+        "errors": 0
+      },
+      "io_scope": "whole native process including setup, validation and shutdown",
+      "frontiers_before": {
+        "resources": {
+          "time": 5055382.650447489,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.03,
+              "rss_bytes": 13885440,
+              "io": {
+                "rchar": 268311,
+                "wchar": 829147,
+                "syscr": 497,
+                "syscw": 470,
+                "read_bytes": 0,
+                "write_bytes": 853745,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.02,
+              "rss_bytes": 13156352,
+              "io": {
+                "rchar": 238446,
+                "wchar": 534247,
+                "syscr": 353,
+                "syscw": 313,
+                "read_bytes": 0,
+                "write_bytes": 573585,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.02,
+              "rss_bytes": 13045760,
+              "io": {
+                "rchar": 237805,
+                "wchar": 547351,
+                "syscr": 350,
+                "syscw": 319,
+                "read_bytes": 0,
+                "write_bytes": 585945,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        "nodes": {
+          "1": {
+            "cluster": "network-qualification",
+            "node": 1,
+            "protocol": 1,
+            "policy": 9,
+            "applied": 16,
+            "snapshot_prefix": 0,
+            "snapshot_sealed": 0,
+            "snapshot_error": "",
+            "generation_prefix": 0,
+            "history_bytes": 370616
+          },
+          "2": {
+            "cluster": "network-qualification",
+            "node": 2,
+            "protocol": 1,
+            "policy": 9,
+            "applied": 16,
+            "snapshot_prefix": 0,
+            "snapshot_sealed": 0,
+            "snapshot_error": "",
+            "generation_prefix": 0,
+            "history_bytes": 382976
+          },
+          "3": {
+            "cluster": "network-qualification",
+            "node": 3,
+            "protocol": 1,
+            "policy": 9,
+            "applied": 16,
+            "snapshot_prefix": 0,
+            "snapshot_sealed": 0,
+            "snapshot_error": "",
+            "generation_prefix": 0,
+            "history_bytes": 420056
+          }
+        },
+        "observed_prefix_spread": 0
+      },
+      "before": {
+        "time": 5055382.676380158,
+        "nodes": {
+          "1": {
+            "cpu_seconds": 0.03,
+            "rss_bytes": 13885440,
+            "io": {
+              "rchar": 270791,
+              "wchar": 832045,
+              "syscr": 532,
+              "syscw": 473,
+              "read_bytes": 0,
+              "write_bytes": 853745,
+              "cancelled_write_bytes": 0
+            }
+          },
+          "2": {
+            "cpu_seconds": 0.02,
+            "rss_bytes": 13156352,
+            "io": {
+              "rchar": 240926,
+              "wchar": 846145,
+              "syscr": 381,
+              "syscw": 466,
+              "read_bytes": 0,
+              "write_bytes": 882585,
+              "cancelled_write_bytes": 0
+            }
+          },
+          "3": {
+            "cpu_seconds": 0.02,
+            "rss_bytes": 13045760,
+            "io": {
+              "rchar": 240285,
+              "wchar": 859249,
+              "syscr": 383,
+              "syscw": 472,
+              "read_bytes": 0,
+              "write_bytes": 894945,
+              "cancelled_write_bytes": 0
+            }
+          }
+        }
+      },
+      "samples": [
+        {
+          "time": 5055382.926860387,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.04,
+              "rss_bytes": 13885440,
+              "io": {
+                "rchar": 468555,
+                "wchar": 1173036,
+                "syscr": 832,
+                "syscw": 665,
+                "read_bytes": 0,
+                "write_bytes": 1175105,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.03,
+              "rss_bytes": 13156352,
+              "io": {
+                "rchar": 382360,
+                "wchar": 1272961,
+                "syscr": 569,
+                "syscw": 697,
+                "read_bytes": 0,
+                "write_bytes": 1294585,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.04,
+              "rss_bytes": 13045760,
+              "io": {
+                "rchar": 381061,
+                "wchar": 1290843,
+                "syscr": 591,
+                "syscw": 706,
+                "read_bytes": 0,
+                "write_bytes": 1311065,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055383.17725001,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.06,
+              "rss_bytes": 13885440,
+              "io": {
+                "rchar": 680082,
+                "wchar": 1500427,
+                "syscr": 1118,
+                "syscw": 850,
+                "read_bytes": 0,
+                "write_bytes": 1484105,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.05,
+              "rss_bytes": 13156352,
+              "io": {
+                "rchar": 523408,
+                "wchar": 1699904,
+                "syscr": 751,
+                "syscw": 928,
+                "read_bytes": 0,
+                "write_bytes": 1706585,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.05,
+              "rss_bytes": 13045760,
+              "io": {
+                "rchar": 522236,
+                "wchar": 1738259,
+                "syscr": 795,
+                "syscw": 947,
+                "read_bytes": 0,
+                "write_bytes": 1743665,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055383.427586554,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.08,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 901643,
+                "wchar": 1821363,
+                "syscr": 1401,
+                "syscw": 1035,
+                "read_bytes": 0,
+                "write_bytes": 1784865,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.07,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 681967,
+                "wchar": 2128693,
+                "syscr": 941,
+                "syscw": 1163,
+                "read_bytes": 0,
+                "write_bytes": 2118585,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.07,
+              "rss_bytes": 13045760,
+              "io": {
+                "rchar": 664211,
+                "wchar": 2185279,
+                "syscr": 1001,
+                "syscw": 1187,
+                "read_bytes": 0,
+                "write_bytes": 2176265,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055383.677937078,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.09,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 1114541,
+                "wchar": 2184338,
+                "syscr": 1736,
+                "syscw": 1241,
+                "read_bytes": 0,
+                "write_bytes": 2126825,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.08,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 831042,
+                "wchar": 2592941,
+                "syscr": 1149,
+                "syscw": 1418,
+                "read_bytes": 0,
+                "write_bytes": 2563545,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.08,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 829474,
+                "wchar": 2646199,
+                "syscr": 1239,
+                "syscw": 1442,
+                "read_bytes": 0,
+                "write_bytes": 2617105,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055383.928279422,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.11,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 1338356,
+                "wchar": 2498000,
+                "syscr": 2017,
+                "syscw": 1418,
+                "read_bytes": 0,
+                "write_bytes": 2423465,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.09,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 968145,
+                "wchar": 2995560,
+                "syscr": 1331,
+                "syscw": 1638,
+                "read_bytes": 0,
+                "write_bytes": 2950825,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.09,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 966046,
+                "wchar": 3069949,
+                "syscr": 1437,
+                "syscw": 1673,
+                "read_bytes": 0,
+                "write_bytes": 3024985,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055384.178612427,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.12,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 1539463,
+                "wchar": 2850837,
+                "syscr": 2307,
+                "syscw": 1616,
+                "read_bytes": 0,
+                "write_bytes": 2757185,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.11,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 1109484,
+                "wchar": 3444177,
+                "syscr": 1509,
+                "syscw": 1881,
+                "read_bytes": 0,
+                "write_bytes": 3383425,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.11,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 1106988,
+                "wchar": 3537586,
+                "syscr": 1637,
+                "syscw": 1923,
+                "read_bytes": 0,
+                "write_bytes": 3478185,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055384.4289662,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.13,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 1743706,
+                "wchar": 3220875,
+                "syscr": 2599,
+                "syscw": 1828,
+                "read_bytes": 0,
+                "write_bytes": 3103265,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.12,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 1274289,
+                "wchar": 3908511,
+                "syscr": 1709,
+                "syscw": 2131,
+                "read_bytes": 0,
+                "write_bytes": 3832505,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.12,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 1254938,
+                "wchar": 4021726,
+                "syscr": 1857,
+                "syscw": 2181,
+                "read_bytes": 0,
+                "write_bytes": 3947865,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055384.679579776,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.15,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 1927571,
+                "wchar": 3509592,
+                "syscr": 2862,
+                "syscw": 1993,
+                "read_bytes": 0,
+                "write_bytes": 3375185,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.14,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 1401861,
+                "wchar": 4305967,
+                "syscr": 1877,
+                "syscw": 2352,
+                "read_bytes": 0,
+                "write_bytes": 4211545,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.13,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 1400268,
+                "wchar": 4419887,
+                "syscr": 2055,
+                "syscw": 2399,
+                "read_bytes": 0,
+                "write_bytes": 4331025,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055384.930193972,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.17,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 2129136,
+                "wchar": 3850094,
+                "syscr": 3161,
+                "syscw": 2185,
+                "read_bytes": 0,
+                "write_bytes": 3696545,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.15,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 1545326,
+                "wchar": 4753425,
+                "syscr": 2069,
+                "syscw": 2593,
+                "read_bytes": 0,
+                "write_bytes": 4644145,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.15,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 1542958,
+                "wchar": 4872600,
+                "syscr": 2273,
+                "syscw": 2650,
+                "read_bytes": 0,
+                "write_bytes": 4763625,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055385.180588984,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.18,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 2362522,
+                "wchar": 4190525,
+                "syscr": 3458,
+                "syscw": 2377,
+                "read_bytes": 0,
+                "write_bytes": 4017905,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.16,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 1696261,
+                "wchar": 5193293,
+                "syscr": 2263,
+                "syscw": 2831,
+                "read_bytes": 0,
+                "write_bytes": 5068505,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.16,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 1782678,
+                "wchar": 5405684,
+                "syscr": 2517,
+                "syscw": 2911,
+                "read_bytes": 0,
+                "write_bytes": 5282249,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055385.430938438,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.19,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 2551837,
+                "wchar": 4475925,
+                "syscr": 3720,
+                "syscw": 2542,
+                "read_bytes": 0,
+                "write_bytes": 4285705,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.18,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 1837017,
+                "wchar": 5523578,
+                "syscr": 2451,
+                "syscw": 3019,
+                "read_bytes": 0,
+                "write_bytes": 5381625,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.17,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 1905878,
+                "wchar": 5770373,
+                "syscr": 2731,
+                "syscw": 3111,
+                "read_bytes": 0,
+                "write_bytes": 5632449,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055385.68131371,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.19,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 2553290,
+                "wchar": 4479490,
+                "syscr": 3794,
+                "syscw": 2549,
+                "read_bytes": 0,
+                "write_bytes": 4285705,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.18,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 1839264,
+                "wchar": 5526746,
+                "syscr": 2531,
+                "syscw": 3025,
+                "read_bytes": 0,
+                "write_bytes": 5381625,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.17,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 1926686,
+                "wchar": 5771564,
+                "syscr": 2821,
+                "syscw": 3114,
+                "read_bytes": 0,
+                "write_bytes": 5632449,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055385.931650864,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.21,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 2695430,
+                "wchar": 4755267,
+                "syscr": 4001,
+                "syscw": 2706,
+                "read_bytes": 0,
+                "write_bytes": 4545265,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.18,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 1937438,
+                "wchar": 5832896,
+                "syscr": 2681,
+                "syscw": 3189,
+                "read_bytes": 0,
+                "write_bytes": 5678265,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.19,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 2029986,
+                "wchar": 6082882,
+                "syscr": 2983,
+                "syscw": 3282,
+                "read_bytes": 0,
+                "write_bytes": 5933209,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055386.182015907,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.21,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 2879947,
+                "wchar": 5093908,
+                "syscr": 4276,
+                "syscw": 2894,
+                "read_bytes": 0,
+                "write_bytes": 4866625,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.2,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 2178482,
+                "wchar": 6350151,
+                "syscr": 2889,
+                "syscw": 3445,
+                "read_bytes": 0,
+                "write_bytes": 6176193,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.19,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 2160295,
+                "wchar": 6495497,
+                "syscr": 3186,
+                "syscw": 3509,
+                "read_bytes": 0,
+                "write_bytes": 6328729,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055386.43236867,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.23,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 3115512,
+                "wchar": 5405593,
+                "syscr": 4559,
+                "syscw": 3074,
+                "read_bytes": 0,
+                "write_bytes": 5159145,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.22,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 2335629,
+                "wchar": 6757463,
+                "syscr": 3065,
+                "syscw": 3668,
+                "read_bytes": 0,
+                "write_bytes": 6567593,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.21,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 2305073,
+                "wchar": 6918654,
+                "syscr": 3379,
+                "syscw": 3739,
+                "read_bytes": 0,
+                "write_bytes": 6736609,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055386.682737923,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.25,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 3456364,
+                "wchar": 5820228,
+                "syscr": 4859,
+                "syscw": 3274,
+                "read_bytes": 0,
+                "write_bytes": 5553945,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.22,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 2470165,
+                "wchar": 7146843,
+                "syscr": 3259,
+                "syscw": 3886,
+                "read_bytes": 0,
+                "write_bytes": 6938393,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.22,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 2457303,
+                "wchar": 7329436,
+                "syscr": 3597,
+                "syscw": 3963,
+                "read_bytes": 0,
+                "write_bytes": 7132129,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055386.933101016,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.26,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 3653681,
+                "wchar": 6138790,
+                "syscr": 5119,
+                "syscw": 3455,
+                "read_bytes": 0,
+                "write_bytes": 5854737,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.24,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 2593413,
+                "wchar": 7522019,
+                "syscr": 3415,
+                "syscw": 4088,
+                "read_bytes": 0,
+                "write_bytes": 7300953,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.23,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 2579757,
+                "wchar": 7725609,
+                "syscr": 3773,
+                "syscw": 4176,
+                "read_bytes": 0,
+                "write_bytes": 7515289,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        {
+          "time": 5055387.183460358,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.28,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 3856870,
+                "wchar": 6492715,
+                "syscr": 5422,
+                "syscw": 3655,
+                "read_bytes": 0,
+                "write_bytes": 6188457,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.26,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 2745802,
+                "wchar": 7999345,
+                "syscr": 3617,
+                "syscw": 4350,
+                "read_bytes": 0,
+                "write_bytes": 7758273,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.25,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 2733873,
+                "wchar": 8210234,
+                "syscr": 4005,
+                "syscw": 4441,
+                "read_bytes": 0,
+                "write_bytes": 7980849,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        }
+      ],
+      "sqlodin": {
+        "elapsed": 4.5504127740859985,
+        "scheduled_rate": null,
+        "latency_basis": "closed-loop invocation",
+        "offered": 80,
+        "invoked": 80,
+        "completed": 80,
+        "errors": 0,
+        "resolved_unknown": 0,
+        "per_second": 17.580822657581628,
+        "latency_ms": {
+          "read": {
+            "count": 60,
+            "p50": 48.84034767746925,
+            "p99": 415.4737563803792
+          },
+          "write": {
+            "count": 20,
+            "p50": 53.329612128436565,
+            "p99": 119.53207664191723
+          }
+        },
+        "raw": [
+          {
+            "start": 5055382.770143552,
+            "due": 5055382.770143552,
+            "write": false,
+            "client": 0,
+            "operation": 0,
+            "status": "ok",
+            "applied": 25,
+            "node": 1,
+            "end": 5055382.812785336
+          },
+          {
+            "start": 5055382.812787786,
+            "due": 5055382.812787786,
+            "write": false,
+            "client": 0,
+            "operation": 1,
+            "status": "ok",
+            "applied": 28,
+            "node": 1,
+            "end": 5055382.861628134
+          },
+          {
+            "start": 5055382.861629814,
+            "due": 5055382.861629814,
+            "write": true,
+            "client": 0,
+            "operation": 2,
+            "status": "ok",
+            "applied": 34,
+            "node": 1,
+            "end": 5055382.981161891
+          },
+          {
+            "start": 5055382.981164031,
+            "due": 5055382.981164031,
+            "write": false,
+            "client": 0,
+            "operation": 3,
+            "status": "ok",
+            "applied": 37,
+            "node": 1,
+            "end": 5055383.024432697
+          },
+          {
+            "start": 5055383.024434236,
+            "due": 5055383.024434236,
+            "write": false,
+            "client": 0,
+            "operation": 4,
+            "status": "ok",
+            "applied": 40,
+            "node": 1,
+            "end": 5055383.077253984
+          },
+          {
+            "start": 5055383.077255564,
+            "due": 5055383.077255564,
+            "write": false,
+            "client": 0,
+            "operation": 5,
+            "status": "ok",
+            "applied": 43,
+            "node": 1,
+            "end": 5055383.123029975
+          },
+          {
+            "start": 5055383.123031125,
+            "due": 5055383.123031125,
+            "write": false,
+            "client": 0,
+            "operation": 6,
+            "status": "ok",
+            "applied": 46,
+            "node": 1,
+            "end": 5055383.171013448
+          },
+          {
+            "start": 5055383.171014688,
+            "due": 5055383.171014688,
+            "write": false,
+            "client": 0,
+            "operation": 7,
+            "status": "ok",
+            "applied": 49,
+            "node": 1,
+            "end": 5055383.215934104
+          },
+          {
+            "start": 5055383.215935674,
+            "due": 5055383.215935674,
+            "write": false,
+            "client": 0,
+            "operation": 8,
+            "status": "ok",
+            "applied": 52,
+            "node": 1,
+            "end": 5055383.276562427
+          },
+          {
+            "start": 5055383.276564047,
+            "due": 5055383.276564047,
+            "write": false,
+            "client": 0,
+            "operation": 9,
+            "status": "ok",
+            "applied": 55,
+            "node": 1,
+            "end": 5055383.329968267
+          },
+          {
+            "start": 5055383.329969777,
+            "due": 5055383.329969777,
+            "write": false,
+            "client": 0,
+            "operation": 10,
+            "status": "ok",
+            "applied": 58,
+            "node": 1,
+            "end": 5055383.375784106
+          },
+          {
+            "start": 5055383.375785696,
+            "due": 5055383.375785696,
+            "write": true,
+            "client": 0,
+            "operation": 11,
+            "status": "ok",
+            "applied": 61,
+            "node": 1,
+            "end": 5055383.428078109
+          },
+          {
+            "start": 5055383.428080809,
+            "due": 5055383.428080809,
+            "write": false,
+            "client": 0,
+            "operation": 12,
+            "status": "ok",
+            "applied": 64,
+            "node": 1,
+            "end": 5055383.474453282
+          },
+          {
+            "start": 5055383.474454732,
+            "due": 5055383.474454732,
+            "write": false,
+            "client": 0,
+            "operation": 13,
+            "status": "ok",
+            "applied": 67,
+            "node": 1,
+            "end": 5055383.519197843
+          },
+          {
+            "start": 5055383.519199073,
+            "due": 5055383.519199073,
+            "write": true,
+            "client": 0,
+            "operation": 14,
+            "status": "ok",
+            "applied": 70,
+            "node": 1,
+            "end": 5055383.572082969
+          },
+          {
+            "start": 5055383.572084389,
+            "due": 5055383.572084389,
+            "write": true,
+            "client": 0,
+            "operation": 15,
+            "status": "ok",
+            "applied": 73,
+            "node": 1,
+            "end": 5055383.625034573
+          },
+          {
+            "start": 5055383.625035943,
+            "due": 5055383.625035943,
+            "write": false,
+            "client": 0,
+            "operation": 16,
+            "status": "ok",
+            "applied": 76,
+            "node": 1,
+            "end": 5055383.675722715
+          },
+          {
+            "start": 5055383.675724305,
+            "due": 5055383.675724305,
+            "write": false,
+            "client": 0,
+            "operation": 17,
+            "status": "ok",
+            "applied": 79,
+            "node": 1,
+            "end": 5055383.726587392
+          },
+          {
+            "start": 5055383.726589142,
+            "due": 5055383.726589142,
+            "write": false,
+            "client": 0,
+            "operation": 18,
+            "status": "ok",
+            "applied": 82,
+            "node": 1,
+            "end": 5055383.782963703
+          },
+          {
+            "start": 5055383.782965163,
+            "due": 5055383.782965163,
+            "write": false,
+            "client": 0,
+            "operation": 19,
+            "status": "ok",
+            "applied": 85,
+            "node": 1,
+            "end": 5055383.834777391
+          },
+          {
+            "start": 5055383.834778711,
+            "due": 5055383.834778711,
+            "write": false,
+            "client": 0,
+            "operation": 20,
+            "status": "ok",
+            "applied": 88,
+            "node": 1,
+            "end": 5055383.880511562
+          },
+          {
+            "start": 5055383.880512952,
+            "due": 5055383.880512952,
+            "write": false,
+            "client": 0,
+            "operation": 21,
+            "status": "ok",
+            "applied": 91,
+            "node": 1,
+            "end": 5055383.925361341
+          },
+          {
+            "start": 5055383.92536273,
+            "due": 5055383.92536273,
+            "write": false,
+            "client": 0,
+            "operation": 22,
+            "status": "ok",
+            "applied": 94,
+            "node": 1,
+            "end": 5055383.987774889
+          },
+          {
+            "start": 5055383.987776389,
+            "due": 5055383.987776389,
+            "write": true,
+            "client": 0,
+            "operation": 23,
+            "status": "ok",
+            "applied": 97,
+            "node": 1,
+            "end": 5055384.033243139
+          },
+          {
+            "start": 5055384.033244529,
+            "due": 5055384.033244529,
+            "write": true,
+            "client": 0,
+            "operation": 24,
+            "status": "ok",
+            "applied": 100,
+            "node": 1,
+            "end": 5055384.076852884
+          },
+          {
+            "start": 5055384.076854454,
+            "due": 5055384.076854454,
+            "write": false,
+            "client": 0,
+            "operation": 25,
+            "status": "ok",
+            "applied": 103,
+            "node": 1,
+            "end": 5055384.119387772
+          },
+          {
+            "start": 5055384.119389182,
+            "due": 5055384.119389182,
+            "write": false,
+            "client": 0,
+            "operation": 26,
+            "status": "ok",
+            "applied": 106,
+            "node": 1,
+            "end": 5055384.17584713
+          },
+          {
+            "start": 5055384.17584863,
+            "due": 5055384.17584863,
+            "write": true,
+            "client": 0,
+            "operation": 27,
+            "status": "ok",
+            "applied": 109,
+            "node": 1,
+            "end": 5055384.233116344
+          },
+          {
+            "start": 5055384.233117914,
+            "due": 5055384.233117914,
+            "write": false,
+            "client": 0,
+            "operation": 28,
+            "status": "ok",
+            "applied": 112,
+            "node": 1,
+            "end": 5055384.277079019
+          },
+          {
+            "start": 5055384.277080549,
+            "due": 5055384.277080549,
+            "write": true,
+            "client": 0,
+            "operation": 29,
+            "status": "ok",
+            "applied": 115,
+            "node": 1,
+            "end": 5055384.33011417
+          },
+          {
+            "start": 5055384.33011563,
+            "due": 5055384.33011563,
+            "write": false,
+            "client": 0,
+            "operation": 30,
+            "status": "ok",
+            "applied": 118,
+            "node": 1,
+            "end": 5055384.373269539
+          },
+          {
+            "start": 5055384.373271059,
+            "due": 5055384.373271059,
+            "write": true,
+            "client": 0,
+            "operation": 31,
+            "status": "ok",
+            "applied": 121,
+            "node": 1,
+            "end": 5055384.426909502
+          },
+          {
+            "start": 5055384.426910932,
+            "due": 5055384.426910932,
+            "write": true,
+            "client": 0,
+            "operation": 32,
+            "status": "ok",
+            "applied": 124,
+            "node": 1,
+            "end": 5055384.478635843
+          },
+          {
+            "start": 5055384.478637623,
+            "due": 5055384.478637623,
+            "write": false,
+            "client": 0,
+            "operation": 33,
+            "status": "ok",
+            "applied": 127,
+            "node": 1,
+            "end": 5055384.533781331
+          },
+          {
+            "start": 5055384.533782851,
+            "due": 5055384.533782851,
+            "write": false,
+            "client": 0,
+            "operation": 34,
+            "status": "ok",
+            "applied": 130,
+            "node": 1,
+            "end": 5055384.585114924
+          },
+          {
+            "start": 5055384.585116314,
+            "due": 5055384.585116314,
+            "write": false,
+            "client": 0,
+            "operation": 35,
+            "status": "ok",
+            "applied": 133,
+            "node": 1,
+            "end": 5055384.640748677
+          },
+          {
+            "start": 5055384.640750147,
+            "due": 5055384.640750147,
+            "write": false,
+            "client": 0,
+            "operation": 36,
+            "status": "ok",
+            "applied": 136,
+            "node": 1,
+            "end": 5055384.693861356
+          },
+          {
+            "start": 5055384.693862976,
+            "due": 5055384.693862976,
+            "write": true,
+            "client": 0,
+            "operation": 37,
+            "status": "ok",
+            "applied": 139,
+            "node": 1,
+            "end": 5055384.749839609
+          },
+          {
+            "start": 5055384.749841078,
+            "due": 5055384.749841078,
+            "write": false,
+            "client": 0,
+            "operation": 38,
+            "status": "ok",
+            "applied": 142,
+            "node": 1,
+            "end": 5055384.793641488
+          },
+          {
+            "start": 5055384.793643018,
+            "due": 5055384.793643018,
+            "write": false,
+            "client": 0,
+            "operation": 39,
+            "status": "ok",
+            "applied": 145,
+            "node": 1,
+            "end": 5055384.850359189
+          },
+          {
+            "start": 5055384.850360669,
+            "due": 5055384.850360669,
+            "write": true,
+            "client": 0,
+            "operation": 40,
+            "status": "ok",
+            "applied": 148,
+            "node": 1,
+            "end": 5055384.898462868
+          },
+          {
+            "start": 5055384.898464458,
+            "due": 5055384.898464458,
+            "write": false,
+            "client": 0,
+            "operation": 41,
+            "status": "ok",
+            "applied": 151,
+            "node": 1,
+            "end": 5055384.942613658
+          },
+          {
+            "start": 5055384.942615318,
+            "due": 5055384.942615318,
+            "write": false,
+            "client": 0,
+            "operation": 42,
+            "status": "ok",
+            "applied": 154,
+            "node": 1,
+            "end": 5055384.994207282
+          },
+          {
+            "start": 5055384.994208782,
+            "due": 5055384.994208782,
+            "write": false,
+            "client": 0,
+            "operation": 43,
+            "status": "ok",
+            "applied": 157,
+            "node": 1,
+            "end": 5055385.04272395
+          },
+          {
+            "start": 5055385.04272542,
+            "due": 5055385.04272542,
+            "write": false,
+            "client": 0,
+            "operation": 44,
+            "status": "ok",
+            "applied": 160,
+            "node": 1,
+            "end": 5055385.087795881
+          },
+          {
+            "start": 5055385.087797361,
+            "due": 5055385.087797361,
+            "write": false,
+            "client": 0,
+            "operation": 45,
+            "status": "ok",
+            "applied": 163,
+            "node": 1,
+            "end": 5055385.133229182
+          },
+          {
+            "start": 5055385.133230672,
+            "due": 5055385.133230672,
+            "write": true,
+            "client": 0,
+            "operation": 46,
+            "status": "ok",
+            "applied": 166,
+            "node": 1,
+            "end": 5055385.186560284
+          },
+          {
+            "start": 5055385.186561914,
+            "due": 5055385.186561914,
+            "write": false,
+            "client": 0,
+            "operation": 47,
+            "status": "ok",
+            "applied": 169,
+            "node": 1,
+            "end": 5055385.240179438
+          },
+          {
+            "start": 5055385.240180938,
+            "due": 5055385.240180938,
+            "write": false,
+            "client": 0,
+            "operation": 48,
+            "status": "ok",
+            "applied": 172,
+            "node": 1,
+            "end": 5055385.291363435
+          },
+          {
+            "start": 5055385.291364865,
+            "due": 5055385.291364865,
+            "write": false,
+            "client": 0,
+            "operation": 49,
+            "status": "ok",
+            "applied": 175,
+            "node": 1,
+            "end": 5055385.36252133
+          },
+          {
+            "start": 5055385.36252285,
+            "due": 5055385.36252285,
+            "write": false,
+            "client": 0,
+            "operation": 50,
+            "status": "ok",
+            "applied": 178,
+            "node": 1,
+            "end": 5055385.777996606
+          },
+          {
+            "start": 5055385.777998276,
+            "due": 5055385.777998276,
+            "write": true,
+            "client": 0,
+            "operation": 51,
+            "status": "ok",
+            "applied": 181,
+            "node": 1,
+            "end": 5055385.841770163
+          },
+          {
+            "start": 5055385.841771643,
+            "due": 5055385.841771643,
+            "write": false,
+            "client": 0,
+            "operation": 52,
+            "status": "ok",
+            "applied": 184,
+            "node": 1,
+            "end": 5055385.906761004
+          },
+          {
+            "start": 5055385.906762544,
+            "due": 5055385.906762544,
+            "write": false,
+            "client": 0,
+            "operation": 53,
+            "status": "ok",
+            "applied": 187,
+            "node": 1,
+            "end": 5055385.950918693
+          },
+          {
+            "start": 5055385.950920353,
+            "due": 5055385.950920353,
+            "write": true,
+            "client": 0,
+            "operation": 54,
+            "status": "ok",
+            "applied": 190,
+            "node": 1,
+            "end": 5055386.008777069
+          },
+          {
+            "start": 5055386.008778489,
+            "due": 5055386.008778489,
+            "write": false,
+            "client": 0,
+            "operation": 55,
+            "status": "ok",
+            "applied": 193,
+            "node": 1,
+            "end": 5055386.059568648
+          },
+          {
+            "start": 5055386.059570168,
+            "due": 5055386.059570168,
+            "write": false,
+            "client": 0,
+            "operation": 56,
+            "status": "ok",
+            "applied": 196,
+            "node": 1,
+            "end": 5055386.108298959
+          },
+          {
+            "start": 5055386.108300509,
+            "due": 5055386.108300509,
+            "write": true,
+            "client": 0,
+            "operation": 57,
+            "status": "ok",
+            "applied": 199,
+            "node": 1,
+            "end": 5055386.169704098
+          },
+          {
+            "start": 5055386.169705528,
+            "due": 5055386.169705528,
+            "write": false,
+            "client": 0,
+            "operation": 58,
+            "status": "ok",
+            "applied": 202,
+            "node": 1,
+            "end": 5055386.213196717
+          },
+          {
+            "start": 5055386.213198127,
+            "due": 5055386.213198127,
+            "write": false,
+            "client": 0,
+            "operation": 59,
+            "status": "ok",
+            "applied": 205,
+            "node": 1,
+            "end": 5055386.27047708
+          },
+          {
+            "start": 5055386.27047858,
+            "due": 5055386.27047858,
+            "write": false,
+            "client": 0,
+            "operation": 60,
+            "status": "ok",
+            "applied": 208,
+            "node": 1,
+            "end": 5055386.318700847
+          },
+          {
+            "start": 5055386.318702286,
+            "due": 5055386.318702286,
+            "write": false,
+            "client": 0,
+            "operation": 61,
+            "status": "ok",
+            "applied": 211,
+            "node": 1,
+            "end": 5055386.370104247
+          },
+          {
+            "start": 5055386.370105707,
+            "due": 5055386.370105707,
+            "write": false,
+            "client": 0,
+            "operation": 62,
+            "status": "ok",
+            "applied": 214,
+            "node": 1,
+            "end": 5055386.448852253
+          },
+          {
+            "start": 5055386.448854183,
+            "due": 5055386.448854183,
+            "write": false,
+            "client": 0,
+            "operation": 63,
+            "status": "ok",
+            "applied": 217,
+            "node": 1,
+            "end": 5055386.493818848
+          },
+          {
+            "start": 5055386.493820338,
+            "due": 5055386.493820338,
+            "write": false,
+            "client": 0,
+            "operation": 64,
+            "status": "ok",
+            "applied": 220,
+            "node": 1,
+            "end": 5055386.539802182
+          },
+          {
+            "start": 5055386.539803892,
+            "due": 5055386.539803892,
+            "write": false,
+            "client": 0,
+            "operation": 65,
+            "status": "ok",
+            "applied": 223,
+            "node": 1,
+            "end": 5055386.601093314
+          },
+          {
+            "start": 5055386.601094874,
+            "due": 5055386.601094874,
+            "write": false,
+            "client": 0,
+            "operation": 66,
+            "status": "ok",
+            "applied": 226,
+            "node": 1,
+            "end": 5055386.657576731
+          },
+          {
+            "start": 5055386.657578231,
+            "due": 5055386.657578231,
+            "write": false,
+            "client": 0,
+            "operation": 67,
+            "status": "ok",
+            "applied": 229,
+            "node": 1,
+            "end": 5055386.720353529
+          },
+          {
+            "start": 5055386.720355169,
+            "due": 5055386.720355169,
+            "write": false,
+            "client": 0,
+            "operation": 68,
+            "status": "ok",
+            "applied": 232,
+            "node": 1,
+            "end": 5055386.77140169
+          },
+          {
+            "start": 5055386.77140317,
+            "due": 5055386.77140317,
+            "write": false,
+            "client": 0,
+            "operation": 69,
+            "status": "ok",
+            "applied": 235,
+            "node": 1,
+            "end": 5055386.82114792
+          },
+          {
+            "start": 5055386.82114941,
+            "due": 5055386.82114941,
+            "write": true,
+            "client": 0,
+            "operation": 70,
+            "status": "ok",
+            "applied": 238,
+            "node": 1,
+            "end": 5055386.880278078
+          },
+          {
+            "start": 5055386.880279548,
+            "due": 5055386.880279548,
+            "write": false,
+            "client": 0,
+            "operation": 71,
+            "status": "ok",
+            "applied": 241,
+            "node": 1,
+            "end": 5055386.92433892
+          },
+          {
+            "start": 5055386.92434048,
+            "due": 5055386.92434048,
+            "write": true,
+            "client": 0,
+            "operation": 72,
+            "status": "ok",
+            "applied": 244,
+            "node": 1,
+            "end": 5055386.975917245
+          },
+          {
+            "start": 5055386.975918965,
+            "due": 5055386.975918965,
+            "write": false,
+            "client": 0,
+            "operation": 73,
+            "status": "ok",
+            "applied": 247,
+            "node": 1,
+            "end": 5055387.021232229
+          },
+          {
+            "start": 5055387.021233739,
+            "due": 5055387.021233739,
+            "write": true,
+            "client": 0,
+            "operation": 74,
+            "status": "ok",
+            "applied": 250,
+            "node": 1,
+            "end": 5055387.081939599
+          },
+          {
+            "start": 5055387.081941089,
+            "due": 5055387.081941089,
+            "write": false,
+            "client": 0,
+            "operation": 75,
+            "status": "ok",
+            "applied": 253,
+            "node": 1,
+            "end": 5055387.125771217
+          },
+          {
+            "start": 5055387.125772737,
+            "due": 5055387.125772737,
+            "write": false,
+            "client": 0,
+            "operation": 76,
+            "status": "ok",
+            "applied": 256,
+            "node": 1,
+            "end": 5055387.168976425
+          },
+          {
+            "start": 5055387.168978355,
+            "due": 5055387.168978355,
+            "write": false,
+            "client": 0,
+            "operation": 77,
+            "status": "ok",
+            "applied": 259,
+            "node": 1,
+            "end": 5055387.22255676
+          },
+          {
+            "start": 5055387.22255843,
+            "due": 5055387.22255843,
+            "write": true,
+            "client": 0,
+            "operation": 78,
+            "status": "ok",
+            "applied": 262,
+            "node": 1,
+            "end": 5055387.276712787
+          },
+          {
+            "start": 5055387.276714237,
+            "due": 5055387.276714237,
+            "write": false,
+            "client": 0,
+            "operation": 79,
+            "status": "ok",
+            "applied": 265,
+            "node": 1,
+            "end": 5055387.320556326
+          }
+        ]
+      },
+      "after": {
+        "time": 5055387.320953074,
+        "nodes": {
+          "1": {
+            "cpu_seconds": 0.28,
+            "rss_bytes": 14671872,
+            "io": {
+              "rchar": 3986957,
+              "wchar": 6684918,
+              "syscr": 5595,
+              "syscw": 3765,
+              "read_bytes": 0,
+              "write_bytes": 6369737,
+              "cancelled_write_bytes": 0
+            }
+          },
+          "2": {
+            "cpu_seconds": 0.26,
+            "rss_bytes": 13418496,
+            "io": {
+              "rchar": 2821791,
+              "wchar": 8242861,
+              "syscr": 3717,
+              "syscw": 4482,
+              "read_bytes": 0,
+              "write_bytes": 7993113,
+              "cancelled_write_bytes": 0
+            }
+          },
+          "3": {
+            "cpu_seconds": 0.26,
+            "rss_bytes": 13307904,
+            "io": {
+              "rchar": 2809862,
+              "wchar": 8461990,
+              "syscr": 4119,
+              "syscw": 4577,
+              "read_bytes": 0,
+              "write_bytes": 8223929,
+              "cancelled_write_bytes": 0
+            }
+          }
+        }
+      },
+      "frontiers_after": {
+        "resources": {
+          "time": 5055387.321300993,
+          "nodes": {
+            "1": {
+              "cpu_seconds": 0.28,
+              "rss_bytes": 14671872,
+              "io": {
+                "rchar": 3986957,
+                "wchar": 6684918,
+                "syscr": 5595,
+                "syscw": 3765,
+                "read_bytes": 0,
+                "write_bytes": 6369737,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "2": {
+              "cpu_seconds": 0.26,
+              "rss_bytes": 13418496,
+              "io": {
+                "rchar": 2821791,
+                "wchar": 8242861,
+                "syscr": 3717,
+                "syscw": 4482,
+                "read_bytes": 0,
+                "write_bytes": 7993113,
+                "cancelled_write_bytes": 0
+              }
+            },
+            "3": {
+              "cpu_seconds": 0.26,
+              "rss_bytes": 13307904,
+              "io": {
+                "rchar": 2809862,
+                "wchar": 8461990,
+                "syscr": 4119,
+                "syscw": 4577,
+                "read_bytes": 0,
+                "write_bytes": 8223929,
+                "cancelled_write_bytes": 0
+              }
+            }
+          }
+        },
+        "nodes": {
+          "1": {
+            "cluster": "network-qualification",
+            "node": 1,
+            "protocol": 1,
+            "policy": 9,
+            "applied": 265,
+            "snapshot_prefix": 0,
+            "snapshot_sealed": 0,
+            "snapshot_error": "",
+            "generation_prefix": 0,
+            "history_bytes": 4283920
+          },
+          "2": {
+            "cluster": "network-qualification",
+            "node": 2,
+            "protocol": 1,
+            "policy": 9,
+            "applied": 265,
+            "snapshot_prefix": 0,
+            "snapshot_sealed": 0,
+            "snapshot_error": "",
+            "generation_prefix": 0,
+            "history_bytes": 4267536
+          },
+          "3": {
+            "cluster": "network-qualification",
+            "node": 3,
+            "protocol": 1,
+            "policy": 9,
+            "applied": 265,
+            "snapshot_prefix": 0,
+            "snapshot_sealed": 0,
+            "snapshot_error": "",
+            "generation_prefix": 0,
+            "history_bytes": 4251152
+          }
+        },
+        "observed_prefix_spread": 0
+      },
+      "verified": true,
+      "logs": {
+        "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 462.142\u00b5s, ledger = 29.518\u00b5s, application = 20.769\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:34613 (mTLS, cluster network-qualification)\nSQLODIN_IO_PROFILE {\"sync_calls\":651,\"sync_ns\":3781919664,\"write_calls\":4128,\"write_bytes\":8695672,\"write_ns\":33320834,\"errors\":0}\n",
+        "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 397.077\u00b5s, ledger = 27.439\u00b5s, application = 24.198\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:41363 (mTLS, cluster network-qualification)\nSQLODIN_IO_PROFILE {\"sync_calls\":657,\"sync_ns\":3767299769,\"write_calls\":4008,\"write_bytes\":8452544,\"write_ns\":32328731,\"errors\":0}\n",
+        "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 382.767\u00b5s, ledger = 27.328\u00b5s, application = 23.799\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:54123 (mTLS, cluster network-qualification)\nSQLODIN_IO_PROFILE {\"sync_calls\":494,\"sync_ns\":2820527849,\"write_calls\":3202,\"write_bytes\":6792184,\"write_ns\":25652744,\"errors\":0}\n"
+      },
+      "io_profiles": {
+        "node3.log": {
+          "sync_calls": 651,
+          "sync_ns": 3781919664,
+          "write_calls": 4128,
+          "write_bytes": 8695672,
+          "write_ns": 33320834,
+          "errors": 0
+        },
+        "node2.log": {
+          "sync_calls": 657,
+          "sync_ns": 3767299769,
+          "write_calls": 4008,
+          "write_bytes": 8452544,
+          "write_ns": 32328731,
+          "errors": 0
+        },
+        "node1.log": {
+          "sync_calls": 494,
+          "sync_ns": 2820527849,
+          "write_calls": 3202,
+          "write_bytes": 6792184,
+          "write_ns": 25652744,
+          "errors": 0
+        }
+      }
+    }
+  ],
+  "io_library_sha256": "b8e477383bbd73a0d6ffbed45d2816810f2a054d643f208cc44bcb6a9ffc703d",
+  "reference_worker_sha256": "662eb748fbd4c8c672309c680dbe56c94c83e41a20f646cc63a10d6d05037265"
+}

@@ -1,0 +1,883 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "started_utc": "2026-09-24T08:35:00.005797+00:00",
+  "host": "paxos-zig",
+  "host_address": "10.175.52.18",
+  "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+  "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           48 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  32\nOn-line CPU(s) list:                     0-31\nVendor ID:                               AuthenticAMD\nModel name:                              AMD Ryzen 9 5950X 16-Core Processor\nCPU family:                              25\nModel:                                   33\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               1\nStepping:                                0\nFrequency boost:                         enabled\nCPU(s) scaling MHz:                      52%\nCPU max MHz:                             5086.1812\nCPU min MHz:                             582.1540\nBogoMIPS:                                6800.71\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate ssbd mba ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk clzero irperf xsaveerptr rdpru wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif v_spec_ctrl umip pku ospke vaes vpclmulqdq rdpid overflow_recov succor smca fsrm debug_swap\nL1d cache:                               512 KiB (16 instances)\nL1i cache:                               512 KiB (16 instances)\nL2 cache:                                8 MiB (16 instances)\nL3 cache:                                64 MiB (2 instances)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-31\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Mitigation; Safe RET\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP always-on; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Mitigation; Clear CPU buffers\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Mitigation; IBPB before exit to userspace\n",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "run_directory": "/home/insan/projects/sqlodin/verification-20260924/build/native-comparison-runs/20260924-083500",
+  "workload": {
+    "operations": 400,
+    "warmup": 100,
+    "concurrency": 4,
+    "repeats": 3,
+    "read_percent": 70,
+    "write_percent": 30
+  },
+  "realworld": [
+    {
+      "system": "sqlodin",
+      "nodes": 3,
+      "initial_startup_ms": 102.03971900045872,
+      "schema_and_seed_ms": 7087.966958060861,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 274,
+          "writes": 126,
+          "concurrency": 4,
+          "seconds": 15.440616931766272,
+          "operations_per_second": 25.90570064445239,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 85.6363708153367,
+          "latency_ms": {
+            "all": {
+              "p50": 105.00040696933866,
+              "p95": 229.89271860569715,
+              "p99": 278.69988046586514,
+              "max": 300.83406157791615
+            },
+            "reads": {
+              "p50": 101.96029813960195,
+              "p95": 239.979462698102,
+              "p99": 285.30002385377884,
+              "max": 300.83406157791615
+            },
+            "writes": {
+              "p50": 112.4578369781375,
+              "p95": 204.25560418516397,
+              "p99": 245.32213155180216,
+              "max": 260.34399215132
+            }
+          }
+        },
+        {
+          "name": "one_voter_crashed",
+          "operations": 400,
+          "reads": 266,
+          "writes": 134,
+          "concurrency": 4,
+          "seconds": 83.15120040718466,
+          "operations_per_second": 4.810513835533733,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 975.63346195966,
+          "latency_ms": {
+            "all": {
+              "p50": 855.655771214515,
+              "p95": 1160.568518564105,
+              "p99": 2026.476126164198,
+              "max": 2127.7383491396904
+            },
+            "reads": {
+              "p50": 974.7782279737294,
+              "p95": 1801.8224220722914,
+              "p99": 2077.95646879822,
+              "max": 2127.7383491396904
+            },
+            "writes": {
+              "p50": 766.1459082737565,
+              "p95": 1027.2254645824432,
+              "p99": 1091.5674325078726,
+              "max": 1093.6240879818797
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 7683.990763500333,
+          "caught_up_state": {
+            "2": [
+              289,
+              289,
+              289,
+              289,
+              711,
+              3610286,
+              0
+            ]
+          }
+        },
+        {
+          "name": "entry_voter_crashed",
+          "operations": 400,
+          "reads": 268,
+          "writes": 132,
+          "concurrency": 4,
+          "seconds": 117.06052309181541,
+          "operations_per_second": 3.417035815620467,
+          "retry_attempts": 2,
+          "time_to_first_success_ms": 54.49996888637543,
+          "latency_ms": {
+            "all": {
+              "p50": 1002.9417811892927,
+              "p95": 2029.0961107239127,
+              "p99": 2186.478476971388,
+              "max": 3083.495929837227
+            },
+            "reads": {
+              "p50": 1038.0969364196062,
+              "p95": 2052.5183025747538,
+              "p99": 3005.1104053854942,
+              "max": 3083.495929837227
+            },
+            "writes": {
+              "p50": 801.084425766021,
+              "p95": 1056.805239059031,
+              "p99": 1122.5852305069566,
+              "max": 1128.3327657729387
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 8735.212247818708,
+          "caught_up_state": {
+            "1": [
+              421,
+              421,
+              421,
+              421,
+              1029,
+              5272307,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 290.4705358669162,
+        "state": {
+          "1": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "2": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "3": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 421,
+          "order_lines": 421,
+          "ledger_entries": 421,
+          "distinct_operations": 421,
+          "units_sold": 1029,
+          "revenue_cents": 5272307,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "2": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ],
+          "3": [
+            421,
+            421,
+            421,
+            421,
+            1029,
+            5272307,
+            0
+          ]
+        },
+        "integrity": {
+          "1": "ok",
+          "2": "ok",
+          "3": "ok"
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 16.740000000000002,
+        "sampled_peak_aggregate_rss_bytes": 45359104,
+        "whole_lifecycle_seconds": 245.99551769066602,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 18603312,
+        "allocated_bytes": 4634624,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "three native mTLS processes; fresh quorum-barrier reads; writes admitted at all voters",
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "repeat": 0
+    },
+    {
+      "system": "sqlodin",
+      "nodes": 3,
+      "initial_startup_ms": 101.12753510475159,
+      "schema_and_seed_ms": 6992.00432933867,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 294,
+          "writes": 106,
+          "concurrency": 4,
+          "seconds": 15.065537338145077,
+          "operations_per_second": 26.550662682785493,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 76.25360786914825,
+          "latency_ms": {
+            "all": {
+              "p50": 102.04001097008586,
+              "p95": 219.91816628724337,
+              "p99": 267.8006971254945,
+              "max": 377.14158184826374
+            },
+            "reads": {
+              "p50": 96.07335738837719,
+              "p95": 233.18479396402836,
+              "p99": 287.24286798387766,
+              "max": 377.14158184826374
+            },
+            "writes": {
+              "p50": 115.28444522991776,
+              "p95": 187.82698921859264,
+              "p99": 195.09694818407297,
+              "max": 206.37468621134758
+            }
+          }
+        },
+        {
+          "name": "one_voter_crashed",
+          "operations": 400,
+          "reads": 283,
+          "writes": 117,
+          "concurrency": 4,
+          "seconds": 83.42193783260882,
+          "operations_per_second": 4.794901801521613,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 623.7630667164922,
+          "latency_ms": {
+            "all": {
+              "p50": 927.290344145149,
+              "p95": 1068.2702278718352,
+              "p99": 1180.7197108864784,
+              "max": 2015.7979931682348
+            },
+            "reads": {
+              "p50": 993.093566969037,
+              "p95": 1087.0646992698312,
+              "p99": 1963.427860289812,
+              "max": 2015.7979931682348
+            },
+            "writes": {
+              "p50": 726.4360804110765,
+              "p95": 1026.5033738687634,
+              "p99": 1039.794190786779,
+              "max": 1051.9207967445254
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 9501.993482932448,
+          "caught_up_state": {
+            "2": [
+              248,
+              248,
+              248,
+              248,
+              579,
+              2696054,
+              0
+            ]
+          }
+        },
+        {
+          "name": "entry_voter_crashed",
+          "operations": 400,
+          "reads": 283,
+          "writes": 117,
+          "concurrency": 4,
+          "seconds": 124.98486722074449,
+          "operations_per_second": 3.200387446054026,
+          "retry_attempts": 2,
+          "time_to_first_success_ms": 53.25842276215553,
+          "latency_ms": {
+            "all": {
+              "p50": 1015.0002972222865,
+              "p95": 2102.3403583094478,
+              "p99": 3094.9119180440903,
+              "max": 3115.1251681149006
+            },
+            "reads": {
+              "p50": 1082.841563038528,
+              "p95": 2159.8676070570946,
+              "p99": 3107.3498027399182,
+              "max": 3115.1251681149006
+            },
+            "writes": {
+              "p50": 830.1689587533474,
+              "p95": 1065.6210351735353,
+              "p99": 1086.7579923942685,
+              "max": 1125.5841115489602
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 9781.915296800435,
+          "caught_up_state": {
+            "1": [
+              365,
+              365,
+              365,
+              365,
+              883,
+              4073584,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 290.34839663654566,
+        "state": {
+          "1": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "2": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "3": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 365,
+          "order_lines": 365,
+          "ledger_entries": 365,
+          "distinct_operations": 365,
+          "units_sold": 883,
+          "revenue_cents": 4073584,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "2": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ],
+          "3": [
+            365,
+            365,
+            365,
+            365,
+            883,
+            4073584,
+            0
+          ]
+        },
+        "integrity": {
+          "1": "ok",
+          "2": "ok",
+          "3": "ok"
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 16.79,
+        "sampled_peak_aggregate_rss_bytes": 45600768,
+        "whole_lifecycle_seconds": 256.2768399724737,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 18541872,
+        "allocated_bytes": 4292096,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "three native mTLS processes; fresh quorum-barrier reads; writes admitted at all voters",
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "repeat": 1
+    },
+    {
+      "system": "sqlodin",
+      "nodes": 3,
+      "initial_startup_ms": 51.08535848557949,
+      "schema_and_seed_ms": 6747.4468145519495,
+      "phases": [
+        {
+          "name": "healthy",
+          "operations": 400,
+          "reads": 297,
+          "writes": 103,
+          "concurrency": 4,
+          "seconds": 9.68151208665222,
+          "operations_per_second": 41.31586021066637,
+          "retry_attempts": 0,
+          "time_to_first_success_ms": 11.536424979567528,
+          "latency_ms": {
+            "all": {
+              "p50": 18.166752997785807,
+              "p95": 220.80369014292955,
+              "p99": 284.2696374282241,
+              "max": 539.2122277989984
+            },
+            "reads": {
+              "p50": 18.224790692329407,
+              "p95": 236.73966713249683,
+              "p99": 514.2775420099497,
+              "max": 539.2122277989984
+            },
+            "writes": {
+              "p50": 18.06704606860876,
+              "p95": 119.05836407095194,
+              "p99": 147.55637664347887,
+              "max": 173.90534095466137
+            }
+          }
+        },
+        {
+          "name": "one_voter_crashed",
+          "operations": 400,
+          "reads": 281,
+          "writes": 119,
+          "concurrency": 4,
+          "seconds": 92.58575367368758,
+          "operations_per_second": 4.320319100169274,
+          "retry_attempts": 1,
+          "time_to_first_success_ms": 129.5217201113701,
+          "latency_ms": {
+            "all": {
+              "p50": 966.3034323602915,
+              "p95": 2027.7433963492513,
+              "p99": 2063.313170336187,
+              "max": 2091.5525667369366
+            },
+            "reads": {
+              "p50": 1005.2081746980548,
+              "p95": 2050.823706202209,
+              "p99": 2069.318355061114,
+              "max": 2091.5525667369366
+            },
+            "writes": {
+              "p50": 843.4376381337643,
+              "p95": 1059.9509431049228,
+              "p99": 1073.7074352800846,
+              "max": 1077.669396996498
+            }
+          },
+          "restarted_node": 2,
+          "catch_up_ms": 7573.203364387155,
+          "caught_up_state": {
+            "2": [
+              248,
+              248,
+              248,
+              248,
+              620,
+              2854050,
+              0
+            ]
+          }
+        },
+        {
+          "name": "entry_voter_crashed",
+          "operations": 400,
+          "reads": 294,
+          "writes": 106,
+          "concurrency": 4,
+          "seconds": 146.5500057125464,
+          "operations_per_second": 2.729443769416075,
+          "retry_attempts": 2,
+          "time_to_first_success_ms": 46.2889326736331,
+          "latency_ms": {
+            "all": {
+              "p50": 1040.7798415981233,
+              "p95": 3059.358272701502,
+              "p99": 3102.832135744393,
+              "max": 3120.771497488022
+            },
+            "reads": {
+              "p50": 1197.2432262264192,
+              "p95": 3067.93961673975,
+              "p99": 3107.9423651099205,
+              "max": 3120.771497488022
+            },
+            "writes": {
+              "p50": 837.6190825365484,
+              "p95": 1067.67791043967,
+              "p99": 1085.7450123876333,
+              "max": 1124.9410044401884
+            }
+          },
+          "crashed_node": 1,
+          "restarted_node_catch_up_ms": 8800.15593022108,
+          "caught_up_state": {
+            "1": [
+              354,
+              354,
+              354,
+              354,
+              871,
+              4092778,
+              0
+            ]
+          }
+        }
+      ],
+      "total_cluster_restart": {
+        "recovery_ms": 290.3032349422574,
+        "state": {
+          "1": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ],
+          "2": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ],
+          "3": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ]
+        }
+      },
+      "correctness": {
+        "expected": {
+          "orders": 354,
+          "order_lines": 354,
+          "ledger_entries": 354,
+          "distinct_operations": 354,
+          "units_sold": 871,
+          "revenue_cents": 4092778,
+          "negative_stock_rows": 0
+        },
+        "per_node": {
+          "1": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ],
+          "2": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ],
+          "3": [
+            354,
+            354,
+            354,
+            354,
+            871,
+            4092778,
+            0
+          ]
+        },
+        "integrity": {
+          "1": "ok",
+          "2": "ok",
+          "3": "ok"
+        }
+      },
+      "resources": {
+        "sampled_database_cpu_seconds": 16.34,
+        "sampled_peak_aggregate_rss_bytes": 45481984,
+        "whole_lifecycle_seconds": 275.99563464242965,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 18459640,
+        "allocated_bytes": 4216832,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "boundary": "three native mTLS processes; fresh quorum-barrier reads; writes admitted at all voters",
+      "storage": "on-disk SQLite application and Paxos journal; WAL synchronous=FULL",
+      "repeat": 2
+    }
+  ],
+  "sequential_writes": [
+    {
+      "system": "sqlodin",
+      "operations": 400,
+      "operations_per_second": 9.060328264731206,
+      "latency_ms": {
+        "p50": 110.24224013090134,
+        "p95": 133.51682014763355,
+        "p99": 168.92515495419502,
+        "max": 198.9014269784093
+      },
+      "restart_verified": true,
+      "boundary": "native mTLS, sequential durable 256-byte inserts",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 8.74,
+        "sampled_peak_aggregate_rss_bytes": 41451520,
+        "whole_lifecycle_seconds": 58.438402283005416,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 15973056,
+        "allocated_bytes": 2383872,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "repeat": 0
+    },
+    {
+      "system": "sqlodin",
+      "operations": 400,
+      "operations_per_second": 9.074850771353649,
+      "latency_ms": {
+        "p50": 108.65456238389015,
+        "p95": 141.23558532446623,
+        "p99": 169.28681265562773,
+        "max": 179.40167896449566
+      },
+      "restart_verified": true,
+      "boundary": "native mTLS, sequential durable 256-byte inserts",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 8.700000000000001,
+        "sampled_peak_aggregate_rss_bytes": 41549824,
+        "whole_lifecycle_seconds": 58.77683582343161,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 16014112,
+        "allocated_bytes": 2541568,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "repeat": 1
+    },
+    {
+      "system": "sqlodin",
+      "operations": 400,
+      "operations_per_second": 8.831363397117919,
+      "latency_ms": {
+        "p50": 109.88076170906425,
+        "p95": 156.33461344987154,
+        "p99": 170.93521356582642,
+        "max": 188.02567571401596
+      },
+      "restart_verified": true,
+      "boundary": "native mTLS, sequential durable 256-byte inserts",
+      "nodes": 3,
+      "resources": {
+        "sampled_database_cpu_seconds": 8.81,
+        "sampled_peak_aggregate_rss_bytes": 42377216,
+        "whole_lifecycle_seconds": 60.21023603156209,
+        "interval_ms": 10,
+        "scope": "database children; setup, verification and recovery included; client excluded"
+      },
+      "disk": {
+        "logical_bytes": 16005824,
+        "allocated_bytes": 2139648,
+        "scope": "persistent node databases, logs, snapshots and metadata after shutdown"
+      },
+      "repeat": 2
+    }
+  ],
+  "failures": [],
+  "sqlodin_build": {
+    "complete": true,
+    "binary_sha256": "e9920de70aecc0e781ba4662b6fa94e72c29005a9aa7e41d8956c0f0fc477503",
+    "platform": "Linux-7.0.0-28-generic-x86_64-with-glibc2.41",
+    "linkage": "\nDynamic section at offset 0x92f6f0 contains 30 entries:\n  Tag        Type                         Name/Value\n 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]\n 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-x86-64.so.2]\n 0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN]\n 0x000000000000000c (INIT)               0xb9000\n 0x000000000000000d (FINI)               0x6ee9c0\n 0x0000000000000019 (INIT_ARRAY)         0x8a8f90\n 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)\n 0x000000000000001a (FINI_ARRAY)         0x8a8f98\n 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)\n 0x000000006ffffef5 (GNU_HASH)           0x3e8\n 0x0000000000000005 (STRTAB)             0x1858\n 0x0000000000000006 (SYMTAB)             0x4d8\n 0x000000000000000a (STRSZ)              2222 (bytes)\n 0x000000000000000b (SYMENT)             24 (bytes)\n 0x0000000000000015 (DEBUG)              0x0\n 0x0000000000000003 (PLTGOT)             0x930910\n 0x0000000000000002 (PLTRELSZ)           3648 (bytes)\n 0x0000000000000014 (PLTREL)             RELA\n 0x0000000000000017 (JMPREL)             0xb77e8\n 0x0000000000000007 (RELA)               0x23d8\n 0x0000000000000008 (RELASZ)             742416 (bytes)\n 0x0000000000000009 (RELAENT)            24 (bytes)\n 0x000000000000001e (FLAGS)              BIND_NOW\n 0x000000006ffffffb (FLAGS_1)            Flags: NOW PIE\n 0x000000006ffffffe (VERNEED)            0x22a8\n 0x000000006fffffff (VERNEEDNUM)         3\n 0x000000006ffffff0 (VERSYM)             0x2106\n 0x000000006ffffff9 (RELACOUNT)          30869\n 0x0000000000000000 (NULL)               0x0\n",
+    "native": {
+      "sqlite": "3.51.3",
+      "sqlite_vec": "0.1.9",
+      "openssl": "3.5.8",
+      "platform": {
+        "system": "Linux",
+        "machine": "x86_64",
+        "compiler": "/usr/bin/cc",
+        "archiver": "/usr/bin/ar",
+        "compiler_version": "cc (Debian 14.2.0-19) 14.2.0",
+        "builder_sha256": "ed2760e611b57d4e09769caa528f882bbd87d6842c6589c66d7b285035777d3f"
+      },
+      "sources": {
+        "sqlite": {
+          "version": "3.51.3",
+          "url": "https://sqlite.org/2026/sqlite-amalgamation-3510300.zip",
+          "files": {
+            "sqlite3.c": "9512509b1bccb7461f79bea8aad6280ae4699e925fa4804381b71f59e7efb0c5",
+            "sqlite3.h": "19585c8b5230e9d4f223bf31b709ece7b6a0bb3faf00d8310625d8e58cda1b1d",
+            "sqlite3ext.h": "ea81fb7bd05882e0e0b92c4d60f677b205f7f1fbf085f218b12f0b5b3f0b9e48"
+          }
+        },
+        "vec": {
+          "version": "0.1.9",
+          "url": "https://github.com/asg017/sqlite-vec/releases/download/v0.1.9/sqlite-vec-0.1.9-amalgamation.zip",
+          "files": {
+            "sqlite-vec.c": "ba081a47fa02eadc3cf6b16c314b695b84081269349aac722b4efa338fe8fd85",
+            "sqlite-vec.h": "8e4d7bfcd779c89bd19a6b2959fce24ee391b2eaf79a85a979377a36627cb060"
+          }
+        },
+        "openssl": {
+          "version": "3.5.8",
+          "url": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+          "sha256": "a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2"
+        }
+      },
+      "sqlite_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-DSQLITE_THREADSAFE=1",
+        "-DSQLITE_OMIT_LOAD_EXTENSION",
+        "-DSQLITE_OMIT_DEPRECATED",
+        "-DSQLITE_DQS=0",
+        "-DSQLITE_ENABLE_FTS5",
+        "-DHAVE_USLEEP=1"
+      ],
+      "vec_flags": [
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-DSQLITE_CORE",
+        "-DSQLITE_VEC_STATIC",
+        "-DSQLITE_VEC_OMIT_FS"
+      ],
+      "openssl_flags": [
+        "no-shared",
+        "no-dso",
+        "no-module",
+        "no-engine",
+        "no-zlib",
+        "--libdir=lib",
+        "--openssldir=/sqlodin/no-system-openssl"
+      ],
+      "archives_sha256": {
+        "libsqlite3.a": "aac3b0f9cafb856e49bc0fc8f00289e1dd36a596032383028ee9a663559630ae",
+        "libsqlite_vec.a": "64f35312f89c2251bc249b2b2301d7b0c9aba7987e1a7e547008a24c68a576d0",
+        "libssl.a": "d287b4bf68bebb8ea76818c859763eb8ac90f65d5ecf13fc0f253a50405df140",
+        "libcrypto.a": "077bddd675958dc9243a04182c15567afcd2d6b68a565eafa9f940c5543ff665"
+      }
+    },
+    "shell": {
+      "sqlite_version": "3.51.3",
+      "source_sha256": "4a5bde1b3e00f873caa7e0e7a4def2ea656b7dfae6cad5fb1e9c0d8f44f4397a",
+      "helper_sha256": "29ce37683ac1014f668d0ba6aca6d4488640ad31a9f59cbeded77d657e0c4413",
+      "flags": [
+        "-O2",
+        "-fPIC",
+        "-DSQLITE_THREADSAFE=1",
+        "-DSQLITE_OMIT_LOAD_EXTENSION",
+        "-DSQLITE_OMIT_DEPRECATED",
+        "-DSQLITE_ENABLE_FTS5",
+        "-DHAVE_USLEEP=1",
+        "-Dmain=sqlodin_sqlite_shell",
+        "-DSQLITE_SHELL_INIT_PROC=sqlodin_shell_init"
+      ],
+      "builder_sha256": "e6299ee205ff59fe577739f1672c712a85a4c80b8f376ac088edb3220f46d0c7",
+      "compiler": "cc (Debian 14.2.0-19) 14.2.0",
+      "archive_sha256": "7a5de5b39e5f45ea8bf7170360865fb4e11d6c0c4871c2edb4e2e96b12b7dd3a"
+    },
+    "odin": "odin version dev-2026-09-nightly:a2fb372",
+    "scope": "Native SQLite/FTS5, sqlite-vec and OpenSSL are static; OS runtime may remain dynamic"
+  },
+  "comparison_build": null,
+  "zaxon_release": null,
+  "source_sha256": {
+    "tools/compare_native_workloads.py": "b70ee8cba2ce66ac66cdf0e3d03aee6b8c97dfa1dbe1d3af6e1250c0e92708a9",
+    "tools/compare_realworld.py": "7a7d7e5ebc2d6a66475a6f4a948ab2118fa148df1f8815e27f25561250795e90",
+    "benchmarks/vendor/zaxonlite/driver.py": "e49639b870070f24f3abe6bdcf3f5901b7e5eba6ecd76c3f90c27f3f15833dba",
+    "benchmarks/vendor/zaxonlite/realworld_workload.py": "fc911c1066a28d4864bb547ac787e5ee189091e03299c785938381bcf3c4ae9a",
+    "benchmarks/vendor/zaxonlite/compare-rqlite-realworld-3node.py": "de6f59176811410c3ef0702082d9ecf872b38a9765470b43bba42654d7ed6a61"
+  },
+  "binaries_sha256": {
+    "sqlodin": "e9920de70aecc0e781ba4662b6fa94e72c29005a9aa7e41d8956c0f0fc477503"
+  },
+  "all_samples_passed": true,
+  "finished_utc": "2026-09-24T08:50:56.805382+00:00"
+}

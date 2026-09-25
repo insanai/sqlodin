@@ -1,0 +1,661 @@
+{
+	"total": 163,
+	"success": 163,
+	"duration": 11736781844,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_abandoned_incoming_image_can_retire_without_a_successor_certificate"
+			},
+			{
+				"success": true,
+				"name": "test_application_group_deferred_fk_boundary"
+			},
+			{
+				"success": true,
+				"name": "test_application_group_matches_individual_history"
+			},
+			{
+				"success": true,
+				"name": "test_application_group_one_commit_independent_outcomes"
+			},
+			{
+				"success": true,
+				"name": "test_application_group_rollback_replays_without_duplicate_effects"
+			},
+			{
+				"success": true,
+				"name": "test_application_group_validates_each_read_version"
+			},
+			{
+				"success": true,
+				"name": "test_background_generation_preserves_live_tail_votes_ids_and_restart"
+			},
+			{
+				"success": true,
+				"name": "test_backup_empty_and_populated_application_preserve_source_and_reject_corruption"
+			},
+			{
+				"success": true,
+				"name": "test_ballot_ordering"
+			},
+			{
+				"success": true,
+				"name": "test_ballot_packing"
+			},
+			{
+				"success": true,
+				"name": "test_bit_set_basic"
+			},
+			{
+				"success": true,
+				"name": "test_bit_set_scans"
+			},
+			{
+				"success": true,
+				"name": "test_catalog_rowids_must_not_become_replicated_application_values"
+			},
+			{
+				"success": true,
+				"name": "test_client_admission_keeps_peer_and_handshake_reserves"
+			},
+			{
+				"success": true,
+				"name": "test_concurrent_masters_resolve_conflicts_by_slot"
+			},
+			{
+				"success": true,
+				"name": "test_concurrent_multimaster_proposals"
+			},
+			{
+				"success": true,
+				"name": "test_durability_gate_lifecycle"
+			},
+			{
+				"success": true,
+				"name": "test_durable_batch_all_masters_restart"
+			},
+			{
+				"success": true,
+				"name": "test_durable_batch_crash_barrier_and_recovery"
+			},
+			{
+				"success": true,
+				"name": "test_durable_batch_independent_outcomes_and_retry"
+			},
+			{
+				"success": true,
+				"name": "test_durable_batch_validates_before_admission"
+			},
+			{
+				"success": true,
+				"name": "test_durable_commit_boundaries"
+			},
+			{
+				"success": true,
+				"name": "test_durable_corruption_and_write_failure"
+			},
+			{
+				"success": true,
+				"name": "test_durable_disk_full_and_promises"
+			},
+			{
+				"success": true,
+				"name": "test_durable_ids_survive_clock_rollback_and_restart"
+			},
+			{
+				"success": true,
+				"name": "test_durable_multimaster_restart_and_old_history"
+			},
+			{
+				"success": true,
+				"name": "test_durable_rejects_changed_engine_identity"
+			},
+			{
+				"success": true,
+				"name": "test_durable_restart_and_identity"
+			},
+			{
+				"success": true,
+				"name": "test_empty_restore_binds_genesis_and_rejects_descriptor_corruption"
+			},
+			{
+				"success": true,
+				"name": "test_engine_sqlite_idempotent_deletes"
+			},
+			{
+				"success": true,
+				"name": "test_engine_sqlite_multimaster_inserts"
+			},
+			{
+				"success": true,
+				"name": "test_every_error_explains_problem_and_recovery"
+			},
+			{
+				"success": true,
+				"name": "test_expression_classifier_never_masks_storage_or_unknown_errors"
+			},
+			{
+				"success": true,
+				"name": "test_expression_rejections_all_replicas"
+			},
+			{
+				"success": true,
+				"name": "test_expression_rejections_rollback_retry_and_restart"
+			},
+			{
+				"success": true,
+				"name": "test_fts_duplicate_is_durable_constraint"
+			},
+			{
+				"success": true,
+				"name": "test_fts_group_and_reference_have_identical_logical_snapshot_state"
+			},
+			{
+				"success": true,
+				"name": "test_fts_shadow_writes_rejected"
+			},
+			{
+				"success": true,
+				"name": "test_generation_allocation_never_inventories_a_preexisting_directory"
+			},
+			{
+				"success": true,
+				"name": "test_generation_cancellation_preserves_source_and_releases_private_locks"
+			},
+			{
+				"success": true,
+				"name": "test_generation_predecessor_descriptor_corruption_fails_closed"
+			},
+			{
+				"success": true,
+				"name": "test_generation_preserves_unchosen_vote_and_global_promise"
+			},
+			{
+				"success": true,
+				"name": "test_generation_publish_restart_suffix_and_fail_closed"
+			},
+			{
+				"success": true,
+				"name": "test_generation_retires_slot_evidence_without_reviving_requests_or_reads"
+			},
+			{
+				"success": true,
+				"name": "test_generation_trims_outcome_cache_and_preserves_rejected_request_after_restart"
+			},
+			{
+				"success": true,
+				"name": "test_history_accounting_rejects_a_missing_active_inventory_entry"
+			},
+			{
+				"success": true,
+				"name": "test_history_hard_reserve_fails_closed_without_publishing_a_promise"
+			},
+			{
+				"success": true,
+				"name": "test_history_measurement_failure_poisoned_before_proposal"
+			},
+			{
+				"success": true,
+				"name": "test_history_quota_counts_owned_staging_and_recovers_after_retirement"
+			},
+			{
+				"success": true,
+				"name": "test_idle_owners_finish_without_timer_ticks"
+			},
+			{
+				"success": true,
+				"name": "test_idle_skip_unblocks_contiguous_commit"
+			},
+			{
+				"success": true,
+				"name": "test_image_retirement_keeps_active_predecessor_and_unsealed_receipt"
+			},
+			{
+				"success": true,
+				"name": "test_inactive_nan_cannot_break_consensus_value_equality"
+			},
+			{
+				"success": true,
+				"name": "test_journal_packing_preserves_inactive_value_bits"
+			},
+			{
+				"success": true,
+				"name": "test_journal_packing_roundtrip_and_bounds"
+			},
+			{
+				"success": true,
+				"name": "test_journal_unpack_rejects_malformed_bounds"
+			},
+			{
+				"success": true,
+				"name": "test_later_read_cannot_borrow_cohort_before_a_completed_write"
+			},
+			{
+				"success": true,
+				"name": "test_legacy_hidden_rowid_schema_requires_explicit_repair_before_open"
+			},
+			{
+				"success": true,
+				"name": "test_legacy_session_epoch_upgrade_preserves_canonical_metadata_schema"
+			},
+			{
+				"success": true,
+				"name": "test_local_read_budget_does_not_poison_writer"
+			},
+			{
+				"success": true,
+				"name": "test_logical_snapshot_normalizes_retired_outcomes_but_binds_retry_results"
+			},
+			{
+				"success": true,
+				"name": "test_maintenance_copy_failure_stops_acknowledgements_and_repeated_jobs"
+			},
+			{
+				"success": true,
+				"name": "test_maintenance_default_dirty_interval_starts_ordered_snapshot"
+			},
+			{
+				"success": true,
+				"name": "test_membership_quorums"
+			},
+			{
+				"success": true,
+				"name": "test_membership_validation"
+			},
+			{
+				"success": true,
+				"name": "test_migration_preserves_source_retries_and_reserved_ids"
+			},
+			{
+				"success": true,
+				"name": "test_migration_preserves_unchosen_acceptor_vote"
+			},
+			{
+				"success": true,
+				"name": "test_migration_replays_chosen_unapplied_and_refuses_incomplete"
+			},
+			{
+				"success": true,
+				"name": "test_more_than_one_consensus_window_applies_every_write"
+			},
+			{
+				"success": true,
+				"name": "test_multimaster_fastpath_1rtt"
+			},
+			{
+				"success": true,
+				"name": "test_mutation_bounds_and_shared_vector_payload"
+			},
+			{
+				"success": true,
+				"name": "test_mutation_builders"
+			},
+			{
+				"success": true,
+				"name": "test_network_json_depth_bounds_decode_and_preserves_sql_strings"
+			},
+			{
+				"success": true,
+				"name": "test_optimistic_commit_conflict_retry_and_reopen"
+			},
+			{
+				"success": true,
+				"name": "test_peer_wire_packing_preserves_complete_values_and_rejects_malformed_frames"
+			},
+			{
+				"success": true,
+				"name": "test_pinned_paxos_recovers_unavailable_owner"
+			},
+			{
+				"success": true,
+				"name": "test_pinned_paxos_retries_lost_accepts"
+			},
+			{
+				"success": true,
+				"name": "test_pinned_sqlite_fts_and_vector_build"
+			},
+			{
+				"success": true,
+				"name": "test_preview_rolls_back_and_preserves_read_version"
+			},
+			{
+				"success": true,
+				"name": "test_query_limits_return_no_partial_result"
+			},
+			{
+				"success": true,
+				"name": "test_query_owned_values_and_bindings"
+			},
+			{
+				"success": true,
+				"name": "test_read_barrier_is_fresh_and_single_use"
+			},
+			{
+				"success": true,
+				"name": "test_read_barrier_waits_for_quorum_and_prior_writes"
+			},
+			{
+				"success": true,
+				"name": "test_read_cohort_requires_quorum_and_preserves_other_waiters_on_cancel"
+			},
+			{
+				"success": true,
+				"name": "test_reads_watermark"
+			},
+			{
+				"success": true,
+				"name": "test_received_generation_preserves_local_acceptor_and_rejects_unbound_seal"
+			},
+			{
+				"success": true,
+				"name": "test_recursive_sql_rejects_without_poisoning"
+			},
+			{
+				"success": true,
+				"name": "test_rejoin_beyond_window_without_new_client_traffic"
+			},
+			{
+				"success": true,
+				"name": "test_replicated_fts_transaction_policy"
+			},
+			{
+				"success": true,
+				"name": "test_replicated_schema_keeps_hidden_rowids_snapshot_accessible"
+			},
+			{
+				"success": true,
+				"name": "test_restore_preserves_retry_fences_and_restarts_after_compaction"
+			},
+			{
+				"success": true,
+				"name": "test_retirement_preserves_exact_predecessor_and_unowned_directories"
+			},
+			{
+				"success": true,
+				"name": "test_retirement_rejects_corrupt_inventory_without_deleting_candidate"
+			},
+			{
+				"success": true,
+				"name": "test_root_retirement_protects_first_predecessor_and_is_one_time"
+			},
+			{
+				"success": true,
+				"name": "test_separated_store_group_recovery_and_exportable_application"
+			},
+			{
+				"success": true,
+				"name": "test_separated_store_identity_and_reserved_ids"
+			},
+			{
+				"success": true,
+				"name": "test_separated_store_journal_application_crash_boundary"
+			},
+			{
+				"success": true,
+				"name": "test_service_defaults_to_managed_storage_and_preserves_explicit_legacy_format"
+			},
+			{
+				"success": true,
+				"name": "test_service_write_batch_rotates_before_readmitting_busy_clients"
+			},
+			{
+				"success": true,
+				"name": "test_service_write_batch_shrinks_without_early_acknowledgement"
+			},
+			{
+				"success": true,
+				"name": "test_session_epoch_grouped_and_reference_orderings_match"
+			},
+			{
+				"success": true,
+				"name": "test_session_epoch_retirement_at_full_capacity"
+			},
+			{
+				"success": true,
+				"name": "test_session_retirement_fences_reclaimed_requests_across_restart"
+			},
+			{
+				"success": true,
+				"name": "test_skip_prefix_atomic_with_journal"
+			},
+			{
+				"success": true,
+				"name": "test_skip_prefix_does_not_group_sql_rollback"
+			},
+			{
+				"success": true,
+				"name": "test_slot_arithmetic"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_cancellation_releases_copy_and_prevents_verification_receipt"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_cannot_disable_durability"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_capture_failure_stops_further_durable_requests"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_certificate_codec_rejects_malformed_frames"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_certificate_requires_matching_distinct_quorum"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_host_pins_group_boundary_and_requires_real_quorum"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_image_cancellation_limits_and_short_file"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_image_pins_prefix_during_wal_writes"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_image_refuses_acceptor_state"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_covers_extensions_and_request_state"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_enforces_work_and_scratch_budgets"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_ignores_page_layout_and_preserves_types"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_manifest_detects_every_truncation_and_bit_change"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_manifest_exclusive_storage_and_failure_boundaries"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_offer_retries_until_receiver_fetches_and_slow_peer_stays_connected"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_receipt_requires_verified_durable_retention"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_request_wire_preserves_hello_and_receipt"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_transfer_rejects_misbinding_offset_and_corruption"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_verifier_rejects_foreign_keys_and_nonempty_wal"
+			},
+			{
+				"success": true,
+				"name": "test_snowflake_generation"
+			},
+			{
+				"success": true,
+				"name": "test_snowflake_rollover_and_clock_rollback"
+			},
+			{
+				"success": true,
+				"name": "test_sql_ordering_survives_physical_layout_and_cache_changes"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_batch_is_atomic"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_begin_failure_does_not_commit_host_transaction"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_delete_and_commit_failures"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_failed_raw_sql_rolls_back_and_does_not_advance"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_fts5"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_read_errors_and_write_rejection"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_sequence_is_not_client_writable"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_text_update_and_vector_bindings"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_vec_embeddings"
+			},
+			{
+				"success": true,
+				"name": "test_sqlite_watermark_survives_reopen"
+			},
+			{
+				"success": true,
+				"name": "test_stale_voter_cannot_reuse_read_fence_after_remote_write"
+			},
+			{
+				"success": true,
+				"name": "test_statement_cache_distinguishes_shapes_and_evicts"
+			},
+			{
+				"success": true,
+				"name": "test_structured_trigger_cannot_change_internal_metadata"
+			},
+			{
+				"success": true,
+				"name": "test_structured_vector_mutation_reaches_vec0"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_constraint_outcome_and_restart"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_crash_after_choice_replays_once"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_default_and_trigger_policy"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_deferred_foreign_key_outcome"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_function_policy_rejects_local_state"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_invalid_sql_is_durable_rejection"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_local_aggregates_use_readonly_connection"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_missing_outcome_prevents_reopen"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_multimaster_duplicate_and_distinct_requests"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_prevents_random_rowid_fallback"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_raw_sql_cannot_bind_inactive_fields"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_retry_identity_and_expiry"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_rollback_conflict_isolated"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_sequence_gap_burns_identity"
+			},
+			{
+				"success": true,
+				"name": "test_transaction_trigger_rollback_preserves_prior_request"
+			},
+			{
+				"success": true,
+				"name": "test_transition_group_commit_and_owned_values"
+			},
+			{
+				"success": true,
+				"name": "test_transition_group_copies_borrowed_promise_before_next_vote"
+			},
+			{
+				"success": true,
+				"name": "test_transition_group_failure_atomicity"
+			},
+			{
+				"success": true,
+				"name": "test_transition_group_flushes_before_effect_capacity"
+			},
+			{
+				"success": true,
+				"name": "test_transition_group_validation_and_storage_failure"
+			},
+			{
+				"success": true,
+				"name": "test_unpublished_background_generation_never_replaces_live_source"
+			}
+		]
+	}
+}

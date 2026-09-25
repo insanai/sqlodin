@@ -1,0 +1,88 @@
+{
+  "complete": true,
+  "passed": true,
+  "checks": [
+    {
+      "name": "quorum_snapshot_certified_while_all_voters_continue_writes",
+      "passed": true
+    },
+    {
+      "name": "chosen_certificate_and_all_acknowledged_writes_survive_full_restart",
+      "passed": true
+    },
+    {
+      "name": "two_survivors_capture_and_certify_without_third_voter",
+      "passed": true
+    },
+    {
+      "name": "returning_voter_catches_up_after_certificate",
+      "passed": true
+    }
+  ],
+  "binary_sha256": "a17fb05c7d7b58e4ac15b8aa28646ca55e8b33fb25977c1829488f6fa5968181",
+  "scope": "format-5 online capture, authenticated quorum receipts and chosen certificate; no trim",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "first": {
+    "1": {
+      "cluster": "network-qualification",
+      "node": 1,
+      "protocol": 1,
+      "applied": 255,
+      "snapshot_prefix": 10,
+      "snapshot_sealed": 10,
+      "snapshot_error": ""
+    },
+    "2": {
+      "cluster": "network-qualification",
+      "node": 2,
+      "protocol": 1,
+      "applied": 255,
+      "snapshot_prefix": 10,
+      "snapshot_sealed": 10,
+      "snapshot_error": ""
+    },
+    "3": {
+      "cluster": "network-qualification",
+      "node": 3,
+      "protocol": 1,
+      "applied": 255,
+      "snapshot_prefix": 10,
+      "snapshot_sealed": 10,
+      "snapshot_error": ""
+    }
+  },
+  "second": {
+    "1": {
+      "cluster": "network-qualification",
+      "node": 1,
+      "protocol": 1,
+      "applied": 272,
+      "snapshot_prefix": 268,
+      "snapshot_sealed": 268,
+      "snapshot_error": ""
+    },
+    "2": {
+      "cluster": "network-qualification",
+      "node": 2,
+      "protocol": 1,
+      "applied": 272,
+      "snapshot_prefix": 268,
+      "snapshot_sealed": 268,
+      "snapshot_error": ""
+    }
+  },
+  "logs": {
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 404.646\u00b5s, ledger = 15.759\u00b5s, application = 27.559\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:60007 (mTLS, cluster network-qualification)\nRecovery node=1 applied=255 journal=510 phases=Recovery_Stats{integrity = 644.243\u00b5s, ledger = 6.176058ms, application = 4.347515ms}\nSQLodin node 1 listening on 127.0.0.1:60007 (mTLS, cluster network-qualification)\n",
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 377.658\u00b5s, ledger = 16.279\u00b5s, application = 34.868\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:51417 (mTLS, cluster network-qualification)\nRecovery node=2 applied=255 journal=509 phases=Recovery_Stats{integrity = 654.382\u00b5s, ledger = 6.188038ms, application = 4.344315ms}\nSQLodin node 2 listening on 127.0.0.1:51417 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 399.896\u00b5s, ledger = 22.499\u00b5s, application = 24.958\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:42723 (mTLS, cluster network-qualification)\nRecovery node=3 applied=255 journal=509 phases=Recovery_Stats{integrity = 674.941\u00b5s, ledger = 6.377776ms, application = 4.392093ms}\nSQLodin node 3 listening on 127.0.0.1:42723 (mTLS, cluster network-qualification)\nRecovery node=3 applied=267 journal=531 phases=Recovery_Stats{integrity = 669.7\u00b5s, ledger = 6.442292ms, application = 4.553913ms}\nSQLodin node 3 listening on 127.0.0.1:42723 (mTLS, cluster network-qualification)\n"
+  }
+}

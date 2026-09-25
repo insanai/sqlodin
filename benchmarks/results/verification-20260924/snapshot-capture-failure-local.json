@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 126812000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_snapshot_capture_failure_stops_further_durable_requests"
+			}
+		]
+	}
+}

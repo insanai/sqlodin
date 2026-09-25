@@ -1,0 +1,22 @@
+{
+  "complete": false,
+  "passed": false,
+  "scope": "bounded owned-decree and host-seam models; not a full multi-slot refinement proof",
+  "tlc_sha256": "71ce43150b6ee0a76cc33849ec45b2c6ae4323dc933b0acaef0928668ed0de72",
+  "cases": [
+    {
+      "model": "SessionRetirement",
+      "config": "SessionRetirement",
+      "expected_violation": null,
+      "passed": false,
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionRetirement.cfg": "c24bba2a11578f90f7f65ba8d67a5b0f7a06b6a1f0ce3c5e70d7a5b0358b9943"
+      },
+      "seconds": 0.22752170800231397,
+      "exit_code": 255,
+      "output": "TLC2 Version 2.14 of 10 July 2019 (rev: 0cae24f)\nRunning breadth-first search Model-Checking with fp 108 and seed 5510614024742458782 with 1 worker on 8 cores with 910MB heap and 64MB offheap memory [pid: 22768] (Mac OS X 27.0 aarch64, Homebrew 27 x86_64, MSBDiskFPSet, DiskStateQueue).\nParsing file /Users/vikrantrathore/projects/insan.ai/sqlodin/specs/SessionRetirement.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Naturals.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/FiniteSets.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/TLC.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Sequences.tla\nSemantic processing of module Naturals\nSemantic processing of module Sequences\nSemantic processing of module FiniteSets\nSemantic processing of module TLC\nSemantic processing of module SessionRetirement\nStarting... (2026-09-25 01:04:20)\nError: TLC threw an unexpected exception.\nThis was probably caused by an error in the spec or model.\nSee the User Output or TLC Console for clues to what happened.\nThe exception was a java.util.concurrent.ExecutionException\n: java.rmi.server.ExportException: Listen failed on port: 0; nested exception is: \n\tjava.net.SocketException: Operation not permitted\nFinished in 00s at (2026-09-25 01:04:20)\n"
+    }
+  ],
+  "error": "RuntimeError('Formal check SessionRetirement did not produce its required result')"
+}

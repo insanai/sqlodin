@@ -1,0 +1,8 @@
+{
+  "complete": false,
+  "passed": false,
+  "checks": [],
+  "operations": 6,
+  "binary_sha256": "d5c4f0e5500f1086713c80f5e5ff50724eb73f6399ef5267f1f32b543676ee77",
+  "error": "PermissionError(1, 'Operation not permitted')"
+}

@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 343106000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_history_hard_reserve_fails_closed_without_publishing_a_promise"
+			}
+		]
+	}
+}

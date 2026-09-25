@@ -1,0 +1,17 @@
+{
+	"total": 2,
+	"success": 2,
+	"duration": 238739000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_session_epoch_grouped_and_reference_orderings_match"
+			},
+			{
+				"success": true,
+				"name": "test_session_retirement_fences_reclaimed_requests_across_restart"
+			}
+		]
+	}
+}

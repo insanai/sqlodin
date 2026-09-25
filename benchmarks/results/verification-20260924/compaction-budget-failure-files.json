@@ -1,0 +1,81 @@
+{
+  "scope": "Read-only inventory after Compaction_Failed; private destination rollback timestamps approximately 300 seconds after generation database creation",
+  "root": "/home/insan/projects/sqlodin/verification-20260925-copy-budget/build/capacity-work/tmp_b_7t9px",
+  "files": [
+    {
+      "path": "data1/consensus.db",
+      "bytes": 4341760,
+      "mtime": 1790285996.4062266
+    },
+    {
+      "path": "data1/node.db",
+      "bytes": 20390440960,
+      "mtime": 1790285996.3192244
+    },
+    {
+      "path": "data2/consensus.db",
+      "bytes": 4354048,
+      "mtime": 1790285996.409227
+    },
+    {
+      "path": "data2/node.db",
+      "bytes": 20390440960,
+      "mtime": 1790285996.3192244
+    },
+    {
+      "path": "data3/node.db",
+      "bytes": 20390440960,
+      "mtime": 1790285996.3192244
+    },
+    {
+      "path": "data3/consensus.db",
+      "bytes": 4317184,
+      "mtime": 1790285996.4322274
+    },
+    {
+      "path": "data3/generation-3160-12290/consensus.db",
+      "bytes": 4096,
+      "mtime": 1790285680.7041252
+    },
+    {
+      "path": "data3/generation-3160-12290/node.db",
+      "bytes": 0,
+      "mtime": 1790285980.6867769
+    },
+    {
+      "path": "data3/snapshots/image-3160.db",
+      "bytes": 14934040576,
+      "mtime": 1790285391.1025882
+    },
+    {
+      "path": "data2/generation-3160-8194/node.db",
+      "bytes": 0,
+      "mtime": 1790285983.1098464
+    },
+    {
+      "path": "data2/generation-3160-8194/consensus.db",
+      "bytes": 4096,
+      "mtime": 1790285684.9112477
+    },
+    {
+      "path": "data2/snapshots/image-3160.db",
+      "bytes": 14934040576,
+      "mtime": 1790285389.860551
+    },
+    {
+      "path": "data1/generation-3160-4100/consensus.db",
+      "bytes": 4096,
+      "mtime": 1790285682.9371903
+    },
+    {
+      "path": "data1/generation-3160-4100/node.db",
+      "bytes": 0,
+      "mtime": 1790285981.6958058
+    },
+    {
+      "path": "data1/snapshots/image-3160.db",
+      "bytes": 14934040576,
+      "mtime": 1790285390.1985612
+    }
+  ]
+}

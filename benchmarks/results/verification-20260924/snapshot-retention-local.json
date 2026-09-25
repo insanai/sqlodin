@@ -1,0 +1,29 @@
+{
+	"total": 5,
+	"success": 5,
+	"duration": 716547000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_snapshot_image_pins_prefix_during_wal_writes"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_covers_extensions_and_request_state"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_enforces_work_and_scratch_budgets"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_logical_digest_ignores_page_layout_and_preserves_types"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_receipt_requires_verified_durable_retention"
+			}
+		]
+	}
+}

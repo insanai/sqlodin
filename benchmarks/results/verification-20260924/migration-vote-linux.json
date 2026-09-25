@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 220253723,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_migration_preserves_unchosen_acceptor_vote"
+			}
+		]
+	}
+}

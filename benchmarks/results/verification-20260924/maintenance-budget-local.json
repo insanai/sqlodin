@@ -1,0 +1,57 @@
+{
+	"total": 12,
+	"success": 12,
+	"duration": 4053393000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_background_generation_preserves_live_tail_votes_ids_and_restart"
+			},
+			{
+				"success": true,
+				"name": "test_backup_empty_and_populated_application_preserve_source_and_reject_corruption"
+			},
+			{
+				"success": true,
+				"name": "test_empty_restore_binds_genesis_and_rejects_descriptor_corruption"
+			},
+			{
+				"success": true,
+				"name": "test_generation_cancellation_preserves_source_and_releases_private_locks"
+			},
+			{
+				"success": true,
+				"name": "test_maintenance_copy_failure_stops_acknowledgements_and_repeated_jobs"
+			},
+			{
+				"success": true,
+				"name": "test_migration_preserves_source_retries_and_reserved_ids"
+			},
+			{
+				"success": true,
+				"name": "test_migration_preserves_unchosen_acceptor_vote"
+			},
+			{
+				"success": true,
+				"name": "test_migration_replays_chosen_unapplied_and_refuses_incomplete"
+			},
+			{
+				"success": true,
+				"name": "test_restore_preserves_retry_fences_and_restarts_after_compaction"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_cancellation_releases_copy_and_prevents_verification_receipt"
+			},
+			{
+				"success": true,
+				"name": "test_snapshot_host_pins_group_boundary_and_requires_real_quorum"
+			},
+			{
+				"success": true,
+				"name": "test_unpublished_background_generation_never_replaces_live_source"
+			}
+		]
+	}
+}

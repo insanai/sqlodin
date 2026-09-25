@@ -1,0 +1,17 @@
+{
+	"total": 2,
+	"success": 2,
+	"duration": 514777000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_generation_preserves_unchosen_vote_and_global_promise"
+			},
+			{
+				"success": true,
+				"name": "test_generation_publish_restart_suffix_and_fail_closed"
+			}
+		]
+	}
+}

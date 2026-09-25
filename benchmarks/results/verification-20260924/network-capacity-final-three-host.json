@@ -1,0 +1,179 @@
+{
+  "complete": false,
+  "passed": false,
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "remote_root": "/home/insan/projects/sqlodin/network-service/20260924T204029Z",
+  "scope": "three Linux instances; direct native mTLS consensus and SQL; fixed membership",
+  "binary_sha256": "1299f4531c8e9daa4d60c71a3d513d0aad253e984854dc4012ecca9664f70a3e",
+  "checks": [
+    {
+      "name": "native_cluster_schema",
+      "passed": true
+    },
+    {
+      "name": "schema_policy_rejects_complete_request_before_snapshot_failure",
+      "passed": true
+    },
+    {
+      "name": "write_any_node_fenced_rows",
+      "passed": true
+    },
+    {
+      "name": "typed_parameters_and_results",
+      "passed": true
+    },
+    {
+      "name": "atomic_batch_rollback_and_next_sequence",
+      "passed": true
+    },
+    {
+      "name": "readonly_policy_and_result_limit",
+      "passed": true
+    },
+    {
+      "name": "mixed_case_local_pragma_cannot_mutate_replicated_state",
+      "passed": true
+    },
+    {
+      "name": "untrusted_unlisted_and_peer_as_client_rejected",
+      "passed": true
+    },
+    {
+      "name": "malformed_frames_close_only_offending_connection",
+      "passed": true
+    },
+    {
+      "name": "six_concurrent_sessions_mixed_writes_and_fenced_reads",
+      "passed": true
+    },
+    {
+      "name": "cross_master_durable_deduplication",
+      "passed": true
+    },
+    {
+      "name": "minority_no_ack_and_explicit_stale_read",
+      "passed": true
+    },
+    {
+      "name": "recover_uncertain_write_after_quorum_restored",
+      "passed": true
+    },
+    {
+      "name": "all_process_sigkill_reopen_fenced_convergence",
+      "passed": true
+    },
+    {
+      "name": "pinned_sqlite_fts_and_vector_versions",
+      "passed": true
+    },
+    {
+      "name": "atomic_search_index_fts_vector_and_single_snapshot_hybrid",
+      "passed": true
+    },
+    {
+      "name": "search_update_delete_and_cross_master_vector_retry",
+      "passed": true
+    },
+    {
+      "name": "fts_and_content_rollback_and_policy_boundary",
+      "passed": true
+    },
+    {
+      "name": "384_dimension_typed_binding_blob_roundtrip",
+      "passed": true
+    },
+    {
+      "name": "sqlalchemy_core_typed_vectors_fts_and_atomic_executemany",
+      "passed": true
+    },
+    {
+      "name": "search_and_sqlalchemy_all_voter_crash_recovery",
+      "passed": true
+    },
+    {
+      "name": "orm_begin_flush_generated_keys_relationships_and_visibility",
+      "passed": true
+    },
+    {
+      "name": "orm_rollback_exception_and_close_discard_all_staged_writes",
+      "passed": true
+    },
+    {
+      "name": "orm_nested_savepoint_rollback_constraint_and_release",
+      "passed": true
+    },
+    {
+      "name": "orm_foreign_key_flush_error_and_session_reuse",
+      "passed": true
+    },
+    {
+      "name": "orm_predicate_reads_and_disjoint_writes_prevent_write_skew",
+      "passed": true
+    },
+    {
+      "name": "orm_cross_master_conflict_and_complete_transaction_retry",
+      "passed": true
+    },
+    {
+      "name": "orm_repeatable_read_detects_intervening_commit",
+      "passed": true
+    },
+    {
+      "name": "core_transaction_and_pool_reset_rollback",
+      "passed": true
+    },
+    {
+      "name": "orm_staged_transaction_survives_contacted_voter_loss",
+      "passed": true
+    },
+    {
+      "name": "orm_uncertain_commit_identity_recovery_on_another_master",
+      "passed": true
+    },
+    {
+      "name": "orm_minority_commit_unknown_then_quorum_recovery",
+      "passed": true
+    },
+    {
+      "name": "orm_commits_survive_all_voter_crash_recovery",
+      "passed": true
+    },
+    {
+      "name": "absent_1_both_survivors_continue_and_rejoin",
+      "passed": true
+    }
+  ],
+  "python_features": true,
+  "orm": true,
+  "majority": true,
+  "source_sha256": {
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_network_hosts.py": "e507c31291424beb36af75b6f9928d8246b3c7713d6d327feab25337803dd3b4",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_network_service.py": "588e8736c350283c19c0f72602c9d1e5ecb8419939e5032afa02c908839410e5",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_python_features.py": "ec32292bd142f5bdfb2a722a967a04744b72cb8ebf18b58a90e47680070a03eb",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_orm_transactions.py": "767776d63f6c17d431d52da50313b8188a6581c008c5ab5db5085840eb011121"
+  },
+  "majority_cases": [
+    {
+      "absent": 1,
+      "operations": 90,
+      "first_write_seconds": 2.5213625830074307,
+      "recovery_goal_met": true
+    },
+    {
+      "absent": 2,
+      "operations": 63,
+      "first_write_seconds": 1.3343837910069851
+    }
+  ],
+  "logs": {
+    "node1.log": "SQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 999.289\u00b5s, ledger = 42.813\u00b5s, application = 68.585\u00b5s}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=523 journal=1222 phases=Recovery_Stats{integrity = 930.146\u00b5s, ledger = 25.40693ms, application = 16.287057ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=670 journal=1516 phases=Recovery_Stats{integrity = 1.366584ms, ledger = 31.600245ms, application = 21.04653ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=922 journal=2023 phases=Recovery_Stats{integrity = 1.643575ms, ledger = 43.665396ms, application = 28.555724ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=960 journal=2120 phases=Recovery_Stats{integrity = 1.744705ms, ledger = 45.720266ms, application = 29.926988ms}\nSQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=996 journal=2192 phases=Recovery_Stats{integrity = 1.940401ms, ledger = 46.67758ms, application = 30.972722ms}\n",
+    "node2.log": "SQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 423.587\u00b5s, ledger = 24.794\u00b5s, application = 38.204\u00b5s}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=511 journal=1168 phases=Recovery_Stats{integrity = 1.09113ms, ledger = 25.113038ms, application = 15.923532ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=523 journal=1201 phases=Recovery_Stats{integrity = 912.755\u00b5s, ledger = 25.503381ms, application = 16.182923ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=670 journal=1494 phases=Recovery_Stats{integrity = 1.410445ms, ledger = 31.956785ms, application = 20.676511ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=943 journal=2044 phases=Recovery_Stats{integrity = 1.740863ms, ledger = 45.255263ms, application = 29.848975ms}\nSQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=960 journal=2088 phases=Recovery_Stats{integrity = 1.844368ms, ledger = 47.002692ms, application = 29.743864ms}\n",
+    "node3.log": "SQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 426.305\u00b5s, ledger = 30.898\u00b5s, application = 43.797\u00b5s}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=511 journal=1145 phases=Recovery_Stats{integrity = 860.619\u00b5s, ledger = 26.052862ms, application = 16.444116ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=523 journal=1178 phases=Recovery_Stats{integrity = 836.491\u00b5s, ledger = 25.213592ms, application = 16.525371ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=670 journal=1470 phases=Recovery_Stats{integrity = 1.227138ms, ledger = 32.333744ms, application = 21.043496ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=943 journal=2020 phases=Recovery_Stats{integrity = 1.655693ms, ledger = 45.519231ms, application = 30.19294ms}\nSQLodin node 3 listening on 10.175.52.21:27601 (mTLS, cluster network-qualification)\nRecovery node=3 applied=960 journal=2065 phases=Recovery_Stats{integrity = 1.70547ms, ledger = 46.455636ms, application = 30.809914ms}\n"
+  },
+  "error": "UnknownOutcome('Write outcome unknown; call resolve_pending() to retry the same request')",
+  "ended_utc": "2026-09-24T20:43:19.488423+00:00"
+}

@@ -1,0 +1,34 @@
+{
+  "complete": true,
+  "passed": true,
+  "checks": [
+    {
+      "name": "cycle_0_survivors_publish_while_third_voter_remains_offline",
+      "passed": true
+    },
+    {
+      "name": "cycle_1_survivors_publish_while_third_voter_remains_offline",
+      "passed": true
+    },
+    {
+      "name": "offline_voter_installs_certified_image_and_continues_writes",
+      "passed": true
+    },
+    {
+      "name": "installed_generation_and_all_acknowledged_effects_survive_full_restart",
+      "passed": true
+    }
+  ],
+  "rows": 256,
+  "operations_per_cycle": 3,
+  "binary_sha256": "63a1294a83a95a0c16cd760d7c84576adb749655d5411444cf541885c19655d2",
+  "scope": "authenticated snapshot catch-up after two retained-prefix changes; explicit compaction",
+  "offline_prefix": 6,
+  "largest_image_bytes": 98304,
+  "catchup_seconds": 1.6549337910037138,
+  "logs": {
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 783.208\u00b5s, ledger = 33.084\u00b5s, application = 27.917\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:65270 (mTLS, cluster network-qualification)\nRecovery node=1 applied=20 journal=5 phases=Recovery_Stats{integrity = 170.292\u00b5s, ledger = 1.347041ms, application = 263.833\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:65270 (mTLS, cluster network-qualification)\nRecovery node=1 applied=50 journal=3 phases=Recovery_Stats{integrity = 136.208\u00b5s, ledger = 735.375\u00b5s, application = 213.083\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:65270 (mTLS, cluster network-qualification)\nRecovery node=1 applied=66 journal=37 phases=Recovery_Stats{integrity = 149.083\u00b5s, ledger = 4.726667ms, application = 2.570125ms}\nSQLodin node 1 listening on 127.0.0.1:65270 (mTLS, cluster network-qualification)\n",
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 794.833\u00b5s, ledger = 58.291\u00b5s, application = 29.166\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:65271 (mTLS, cluster network-qualification)\nRecovery node=2 applied=35 journal=55 phases=Recovery_Stats{integrity = 157.5\u00b5s, ledger = 5.838834ms, application = 2.844792ms}\nSQLodin node 2 listening on 127.0.0.1:65271 (mTLS, cluster network-qualification)\nRecovery node=2 applied=52 journal=9 phases=Recovery_Stats{integrity = 159.792\u00b5s, ledger = 1.4565ms, application = 670.291\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:65271 (mTLS, cluster network-qualification)\nRecovery node=2 applied=66 journal=36 phases=Recovery_Stats{integrity = 211.417\u00b5s, ledger = 6.8395ms, application = 3.927041ms}\nSQLodin node 2 listening on 127.0.0.1:65271 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 768.833\u00b5s, ledger = 37\u00b5s, application = 29.5\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:65272 (mTLS, cluster network-qualification)\nRecovery node=3 applied=6 journal=14 phases=Recovery_Stats{integrity = 159.75\u00b5s, ledger = 2.861458ms, application = 1.845416ms}\nSQLodin node 3 listening on 127.0.0.1:65272 (mTLS, cluster network-qualification)\nRecovery node=3 applied=66 journal=36 phases=Recovery_Stats{integrity = 254.917\u00b5s, ledger = 7.523708ms, application = 4.466666ms}\nSQLodin node 3 listening on 127.0.0.1:65272 (mTLS, cluster network-qualification)\n"
+  }
+}

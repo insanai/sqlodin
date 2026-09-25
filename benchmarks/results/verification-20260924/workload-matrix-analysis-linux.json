@@ -1,0 +1,1515 @@
+{
+  "complete": true,
+  "matrix_sha256": "b9ff828f2efdd3b7bf8f5420947da01692a127d3897df978dcddd0aa82538453",
+  "original_targets": {
+    "mixed_tps": 3000,
+    "write_tps": 1000,
+    "read_p99_ms": 20,
+    "write_p99_ms": 50,
+    "sqlite_fraction": 0.25
+  },
+  "cases": [
+    {
+      "index": 0,
+      "parameters": {
+        "clients": 8,
+        "reads": 95,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "c2719f6748c57d0b2e3c023be5e954128b72af77dbf9efd7b68e1d4ade72b90e",
+      "native_tps": 30.676257182669023,
+      "sqlite_tps": 1578.5745106349596,
+      "completed": 640,
+      "offered": 640,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 615,
+          "p50": 235.2688005194068,
+          "p99": 433.5048692300916
+        },
+        "write": {
+          "count": 25,
+          "p50": 283.9709687978029,
+          "p99": 570.5555630847812
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 25,
+      "writes_per_second": 1.1982912961980088,
+      "cpu_cores": 0.09969783584367432,
+      "peak_voter_rss_bytes": 14573568,
+      "proc_write_bytes": 40804424,
+      "whole_process_sync_calls": 3360,
+      "whole_process_mean_sync_ms": 17.411699908035715,
+      "whole_process_write_byte_ratio": 62.93181983311257,
+      "max_final_history_bytes": 4382224,
+      "sqlite_fraction": 0.019432885160631363,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 1,
+      "parameters": {
+        "clients": 32,
+        "reads": 70,
+        "payload": 4096,
+        "statements": 8,
+        "rows": 4,
+        "skew": true,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "45de8756064bba7abd02193d82f8e2a4193035430d3629d1636fac9ea6a8632c",
+      "native_tps": 72.09728193752309,
+      "sqlite_tps": 962.8396140887864,
+      "completed": 2560,
+      "offered": 2560,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 1805,
+          "p50": 394.1501444205642,
+          "p99": 1778.2312147319317
+        },
+        "write": {
+          "count": 755,
+          "p50": 362.9250330850482,
+          "p99": 1415.530363097787
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 755,
+      "writes_per_second": 21.263065571417947,
+      "cpu_cores": 0.1765820147454179,
+      "peak_voter_rss_bytes": 19386368,
+      "proc_write_bytes": 145059872,
+      "whole_process_sync_calls": 5553,
+      "whole_process_mean_sync_ms": 18.082405082117774,
+      "whole_process_write_byte_ratio": 11.820703905920983,
+      "max_final_history_bytes": 6184584,
+      "sqlite_fraction": 0.07487984590845342,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 2,
+      "parameters": {
+        "clients": 64,
+        "reads": 0,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260926
+      },
+      "sample_sha256": "a92994d46fb10346d8cbae3911c9a88a33ca891100fb16db0c322e7b6e1d9aa8",
+      "native_tps": 144.37008576981705,
+      "sqlite_tps": 2751.324645901894,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "write": {
+          "count": 5120,
+          "p50": 382.5402371585369,
+          "p99": 1304.104876704514
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 5120,
+      "writes_per_second": 144.37008576981705,
+      "cpu_cores": 0.4661010776904445,
+      "peak_voter_rss_bytes": 20455424,
+      "proc_write_bytes": 254035480,
+      "whole_process_sync_calls": 9182,
+      "whole_process_mean_sync_ms": 9.434431232846874,
+      "whole_process_write_byte_ratio": 12.40254034041914,
+      "max_final_history_bytes": 7994968,
+      "sqlite_fraction": 0.052472937348508365,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "write_p99": false,
+        "pure_write_tps": false
+      }
+    },
+    {
+      "index": 3,
+      "parameters": {
+        "clients": 1,
+        "reads": 50,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "5290384433880ec76cfcc71428797a59d048976df2c09a383333b91ab55b1cc7",
+      "native_tps": 18.71583253347215,
+      "sqlite_tps": 417.81361838497816,
+      "completed": 80,
+      "offered": 80,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 38,
+          "p50": 49.521008506417274,
+          "p99": 66.82181265205145
+        },
+        "write": {
+          "count": 42,
+          "p50": 52.60855611413717,
+          "p99": 111.29449307918549
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 42,
+      "writes_per_second": 9.825812080072879,
+      "cpu_cores": 0.1731214509346174,
+      "peak_voter_rss_bytes": 14471168,
+      "proc_write_bytes": 20692936,
+      "whole_process_sync_calls": 1801,
+      "whole_process_mean_sync_ms": 6.007113342587451,
+      "whole_process_write_byte_ratio": 31.49655098685048,
+      "max_final_history_bytes": 4288016,
+      "sqlite_fraction": 0.044794692441612015,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 4,
+      "parameters": {
+        "clients": 32,
+        "reads": 95,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "9d9b919106fca7a963daa8a5091ee355bd5718ec1f990ad2122b4746b09e9236",
+      "native_tps": 242.28504493161452,
+      "sqlite_tps": 4677.4556887463605,
+      "completed": 2560,
+      "offered": 2560,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 2439,
+          "p50": 112.67955880612135,
+          "p99": 328.43171805143356
+        },
+        "write": {
+          "count": 121,
+          "p50": 132.35964067280293,
+          "p99": 502.9193675145507
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 121,
+      "writes_per_second": 11.451754076845843,
+      "cpu_cores": 0.23471363727750158,
+      "peak_voter_rss_bytes": 15372288,
+      "proc_write_bytes": 53718160,
+      "whole_process_sync_calls": 3954,
+      "whole_process_mean_sync_ms": 6.915496308548305,
+      "whole_process_write_byte_ratio": 51.689413001299485,
+      "max_final_history_bytes": 4513272,
+      "sqlite_fraction": 0.051798469307691324,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 5,
+      "parameters": {
+        "clients": 32,
+        "reads": 0,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "14fa4bc8ee078d46f2d1038e78f70ffb6ce5684500f429a62f285aa243824050",
+      "native_tps": 73.58052369961855,
+      "sqlite_tps": 2844.989422417903,
+      "completed": 2560,
+      "offered": 2560,
+      "errors": 0,
+      "latency_ms": {
+        "write": {
+          "count": 2560,
+          "p50": 329.101680777967,
+          "p99": 1230.84179405123
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 2560,
+      "writes_per_second": 73.58052369961855,
+      "cpu_cores": 0.30380708418162816,
+      "peak_voter_rss_bytes": 18800640,
+      "proc_write_bytes": 163567384,
+      "whole_process_sync_calls": 6702,
+      "whole_process_mean_sync_ms": 13.34222794822441,
+      "whole_process_write_byte_ratio": 15.813758670172339,
+      "max_final_history_bytes": 6590112,
+      "sqlite_fraction": 0.02586319763434616,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "write_p99": false,
+        "pure_write_tps": false
+      }
+    },
+    {
+      "index": 6,
+      "parameters": {
+        "clients": 8,
+        "reads": 70,
+        "payload": 4096,
+        "statements": 4,
+        "rows": 2,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "1458b88545461bcfad50ee988c1921c1163275cbc99e34349a30ec8176de57c4",
+      "native_tps": 68.63888047520996,
+      "sqlite_tps": 319.2155882007139,
+      "completed": 640,
+      "offered": 640,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 451,
+          "p50": 101.31927207112312,
+          "p99": 213.69365509599447
+        },
+        "write": {
+          "count": 189,
+          "p50": 108.0931993201375,
+          "p99": 224.65539630502462
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 189,
+      "writes_per_second": 20.269919390335442,
+      "cpu_cores": 0.24130856417066002,
+      "peak_voter_rss_bytes": 16826368,
+      "proc_write_bytes": 63140928,
+      "whole_process_sync_calls": 3690,
+      "whole_process_mean_sync_ms": 7.0797854677506775,
+      "whole_process_write_byte_ratio": 6.774741823043202,
+      "max_final_history_bytes": 4644416,
+      "sqlite_fraction": 0.21502358597867638,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 7,
+      "parameters": {
+        "clients": 64,
+        "reads": 70,
+        "payload": 4096,
+        "statements": 4,
+        "rows": 2,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "e041785d8e7f5ab2a47c3bf12ab2c120e9ee0705fe58cf01170587f2a856c227",
+      "native_tps": 196.84615694673138,
+      "sqlite_tps": 2595.4663490235325,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 3576,
+          "p50": 290.14315735548735,
+          "p99": 875.6382213905454
+        },
+        "write": {
+          "count": 1544,
+          "p50": 246.1639167740941,
+          "p99": 834.392998367548
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 1544,
+      "writes_per_second": 59.36141920424868,
+      "cpu_cores": 0.3548613337145177,
+      "peak_voter_rss_bytes": 21434368,
+      "proc_write_bytes": 189625312,
+      "whole_process_sync_calls": 6959,
+      "whole_process_mean_sync_ms": 9.315460801264548,
+      "whole_process_write_byte_ratio": 8.24317093104371,
+      "max_final_history_bytes": 6815416,
+      "sqlite_fraction": 0.07584230749930121,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 8,
+      "parameters": {
+        "clients": 32,
+        "reads": 50,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "c0e09270be286931822b64a586e785f97c32df9e54a1dd808b02f3caace731e9",
+      "native_tps": 107.11287699264649,
+      "sqlite_tps": 2765.3849043637497,
+      "completed": 2560,
+      "offered": 2560,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 1264,
+          "p50": 248.4664162620902,
+          "p99": 1103.4836173057556
+        },
+        "write": {
+          "count": 1296,
+          "p50": 216.6244862601161,
+          "p99": 1039.1764175146818
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 1296,
+      "writes_per_second": 54.225893977527285,
+      "cpu_cores": 0.289121085944995,
+      "peak_voter_rss_bytes": 17829888,
+      "proc_write_bytes": 121921864,
+      "whole_process_sync_calls": 6056,
+      "whole_process_mean_sync_ms": 10.141746440554822,
+      "whole_process_write_byte_ratio": 21.036276497376345,
+      "max_final_history_bytes": 5516936,
+      "sqlite_fraction": 0.0387334424309699,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 9,
+      "parameters": {
+        "clients": 64,
+        "reads": 70,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260926
+      },
+      "sample_sha256": "646b9bfda9eeabdeaaf9c5c00fdc949068b32df33bbb3f7ec30b77721fde3cab",
+      "native_tps": 225.26428235668106,
+      "sqlite_tps": 2940.147714036812,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 3573,
+          "p50": 275.50316136330366,
+          "p99": 528.3722467720509
+        },
+        "write": {
+          "count": 1547,
+          "p50": 233.18762239068747,
+          "p99": 598.9559944719076
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 1547,
+      "writes_per_second": 68.06325093863,
+      "cpu_cores": 0.37925353787394356,
+      "peak_voter_rss_bytes": 19664896,
+      "proc_write_bytes": 142786264,
+      "whole_process_sync_calls": 6840,
+      "whole_process_mean_sync_ms": 8.541919039912282,
+      "whole_process_write_byte_ratio": 20.782498361000105,
+      "max_final_history_bytes": 5836544,
+      "sqlite_fraction": 0.07661665476235344,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 10,
+      "parameters": {
+        "clients": 8,
+        "reads": 50,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "3cdffe4cdacbffd609cadbb3a372a9547a43dbcf51b1c11f7669718bb73e83ce",
+      "native_tps": 60.112964632443955,
+      "sqlite_tps": 867.1159467162985,
+      "completed": 640,
+      "offered": 640,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 321,
+          "p50": 103.66442333906889,
+          "p99": 888.0159622058272
+        },
+        "write": {
+          "count": 319,
+          "p50": 109.48930773884058,
+          "p99": 247.43377976119518
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 319,
+      "writes_per_second": 29.962555808983783,
+      "cpu_cores": 0.22636288244404673,
+      "peak_voter_rss_bytes": 15466496,
+      "proc_write_bytes": 57476680,
+      "whole_process_sync_calls": 3751,
+      "whole_process_mean_sync_ms": 7.381532287656625,
+      "whole_process_write_byte_ratio": 31.87228554251705,
+      "max_final_history_bytes": 4607624,
+      "sqlite_fraction": 0.06932517486281638,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 11,
+      "parameters": {
+        "clients": 32,
+        "reads": 0,
+        "payload": 4096,
+        "statements": 8,
+        "rows": 4,
+        "skew": true,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "6f7f98407077e00975d1281e0221d545ae9cbd376a43dbfa5801c7a65de2f71f",
+      "native_tps": 99.98167671383983,
+      "sqlite_tps": 2441.5460199937406,
+      "completed": 2560,
+      "offered": 2560,
+      "errors": 0,
+      "latency_ms": {
+        "write": {
+          "count": 2560,
+          "p50": 277.5332275778055,
+          "p99": 1288.6568335816264
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 2560,
+      "writes_per_second": 99.98167671383983,
+      "cpu_cores": 0.44835533151362555,
+      "peak_voter_rss_bytes": 20914176,
+      "proc_write_bytes": 289141020,
+      "whole_process_sync_calls": 6765,
+      "whole_process_mean_sync_ms": 8.933661709682188,
+      "whole_process_write_byte_ratio": 15.688039170288036,
+      "max_final_history_bytes": 9952904,
+      "sqlite_fraction": 0.04095015039450133,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "write_p99": false,
+        "pure_write_tps": false
+      }
+    },
+    {
+      "index": 12,
+      "parameters": {
+        "clients": 64,
+        "reads": 0,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260927
+      },
+      "sample_sha256": "fbd20173cc09ea2aa35e643c6d11f851589a6e02e9ebaf75b96b8842b9b75d94",
+      "native_tps": 135.03660778569667,
+      "sqlite_tps": 2829.3500011657725,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "write": {
+          "count": 5120,
+          "p50": 410.2405793964863,
+          "p99": 1572.942296974361
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 5120,
+      "writes_per_second": 135.03660778569667,
+      "cpu_cores": 0.46392459588875085,
+      "peak_voter_rss_bytes": 19832832,
+      "proc_write_bytes": 265743696,
+      "whole_process_sync_calls": 9736,
+      "whole_process_mean_sync_ms": 9.385326927280197,
+      "whole_process_write_byte_ratio": 13.05149845831014,
+      "max_final_history_bytes": 8224416,
+      "sqlite_fraction": 0.047727077855358215,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "write_p99": false,
+        "pure_write_tps": false
+      }
+    },
+    {
+      "index": 13,
+      "parameters": {
+        "clients": 1,
+        "reads": 70,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "e2a7efae31f29f5104e90732a7b7efea8c98097f5f980a0c859342e679c574c6",
+      "native_tps": 17.580822657581628,
+      "sqlite_tps": 878.810720029633,
+      "completed": 80,
+      "offered": 80,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 60,
+          "p50": 48.84034767746925,
+          "p99": 415.4737563803792
+        },
+        "write": {
+          "count": 20,
+          "p50": 53.329612128436565,
+          "p99": 119.53207664191723
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 20,
+      "writes_per_second": 4.395205664395407,
+      "cpu_cores": 0.16042500675043236,
+      "peak_voter_rss_bytes": 14671872,
+      "proc_write_bytes": 19955504,
+      "whole_process_sync_calls": 1802,
+      "whole_process_mean_sync_ms": 5.754576738068812,
+      "whole_process_write_byte_ratio": 34.442059468386915,
+      "max_final_history_bytes": 4283920,
+      "sqlite_fraction": 0.020005243742348536,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 14,
+      "parameters": {
+        "clients": 64,
+        "reads": 95,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "4759c3c8ab6ffe6b4e0094f16aab3d59e94b718ee09fa547989758f1d1d4dd3f",
+      "native_tps": 405.3144190338795,
+      "sqlite_tps": 5059.336721997519,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 4873,
+          "p50": 139.78550489991903,
+          "p99": 1010.2012138813734
+        },
+        "write": {
+          "count": 247,
+          "p50": 155.84737993776798,
+          "p99": 367.99676436930895
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 247,
+      "writes_per_second": 19.553254199485984,
+      "cpu_cores": 0.2533215118961747,
+      "peak_voter_rss_bytes": 16666624,
+      "proc_write_bytes": 63623864,
+      "whole_process_sync_calls": 4294,
+      "whole_process_mean_sync_ms": 7.232272371448532,
+      "whole_process_write_byte_ratio": 41.760945183229374,
+      "max_final_history_bytes": 4570640,
+      "sqlite_fraction": 0.08011216515232336,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 15,
+      "parameters": {
+        "clients": 32,
+        "reads": 70,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "eda42b56d256f0cb58a95770c71d7eac231fdd8315ee756fe01cd45de07d6242",
+      "native_tps": 152.3270976260999,
+      "sqlite_tps": 2971.8147019119365,
+      "completed": 2560,
+      "offered": 2560,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 1780,
+          "p50": 192.43401568382978,
+          "p99": 397.1007214859128
+        },
+        "write": {
+          "count": 780,
+          "p50": 177.88966372609138,
+          "p99": 471.82999923825264
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 780,
+      "writes_per_second": 46.412162557952314,
+      "cpu_cores": 0.29870391800118024,
+      "peak_voter_rss_bytes": 17469440,
+      "proc_write_bytes": 96930032,
+      "whole_process_sync_calls": 5326,
+      "whole_process_mean_sync_ms": 8.464282867067217,
+      "whole_process_write_byte_ratio": 27.01528300816029,
+      "max_final_history_bytes": 5115528,
+      "sqlite_fraction": 0.05125726631882509,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 16,
+      "parameters": {
+        "clients": 1,
+        "reads": 95,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "5919dadd6a12cd07da4fb511a3cfb7e0cac893c88f764b8611e08313207ac218",
+      "native_tps": 10.996652754715392,
+      "sqlite_tps": 1782.0930466701773,
+      "completed": 80,
+      "offered": 80,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 77,
+          "p50": 61.3577775657177,
+          "p99": 171.5347645804286
+        },
+        "write": {
+          "count": 3,
+          "p50": 151.63611341267824,
+          "p99": 231.4041070640087
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 3,
+      "writes_per_second": 0.41237447830182716,
+      "cpu_cores": 0.11134110914149332,
+      "peak_voter_rss_bytes": 15056896,
+      "proc_write_bytes": 19296376,
+      "whole_process_sync_calls": 1812,
+      "whole_process_mean_sync_ms": 11.139147490066225,
+      "whole_process_write_byte_ratio": 37.39198658671599,
+      "max_final_history_bytes": 4279824,
+      "sqlite_fraction": 0.006170638943495417,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 17,
+      "parameters": {
+        "clients": 64,
+        "reads": 70,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "1e3a15b126a4d9449b1ed28c93d60762a19f483373a69144f8b88a0f9a391223",
+      "native_tps": 187.5753711775984,
+      "sqlite_tps": 3003.446902167022,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 3576,
+          "p50": 299.39527343958616,
+          "p99": 952.5938630104065
+        },
+        "write": {
+          "count": 1544,
+          "p50": 259.4895139336586,
+          "p99": 795.1072277501225
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 1544,
+      "writes_per_second": 56.56569787074452,
+      "cpu_cores": 0.326425108826641,
+      "peak_voter_rss_bytes": 19558400,
+      "proc_write_bytes": 143440792,
+      "whole_process_sync_calls": 6819,
+      "whole_process_mean_sync_ms": 10.435660592022291,
+      "whole_process_write_byte_ratio": 20.93863503661623,
+      "max_final_history_bytes": 5840496,
+      "sqlite_fraction": 0.062453366844028635,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 18,
+      "parameters": {
+        "clients": 64,
+        "reads": 0,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "6ea184d89d43eb36fdf229923efaaee6672d31a5c8b16e31ffb0699eb03591bd",
+      "native_tps": 108.89625252648388,
+      "sqlite_tps": 1034.8548549229788,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "write": {
+          "count": 5120,
+          "p50": 445.37172093987465,
+          "p99": 1890.2350515127182
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 5120,
+      "writes_per_second": 108.89625252648388,
+      "cpu_cores": 0.396875795340662,
+      "peak_voter_rss_bytes": 20148224,
+      "proc_write_bytes": 273093800,
+      "whole_process_sync_calls": 10164,
+      "whole_process_mean_sync_ms": 11.960254849370326,
+      "whole_process_write_byte_ratio": 13.377243567314201,
+      "max_final_history_bytes": 8220320,
+      "sqlite_fraction": 0.10522852746783384,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "write_p99": false,
+        "pure_write_tps": false
+      }
+    },
+    {
+      "index": 19,
+      "parameters": {
+        "clients": 64,
+        "reads": 70,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260927
+      },
+      "sample_sha256": "b457818094ecd0402280802eaa2a05dc2f360b44fd08887e6b427b3bb63426e8",
+      "native_tps": 173.08609902360186,
+      "sqlite_tps": 1711.6375438378002,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 3574,
+          "p50": 359.8095066845417,
+          "p99": 796.5990174561739
+        },
+        "write": {
+          "count": 1546,
+          "p50": 303.553837351501,
+          "p99": 883.6287166923285
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 1546,
+      "writes_per_second": 52.26388849423603,
+      "cpu_cores": 0.29816785027112663,
+      "peak_voter_rss_bytes": 19689472,
+      "proc_write_bytes": 143264088,
+      "whole_process_sync_calls": 6841,
+      "whole_process_mean_sync_ms": 11.55778738035375,
+      "whole_process_write_byte_ratio": 20.860855646215224,
+      "max_final_history_bytes": 5828208,
+      "sqlite_fraction": 0.10112310263743783,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 20,
+      "parameters": {
+        "clients": 8,
+        "reads": 0,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "46c705f076a30535c7dd5425eb73d5413ada138cf2761e342d1e9c5526a03138",
+      "native_tps": 64.1901065142972,
+      "sqlite_tps": 860.2232418735358,
+      "completed": 640,
+      "offered": 640,
+      "errors": 0,
+      "latency_ms": {
+        "write": {
+          "count": 640,
+          "p50": 112.78271768242121,
+          "p99": 217.6647325977683
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 640,
+      "writes_per_second": 64.1901065142972,
+      "cpu_cores": 0.2587663668857606,
+      "peak_voter_rss_bytes": 16007168,
+      "proc_write_bytes": 64821344,
+      "whole_process_sync_calls": 3777,
+      "whole_process_mean_sync_ms": 7.435703491395287,
+      "whole_process_write_byte_ratio": 21.776242017247665,
+      "max_final_history_bytes": 4664872,
+      "sqlite_fraction": 0.07462028853637274,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "write_p99": false,
+        "pure_write_tps": false
+      }
+    },
+    {
+      "index": 21,
+      "parameters": {
+        "clients": 64,
+        "reads": 70,
+        "payload": 4096,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "89a0f6e1311242af3209ee45733e087dad7ed1a63fb19c00f7ddb2acd0450b23",
+      "native_tps": 94.20218025698827,
+      "sqlite_tps": 2611.1943537462253,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 3576,
+          "p50": 663.7656735256314,
+          "p99": 1750.2037761732936
+        },
+        "write": {
+          "count": 1544,
+          "p50": 527.6673957705498,
+          "p99": 1602.8498951345682
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 1544,
+      "writes_per_second": 28.407844983748024,
+      "cpu_cores": 0.19392401951340943,
+      "peak_voter_rss_bytes": 21176320,
+      "proc_write_bytes": 171971704,
+      "whole_process_sync_calls": 7273,
+      "whole_process_mean_sync_ms": 19.703740322012923,
+      "whole_process_write_byte_ratio": 8.846919849960214,
+      "max_final_history_bytes": 6012504,
+      "sqlite_fraction": 0.03607628061918807,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 22,
+      "parameters": {
+        "clients": 64,
+        "reads": 0,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 1000,
+        "seed": 20260925
+      },
+      "sample_sha256": "e8c6c5b2d66493d9208e8cbea74d55fe0dc1420231a994d3e8a4e382ebd04965",
+      "native_tps": 101.29166097588664,
+      "sqlite_tps": 987.9692728678293,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "write": {
+          "count": 5120,
+          "p50": 18184.790335595608,
+          "p99": 43042.35131852329
+        }
+      },
+      "latency_basis": "scheduled arrival",
+      "successful_writes": 5120,
+      "writes_per_second": 101.29166097588664,
+      "cpu_cores": 0.35788401309644324,
+      "peak_voter_rss_bytes": 20246528,
+      "proc_write_bytes": 272896472,
+      "whole_process_sync_calls": 10171,
+      "whole_process_mean_sync_ms": 13.09884498987317,
+      "whole_process_write_byte_ratio": 13.38783591476536,
+      "max_final_history_bytes": 8212056,
+      "sqlite_fraction": 0.10252511263013486,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "write_p99": false,
+        "pure_write_tps": false
+      }
+    },
+    {
+      "index": 23,
+      "parameters": {
+        "clients": 32,
+        "reads": 50,
+        "payload": 4096,
+        "statements": 8,
+        "rows": 4,
+        "skew": true,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "f9ebf5f026976df25f22ac113e055c57a1fbcaaa9c3d50d2f22f02ee65280af1",
+      "native_tps": 107.97679461883438,
+      "sqlite_tps": 991.1153188609958,
+      "completed": 2560,
+      "offered": 2560,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 1268,
+          "p50": 262.75955978780985,
+          "p99": 929.3642630800605
+        },
+        "write": {
+          "count": 1292,
+          "p50": 227.4957885965705,
+          "p99": 924.8020751401782
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 1292,
+      "writes_per_second": 54.49453853419297,
+      "cpu_cores": 0.32688287433436186,
+      "peak_voter_rss_bytes": 20455424,
+      "proc_write_bytes": 195762632,
+      "whole_process_sync_calls": 6029,
+      "whole_process_mean_sync_ms": 10.867112167191905,
+      "whole_process_write_byte_ratio": 13.141190406740384,
+      "max_final_history_bytes": 7253640,
+      "sqlite_fraction": 0.10894473384078342,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 24,
+      "parameters": {
+        "clients": 8,
+        "reads": 70,
+        "payload": 4096,
+        "statements": 8,
+        "rows": 4,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "366fa95e78cd69445a35852a127c14bb689d6e0d9e649f9ca06e34d361d21288",
+      "native_tps": 38.23691183985402,
+      "sqlite_tps": 961.7145752656699,
+      "completed": 640,
+      "offered": 640,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 451,
+          "p50": 158.0689838156104,
+          "p99": 551.8593965098262
+        },
+        "write": {
+          "count": 189,
+          "p50": 174.3826987221837,
+          "p99": 512.2514273971319
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 189,
+      "writes_per_second": 11.29183802770689,
+      "cpu_cores": 0.1631043270668773,
+      "peak_voter_rss_bytes": 17059840,
+      "proc_write_bytes": 100171760,
+      "whole_process_sync_calls": 3808,
+      "whole_process_mean_sync_ms": 12.020433640756304,
+      "whole_process_write_byte_ratio": 8.392854908729941,
+      "max_final_history_bytes": 4771344,
+      "sqlite_fraction": 0.03975910610410705,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 25,
+      "parameters": {
+        "clients": 64,
+        "reads": 50,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "f8d6a0efa4c0181f74f98967bd2b1a8b54d51f23c662a961178850dd46ec65d9",
+      "native_tps": 73.64170639697073,
+      "sqlite_tps": 1112.0884693698467,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 2558,
+          "p50": 904.5190801844001,
+          "p99": 1828.8263399153948
+        },
+        "write": {
+          "count": 2562,
+          "p50": 703.1359681859612,
+          "p99": 1745.8199672400951
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 2562,
+      "writes_per_second": 36.849619490046685,
+      "cpu_cores": 0.20596664757902755,
+      "peak_voter_rss_bytes": 20242432,
+      "proc_write_bytes": 199807968,
+      "whole_process_sync_calls": 8768,
+      "whole_process_mean_sync_ms": 21.16625361895529,
+      "whole_process_write_byte_ratio": 18.199786551609588,
+      "max_final_history_bytes": 6827680,
+      "sqlite_fraction": 0.06621928778624872,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 26,
+      "parameters": {
+        "clients": 1,
+        "reads": 0,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "6f8efe9feb40152682a3098fb4a874beb554c86f1f046ab6ae9ffd017f5019b3",
+      "native_tps": 7.935415412917875,
+      "sqlite_tps": 63.843445012816716,
+      "completed": 80,
+      "offered": 80,
+      "errors": 0,
+      "latency_ms": {
+        "write": {
+          "count": 80,
+          "p50": 120.35732343792915,
+          "p99": 250.07620360702276
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 80,
+      "writes_per_second": 7.935415412917875,
+      "cpu_cores": 0.08728956954209663,
+      "peak_voter_rss_bytes": 14684160,
+      "proc_write_bytes": 22361464,
+      "whole_process_sync_calls": 1820,
+      "whole_process_mean_sync_ms": 14.360638416483516,
+      "whole_process_write_byte_ratio": 28.134658895544057,
+      "max_final_history_bytes": 4283872,
+      "sqlite_fraction": 0.1242949125211652,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "write_p99": false,
+        "pure_write_tps": false
+      }
+    },
+    {
+      "index": 27,
+      "parameters": {
+        "clients": 8,
+        "reads": 70,
+        "payload": 4096,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "2ce8afa18f5ddfcc0a733634aa937ba38c4e06af2284078c2c56b8194f7f249c",
+      "native_tps": 51.618079264676645,
+      "sqlite_tps": 383.6891884151245,
+      "completed": 640,
+      "offered": 640,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 451,
+          "p50": 117.64513608068228,
+          "p99": 445.7881674170494
+        },
+        "write": {
+          "count": 189,
+          "p50": 127.02754139900208,
+          "p99": 554.2360218241811
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 189,
+      "writes_per_second": 15.24346403284982,
+      "cpu_cores": 0.18550247235743167,
+      "peak_voter_rss_bytes": 16539648,
+      "proc_write_bytes": 52800880,
+      "whole_process_sync_calls": 3639,
+      "whole_process_mean_sync_ms": 10.186567195108546,
+      "whole_process_write_byte_ratio": 7.6883218958022495,
+      "max_final_history_bytes": 4541992,
+      "sqlite_fraction": 0.1345309714821298,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 28,
+      "parameters": {
+        "clients": 32,
+        "reads": 95,
+        "payload": 4096,
+        "statements": 8,
+        "rows": 4,
+        "skew": true,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "4cd281e41e660cff096afe545246fdec5b2cf7b6465794fe39633557cc8679fe",
+      "native_tps": 259.18280535409065,
+      "sqlite_tps": 4836.559900547551,
+      "completed": 2560,
+      "offered": 2560,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 2438,
+          "p50": 114.5992474630475,
+          "p99": 222.72061184048653
+        },
+        "write": {
+          "count": 122,
+          "p50": 130.24574145674706,
+          "p99": 282.18400571495295
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 122,
+      "writes_per_second": 12.351680567655881,
+      "cpu_cores": 0.2450087456862888,
+      "peak_voter_rss_bytes": 17424384,
+      "proc_write_bytes": 60523144,
+      "whole_process_sync_calls": 3773,
+      "whole_process_mean_sync_ms": 6.856688216273522,
+      "whole_process_write_byte_ratio": 8.2512680612908,
+      "max_final_history_bytes": 4681280,
+      "sqlite_fraction": 0.053588255016700684,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false
+      }
+    },
+    {
+      "index": 29,
+      "parameters": {
+        "clients": 8,
+        "reads": 70,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "2f9a04c20e17b972d4a4d25917b46661b7117f1f71bad45974fdede25e78d4d3",
+      "native_tps": 50.6080778340607,
+      "sqlite_tps": 966.6188594981473,
+      "completed": 640,
+      "offered": 640,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 451,
+          "p50": 120.35414204001427,
+          "p99": 426.7610814422369
+        },
+        "write": {
+          "count": 189,
+          "p50": 120.90911623090506,
+          "p99": 695.1629556715488
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 189,
+      "writes_per_second": 14.94519798537105,
+      "cpu_cores": 0.18108202849999844,
+      "peak_voter_rss_bytes": 14864384,
+      "proc_write_bytes": 52858976,
+      "whole_process_sync_calls": 3722,
+      "whole_process_mean_sync_ms": 9.809613510209564,
+      "whole_process_write_byte_ratio": 40.516761872453955,
+      "max_final_history_bytes": 4541992,
+      "sqlite_fraction": 0.0523557732572439,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 30,
+      "parameters": {
+        "clients": 64,
+        "reads": 70,
+        "payload": 256,
+        "statements": 1,
+        "rows": 1,
+        "skew": false,
+        "rate": 3000,
+        "seed": 20260925
+      },
+      "sample_sha256": "6bf9f5f4b92ad5d45762afd15dc6d2d3a2b164f11268871e0607659fe4069262",
+      "native_tps": 214.79303620550743,
+      "sqlite_tps": 2978.5883932581055,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 3576,
+          "p50": 11039.934455417097,
+          "p99": 21465.17228987068
+        },
+        "write": {
+          "count": 1544,
+          "p50": 10540.065497159958,
+          "p99": 21681.041697971523
+        }
+      },
+      "latency_basis": "scheduled arrival",
+      "successful_writes": 1544,
+      "writes_per_second": 64.77352498072334,
+      "cpu_cores": 0.3599461427037605,
+      "peak_voter_rss_bytes": 19755008,
+      "proc_write_bytes": 144240528,
+      "whole_process_sync_calls": 6915,
+      "whole_process_mean_sync_ms": 8.845838217498192,
+      "whole_process_write_byte_ratio": 20.957512223928724,
+      "max_final_history_bytes": 5828304,
+      "sqlite_fraction": 0.07211235922750567,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    },
+    {
+      "index": 31,
+      "parameters": {
+        "clients": 64,
+        "reads": 70,
+        "payload": 4096,
+        "statements": 8,
+        "rows": 4,
+        "skew": false,
+        "rate": 0,
+        "seed": 20260925
+      },
+      "sample_sha256": "9716d2a02f7f231b9950c9c21a6c53825ce44b4291b136715aabfa502bbdb6f9",
+      "native_tps": 336.5596147926524,
+      "sqlite_tps": 2411.214509198001,
+      "completed": 5120,
+      "offered": 5120,
+      "errors": 0,
+      "latency_ms": {
+        "read": {
+          "count": 3576,
+          "p50": 188.81653901189566,
+          "p99": 586.3379836082458
+        },
+        "write": {
+          "count": 1544,
+          "p50": 172.31064196676016,
+          "p99": 715.3128040954471
+        }
+      },
+      "latency_basis": "closed-loop invocation",
+      "successful_writes": 1544,
+      "writes_per_second": 101.49375883590925,
+      "cpu_cores": 0.5718884079484523,
+      "peak_voter_rss_bytes": 21110784,
+      "proc_write_bytes": 271857784,
+      "whole_process_sync_calls": 6690,
+      "whole_process_mean_sync_ms": 5.506271503139013,
+      "whole_process_write_byte_ratio": 11.465786552924758,
+      "max_final_history_bytes": 7917168,
+      "sqlite_fraction": 0.13958095122138103,
+      "targets_met": {
+        "sqlite_fraction": false,
+        "read_p99": false,
+        "write_p99": false,
+        "mixed_tps": false,
+        "mixed_writes_per_second": false
+      }
+    }
+  ],
+  "qualifications": [
+    "CPU and /proc I/O differences cover the measured workload interval.",
+    "Forwarded sync and pwrite counters include setup, validation and shutdown.",
+    "Write-byte ratio compares three replicas combined with a single SQLite reference.",
+    "Reference uses the same pinned FULL SQLite and bounded grouping, without TLS or replication.",
+    "Scheduled latency includes backlog; bounded clients are not an unlimited arrival generator.",
+    "Throughput and latency targets are evaluated, not weakened or claimed as guarantees."
+  ],
+  "operations_verified": 91840,
+  "all_applicable_targets_met": false
+}

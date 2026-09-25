@@ -1,0 +1,8 @@
+{
+  "scope": "Exact regression/negative-control source retained; final test differs only by a line wrap required by style checking",
+  "files": {
+    "replay-turn-regression-sources/negative_generation_delta.odin": "871b600b5bcbeef98b378546ef1fdd1863440b53012037fe4e51196041e46d56",
+    "replay-turn-regression-sources/test_generation_worker.odin": "c68c2f4d293d7b514e7b15018b6e910da9b42a08292498900beb2b87a2b63556"
+  },
+  "final_test_sha256": "cf4a9a74e6ee7b48556d0b4e67ec5293a11af6ac905bc4404d8b4916d240575a"
+}

@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 0,
+	"duration": 1644762000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_service_write_batch_shrinks_without_early_acknowledgement"
+			}
+		]
+	}
+}

@@ -273,7 +273,7 @@ process-crash evidence only. It must not be cited as disk performance.
 
 The current host uses `step_batch` to group up to sixteen received Paxos transitions behind a
 FULL journal commit. Its owned pending effects and durable-frontier checks are reviewed in
-[`docs/journal-group-commit.md`](../docs/journal-group-commit.md). The complete pinned upstream
+[`docs/sod/records/0004-production-sql-and-durable-throughput.typ`](../docs/sod/records/0004-production-sql-and-durable-throughput.typ). The complete pinned upstream
 library is unchanged. The reference path remains available:
 
 ```sh
@@ -327,7 +327,7 @@ pilot plus fetched snapshots of the running eight-hour SSH campaign. It uses one
 durable voter per LXC instance on `.19`, `.20` and `.21`, twelve long-lived transfer
 sessions, periodic exact checks, bounded resource monitoring and scheduled process
 crashes. The source and binary are frozen for the run. See
-[`docs/cluster-qualification.md`](../docs/cluster-qualification.md) for duration,
+[`docs/sod/records/0004-production-sql-and-durable-throughput.typ`](../docs/sod/records/0004-production-sql-and-durable-throughput.typ) for duration,
 limits, transport and physical-failure-domain caveats, and the collection command.
 Never import a running or failed `soak.json` as a successful benchmark. Completion
 requires `complete: true`, `status: passed` and matching final offline audits.

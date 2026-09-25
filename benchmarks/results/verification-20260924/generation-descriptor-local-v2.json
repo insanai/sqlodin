@@ -1,0 +1,25 @@
+{
+	"total": 4,
+	"success": 4,
+	"duration": 2632555000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_background_generation_preserves_live_tail_votes_ids_and_restart"
+			},
+			{
+				"success": true,
+				"name": "test_generation_predecessor_descriptor_corruption_fails_closed"
+			},
+			{
+				"success": true,
+				"name": "test_generation_publish_restart_suffix_and_fail_closed"
+			},
+			{
+				"success": true,
+				"name": "test_unpublished_background_generation_never_replaces_live_source"
+			}
+		]
+	}
+}

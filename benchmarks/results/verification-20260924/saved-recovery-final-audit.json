@@ -1,0 +1,96 @@
+{
+  "complete": true,
+  "passed": true,
+  "recovery_report_sha256": "5405ea8c5f95062af08a445cfeccc9b1a1d87e7f720b37a72ec87004651d5e17",
+  "remote_root": "/home/insan/projects/sqlodin/recovery-replay/20260924T102628Z",
+  "audits": [
+    {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "657e955788dd5987604036d94f88a9a1c876d28bbf0e9b1aa807eeed6e38e545",
+        "transfers": "5d19623a67d973a7e204d950bab552f701f6ee5cabf56aca74a39a23c8d80927",
+        "ledger": "2b24ebf61692353b3fc057f829c20c5d3a7984ad1bad1ea6339ca2818d647490",
+        "sessions": "4d9c9eea93980c513dc26c261bfc9808e149b246b9f0c627d5d846fbc32688c3",
+        "state": "854b3faba23c764c7764b267724f86caeb7514c61364dcd54209c4c8eedac925"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 82588,
+        "ledger": 165176,
+        "sessions": 17,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 344525111296,
+        "data_bytes": 346287872
+      },
+      "verification_sqlite": "3.46.1",
+      "host": "insan@10.175.52.19"
+    },
+    {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "657e955788dd5987604036d94f88a9a1c876d28bbf0e9b1aa807eeed6e38e545",
+        "transfers": "5d19623a67d973a7e204d950bab552f701f6ee5cabf56aca74a39a23c8d80927",
+        "ledger": "2b24ebf61692353b3fc057f829c20c5d3a7984ad1bad1ea6339ca2818d647490",
+        "sessions": "4d9c9eea93980c513dc26c261bfc9808e149b246b9f0c627d5d846fbc32688c3",
+        "state": "854b3faba23c764c7764b267724f86caeb7514c61364dcd54209c4c8eedac925"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 82588,
+        "ledger": 165176,
+        "sessions": 17,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 376835276800,
+        "data_bytes": 346087168
+      },
+      "verification_sqlite": "3.46.1",
+      "host": "insan@10.175.52.20"
+    },
+    {
+      "integrity": [
+        "ok"
+      ],
+      "logical_sha256": {
+        "accounts": "657e955788dd5987604036d94f88a9a1c876d28bbf0e9b1aa807eeed6e38e545",
+        "transfers": "5d19623a67d973a7e204d950bab552f701f6ee5cabf56aca74a39a23c8d80927",
+        "ledger": "2b24ebf61692353b3fc057f829c20c5d3a7984ad1bad1ea6339ca2818d647490",
+        "sessions": "4d9c9eea93980c513dc26c261bfc9808e149b246b9f0c627d5d846fbc32688c3",
+        "state": "854b3faba23c764c7764b267724f86caeb7514c61364dcd54209c4c8eedac925"
+      },
+      "counts": {
+        "accounts": 3,
+        "transfers": 82588,
+        "ledger": 165176,
+        "sessions": 17,
+        "state": 1
+      },
+      "exact_transfers_and_balances": true,
+      "audit_pairs": true,
+      "resources": {
+        "free_bytes": 1286043074560,
+        "data_bytes": 346070760
+      },
+      "verification_sqlite": "3.46.1",
+      "host": "insan@10.175.52.21"
+    }
+  ],
+  "compared_tables": [
+    "accounts",
+    "transfers",
+    "ledger",
+    "sessions"
+  ],
+  "verifier_sha256": "52aaf654c6076e91dde400468ce4fb001e037711ce338ccab8d57c972dbc7a19"
+}

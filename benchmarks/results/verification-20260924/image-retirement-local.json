@@ -1,0 +1,17 @@
+{
+	"total": 2,
+	"success": 2,
+	"duration": 603529000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_abandoned_incoming_image_can_retire_without_a_successor_certificate"
+			},
+			{
+				"success": true,
+				"name": "test_image_retirement_keeps_active_predecessor_and_unsealed_receipt"
+			}
+		]
+	}
+}

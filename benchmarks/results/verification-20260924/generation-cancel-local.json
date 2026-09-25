@@ -1,0 +1,21 @@
+{
+	"total": 3,
+	"success": 3,
+	"duration": 2690331000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_background_generation_preserves_live_tail_votes_ids_and_restart"
+			},
+			{
+				"success": true,
+				"name": "test_generation_cancellation_preserves_source_and_releases_private_locks"
+			},
+			{
+				"success": true,
+				"name": "test_unpublished_background_generation_never_replaces_live_source"
+			}
+		]
+	}
+}

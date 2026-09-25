@@ -1,0 +1,10 @@
+{
+  "complete": true,
+  "scope": "six local pinned-native builder tests, including extracted-shell checksum positive/negative case",
+  "command": "python3 -m unittest discover -s tools -p test_native_build.py -v",
+  "tests": 6,
+  "sources": {
+    "tools/build_shell.py": "5cc6e643d3f8e4a18834d1c910bfec6b768bbb6f3c8e44fd4ebf1f445c3ea618",
+    "tools/test_native_build.py": "f96bc36481b9139dbaee86b73f4d96044ae3bd4216ff21cffda0868de6e9c690"
+  }
+}

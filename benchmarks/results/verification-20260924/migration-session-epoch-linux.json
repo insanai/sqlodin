@@ -1,0 +1,24 @@
+{
+  "complete": false,
+  "passed": false,
+  "checks": [],
+  "operations": 18,
+  "binary_sha256": "ebe5a51b3e9d730b375809a81bd11ec60ceb7f80ea30bdcdc6ae2b45db528e16",
+  "old_binary_sha256": "c91c2fa77ed16248304961157096bd1389b16f10d1b796be0ed2a89fa7f7c9ea",
+  "filesystem": {
+    "filesystems": [
+      {
+        "target": "/",
+        "source": "local/containers/paxos-zig[/rootfs]",
+        "fstype": "zfs",
+        "options": "rw,relatime,idmapped,xattr,posixacl,casesensitive"
+      }
+    ]
+  },
+  "logs": {
+    "node1.log": "Recovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 62.827\u00b5s, ledger = 18.529\u00b5s, application = 27.199\u00b5s}\nSQLodin node 1 listening on 127.0.0.1:56843 (mTLS, cluster network-qualification)\n",
+    "node2.log": "Recovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 69.736\u00b5s, ledger = 18.879\u00b5s, application = 29.758\u00b5s}\nSQLodin node 2 listening on 127.0.0.1:42955 (mTLS, cluster network-qualification)\n",
+    "node3.log": "Recovery node=3 applied=0 journal=0 phases=Recovery_Stats{integrity = 67.106\u00b5s, ledger = 22.819\u00b5s, application = 23.428\u00b5s}\nSQLodin node 3 listening on 127.0.0.1:36877 (mTLS, cluster network-qualification)\n"
+  },
+  "error": "QueryError('Unsupported')"
+}

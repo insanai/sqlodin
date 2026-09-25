@@ -1,0 +1,18 @@
+{
+  "complete": true,
+  "checks": [
+    {
+      "rejected": false,
+      "passed": true,
+      "archive_sha256": "fa7924bb2ac8281693973061f910e1a579cad4e11c87dbf2b19a1a3bbc43342f",
+      "binary_sha256": "6681bb3f185dd300782f6524c8d421dec31ef9d18ccd398be2687107162d385d"
+    },
+    {
+      "rejected": true,
+      "passed": true,
+      "archive_sha256": "9f54da197099d08bdb211950106066f7a28d26a9e0b0b0af7b4b4b1b755b4919",
+      "binary_sha256": "a299d070f1c68d439345a5f45107ccd2eebb5e61ce2449a9f7030b53850b4187"
+    }
+  ],
+  "identity": "b8cc1fc2e62b96a089a6bb91118d6aeb1ac0b1ea47d7a28fe0ec2339d1badaf1"
+}

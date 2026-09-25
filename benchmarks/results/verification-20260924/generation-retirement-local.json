@@ -1,0 +1,17 @@
+{
+	"total": 2,
+	"success": 2,
+	"duration": 815371000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_retirement_preserves_exact_predecessor_and_unowned_directories"
+			},
+			{
+				"success": true,
+				"name": "test_retirement_rejects_corrupt_inventory_without_deleting_candidate"
+			}
+		]
+	}
+}

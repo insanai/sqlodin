@@ -1,0 +1,38 @@
+{
+  "complete": false,
+  "passed": false,
+  "hosts": [
+    "insan@10.175.52.19",
+    "insan@10.175.52.20",
+    "insan@10.175.52.21"
+  ],
+  "remote_root": "/home/insan/projects/sqlodin/network-service/20260924T205000Z",
+  "scope": "three Linux instances; direct native mTLS consensus and SQL; fixed membership",
+  "binary_sha256": "1299f4531c8e9daa4d60c71a3d513d0aad253e984854dc4012ecca9664f70a3e",
+  "checks": [
+    {
+      "name": "native_cluster_schema",
+      "passed": true
+    },
+    {
+      "name": "schema_policy_rejects_complete_request_before_snapshot_failure",
+      "passed": true
+    }
+  ],
+  "python_features": true,
+  "orm": true,
+  "majority": true,
+  "source_sha256": {
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_network_hosts.py": "f95343c63801e481337d2bd2626850635e3ebd1b4512e2b032bf069901f7bde1",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_network_service.py": "588e8736c350283c19c0f72602c9d1e5ecb8419939e5032afa02c908839410e5",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_python_features.py": "ec32292bd142f5bdfb2a722a967a04744b72cb8ebf18b58a90e47680070a03eb",
+    "/Users/vikrantrathore/projects/insan.ai/sqlodin/tools/check_orm_transactions.py": "767776d63f6c17d431d52da50313b8188a6581c008c5ab5db5085840eb011121"
+  },
+  "logs": {
+    "node1.log": "SQLodin node 1 listening on 10.175.52.19:27601 (mTLS, cluster network-qualification)\nRecovery node=1 applied=0 journal=0 phases=Recovery_Stats{integrity = 1.023315ms, ledger = 41.835\u00b5s, application = 54.896\u00b5s}\n",
+    "node2.log": "SQLodin node 2 listening on 10.175.52.20:27601 (mTLS, cluster network-qualification)\nRecovery node=2 applied=0 journal=0 phases=Recovery_Stats{integrity = 600.705\u00b5s, ledger = 46.095\u00b5s, application = 54.406\u00b5s}\n",
+    "node3.log": ""
+  },
+  "error": "ConnectionError('Operation deadline exceeded: [Errno 61] Connection refused')",
+  "ended_utc": "2026-09-24T20:50:24.958490+00:00"
+}

@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 69562126,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_legacy_hidden_rowid_schema_requires_explicit_repair_before_open"
+			}
+		]
+	}
+}

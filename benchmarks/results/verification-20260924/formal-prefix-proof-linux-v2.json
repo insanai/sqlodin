@@ -1,0 +1,14 @@
+{
+  "complete": false,
+  "passed": false,
+  "scope": "unbounded durable-history/prefix seam; not a consensus/refinement proof",
+  "model": "PrefixRecoveryProof",
+  "tool_revision": "7824dab",
+  "distribution_sha256": "a2860384bc89c4c5b2c73ec367e29f44d829e4d4a2698ab295139f829219331c",
+  "executable_sha256": "d8debcba59db1bd5814d6693e3b25e3db1a8221e499bdf8b548594e2f857ede5",
+  "source_sha256": "3ce5ee42b346cc5f7494084681f9cc5955adce58eb2d5bb9179ccc3b3ffe91a1",
+  "output": "(* created new \".tlacache/PrefixRecoveryProof.tlaps/PrefixRecoveryProof.thy\" *)\n(* fingerprints written in \".tlacache/PrefixRecoveryProof.tlaps/fingerprints\" *)\nFile \"./PrefixRecoveryProof.tla\", line 67, characters 1-2:\n[ERROR]: Could not prove or check:\n           ASSUME NEW VARIABLE chosen,\n                  NEW VARIABLE tail,\n                  NEW VARIABLE committed,\n                  NEW VARIABLE applied,\n                  NEW VARIABLE cut,\n                  NEW VARIABLE acknowledged,\n                  NEW VARIABLE ready,\n                  vars ==\n                    <<chosen, tail, committed, applied, cut, acknowledged,\n                      ready>>,\n                  Next ==\n                    (\\E s \\in Nat : Choose(s)) \\/ Apply \\/ Ack \\/ Trim\n                    \\/ Crash \\/ Replay \\/ Open \\/ (\n                    \\E k \\in Nat : Publish(k)),\n                  ChoosePrefix ,\n                  ApplyPrefix ,\n                  AckPrefix ,\n                  PublishPrefix ,\n                  TrimPrefix ,\n                  CrashPrefix ,\n                  ReplayPrefix ,\n                  OpenPrefix ,\n                  SMT \n           PROVE  Inv /\\ [Next]_vars => Inv'\nFile \"./PrefixRecoveryProof.tla\", line 1, character 1 to line 76, character 77:\n[ERROR]: 1/36 obligations failed.\nThere were backend errors processing module `\"PrefixRecoveryProof\"`.\n tlapm ending abnormally with Failure(\"backend errors: there are unproved obligations\")\nRaised at Stdlib.failwith in file \"stdlib.ml\", line 29, characters 17-33\nCalled from Tlapm_lib.process_module in file \"src/tlapm_lib.ml\", line 492, characters 12-77\nCalled from Tlapm_lib.main.f in file \"src/tlapm_lib.ml\", line 621, characters 23-43\nCalled from Stdlib__List.fold_left in file \"list.ml\", line 123, characters 24-34\nCalled from Tlapm_lib.main in file \"src/tlapm_lib.ml\", line 624, characters 13-40\nCalled from Tlapm_lib.init in file \"src/tlapm_lib.ml\", line 641, characters 8-59\n\n",
+  "exit_code": 3,
+  "error": "RuntimeError('The full set of proof obligations was not discharged')",
+  "seconds": 5.479959703050554
+}

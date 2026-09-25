@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 0,
+	"duration": 59935000,
+	"packages": {
+		"tests": [
+			{
+				"success": false,
+				"name": "test_peer_wire_packing_preserves_complete_values_and_rejects_malformed_frames"
+			}
+		]
+	}
+}

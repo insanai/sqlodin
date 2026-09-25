@@ -1,0 +1,73 @@
+{
+  "complete": true,
+  "passed": true,
+  "scope": "bounded owned-decree and host-seam models; not a full multi-slot refinement proof",
+  "tlc_sha256": "71ce43150b6ee0a76cc33849ec45b2c6ae4323dc933b0acaef0928668ed0de72",
+  "cases": [
+    {
+      "model": "SessionRetirement",
+      "config": "SessionRetirement",
+      "expected_violation": null,
+      "passed": true,
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionRetirement.cfg": "c24bba2a11578f90f7f65ba8d67a5b0f7a06b6a1f0ce3c5e70d7a5b0358b9943"
+      },
+      "seconds": 0.6335286250032368,
+      "exit_code": 0,
+      "output": "TLC2 Version 2.14 of 10 July 2019 (rev: 0cae24f)\nRunning breadth-first search Model-Checking with fp 101 and seed 5066546138965098598 with 1 worker on 8 cores with 910MB heap and 64MB offheap memory [pid: 22782] (Mac OS X 27.0 aarch64, Homebrew 27 x86_64, MSBDiskFPSet, DiskStateQueue).\nParsing file /Users/vikrantrathore/projects/insan.ai/sqlodin/specs/SessionRetirement.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Naturals.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/FiniteSets.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/TLC.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Sequences.tla\nSemantic processing of module Naturals\nSemantic processing of module Sequences\nSemantic processing of module FiniteSets\nSemantic processing of module TLC\nSemantic processing of module SessionRetirement\nStarting... (2026-09-25 01:04:46)\nComputing initial states...\nFinished computing initial states: 1 distinct state generated at 2026-09-25 01:04:47.\nModel checking completed. No error has been found.\n  Estimates of the probability that TLC did not check all reachable states\n  because two distinct states had the same fingerprint:\n  calculated (optimistic):  val = 4.8E-16\n189 states generated, 84 distinct states found, 0 states left on queue.\nThe depth of the complete state graph search is 9.\nThe average outdegree of the complete state graph is 1 (minimum is 0, the maximum 3 and the 95th percentile is 3).\nFinished in 00s at (2026-09-25 01:04:47)\n"
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionNoEpochGuard",
+      "expected_violation": "Invariant AtMostOnce is violated",
+      "passed": true,
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionNoEpochGuard.cfg": "9cf6a4552d7c5bf1392fd7e0d76ca799b218f75e64d733e48248378fbca8a031"
+      },
+      "seconds": 0.6191572910029208,
+      "exit_code": 12,
+      "output": "TLC2 Version 2.14 of 10 July 2019 (rev: 0cae24f)\nRunning breadth-first search Model-Checking with fp 129 and seed -8551483895541741276 with 1 worker on 8 cores with 910MB heap and 64MB offheap memory [pid: 22783] (Mac OS X 27.0 aarch64, Homebrew 27 x86_64, MSBDiskFPSet, DiskStateQueue).\nParsing file /Users/vikrantrathore/projects/insan.ai/sqlodin/specs/SessionRetirement.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Naturals.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/FiniteSets.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/TLC.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Sequences.tla\nSemantic processing of module Naturals\nSemantic processing of module Sequences\nSemantic processing of module FiniteSets\nSemantic processing of module TLC\nSemantic processing of module SessionRetirement\nStarting... (2026-09-25 01:04:47)\nComputing initial states...\nFinished computing initial states: 1 distinct state generated at 2026-09-25 01:04:47.\nError: Invariant AtMostOnce is violated.\nError: The behavior up to this point is:\nState 1: <Initial predicate>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 0 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 0 @@ 1 :> 0 @@ 2 :> 0)\n\nState 2: <Execute line 14, col 5 to line 20, col 36 of module SessionRetirement>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 1 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {<<0, 1>>}\n/\\ advances = (0 :> 0 @@ 1 :> 0 @@ 2 :> 0)\n\nState 3: <Retire line 22, col 5 to line 27, col 24 of module SessionRetirement>\n/\\ epoch = 1\n/\\ effects = ( <<0, 1>> :> 1 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 1 @@ 1 :> 0 @@ 2 :> 0)\n\nState 4: <Execute line 14, col 5 to line 20, col 36 of module SessionRetirement>\n/\\ epoch = 1\n/\\ effects = ( <<0, 1>> :> 2 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {<<0, 1>>}\n/\\ advances = (0 :> 1 @@ 1 :> 0 @@ 2 :> 0)\n\n84 states generated, 42 distinct states found, 27 states left on queue.\nThe depth of the complete state graph search is 4.\nThe average outdegree of the complete state graph is 3 (minimum is 1, the maximum 7 and the 95th percentile is 7).\nFinished in 00s at (2026-09-25 01:04:47)\n"
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionLostEpoch",
+      "expected_violation": "Invariant AtMostOnce is violated",
+      "passed": true,
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionLostEpoch.cfg": "ed94f56e6f151301c4dd20f037b980737cf4e280914f4045a05160de0c061896"
+      },
+      "seconds": 0.6350760420027655,
+      "exit_code": 12,
+      "output": "TLC2 Version 2.14 of 10 July 2019 (rev: 0cae24f)\nRunning breadth-first search Model-Checking with fp 98 and seed -4082129720464426308 with 1 worker on 8 cores with 910MB heap and 64MB offheap memory [pid: 22786] (Mac OS X 27.0 aarch64, Homebrew 27 x86_64, MSBDiskFPSet, DiskStateQueue).\nParsing file /Users/vikrantrathore/projects/insan.ai/sqlodin/specs/SessionRetirement.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Naturals.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/FiniteSets.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/TLC.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Sequences.tla\nSemantic processing of module Naturals\nSemantic processing of module Sequences\nSemantic processing of module FiniteSets\nSemantic processing of module TLC\nSemantic processing of module SessionRetirement\nStarting... (2026-09-25 01:04:48)\nComputing initial states...\nFinished computing initial states: 1 distinct state generated at 2026-09-25 01:04:48.\nError: Invariant AtMostOnce is violated.\nError: The behavior up to this point is:\nState 1: <Initial predicate>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 0 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 0 @@ 1 :> 0 @@ 2 :> 0)\n\nState 2: <Execute line 14, col 5 to line 20, col 36 of module SessionRetirement>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 1 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {<<0, 1>>}\n/\\ advances = (0 :> 0 @@ 1 :> 0 @@ 2 :> 0)\n\nState 3: <Retire line 22, col 5 to line 27, col 24 of module SessionRetirement>\n/\\ epoch = 1\n/\\ effects = ( <<0, 1>> :> 1 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 1 @@ 1 :> 0 @@ 2 :> 0)\n\nState 4: <Crash line 28, col 10 to line 29, col 49 of module SessionRetirement>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 1 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 1 @@ 1 :> 0 @@ 2 :> 0)\n\nState 5: <Execute line 14, col 5 to line 20, col 36 of module SessionRetirement>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 2 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {<<0, 1>>}\n/\\ advances = (0 :> 1 @@ 1 :> 0 @@ 2 :> 0)\n\n52 states generated, 44 distinct states found, 27 states left on queue.\nThe depth of the complete state graph search is 5.\nThe average outdegree of the complete state graph is 3 (minimum is 1, the maximum 4 and the 95th percentile is 4).\nFinished in 00s at (2026-09-25 01:04:48)\n"
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionRepeatRetirement",
+      "expected_violation": "Invariant CommandIdempotent is violated",
+      "passed": true,
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionRepeatRetirement.cfg": "02c37c4d0c2ca158b62550061e97c9c39a8f6d4b58ee4b62e74970204c4314c3"
+      },
+      "seconds": 0.6265020829960122,
+      "exit_code": 12,
+      "output": "TLC2 Version 2.14 of 10 July 2019 (rev: 0cae24f)\nRunning breadth-first search Model-Checking with fp 38 and seed -4092615273673998239 with 1 worker on 8 cores with 910MB heap and 64MB offheap memory [pid: 22787] (Mac OS X 27.0 aarch64, Homebrew 27 x86_64, MSBDiskFPSet, DiskStateQueue).\nParsing file /Users/vikrantrathore/projects/insan.ai/sqlodin/specs/SessionRetirement.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Naturals.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/FiniteSets.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/TLC.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Sequences.tla\nSemantic processing of module Naturals\nSemantic processing of module Sequences\nSemantic processing of module FiniteSets\nSemantic processing of module TLC\nSemantic processing of module SessionRetirement\nStarting... (2026-09-25 01:04:48)\nComputing initial states...\nFinished computing initial states: 1 distinct state generated at 2026-09-25 01:04:48.\nError: Invariant CommandIdempotent is violated.\nError: The behavior up to this point is:\nState 1: <Initial predicate>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 0 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 0 @@ 1 :> 0 @@ 2 :> 0)\n\nState 2: <Retire line 22, col 5 to line 27, col 24 of module SessionRetirement>\n/\\ epoch = 1\n/\\ effects = ( <<0, 1>> :> 0 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 1 @@ 1 :> 0 @@ 2 :> 0)\n\nState 3: <Retire line 22, col 5 to line 27, col 24 of module SessionRetirement>\n/\\ epoch = 2\n/\\ effects = ( <<0, 1>> :> 0 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 2 @@ 1 :> 0 @@ 2 :> 0)\n\n23 states generated, 16 distinct states found, 11 states left on queue.\nThe depth of the complete state graph search is 3.\nThe average outdegree of the complete state graph is 4 (minimum is 3, the maximum 5 and the 95th percentile is 5).\nFinished in 00s at (2026-09-25 01:04:48)\n"
+    },
+    {
+      "model": "SessionRetirement",
+      "config": "SessionKeepRows",
+      "expected_violation": "Invariant OnlyCurrentRows is violated",
+      "passed": true,
+      "sources": {
+        "SessionRetirement.tla": "50a8c89ba3853ca4892a1710a9fb85a94094055ae884652c9a28e80ea8f6c001",
+        "SessionKeepRows.cfg": "d628b565869db12c941bc8d5ae0035183af29dd776ac016a8886d8fb15c17a75"
+      },
+      "seconds": 0.6308289590015193,
+      "exit_code": 12,
+      "output": "TLC2 Version 2.14 of 10 July 2019 (rev: 0cae24f)\nRunning breadth-first search Model-Checking with fp 10 and seed -226976963974905315 with 1 worker on 8 cores with 910MB heap and 64MB offheap memory [pid: 22788] (Mac OS X 27.0 aarch64, Homebrew 27 x86_64, MSBDiskFPSet, DiskStateQueue).\nParsing file /Users/vikrantrathore/projects/insan.ai/sqlodin/specs/SessionRetirement.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Naturals.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/FiniteSets.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/TLC.tla\nParsing file /private/var/folders/d_/nhqt8l112d13r8fs1n188dc00000gn/T/Sequences.tla\nSemantic processing of module Naturals\nSemantic processing of module Sequences\nSemantic processing of module FiniteSets\nSemantic processing of module TLC\nSemantic processing of module SessionRetirement\nStarting... (2026-09-25 01:04:49)\nComputing initial states...\nFinished computing initial states: 1 distinct state generated at 2026-09-25 01:04:49.\nError: Invariant OnlyCurrentRows is violated.\nError: The behavior up to this point is:\nState 1: <Initial predicate>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 0 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {}\n/\\ advances = (0 :> 0 @@ 1 :> 0 @@ 2 :> 0)\n\nState 2: <Execute line 14, col 5 to line 20, col 36 of module SessionRetirement>\n/\\ epoch = 0\n/\\ effects = ( <<0, 1>> :> 1 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {<<0, 1>>}\n/\\ advances = (0 :> 0 @@ 1 :> 0 @@ 2 :> 0)\n\nState 3: <Retire line 22, col 5 to line 27, col 24 of module SessionRetirement>\n/\\ epoch = 1\n/\\ effects = ( <<0, 1>> :> 1 @@\n  <<0, 2>> :> 0 @@\n  <<1, 1>> :> 0 @@\n  <<1, 2>> :> 0 @@\n  <<2, 1>> :> 0 @@\n  <<2, 2>> :> 0 )\n/\\ rows = {<<0, 1>>}\n/\\ advances = (0 :> 1 @@ 1 :> 0 @@ 2 :> 0)\n\n7 states generated, 6 distinct states found, 3 states left on queue.\nThe depth of the complete state graph search is 3.\nThe average outdegree of the complete state graph is 3 (minimum is 3, the maximum 3 and the 95th percentile is 3).\nFinished in 00s at (2026-09-25 01:04:49)\n"
+    }
+  ]
+}

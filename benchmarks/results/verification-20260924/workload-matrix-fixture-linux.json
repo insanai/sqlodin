@@ -1,0 +1,95 @@
+{
+  "complete": true,
+  "fixture_only": true,
+  "cases": [
+    {
+      "parameters": {
+        "clients": 8,
+        "reads": 70,
+        "payload": 4096,
+        "statements": 8,
+        "rows": 4,
+        "skew": true,
+        "rate": 100,
+        "seed": 20260925
+      },
+      "command": [
+        "/usr/bin/python3",
+        "/home/insan/projects/sqlodin/verification-20260924/tools/calibrate_native_mixed.py",
+        "--binary",
+        "/home/insan/projects/sqlodin/verification-20260924/build/sqlodin-capacity-final-linux",
+        "--output",
+        "/home/insan/projects/sqlodin/verification-20260924/benchmarks/results/verification-20260924/workload-matrix-fixture-linux/case-00.json",
+        "--sqlite-group",
+        "16",
+        "--io-profile-library",
+        "/home/insan/projects/sqlodin/verification-20260924/build/io-profile/profile.so",
+        "--operations",
+        "10",
+        "--clients",
+        "8",
+        "--reads",
+        "70",
+        "--payload",
+        "4096",
+        "--statements",
+        "8",
+        "--rows",
+        "4",
+        "--skew",
+        "--rate",
+        "100",
+        "--seed",
+        "20260925"
+      ],
+      "sample": "benchmarks/results/verification-20260924/workload-matrix-fixture-linux/case-00.json",
+      "execution": {
+        "exit_code": 0,
+        "seconds": 5.371053529903293,
+        "output": "8 70 101.2586971789665 46.5269672049293\n"
+      },
+      "passed": true,
+      "sample_sha256": "7e2b44b024aac8a3f9ec1f02a36659fa8fa7b0fa8e3ad3db2eb4b867419b42fc",
+      "summary": {
+        "native_tps": 46.5269672049293,
+        "sqlite_tps": 101.2586971789665,
+        "sqlite_fraction": 0.4594861330547901,
+        "latency": {
+          "read": {
+            "count": 53,
+            "p50": 494.12166327238083,
+            "p99": 969.753161072731
+          },
+          "write": {
+            "count": 27,
+            "p50": 474.3322040885687,
+            "p99": 852.3428179323673
+          }
+        },
+        "latency_basis": "scheduled arrival",
+        "completed": 80,
+        "offered": 80,
+        "errors": 0,
+        "resolved_unknown": 0
+      }
+    }
+  ],
+  "planned": 1,
+  "scope": "coverage matrix, not a full factorial; on-disk FULL, all-voter entry, bounded grouping",
+  "originals": {
+    "mixed_tps": 3000,
+    "write_tps": 1000,
+    "read_p99_ms": 20,
+    "write_p99_ms": 50,
+    "sqlite_fraction": 0.25
+  },
+  "binary_sha256": "1299f4531c8e9daa4d60c71a3d513d0aad253e984854dc4012ecca9664f70a3e",
+  "harness_sha256": {
+    "qualify_native_workloads.py": "396e442814bf90187858e87e036a299b855b452a1e974d5c162accf538903120",
+    "calibrate_native_mixed.py": "ef7295cb0e9bbcd881fac383ddf87929c0ccf075262f522639125ba93a31580a",
+    "sqlite_group_reference.py": "b43aaf40b669616e02f543e3e8e2a86476aa5e756e1530b90a99791e6e631e5e",
+    "sqlite_reference_worker.py": "662eb748fbd4c8c672309c680dbe56c94c83e41a20f646cc63a10d6d05037265"
+  },
+  "io_library_sha256": "b8e477383bbd73a0d6ffbed45d2816810f2a054d643f208cc44bcb6a9ffc703d",
+  "targets_evaluated_separately": true
+}

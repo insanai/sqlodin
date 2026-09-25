@@ -1,0 +1,13 @@
+{
+	"total": 1,
+	"success": 1,
+	"duration": 336624000,
+	"packages": {
+		"tests": [
+			{
+				"success": true,
+				"name": "test_received_generation_preserves_local_acceptor_and_rejects_unbound_seal"
+			}
+		]
+	}
+}
