@@ -8,8 +8,9 @@ Written by Vikrant Rathore with assistance from Ronak Rathore. Updated
 durable Paxos voter, nonblocking TLS connections, SQL admission, read
 barriers, and results. Peers exchange consensus messages directly over
 mTLS. Python is a client, not the server or replication coordinator.
-The supported deployment is three fixed voters. See the release record for
-qualification evidence, measured performance and operational limits.
+The server accepts one to five fixed voters. End-to-end release qualification
+used three voters; targeted tests and models also cover five. See the release
+record for qualification evidence, measured performance and operational limits.
 
 == Build and run
 <build-and-run>

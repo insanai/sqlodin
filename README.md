@@ -1,5 +1,7 @@
 # SQLodin
 
+[Website](https://insanai.github.io/sqlodin/) · [Book](https://insanai.github.io/sqlodin/book/) · [Guides](https://insanai.github.io/sqlodin/guides/) · [Design discussions](https://insanai.github.io/sqlodin/sods/)
+
 SQLodin is a distributed SQL database built with SQLite and Paxos. It supports
 multi-master writes: an application can send a write to any voter in the cluster.
 Each voter stores the database on disk. Paxos gives writes a common order, and
@@ -54,7 +56,7 @@ SELECT * FROM note;
 
 This creates a local SQLite file. For a three-voter replicated example, start each voter with its
 own data directories, certificates, and a shared membership configuration. The
-[service guide](docs/guides/network-service.typ) explains the configuration and
+[service guide](https://insanai.github.io/sqlodin/guides/network-service/) explains the configuration and
 certificate requirements. Once a cluster and client configuration are ready:
 
 ```sh
@@ -66,7 +68,7 @@ certificate requirements. Once a cluster and client configuration are ready:
 Use `serve node.json` without `--create` on subsequent starts. The interactive
 client supports scripts, transactions, savepoints, result formats, and commands
 such as `.tables`, `.schema`, `.nodes`, and `.help`. See the
-[CLI guide](docs/guides/cli.typ) for details. Do not open a running voter's database
+[CLI guide](https://insanai.github.io/sqlodin/guides/cli/) for details. Do not open a running voter's database
 with the local shell.
 
 ### macOS and Windows
@@ -103,7 +105,7 @@ with sqlodin.connect(
     print(db.query("SELECT body FROM note WHERE id = ?", (1,)).one()["body"])
 ```
 
-The [Python guide](languages/python/README.md) covers endpoint failover, durable
+The [Python guide](https://insanai.github.io/sqlodin/python/) covers endpoint failover, durable
 retry identities, transactions, SQLAlchemy, and text/vector search.
 
 ## How it works
@@ -119,11 +121,11 @@ network, disk, or contention costs. Transactions use optimistic conflict checks;
 even writes to different rows can conflict. Membership is fixed, upgrades require
 a coordinated procedure, and replicas must use matching builds and schemas.
 
-The [book](docs/book.typ) develops the design and its limits. The
+The [book](https://insanai.github.io/sqlodin/book/) develops the design and its limits. The
 [specifications](specs/README.md) connect the implementation to TLA+ models,
 proof obligations, and targeted fault tests. Those checks cover stated models and
 assumptions; they are not a proof of the entire executable. Measured results and
-workload definitions are in the book's [benchmark chapter](docs/book/11_benchmarks.typ).
+workload definitions are in the book's [benchmark chapter](https://insanai.github.io/sqlodin/book/11_benchmarks/).
 
 ## Build from source
 
@@ -139,7 +141,7 @@ cd sqlodin
 The build verifies pinned sources for SQLite 3.51.3 with FTS5, sqlite-vec 0.1.9,
 and OpenSSL 3.5.8, then links them into the executable. No shared SQLite or OpenSSL
 installation is needed at runtime. Normal operating-system libraries remain.
-See [building](docs/guides/building.typ) and [contributing](CONTRIBUTING.md).
+See [building](https://insanai.github.io/sqlodin/guides/building/) and [contributing](CONTRIBUTING.md).
 
 Maintainers can publish a binary release by pushing a `v` tag matching the CLI
 version. The release workflow tests on Linux and builds Linux and macOS archives.

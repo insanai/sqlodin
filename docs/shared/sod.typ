@@ -186,7 +186,11 @@
   #text(size: 9.8pt)[#body]
 ]
 
-#let diagram-card(caption: none, body) = align(center)[
+#let diagram-content(body) = context {
+  if target() == "html" { html.frame(block(width: 165mm, body)) } else { body }
+}
+
+#let diagram-card(caption: none, body) = diagram-content(align(center)[
   #block(
     width: 100%,
     breakable: false,
@@ -206,7 +210,7 @@
       ]
     ]
   ]
-]
+])
 
 #let zen-box(body) = block(
   width: 100%,
@@ -269,6 +273,14 @@
   #set heading(numbering: "1.1")
   #counter(heading).update(0)
 
+  #context if target() == "html" [
+    #html.elem("header", [
+      #html.elem("h1", [SOD #number: #title])
+      #par[*Status:* #status / *Created:* #created / *Updated:* #last-updated]
+      #par[#authors-block(authors)]
+      #par[#category / #discussion]
+    ])
+  ] else [
   // RFC-style Header Card inspired by ensodiscussions (EDS)
   #block(
     width: 100%,
@@ -340,6 +352,8 @@
         ]
       ]
     ]
+  ]
+
   ]
 
   #v(0.8em)

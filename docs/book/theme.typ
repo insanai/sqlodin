@@ -47,6 +47,13 @@
     else if kind == "warning" { (amber_light, amber) }
     else if kind == "danger" { (red_light, red) }
     else { (blue_light, blue) }
+  context {
+    if target() == "html" {
+      html.elem("aside", attrs: (class: "callout " + kind), [
+        #if title != none { html.elem("strong", title) }
+        #body
+      ])
+    } else {
   block(width: 100%, fill: bg, stroke: (left: 2pt + border),
     inset: (x: 11pt, y: 9pt), above: 8pt, below: 8pt, breakable: false)[
     #set par(justify: false)
@@ -56,4 +63,6 @@
     ]
     #text(size: 10pt)[#body]
   ]
+    }
+  }
 }

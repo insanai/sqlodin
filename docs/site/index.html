@@ -1,0 +1,37 @@
+<section class="hero">
+  <div><p class="eyebrow">SQLite · Paxos · Odin</p><h1>Your SQL.<br>More than<br><em>one place to write.</em></h1>
+  <p class="lead">SQLodin is a distributed SQL database. Send a write to any voter. Paxos gives the cluster one ordered history, stored on disk.</p>
+  <div class="actions"><a class="button" href="/sqlodin/book/01_start/">Get started ↗</a><a class="button secondary" href="/sqlodin/book/">Read the book</a></div>
+  <p class="meta">Open source · MIT license · Odin + Python · v0.6.0</p></div>
+  <div class="cluster"><div class="label">Multi-master writes. A shared history.</div>
+  <svg viewBox="0 0 450 295" role="img" aria-labelledby="cluster-title cluster-desc"><title id="cluster-title">Three voters, each accepting SQL writes</title><desc id="cluster-desc">Applications can write to any voter. The voters exchange Paxos messages, persist decisions, and apply the same ordered SQL history to their SQLite databases.</desc>
+    <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10" fill="none" stroke="#b6ceb8" stroke-width="2"/></marker></defs>
+    <g fill="none" stroke="#668c76" stroke-width="1.5"><path d="M76 51V98M225 51V98M374 51V98" marker-end="url(#arrow)"/><path d="M124 135H176M274 135H326" marker-start="url(#arrow)" marker-end="url(#arrow)"/><path d="M76 175V209H374V175M225 175V242"/><path d="M76 209V242M374 209V242"/></g>
+    <g fill="#233f34" stroke="#648774"><rect x="26" y="99" width="100" height="76" rx="8"/><rect x="175" y="99" width="100" height="76" rx="8"/><rect x="324" y="99" width="100" height="76" rx="8"/></g>
+    <g fill="#edf2e8" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13"><text x="76" y="37">SQL write</text><text x="225" y="37">SQL write</text><text x="374" y="37">SQL write</text><text x="76" y="128">Voter A</text><text x="225" y="128">Voter B</text><text x="374" y="128">Voter C</text></g>
+    <g fill="#a6c8ae" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11"><text x="76" y="152">SQLite + disk</text><text x="225" y="152">SQLite + disk</text><text x="374" y="152">SQLite + disk</text></g>
+    <g fill="#dba65c"><rect x="40" y="242" width="26" height="23" rx="3"/><rect x="71" y="242" width="26" height="23" rx="3"/><rect x="102" y="242" width="26" height="23" rx="3"/><rect x="188" y="242" width="26" height="23" rx="3"/><rect x="219" y="242" width="26" height="23" rx="3"/><rect x="250" y="242" width="26" height="23" rx="3"/><rect x="324" y="242" width="26" height="23" rx="3"/><rect x="355" y="242" width="26" height="23" rx="3"/><rect x="386" y="242" width="26" height="23" rx="3"/></g>
+    <g fill="#173329" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11"><text x="53" y="258">1</text><text x="84" y="258">2</text><text x="115" y="258">3</text><text x="201" y="258">1</text><text x="232" y="258">2</text><text x="263" y="258">3</text><text x="337" y="258">1</text><text x="368" y="258">2</text><text x="399" y="258">3</text></g>
+  </svg><div class="cluster-foot"><span>One replicated database</span><span>Majority required for progress</span></div></div>
+</section>
+<section class="features" aria-label="Database capabilities">
+<article><span class="label">01 / Write anywhere</span><h2>Every voter can propose.</h2><p>Rotating slot ownership lets voters admit writes without forwarding each request to a standing leader. The cluster still agrees on one order.</p></article>
+<article><span class="label">02 / Use familiar tools</span><h2>SQL, from a terminal or Python.</h2><p>An interactive CLI, parameter binding, transactions and SQLAlchemy. FTS5 and exact vector search work alongside structured records.</p></article>
+<article><span class="label">03 / Keep the evidence</span><h2>Durability you can examine.</h2><p>A durable Paxos journal, replayable application state, authenticated peers and explicit retry identities. Read the models, tests and design decisions.</p></article>
+</section>
+<section class="section start"><div><p class="eyebrow">Start with a local file</p><h2>A query before<br>a cluster.</h2><p>The executable includes a local SQLite shell. Try it first, then follow the service guide to configure certificates and replicated voters.</p><a href="/sqlodin/guides/network-service/">Set up a cluster ↗</a></div><div class="code"><div class="code-label">TERMINAL · LINUX x86-64</div><pre><code>curl -fLO https://github.com/insanai/sqlodin/releases/latest/download/sqlodin-linux-amd64.tar.gz
+tar -xzf sqlodin-linux-amd64.tar.gz
+./sqlodin local notes.db
+
+CREATE TABLE note (id INTEGER PRIMARY KEY, body TEXT);
+INSERT INTO note VALUES (1, 'Hello, SQLodin');
+SELECT * FROM note;
+
+<span class="comment">-- A local file is not yet a replicated database.</span></code></pre></div></section>
+<section class="section"><p class="eyebrow">Find your way through the system</p><h2>Learn it. Use it. Question it.</h2><div class="cards">
+<a class="card" href="/sqlodin/book/"><span class="label">The book</span><h3>From SQL to consensus ↗</h3><p>A connected explanation of clients, ordering, storage, recovery and the mathematics behind them.</p></a>
+<a class="card" href="/sqlodin/guides/"><span class="label">Practical guides</span><h3>Build and operate ↗</h3><p>Installation, the CLI, network configuration, certificates, and ORM transaction behavior.</p></a>
+<a class="card" href="/sqlodin/sods/"><span class="label">Design discussions</span><h3>Decisions with context ↗</h3><p>The problem, alternatives, implementation boundary and current status of each SOD.</p></a>
+</div></section>
+<section class="section start"><div><p class="eyebrow">A useful fit</p><h2>Transactional data.<br>More than one machine.</h2><p>Internal tools, inventory and job records, service metadata, and applications combining SQL with text or embedding search.</p><a href="/sqlodin/book/11_benchmarks/">Read the measured workloads ↗</a></div><div class="limits"><p>The 0.6.0 server accepts one to five fixed voters. Release qualification used three voters; targeted tests and models also cover five. Replication does not shard the database or remove SQLite's single-writer constraint. Supported SQL and transaction sizes have explicit bounds.</p><p style="margin-top:16px"><a href="/sqlodin/specs/sql-policy/">SQL contract</a> · <a href="/sqlodin/book/09_proofs/">Proofs and their assumptions</a></p></div></section>
+<section class="section"><p class="eyebrow">One executable, three entry points</p><h2>Server. Cluster client. Local shell.</h2><p>Linux x86-64 and macOS Apple Silicon / Intel builds include SQLite, sqlite-vec and OpenSSL. On Windows, use the Linux binary under WSL2.</p><div class="actions"><a class="button" href="https://github.com/insanai/sqlodin/releases/latest">Download SQLodin ↗</a><a class="button secondary" href="/sqlodin/python/">Python client guide</a><a class="button secondary" href="/sqlodin/downloads/sqlodin-book.pdf">Book PDF ↓</a></div></section>

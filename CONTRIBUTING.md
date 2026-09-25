@@ -27,11 +27,14 @@ Pull requests run Linux checks selected by the files changed:
 
 - Documentation-only edits run source style and CI selection checks, without a native build.
 - Python changes run the locked Python test environment and benchmark-harness tests.
-- Native changes build and vet the CLI, run optimized unit tests and compiler contracts,
+- Native changes type-check and vet the CLI, run debug unit tests and compiler contracts,
   and run one bounded fault-simulation seed with one, three, and five nodes.
 - Consensus dependency updates also run the upstream unit tests.
-- TLA+ model or configuration changes run the bounded models and their negative controls.
-  This job does not run TLAPS proofs; supply proof-checking evidence for proof changes.
+- TLA+ model or configuration changes run the changed models with their negative controls,
+  plus a small set of durability and read checks. Register new model configurations in
+  `tools/check_formal.py`. The manual CI workflow can run the full bounded-model matrix.
+  TLAPS proof changes need a separate proof-checking workflow; they are not passed off
+  as successful TLC checks.
 
 The stable **PR checks** job reports the combined result. Older runs on the same
 branch are cancelled. Native dependency archives are cached and checked by the
@@ -106,3 +109,9 @@ Use the [documentation index](docs/index.typ) as the reader entry point. Keep ta
 instructions in `docs/guides/`, narrative chapters in `docs/book/`, numbered decisions in
 `docs/sod/`, release qualification in `docs/releases/`, and historical discussion within the relevant SOD. Formal contracts and executable models stay together in `specs/`;
 raw evidence stays in `benchmarks/results/`. Avoid adding loose documents to `docs/`.
+
+The [website](https://insanai.github.io/sqlodin/) is generated from these sources.
+Run `uv run tools/build_site.py` with Typst 0.15.1 installed to build HTML, PDFs and
+the search index in `build/site`. The Pages workflow checks document links on Linux,
+attaches previews to documentation PRs, and deploys only from `main`. Site presentation
+lives in `docs/site`; keep technical prose in its existing book, guide, SOD or spec.
