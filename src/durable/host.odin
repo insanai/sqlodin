@@ -47,7 +47,7 @@ Host :: struct {
 	consensus_lock: posix.FD,
 	packets: queue.Queue(Packet),
 	sequence: u64,
-	chosen_stmt: db.Sqlite3_Stmt,
+	chosen_stmt, record_stmt: db.Sqlite3_Stmt,
 	durable_sequence: u64,
 	transition_group: ^Transition_Group,
 	head: [32]u8,
@@ -134,6 +134,7 @@ close :: proc(h: ^Host) {
 	snapshot_close(h)
 	if h.chosen_stmt != nil do db.sqlite3_finalize(h.chosen_stmt)
 	sql.engine_close(&h.engine)
+	if h.record_stmt != nil do db.sqlite3_finalize(h.record_stmt)
 	if h.consensus != nil do db.close(h.consensus)
 	if h.consensus_lock >= 0 do posix.close(h.consensus_lock)
 	if h.transition_group != nil do free(h.transition_group)

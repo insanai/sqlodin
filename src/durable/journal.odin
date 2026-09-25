@@ -6,8 +6,11 @@ import sql ".."
 import db "../sqlite"
 import paxos "../../deps/paxos-odin/src"
 
+// The history reserve covers one bounded group (GROUP_RECORDS < 2,112 records),
+// so measure it when a transaction starts and every 256 records within it.
 persist_record :: proc(h: ^Host, r: ^Record) -> bool {
-	if h.sequence == u64(max(i64)) || !history_record_room(h) do return false
+	if h.sequence == u64(max(i64)) do return false
+	if (h.sequence - h.durable_sequence) % 256 == 0 && !history_record_room(h) do return false
 	r.seq, r.previous = h.sequence + 1, h.head
 	c := Codec{legacy = r.legacy}
 	record_codec(&c, r)
@@ -15,9 +18,13 @@ persist_record :: proc(h: ^Host, r: ^Record) -> bool {
 	bytes, encoded := pack_record(c.bytes[:c.pos], packed[:])
 	if !encoded do return false
 	hash := digest(bytes)
-	s, ok := prepare(h, "INSERT INTO _sqlodin_journal VALUES(?,?,?,?,?)")
-	if !ok do return false
-	defer db.sqlite3_finalize(s)
+	if h.record_stmt == nil {
+		prepared: bool
+		h.record_stmt, prepared = prepare(h, "INSERT INTO _sqlodin_journal VALUES(?,?,?,?,?)")
+		if !prepared do return false
+	}
+	s := h.record_stmt
+	defer db.sqlite3_reset(s)
 	if db.sqlite3_bind_int64(s, 1, i64(r.seq)) != db.OK ||
 	   db.sqlite3_bind_int64(s, 2, i64(r.kind)) != db.OK ||
 	   db.sqlite3_bind_int64(s, 3, i64(r.slot)) != db.OK ||
