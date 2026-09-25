@@ -17,7 +17,7 @@ def run(*command):
 def tests(package, name):
     report = OUT / f'{name}.json'
     report.unlink(missing_ok=True)
-    run('odin', 'test', package, '-o:speed', '-vet', '-strict-style', '-thread-count:4',
+    run('odin', 'test', package, '-debug', '-vet', '-strict-style', '-thread-count:4',
         '-define:ODIN_TEST_THREADS=4', f'-out:{OUT / name}',
         f'-define:ODIN_TEST_JSON_REPORT={report}')
     result = json.loads(report.read_text())
@@ -38,7 +38,7 @@ def main():
     tests('tests', 'sqlodin')
     run(sys.executable, 'tools/check_contracts.py')
     simulator = str(OUT / 'sim')
-    run('odin', 'build', 'sim', '-o:speed', '-vet', '-strict-style', f'-out:{simulator}')
+    run('odin', 'build', 'sim', '-o:minimal', '-vet', '-strict-style', f'-out:{simulator}')
     for nodes in (1, 3, 5):
         run(simulator, f'--nodes={nodes}', '--seed=1', '--steps=1000')
     database = OUT / 'smoke.db'

@@ -12,13 +12,14 @@ def classify(paths):
             continue
         if path.startswith('languages/python/'):
             python = True
-        elif path == 'tools/check_formal.py' or (
+        elif path in {'tools/check_formal.py', 'tools/check_ci_formal.py'} or (
             path.startswith('specs/') and path.endswith(('.tla', '.cfg'))
         ):
             formal = True
         elif path.startswith(('docs/', 'specs/', 'benchmarks/results/', '.github/ISSUE_TEMPLATE/')) or (
             path in {'README.md', 'CONTRIBUTING.md', 'LICENSE', '.gitignore',
-                     '.github/PULL_REQUEST_TEMPLATE.md', '.github/release-notes.md'}
+                     '.github/PULL_REQUEST_TEMPLATE.md', '.github/release-notes.md',
+                     'tools/build_site.py', '.github/workflows/pages.yml'}
         ):
             continue
         else:

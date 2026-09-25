@@ -14,6 +14,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', default='bin/sqlodin')
     parser.add_argument('--offline', action='store_true')
+    parser.add_argument('--opt', choices=('minimal', 'speed'), default='speed',
+                        help='Use minimal optimization for short CI builds; releases use speed')
     parser.add_argument('--jobs', type=int, default=min(4, os.cpu_count() or 1))
     args = parser.parse_args()
     subprocess.run([sys.executable, str(ROOT / 'tools/build_native.py'), '--jobs', str(args.jobs),
@@ -21,7 +23,7 @@ def main():
     subprocess.run([sys.executable, str(ROOT / 'tools/build_shell.py')], check=True)
     output = Path(args.output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run([os.environ.get('ODIN', 'odin'), 'build', 'cli', '-o:speed', '-vet',
+    subprocess.run([os.environ.get('ODIN', 'odin'), 'build', 'cli', f'-o:{args.opt}', '-vet',
                     '-strict-style', f'-out:{output}'], cwd=ROOT, check=True)
     licenses = output.parent / 'licenses'
     licenses.mkdir(exist_ok=True)

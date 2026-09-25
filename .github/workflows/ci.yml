@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      full_formal:
+        description: Run the full bounded-model matrix instead of the short formal checks
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -67,7 +72,7 @@ jobs:
           python-version: '3.12'
       - uses: ./.github/actions/native-setup
       - name: Build and vet CLI
-        run: python3 tools/build_cli.py --jobs 4
+        run: python3 tools/build_cli.py --jobs 4 --opt minimal
       - name: Tests and bounded simulation
         run: |
           python3 tools/check_ci.py
@@ -84,14 +89,23 @@ jobs:
     needs: changes
     if: needs.changes.outputs.formal == 'true'
     runs-on: ubuntu-22.04
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - name: Bounded models and negative controls
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          FULL: ${{ inputs.full_formal || false }}
         run: |
           mkdir -p build
           curl --fail --location --retry 3 https://github.com/tlaplus/tlaplus/releases/download/v1.6.0/tla2tools.jar -o build/tla2tools.jar
-          python3 tools/check_formal.py --jar build/tla2tools.jar --output build/formal-ci.json
+          if [ "$FULL" = true ]; then
+            python3 tools/check_ci_formal.py --all
+          else
+            python3 tools/check_ci_formal.py --base "$BASE"
+          fi
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
@@ -113,5 +127,8 @@ jobs:
           import json, os
           results = json.loads(os.environ['RESULTS'])
           assert results['changes']['result'] == 'success', results
-          assert all(job['result'] in ('success', 'skipped') for job in results.values()), results
+          for name in ('python', 'native', 'formal'):
+              selected = results['changes']['outputs'][name] == 'true'
+              allowed = ('success',) if selected else ('success', 'skipped')
+              assert results[name]['result'] in allowed, results
           PY
